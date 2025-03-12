@@ -1,0 +1,783 @@
+2025-03-11 13:54:55 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 13:54:55 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 13:57:04 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 13:57:04 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 13:57:05 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 13:57:05 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 13:57:20 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 13:57:20 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 13:57:22 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 13:57:22 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 13:57:45 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 13:57:45 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 13:58:49 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 13:58:49 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:01:27 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:01:27 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:01:29 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:01:29 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:02:01 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:02:01 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:02:41 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:02:41 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:03:37 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:03:37 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:03:39 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:03:39 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:04:00 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:04:00 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:05:50 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:05:50 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:06:00 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:06:01 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:06:18 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:06:18 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:06:18 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:06:18 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:06:18 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:06:18 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:07:14 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:07:14 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:07:14 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:07:14 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:07:14 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:07:14 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:07:32 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:07:32 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:07:32 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:07:32 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:07:32 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:07:32 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:08:16 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:08:16 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:08:16 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:08:16 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:08:16 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:08:16 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:08:25 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:08:25 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:08:25 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:08:25 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:08:25 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:08:25 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:08:35 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:08:35 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:08:35 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:08:35 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:08:35 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:08:35 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:08:41 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:08:41 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:08:41 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:08:41 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:08:41 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:08:41 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:08:59 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:08:59 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:08:59 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:08:59 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:08:59 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:08:59 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:09:43 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:09:43 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:09:43 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:09:43 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:09:43 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:09:43 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:11:21 [INFO]: Processing uploaded file: sample.txt {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:11:21 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\uploads\file-1741702281173-880450284.txt of type text/plain {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:18:08 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:18:08 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:18:08 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:18:08 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:18:08 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:18:08 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:40:22 [ERROR]: Error fetching document upload: Cast to ObjectId failed for value "upload" (type string) at path "_id" for model "Document" {
+  "service": "kb-analysis-backend",
+  "stringValue": "\"upload\"",
+  "kind": "ObjectId",
+  "value": "upload",
+  "path": "_id",
+  "reason": {},
+  "valueType": "string",
+  "stack": "CastError: Cast to ObjectId failed for value \"upload\" (type string) at path \"_id\" for model \"Document\"\n    at ObjectId.cast (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\schema\\objectid.js:250:11)\n    at SchemaType.applySetters (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\schematype.js:1219:12)\n    at SchemaType.castForQuery (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\schematype.js:1633:15)\n    at cast (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\cast.js:389:32)\n    at Query.cast (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\query.js:4927:12)\n    at Query._castConditions (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\query.js:2237:10)\n    at model.Query._findOne (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\query.js:2533:8)\n    at model.Query.exec (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\query.js:4447:28)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async getDocumentById (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\documentController.js:92:22)"
+}
+2025-03-11 14:40:22 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/documents/upload",
+  "status": 500,
+  "responseTime": "159ms",
+  "userAgent": "PostmanRuntime/7.43.0"
+}
+2025-03-11 14:40:27 [INFO]: Processing uploaded file: Fiche produit - APRIL Santé Globale  + 2023.pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:40:27 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\uploads\file-1741704027798-96892689.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:40:28 [INFO]: Split document into 11 chunks {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:40:28 [ERROR]: Error uploading document: Document validation failed: uploadedBy: Path `uploadedBy` is required. {
+  "service": "kb-analysis-backend",
+  "errors": {
+    "uploadedBy": {
+      "name": "ValidatorError",
+      "message": "Path `uploadedBy` is required.",
+      "properties": {
+        "message": "Path `uploadedBy` is required.",
+        "type": "required",
+        "path": "uploadedBy"
+      },
+      "kind": "required",
+      "path": "uploadedBy"
+    }
+  },
+  "_message": "Document validation failed",
+  "stack": "ValidationError: Document validation failed: uploadedBy: Path `uploadedBy` is required.\n    at Document.invalidate (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\document.js:3219:32)\n    at C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\document.js:3012:17\n    at C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\schematype.js:1368:9\n    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)"
+}
+2025-03-11 14:40:28 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "POST",
+  "url": "/api/documents/upload",
+  "status": 500,
+  "responseTime": "827ms",
+  "userAgent": "PostmanRuntime/7.43.0",
+  "requestBody": {
+    "name": "Fiche produit - APRIL",
+    "description": "Ce document contient l'ensemble des fiches de produits offert par APRIL",
+    "tag": "test"
+  }
+}
+2025-03-11 14:42:39 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:42:39 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:42:39 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:42:39 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:42:39 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:42:39 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:42:54 [INFO]: Processing uploaded file: Fiche produit - APRIL Santé Globale  + 2023.pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:42:54 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\uploads\file-1741704174919-914452344.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:42:55 [INFO]: Split document into 11 chunks {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:42:55 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "POST",
+  "url": "/api/documents/upload",
+  "status": 201,
+  "responseTime": "597ms",
+  "userAgent": "PostmanRuntime/7.43.0",
+  "requestBody": {
+    "name": "Fiche produit - APRIL",
+    "description": "Ce document contient l'ensemble des fiches de produits offert par APRIL",
+    "tag": "[\"test\"]"
+  }
+}
+2025-03-11 14:48:58 [INFO]: Processing uploaded file: Guides.pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:48:58 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\uploads\file-1741704538715-208026574.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:48:59 [INFO]: Split document into 49 chunks {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:49:00 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "POST",
+  "url": "/api/documents/upload",
+  "status": 201,
+  "responseTime": "1358ms",
+  "userAgent": "PostmanRuntime/7.43.0",
+  "requestBody": {
+    "name": "Guide de traiement des reclamations",
+    "description": "Ce document représente un guide pour le traitement des reclamations destiné aux clients de l'entreprise APRIL",
+    "tag": "[\"test\"]"
+  }
+}
+2025-03-11 14:52:10 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/documents",
+  "status": 200,
+  "responseTime": "56ms",
+  "userAgent": "PostmanRuntime/7.43.0"
+}
+2025-03-11 14:53:54 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "POST",
+  "url": "/api/fine-tuning/jobs",
+  "status": 400,
+  "responseTime": "2ms",
+  "userAgent": "PostmanRuntime/7.43.0",
+  "requestBody": {
+    "model": "gpt-3.5-turbo",
+    "baseModel": "gpt-3.5-turbo",
+    "trainingDocuments": [
+      "67d04bef41ddcd64b3be829f",
+      "67d04d5b41ddcd64b3be82ac"
+    ],
+    "description": "Custom model for APRIL documentation",
+    "hyperparameters": {
+      "nEpochs": 3
+    }
+  }
+}
+2025-03-11 14:54:10 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "POST",
+  "url": "/api/fine-tuning/jobs",
+  "status": 400,
+  "responseTime": "1ms",
+  "userAgent": "PostmanRuntime/7.43.0",
+  "requestBody": {
+    "model": "gpt-3.5-turbo",
+    "baseModel": "gpt-3.5-turbo",
+    "trainingDocuments": [
+      "67d04bef41ddcd64b3be829f",
+      "67d04d5b41ddcd64b3be82ac"
+    ],
+    "description": "Custom model for APRIL documentation",
+    "hyperparameters": {
+      "nEpochs": 3
+    }
+  }
+}
+2025-03-11 14:55:51 [INFO]: Creating fine-tuning job for 2 documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:55:51 [INFO]: Preparing training data from 2 documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:55:51 [INFO]: Generated 181 training examples {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:55:55 [ERROR]: Error creating fine-tuning job: FineTuningJob validation failed: status: `validating_files` is not a valid enum value for path `status`. {
+  "service": "kb-analysis-backend",
+  "errors": {
+    "status": {
+      "name": "ValidatorError",
+      "message": "`validating_files` is not a valid enum value for path `status`.",
+      "properties": {
+        "message": "`validating_files` is not a valid enum value for path `status`.",
+        "type": "enum",
+        "enumValues": [
+          "created",
+          "pending",
+          "running",
+          "succeeded",
+          "failed",
+          "cancelled"
+        ],
+        "path": "status",
+        "value": "validating_files"
+      },
+      "kind": "enum",
+      "path": "status",
+      "value": "validating_files"
+    }
+  },
+  "_message": "FineTuningJob validation failed",
+  "stack": "ValidationError: FineTuningJob validation failed: status: `validating_files` is not a valid enum value for path `status`.\n    at Document.invalidate (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\document.js:3219:32)\n    at C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\document.js:3012:17\n    at C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\schematype.js:1368:9\n    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)"
+}
+2025-03-11 14:55:55 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "POST",
+  "url": "/api/fine-tuning/jobs",
+  "status": 500,
+  "responseTime": "3744ms",
+  "userAgent": "PostmanRuntime/7.43.0",
+  "requestBody": {
+    "model": "gpt-3.5-turbo",
+    "baseModel": "gpt-3.5-turbo",
+    "documentIds": [
+      "67d04bef41ddcd64b3be829f",
+      "67d04d5b41ddcd64b3be82ac"
+    ],
+    "description": "Custom model for APRIL documentation",
+    "hyperparameters": {
+      "nEpochs": 3
+    }
+  }
+}
+2025-03-11 14:57:16 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:57:16 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:57:16 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:57:16 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:57:16 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:57:16 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:57:20 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:57:20 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:57:20 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:57:20 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:57:20 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:57:20 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:57:39 [INFO]: Creating fine-tuning job for 2 documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:57:39 [INFO]: Preparing training data from 2 documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:57:39 [INFO]: Generated 181 training examples {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 14:57:42 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "POST",
+  "url": "/api/fine-tuning/jobs",
+  "status": 201,
+  "responseTime": "3162ms",
+  "userAgent": "PostmanRuntime/7.43.0",
+  "requestBody": {
+    "model": "gpt-3.5-turbo",
+    "baseModel": "gpt-3.5-turbo",
+    "documentIds": [
+      "67d04bef41ddcd64b3be829f",
+      "67d04d5b41ddcd64b3be82ac"
+    ],
+    "description": "Custom model for APRIL documentation",
+    "hyperparameters": {
+      "nEpochs": 3
+    }
+  }
+}
+2025-03-11 14:59:24 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/fine-tuning/jobs",
+  "status": 200,
+  "responseTime": "5ms",
+  "userAgent": "PostmanRuntime/7.43.0"
+}
+2025-03-11 15:00:28 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/documents",
+  "status": 200,
+  "responseTime": "7ms",
+  "userAgent": "PostmanRuntime/7.43.0"
+}
+2025-03-11 15:03:21 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/fine-tuning/jobs/67d04f662d1bbee106545bb2",
+  "status": 200,
+  "responseTime": "4ms",
+  "userAgent": "PostmanRuntime/7.43.0"
+}
+2025-03-11 15:05:23 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 15:05:23 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 15:05:23 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 15:05:23 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 15:05:23 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 15:05:23 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 15:05:33 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 15:05:33 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 15:05:33 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 15:05:33 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 15:05:33 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 15:05:33 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 15:06:02 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 15:06:02 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 15:06:02 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 15:06:02 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 15:06:02 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 15:06:02 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 15:06:05 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 15:06:05 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 15:06:05 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 15:06:05 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 15:06:05 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 15:06:05 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-11 15:07:55 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/fine-tuning/jobs/67d04f662d1bbee106545bb2",
+  "status": 200,
+  "responseTime": "44ms",
+  "userAgent": "PostmanRuntime/7.43.0"
+}
+2025-03-11 15:09:03 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/fine-tuning/jobs/67d04f662d1bbee106545bb2/status",
+  "status": 404,
+  "responseTime": "4ms",
+  "userAgent": "PostmanRuntime/7.43.0"
+}
+2025-03-11 15:10:15 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/jobs/67d04f662d1bbee106545bb2/status",
+  "status": 404,
+  "responseTime": "2ms",
+  "userAgent": "PostmanRuntime/7.43.0"
+}
+2025-03-11 15:10:27 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/fine-tuning/jobs/67d04f662d1bbee106545bb2/status",
+  "status": 404,
+  "responseTime": "0ms",
+  "userAgent": "PostmanRuntime/7.43.0"
+}
+2025-03-11 15:13:50 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "PUT",
+  "url": "/api/fine-tuning/jobs/67d04f662d1bbee106545bb2/status",
+  "status": 200,
+  "responseTime": "892ms",
+  "userAgent": "PostmanRuntime/7.43.0",
+  "requestBody": {}
+}
+2025-03-11 15:20:09 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "PUT",
+  "url": "/api/fine-tuning/jobs/67d04f662d1bbee106545bb2/status",
+  "status": 200,
+  "responseTime": "791ms",
+  "userAgent": "PostmanRuntime/7.43.0",
+  "requestBody": {}
+}
+2025-03-11 15:34:52 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/documents/67d04bef41ddcd64b3be829f",
+  "status": 200,
+  "responseTime": "71ms",
+  "userAgent": "PostmanRuntime/7.43.0"
+}
+2025-03-11 15:39:44 [ERROR]: Error testing fine-tuned model: 404 The model `ft:gpt-3.5-turbo:undefined:1741705062316` does not exist or you do not have access to it. {
+  "service": "kb-analysis-backend",
+  "status": 404,
+  "headers": {
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "cf-cache-status": "DYNAMIC",
+    "cf-ray": "91ec2567cf9d692a-LIS",
+    "connection": "keep-alive",
+    "content-encoding": "gzip",
+    "content-type": "application/json; charset=utf-8",
+    "date": "Tue, 11 Mar 2025 15:39:43 GMT",
+    "server": "cloudflare",
+    "set-cookie": "__cf_bm=EaJWN_Ne.4ED_pcogseo1PHpt8DeheS7.mzf0YyZhmM-1741707583-1.0.1.1-KD3CVVPizMMH7SSyJTyee.frw92mIoOu_fEGAiPUMpk0xNJMDP7AWckEZ3VhoV570kpPhWZmyYMo3sta8PIU6yXL4O5mdrIBBTOqUxkZydE; path=/; expires=Tue, 11-Mar-25 16:09:43 GMT; domain=.api.openai.com; HttpOnly; Secure; SameSite=None, _cfuvid=5AhaM2uf_Wb79Bb23C7KR8Bp4TOCQcqfuTd3zTiFCYc-1741707583349-0.0.1.1-604800000; path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None",
+    "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+    "transfer-encoding": "chunked",
+    "vary": "Origin",
+    "x-content-type-options": "nosniff",
+    "x-request-id": "req_3696a0b0a0fcf1374528e03be188318f"
+  },
+  "request_id": "req_3696a0b0a0fcf1374528e03be188318f",
+  "error": {
+    "message": "The model `ft:gpt-3.5-turbo:undefined:1741705062316` does not exist or you do not have access to it.",
+    "type": "invalid_request_error",
+    "param": null,
+    "code": "model_not_found"
+  },
+  "code": "model_not_found",
+  "param": null,
+  "type": "invalid_request_error",
+  "stack": "Error: 404 The model `ft:gpt-3.5-turbo:undefined:1741705062316` does not exist or you do not have access to it.\n    at APIError.generate (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\openai\\error.js:54:20)\n    at OpenAI.makeStatusError (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\openai\\core.js:299:33)\n    at OpenAI.makeRequest (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\openai\\core.js:343:30)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async testFineTunedModel (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\fineTuningController.js:213:24)"
+}
+2025-03-11 15:39:44 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "POST",
+  "url": "/api/fine-tuning/test",
+  "status": 500,
+  "responseTime": "864ms",
+  "userAgent": "PostmanRuntime/7.43.0",
+  "requestBody": {
+    "modelId": "ft:gpt-3.5-turbo:undefined:1741705062316",
+    "content": "Analyze this document and provide key insights, recommendations, and potential gaps for the following APRIL health insurance product documentation:\n\nCIBLES ET GARANTIES\n\nCible:\nLes plus de 50 ans (isolés, couples).\n\nGaranties:\n- Des garanties de base très complètes couvrant les besoins spécifiques des seniors avec 6 niveaux\n- Hospitalisation, frais médicaux, pharmacie, frais dentaires, frais optiques, accessoire optique et prothèse auditive\n- 1 option : Pack Confort et Bien-Être\n\n[... rest of your document content ...]",
+    "systemPrompt": "You are an AI expert in analyzing APRIL insurance documentation. Analyze this health insurance product documentation and provide:\n1. Key insights about the product structure and coverage\n2. Strengths and unique selling points\n3. Potential gaps or areas for improvement\n4. Recommendations for enhancing the documentation clarity and completeness\n5. Comparison with market standards for senior health insurance products"
+  }
+}
+2025-03-11 15:40:43 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "POST",
+  "url": "/api/fine-tuning/test",
+  "status": 200,
+  "responseTime": "10716ms",
+  "userAgent": "PostmanRuntime/7.43.0",
+  "requestBody": {
+    "modelId": "ft:gpt-3.5-turbo-0125:harx::B9vcFkGZ",
+    "content": "Analyze this document and provide key insights, recommendations, and potential gaps for the following APRIL health insurance product documentation:\n\nCIBLES ET GARANTIES\n\nCible:\nLes plus de 50 ans (isolés, couples).\n\nGaranties:\n- Des garanties de base très complètes couvrant les besoins spécifiques des seniors avec 6 niveaux\n- Hospitalisation, frais médicaux, pharmacie, frais dentaires, frais optiques, accessoire optique et prothèse auditive\n- 1 option : Pack Confort et Bien-Être\n\n[... rest of your document content ...]",
+    "systemPrompt": "You are an AI expert in analyzing APRIL insurance documentation. Analyze this health insurance product documentation and provide:\n1. Key insights about the product structure and coverage\n2. Strengths and unique selling points\n3. Potential gaps or areas for improvement\n4. Recommendations for enhancing the documentation clarity and completeness\n5. Comparison with market standards for senior health insurance products"
+  }
+}
