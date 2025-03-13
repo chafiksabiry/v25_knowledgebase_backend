@@ -4,6 +4,7 @@ const Document = require('../models/Document');
 const { logger } = require('../utils/logger');
 const { extractTextFromFile, calculateDocumentMetrics } = require('../services/documentProcessingService');
 const { chunkDocument } = require('../utils/textProcessing');
+const Company = require('../models/Company');
 
 // Upload a new document
 const uploadDocument = async (req, res) => {
@@ -12,9 +13,20 @@ const uploadDocument = async (req, res) => {
       return res.status(400).json({ error: 'No file uploaded' });
     }
 
+    const { name, description, tags, uploadedBy, companyId } = req.body;
+    
+    // Check if companyId is provided
+    if (!companyId) {
+      return res.status(400).json({ error: 'Company ID is required' });
+    }
+
     logger.info(`Processing uploaded file: ${req.file.originalname}`);
 
-    const { name, description, tags, uploadedBy, companyId } = req.body;
+    // Validate companyId
+    const company = await Company.findById(companyId);
+    if (!company) {
+      return res.status(404).json({ error: 'Company not found' });
+    }
     
     // Extract text from the uploaded file
     const fileUrl = `/uploads/${req.file.filename}`;
@@ -77,8 +89,13 @@ const uploadDocument = async (req, res) => {
 const getAllDocuments = async (req, res) => {
   try {
     const { companyId } = req.query;
-    const query = companyId ? { companyId } : {};
-    const documents = await Document.find(query).select('-content -chunks');
+    
+    // Check if companyId is provided
+    if (!companyId) {
+      return res.status(400).json({ error: 'Company ID is required' });
+    }
+
+    const documents = await Document.find({ companyId }).select('-content -chunks');
     res.status(200).json({ documents });
   } catch (error) {
     logger.error('Error fetching documents:', error);

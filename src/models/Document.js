@@ -12,7 +12,11 @@ const DocumentSchema = new Schema(
     tags: [{ type: String }],
     uploadedAt: { type: Date, default: Date.now },
     uploadedBy: { type: String },
-    companyId: { type: String },
+    companyId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Company',
+      required: true
+    },
     isProcessed: { type: Boolean, default: false },
     processingStatus: { 
       type: String, 
@@ -27,7 +31,7 @@ const DocumentSchema = new Schema(
       pageCount: { type: Number },
       wordCount: { type: Number },
       characterCount: { type: Number },
-      createdAt: { type: Date },
+      createdAt: { type: Date, default: Date.now },
       modifiedAt: { type: Date },
       author: { type: String }
     },
