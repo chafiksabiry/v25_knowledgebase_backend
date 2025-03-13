@@ -4966,3 +4966,21 @@
     "companyId": "67d18e2b319c11009f4f2a98"
   }
 }
+2025-03-13 12:07:50 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-13 12:07:50 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-13 12:07:50 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-13 12:07:50 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-13 12:07:50 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-13 12:07:50 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
