@@ -52,7 +52,7 @@ const uploadCallRecording = async (req, res) => {
     res.status(201).json({
       message: 'Call recording uploaded successfully',
       callRecording: {
-        id: callRecording._id.toString(),
+        id: callRecording._id,
         contactId: callRecording.contactId,
         date: callRecording.date,
         duration: callRecording.duration,
@@ -81,7 +81,7 @@ const getCallRecordings = async (req, res) => {
     
     // Map the records to include id instead of _id
     const formattedRecordings = callRecordings.map(recording => ({
-      id: recording._id.toString(),
+      id: recording._id,
       contactId: recording.contactId,
       date: recording.date,
       duration: recording.duration,

@@ -3868,3 +3868,1101 @@
   "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
   "requestBody": {}
 }
+2025-03-13 11:03:38 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/documents?companyId=67d18e2b319c11009f4f2a98",
+  "status": 200,
+  "responseTime": "58ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:03:38 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/call-recordings?companyId=67d18e2b319c11009f4f2a98",
+  "status": 200,
+  "responseTime": "62ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:03:38 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/documents?companyId=67d18e2b319c11009f4f2a98",
+  "status": 200,
+  "responseTime": "4ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:03:38 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/call-recordings?companyId=67d18e2b319c11009f4f2a98",
+  "status": 200,
+  "responseTime": "10ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:04:38 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "POST",
+  "url": "/api/call-recordings/upload",
+  "status": 201,
+  "responseTime": "167ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "requestBody": {
+    "contactId": "Call Digital Assurance",
+    "date": "2025-03-13",
+    "duration": "5",
+    "summary": "This is an ideal call made between Digital Assurance Agent and a french lead about assurance offer",
+    "sentiment": "neutral",
+    "tags": "",
+    "aiInsights": "",
+    "repId": "current-user",
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:05:26 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/documents?companyId=67d18e2b319c11009f4f2a98",
+  "status": 200,
+  "responseTime": "7ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:05:26 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/call-recordings?companyId=67d18e2b319c11009f4f2a98",
+  "status": 200,
+  "responseTime": "17ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:05:26 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/documents?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "5ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:05:26 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/call-recordings?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "9ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:05:34 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/uploads/file-1741863878686-721567964.wav",
+  "status": 206,
+  "responseTime": "21ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36"
+}
+2025-03-13 11:05:44 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "DELETE",
+  "url": "/api/call-recordings/67d2bbc62a6a4cd450c95134",
+  "status": 200,
+  "responseTime": "21ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "requestBody": {}
+}
+2025-03-13 11:06:23 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "POST",
+  "url": "/api/call-recordings/upload",
+  "status": 201,
+  "responseTime": "77ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "requestBody": {
+    "contactId": "Test Deutch Call",
+    "date": "2025-03-13",
+    "duration": "7",
+    "summary": "Test Test Test Test",
+    "sentiment": "neutral",
+    "tags": "",
+    "aiInsights": "",
+    "repId": "current-user",
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:06:30 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/uploads/file-1741863983167-166329784.wav",
+  "status": 206,
+  "responseTime": "19ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36"
+}
+2025-03-13 11:06:49 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "DELETE",
+  "url": "/api/call-recordings/undefined",
+  "status": 500,
+  "responseTime": "75ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "requestBody": {}
+}
+2025-03-13 11:06:58 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "DELETE",
+  "url": "/api/call-recordings/undefined",
+  "status": 500,
+  "responseTime": "19ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "requestBody": {}
+}
+2025-03-13 11:10:20 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/documents?companyId=67d18e2b319c11009f4f2a98",
+  "status": 200,
+  "responseTime": "164ms",
+  "userAgent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Mobile Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:10:20 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/call-recordings?companyId=67d18e2b319c11009f4f2a98",
+  "status": 200,
+  "responseTime": "96ms",
+  "userAgent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Mobile Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:10:20 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/documents?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "98ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:10:20 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/call-recordings?companyId=67d18e2b319c11009f4f2a98",
+  "status": 200,
+  "responseTime": "89ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:10:30 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/documents?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "18ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:10:30 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/call-recordings?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "38ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:10:30 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/call-recordings?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "18ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:10:30 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/documents?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "34ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:10:33 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "DELETE",
+  "url": "/api/call-recordings/undefined",
+  "status": 500,
+  "responseTime": "36ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "requestBody": {}
+}
+2025-03-13 11:10:35 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "DELETE",
+  "url": "/api/call-recordings/undefined",
+  "status": 500,
+  "responseTime": "10ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "requestBody": {}
+}
+2025-03-13 11:11:59 [INFO]: Processing uploaded file: Fiche produit - APRIL SanteÌ Globale  + 2023.pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-13 11:11:59 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\uploads\file-1741864319618-315797658.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-13 11:12:00 [INFO]: Split document into 11 chunks {
+  "service": "kb-analysis-backend"
+}
+2025-03-13 11:12:00 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "POST",
+  "url": "/api/documents/upload",
+  "status": 201,
+  "responseTime": "810ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "requestBody": {
+    "name": "Test Deutch Call",
+    "description": "zertyuezrtyu",
+    "tags": "",
+    "uploadedBy": "Current User",
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:12:01 [ERROR]: Error deleting document undefined: Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Document" {
+  "service": "kb-analysis-backend",
+  "stringValue": "\"undefined\"",
+  "kind": "ObjectId",
+  "value": "undefined",
+  "path": "_id",
+  "reason": {},
+  "valueType": "string",
+  "stack": "CastError: Cast to ObjectId failed for value \"undefined\" (type string) at path \"_id\" for model \"Document\"\n    at ObjectId.cast (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\schema\\objectid.js:250:11)\n    at SchemaType.applySetters (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\schematype.js:1219:12)\n    at SchemaType.castForQuery (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\schematype.js:1633:15)\n    at cast (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\cast.js:389:32)\n    at Query.cast (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\query.js:4927:12)\n    at Query._castConditions (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\query.js:2237:10)\n    at model.Query._findOne (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\query.js:2533:8)\n    at model.Query.exec (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\query.js:4447:28)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async deleteDocument (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\documentController.js:123:22)"
+}
+2025-03-13 11:12:01 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "DELETE",
+  "url": "/api/documents/undefined",
+  "status": 500,
+  "responseTime": "17ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "requestBody": {}
+}
+2025-03-13 11:12:04 [ERROR]: Error deleting document undefined: Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Document" {
+  "service": "kb-analysis-backend",
+  "stringValue": "\"undefined\"",
+  "kind": "ObjectId",
+  "value": "undefined",
+  "path": "_id",
+  "reason": {},
+  "valueType": "string",
+  "stack": "CastError: Cast to ObjectId failed for value \"undefined\" (type string) at path \"_id\" for model \"Document\"\n    at ObjectId.cast (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\schema\\objectid.js:250:11)\n    at SchemaType.applySetters (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\schematype.js:1219:12)\n    at SchemaType.castForQuery (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\schematype.js:1633:15)\n    at cast (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\cast.js:389:32)\n    at Query.cast (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\query.js:4927:12)\n    at Query._castConditions (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\query.js:2237:10)\n    at model.Query._findOne (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\query.js:2533:8)\n    at model.Query.exec (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\query.js:4447:28)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async deleteDocument (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\documentController.js:123:22)"
+}
+2025-03-13 11:12:04 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "DELETE",
+  "url": "/api/documents/undefined",
+  "status": 500,
+  "responseTime": "7ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "requestBody": {}
+}
+2025-03-13 11:17:37 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-13 11:17:37 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-13 11:17:37 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-13 11:17:37 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-13 11:17:37 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-13 11:17:37 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-13 11:18:24 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/call-recordings?companyId=67d18e2b319c11009f4f2a98",
+  "status": 200,
+  "responseTime": "56ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:18:24 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/documents?companyId=67d18e2b319c11009f4f2a98",
+  "status": 200,
+  "responseTime": "84ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:18:24 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/call-recordings?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "7ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:18:24 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/documents?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "11ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:18:26 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "DELETE",
+  "url": "/api/documents/67d2bd802a6a4cd450c95148",
+  "status": 200,
+  "responseTime": "24ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "requestBody": {}
+}
+2025-03-13 11:18:30 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "DELETE",
+  "url": "/api/call-recordings/undefined",
+  "status": 500,
+  "responseTime": "22ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "requestBody": {}
+}
+2025-03-13 11:19:38 [INFO]: Processing uploaded file: Guides.pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-13 11:19:38 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\uploads\file-1741864777900-649508124.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-13 11:19:39 [INFO]: Split document into 49 chunks {
+  "service": "kb-analysis-backend"
+}
+2025-03-13 11:19:39 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "POST",
+  "url": "/api/documents/upload",
+  "status": 201,
+  "responseTime": "1381ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "requestBody": {
+    "name": "Guide APril",
+    "description": "dfghujiko",
+    "tags": "assurance,product,guide",
+    "uploadedBy": "Current User",
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:19:41 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/uploads/file-1741864777900-649508124.pdf",
+  "status": 200,
+  "responseTime": "28ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36"
+}
+2025-03-13 11:19:43 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/uploads/file-1741864777900-649508124.pdf",
+  "status": 304,
+  "responseTime": "2ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36"
+}
+2025-03-13 11:19:50 [ERROR]: Error deleting document undefined: Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Document" {
+  "service": "kb-analysis-backend",
+  "stringValue": "\"undefined\"",
+  "kind": "ObjectId",
+  "value": "undefined",
+  "path": "_id",
+  "reason": {},
+  "valueType": "string",
+  "stack": "CastError: Cast to ObjectId failed for value \"undefined\" (type string) at path \"_id\" for model \"Document\"\n    at ObjectId.cast (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\schema\\objectid.js:250:11)\n    at SchemaType.applySetters (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\schematype.js:1219:12)\n    at SchemaType.castForQuery (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\schematype.js:1633:15)\n    at cast (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\cast.js:389:32)\n    at Query.cast (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\query.js:4927:12)\n    at Query._castConditions (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\query.js:2237:10)\n    at model.Query._findOne (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\query.js:2533:8)\n    at model.Query.exec (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\query.js:4447:28)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async deleteDocument (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\documentController.js:123:22)"
+}
+2025-03-13 11:19:50 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "DELETE",
+  "url": "/api/documents/undefined",
+  "status": 500,
+  "responseTime": "10ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "requestBody": {}
+}
+2025-03-13 11:22:47 [ERROR]: Error deleting document undefined: Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Document" {
+  "service": "kb-analysis-backend",
+  "stringValue": "\"undefined\"",
+  "kind": "ObjectId",
+  "value": "undefined",
+  "path": "_id",
+  "reason": {},
+  "valueType": "string",
+  "stack": "CastError: Cast to ObjectId failed for value \"undefined\" (type string) at path \"_id\" for model \"Document\"\n    at ObjectId.cast (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\schema\\objectid.js:250:11)\n    at SchemaType.applySetters (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\schematype.js:1219:12)\n    at SchemaType.castForQuery (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\schematype.js:1633:15)\n    at cast (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\cast.js:389:32)\n    at Query.cast (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\query.js:4927:12)\n    at Query._castConditions (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\query.js:2237:10)\n    at model.Query._findOne (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\query.js:2533:8)\n    at model.Query.exec (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\query.js:4447:28)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async deleteDocument (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\documentController.js:123:22)"
+}
+2025-03-13 11:22:47 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "DELETE",
+  "url": "/api/documents/undefined",
+  "status": 500,
+  "responseTime": "14ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "requestBody": {}
+}
+2025-03-13 11:25:41 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/documents?companyId=67d18e2b319c11009f4f2a98",
+  "status": 200,
+  "responseTime": "108ms",
+  "userAgent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Mobile Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:25:41 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/call-recordings?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "83ms",
+  "userAgent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Mobile Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:25:47 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/documents?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "8ms",
+  "userAgent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Mobile Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:25:47 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/call-recordings?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "18ms",
+  "userAgent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Mobile Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:26:02 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/documents?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "7ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:26:02 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/call-recordings?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "7ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:26:02 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/documents?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "8ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:26:02 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/call-recordings?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "12ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:26:04 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "DELETE",
+  "url": "/api/documents/67d2bf4bc807986ff71808c1",
+  "status": 200,
+  "responseTime": "323ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "requestBody": {}
+}
+2025-03-13 11:26:07 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/documents?companyId=67d18e2b319c11009f4f2a98",
+  "status": 200,
+  "responseTime": "6ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:26:07 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/call-recordings?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "15ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:26:07 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/documents?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "5ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:26:07 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/call-recordings?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "7ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:27:31 [INFO]: Processing uploaded file: Guides.pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-13 11:27:31 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\uploads\file-1741865251387-208757942.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-13 11:27:32 [INFO]: Split document into 49 chunks {
+  "service": "kb-analysis-backend"
+}
+2025-03-13 11:27:32 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "POST",
+  "url": "/api/documents/upload",
+  "status": 201,
+  "responseTime": "1094ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "requestBody": {
+    "name": "Guide récalmations APRIL",
+    "description": "Test de guide pour l'entreprise APRIL à ses clients\r\n",
+    "tags": "assurance,guide,",
+    "uploadedBy": "Current User",
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:28:08 [INFO]: Processing uploaded file: Fiche produit - APRIL SanteÌ Globale  + 2023.pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-13 11:28:08 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\uploads\file-1741865288707-89782062.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-13 11:28:08 [INFO]: Split document into 11 chunks {
+  "service": "kb-analysis-backend"
+}
+2025-03-13 11:28:09 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "POST",
+  "url": "/api/documents/upload",
+  "status": 201,
+  "responseTime": "299ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "requestBody": {
+    "name": "Fiche Produit APRIL - Assurance",
+    "description": "Fiche Produit APRIL - Assurance description",
+    "tags": "fiche,product,assurance",
+    "uploadedBy": "Current User",
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:28:19 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "DELETE",
+  "url": "/api/documents/67d2c148c807986ff7180999",
+  "status": 200,
+  "responseTime": "10ms",
+  "userAgent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Mobile Safari/537.36",
+  "requestBody": {}
+}
+2025-03-13 11:28:26 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "DELETE",
+  "url": "/api/documents/67d2c124c807986ff7180965",
+  "status": 200,
+  "responseTime": "19ms",
+  "userAgent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Mobile Safari/537.36",
+  "requestBody": {}
+}
+2025-03-13 11:29:30 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-13 11:29:30 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-13 11:29:30 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-13 11:29:30 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-13 11:29:30 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-13 11:29:30 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-13 11:29:49 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/documents?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "12ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:29:49 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/call-recordings?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "16ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:30:28 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/documents?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "6ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:30:28 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/call-recordings?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "8ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:33:34 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/documents?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "9ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:33:34 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/call-recordings?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "10ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:33:34 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/documents?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "3ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:33:34 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/call-recordings?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "10ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:40:12 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-13 11:40:12 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-13 11:40:12 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-13 11:40:12 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-13 11:40:12 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-13 11:40:12 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-13 11:41:05 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "DELETE",
+  "url": "/api/call-recordings/67d2bc2f2a6a4cd450c9513d",
+  "status": 200,
+  "responseTime": "20ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "requestBody": {}
+}
+2025-03-13 11:41:23 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "POST",
+  "url": "/api/call-recordings/upload",
+  "status": 201,
+  "responseTime": "80ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "requestBody": {
+    "contactId": "Deutch call - digital Assurance",
+    "date": "2025-03-13",
+    "duration": "5",
+    "summary": "test test test ",
+    "sentiment": "neutral",
+    "tags": "",
+    "aiInsights": "",
+    "repId": "current-user",
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:41:38 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "DELETE",
+  "url": "/api/call-recordings/67d2c463a215b20966a3badd",
+  "status": 200,
+  "responseTime": "11ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "requestBody": {}
+}
+2025-03-13 11:41:51 [INFO]: Processing uploaded file: Fiche produit - APRIL SanteÌ Globale  + 2023.pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-13 11:41:51 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\uploads\file-1741866111229-922637380.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-13 11:41:51 [INFO]: Split document into 11 chunks {
+  "service": "kb-analysis-backend"
+}
+2025-03-13 11:41:51 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "POST",
+  "url": "/api/documents/upload",
+  "status": 201,
+  "responseTime": "664ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "requestBody": {
+    "name": "Fiche Produit APRIL - Assurance",
+    "description": "azedfrtgyuiozertgyu",
+    "tags": "",
+    "uploadedBy": "Current User",
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:41:54 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/uploads/file-1741866111229-922637380.pdf",
+  "status": 200,
+  "responseTime": "9ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36"
+}
+2025-03-13 11:42:01 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "DELETE",
+  "url": "/api/documents/67d2c47fa215b20966a3bae2",
+  "status": 200,
+  "responseTime": "13ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "requestBody": {}
+}
+2025-03-13 11:42:46 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-13 11:42:46 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-13 11:42:46 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-13 11:42:46 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-13 11:42:46 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-13 11:42:46 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-13 11:43:59 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/documents?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "21ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:43:59 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/call-recordings?companyId=67d18e2b319c11009f4f2a98",
+  "status": 200,
+  "responseTime": "17ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:43:59 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/documents?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "9ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:43:59 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/call-recordings?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "9ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:44:01 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/documents?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "10ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:44:01 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/call-recordings?companyId=67d18e2b319c11009f4f2a98",
+  "status": 200,
+  "responseTime": "9ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:44:01 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/documents?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "5ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:44:01 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/call-recordings?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "8ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:44:36 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/documents?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "8ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:44:36 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/call-recordings?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "14ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:44:36 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/documents?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "10ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:44:36 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/call-recordings?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "13ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:49:27 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/documents?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "6ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:49:27 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/documents?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "8ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:49:27 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/call-recordings?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "17ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-13 11:49:27 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/call-recordings?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "11ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
