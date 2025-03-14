@@ -7,11 +7,12 @@ const DocumentSchema = new Schema(
     name: { type: String, required: true },
     description: { type: String, default: '' },
     fileUrl: { type: String, required: true },
+    cloudinaryPublicId: { type: String, required: true },
     fileType: { type: String, required: true },
     content: { type: String, required: true },
     tags: [{ type: String }],
     uploadedAt: { type: Date, default: Date.now },
-    uploadedBy: { type: String },
+    uploadedBy: { type: String, required: true },
     companyId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Company',
@@ -28,9 +29,10 @@ const DocumentSchema = new Schema(
       index: { type: Number, required: true }
     }],
     metadata: {
-      pageCount: { type: Number },
       wordCount: { type: Number },
       characterCount: { type: Number },
+      sentenceCount: { type: Number },
+      paragraphCount: { type: Number },
       createdAt: { type: Date, default: Date.now },
       modifiedAt: { type: Date },
       author: { type: String }

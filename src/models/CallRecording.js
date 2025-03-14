@@ -9,30 +9,57 @@ const callRecordingSchema = new mongoose.Schema({
     type: Date,
     required: true
   },
-  duration: Number,
+  duration: {
+    type: Number,
+    required: true
+  },
   recordingUrl: {
     type: String,
     required: true
   },
-  transcriptUrl: String,
-  summary: String,
+  cloudinaryPublicId: {
+    type: String,
+    required: true
+  },
+  transcriptUrl: {
+    type: String
+  },
+  summary: {
+    type: String
+  },
   sentiment: {
     type: String,
     enum: ['positive', 'negative', 'neutral'],
     default: 'neutral'
   },
-  tags: [String],
-  aiInsights: [String],
-  repId: String,
+  tags: [{
+    type: String
+  }],
+  aiInsights: [{
+    type: String
+  }],
+  repId: {
+    type: String,
+    required: true
+  },
   companyId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Company',
     required: true
   },
   processingOptions: {
-    transcription: Boolean,
-    sentiment: Boolean,
-    insights: Boolean
+    transcription: {
+      type: Boolean,
+      default: true
+    },
+    sentiment: {
+      type: Boolean,
+      default: true
+    },
+    insights: {
+      type: Boolean,
+      default: true
+    }
   },
   audioState: {
     isPlaying: Boolean,
