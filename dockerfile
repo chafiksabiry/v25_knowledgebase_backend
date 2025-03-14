@@ -1,0 +1,23 @@
+FROM node:18
+
+WORKDIR /app
+
+COPY package*.json ./
+
+RUN npm install
+
+COPY . .
+
+ENV MONGODB_URI=mongodb://harx:gcZ62rl8hoME@185.137.122.3:27017/V25_KnowledgeBase
+ENV PORT=3001
+ENV OPENAI_API_KEY=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
+ENV NODE_ENV=development
+ENV LOG_LEVEL=info
+ENV CORS_ORIGIN=http://38.242.208.242:3001
+ENV MAX_UPLOAD_SIZE=10
+ENV FINE_TUNING_MODEL=gpt-3.5-turbo
+ENV DOCUMENT_STORAGE_PATH=./uploads 
+
+EXPOSE 3001
+
+CMD ["npm", "start"]
