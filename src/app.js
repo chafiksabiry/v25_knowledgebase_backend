@@ -7,6 +7,7 @@ const { logger } = require('./utils/logger');
 const loggerMiddleware = require('./middleware/loggerMiddleware');
 const documentRoutes = require('./routes/documentRoutes');
 const fineTuningRoutes = require('./routes/fineTuningRoutes');
+const analysisRoutes = require('./routes/analysisRoutes');
 
 // Initialize express app
 const app = express();
@@ -32,6 +33,7 @@ app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 // Routes
 app.use('/api/documents', documentRoutes);
 app.use('/api/fine-tuning', fineTuningRoutes);
+app.use('/api/analysis', analysisRoutes);
 
 // Health check endpoint
 app.get('/health', (req, res) => {

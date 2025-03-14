@@ -6,7 +6,7 @@ const path = require('path');
 const { logger } = require('./utils/logger');
 const documentRoutes = require('./routes/documentRoutes');
 const fineTuningRoutes = require('./routes/fineTuningRoutes');
-//const analysisRoutes = require('./routes/analysisRoutes');
+const analysisRoutes = require('./routes/analysisRoutes');
 const app = require('./app');
 const companyRoutes = require('./routes/companyRoutes');
 const callRecordingRoutes = require('./routes/callRecordingRoutes');
@@ -31,7 +31,7 @@ app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 // Routes
 app.use('/api/documents', documentRoutes);
 app.use('/api/fine-tuning', fineTuningRoutes);
-//app.use('/api/analysis', analysisRoutes);
+app.use('/api/analysis', analysisRoutes);
 app.use('/api/companies', companyRoutes);
 app.use('/api/call-recordings', callRecordingRoutes);
 

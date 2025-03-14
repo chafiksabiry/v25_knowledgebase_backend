@@ -13,59 +13,63 @@ const AnalysisSchema = new Schema(
     },
     status: { 
       type: String, 
-      enum: ['pending', 'processing', 'completed', 'failed'],
-      default: 'pending'
+      enum: ['idle', 'processing', 'completed', 'failed'],
+      default: 'idle'
     },
     summary: { type: String },
-    insights: [{
-      title: { type: String, required: true },
-      description: { type: String, required: true },
-      category: { 
+    topicAnalysis: {
+      coveredTopics: [{ type: String }],
+      missingTopics: [{ type: String }],
+      topicRelationships: [{
+        from: { type: String },
+        to: { type: String },
+        relationship: { type: String }
+      }]
+    },
+    contentQuality: {
+      strengths: [{ type: String }],
+      weaknesses: [{ type: String }],
+      consistencyIssues: [{ type: String }]
+    },
+    recommendations: [{
+      area: { 
         type: String, 
-        enum: ['gap', 'recommendation', 'strength', 'weakness'],
-        required: true 
+        enum: ['topic', 'structure', 'quality', 'accessibility']
       },
-      severity: { 
+      description: { type: String },
+      affectedDocuments: [{ type: String }],
+      priority: { 
         type: String, 
         enum: ['high', 'medium', 'low']
       },
-      confidence: { type: Number, required: true }
-    }],
-    metrics: {
-      clarity: { type: Number },
-      completeness: { type: Number },
-      consistency: { type: Number },
-      accuracy: { type: Number },
-      relevance: { type: Number },
-      overallScore: { type: Number }
-    },
-    contentGaps: [{
-      description: { type: String, required: true },
-      severity: { 
+      effort: { 
         type: String, 
-        enum: ['high', 'medium', 'low'],
-        required: true 
-      },
-      affectedSections: [{ type: String }],
-      recommendation: { type: String }
-    }],
-    recommendations: [{
-      description: { type: String, required: true },
-      priority: { 
-        type: String, 
-        enum: ['high', 'medium', 'low'],
-        required: true 
-      },
-      impact: { type: String, required: true },
-      implementationDifficulty: { 
-        type: String, 
-        enum: ['easy', 'moderate', 'difficult']
+        enum: ['small', 'medium', 'large']
       }
     }],
-    keyTopics: [{ type: String }],
-    companyId: { type: String },
+    companyId: { type: String, required: true },
     processingTime: { type: Number },
-    error: { type: String }
+    error: { type: String },
+    // Progress tracking fields
+    currentStage: {
+      type: String,
+      enum: ['idle', 'preprocessing', 'topic-analysis', 'batch-processing', 'final-analysis', 'saving-results'],
+      default: 'idle'
+    },
+    progress: {
+      type: Number,
+      min: 0,
+      max: 100,
+      default: 0
+    },
+    currentBatch: {
+      type: Number,
+      default: 0
+    },
+    totalBatches: {
+      type: Number,
+      default: 0
+    }
   },
   { timestamps: true }
 );
