@@ -1,0 +1,33 @@
+{
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are an expert assistant for APRIL Santé Globale product. Only answer using the provided knowledge base."
+      },
+      {
+        "role": "user",
+        "content": "Quelle est la limite d'âge pour souscrire à l'offre APRIL Santé Globale ?"
+      },
+      {
+        "role": "assistant",
+        "content": "Il n'y a aucune limite d'âge à l'adhésion ou aux prestations de l'offre APRIL Santé Globale."
+      }
+    ]
+}
+{
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are an AI sales assistant for APRIL Santé Globale, helping clients choose the right health insurance plan."
+      },
+      {
+        "role": "user",
+        "content": "Je cherche une mutuelle santé adaptée à une personne de plus de 50 ans, avec une bonne couverture dentaire et optique."
+      },
+      {
+        "role": "assistant",
+        "content": "L'offre APRIL Santé Globale + est spécialement conçue pour les plus de 50 ans. Je vous recommande le niveau 4 ou supérieur, qui propose une couverture renforcée pour les prothèses dentaires et optiques, avec des remboursements allant jusqu'à 250% pour les prothèses dentaires et 300€ pour les lunettes Classe B."
+      }
+    ]
+}
+  
