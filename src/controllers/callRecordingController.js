@@ -2,6 +2,8 @@ const CallRecording = require('../models/CallRecording');
 const Company = require('../models/Company');
 const fs = require('fs').promises;
 const path = require('path');
+const { uploadToCloudinary, deleteFromCloudinary } = require('../services/cloudinaryService');
+const { logger } = require('../utils/logger');
 
 // Upload a new call recording
 const uploadCallRecording = async (req, res) => {
@@ -18,7 +20,9 @@ const uploadCallRecording = async (req, res) => {
       return res.status(404).json({ error: 'Company not found' });
     }
 
-    const recordingUrl = `/uploads/${req.file.filename}`;
+    // Upload to Cloudinary
+    const filePath = req.file.path;
+    const { url: recordingUrl, public_id: cloudinaryPublicId } = await uploadToCloudinary(filePath, 'call-recordings');
 
     // Create call recording record
     const callRecording = new CallRecording({
@@ -26,6 +30,7 @@ const uploadCallRecording = async (req, res) => {
       date,
       duration,
       recordingUrl,
+      cloudinaryPublicId,
       summary,
       sentiment,
       tags: tags ? tags.split(',').map(tag => tag.trim()) : [],
@@ -49,6 +54,9 @@ const uploadCallRecording = async (req, res) => {
 
     await callRecording.save();
 
+    // Delete local file after upload
+    await fs.unlink(filePath);
+
     res.status(201).json({
       message: 'Call recording uploaded successfully',
       callRecording: {
@@ -66,6 +74,15 @@ const uploadCallRecording = async (req, res) => {
       }
     });
   } catch (error) {
+    logger.error('Error uploading call recording:', error);
+    // Clean up local file if it exists
+    if (req.file && req.file.path) {
+      try {
+        await fs.unlink(req.file.path);
+      } catch (unlinkError) {
+        logger.error('Error deleting local file:', unlinkError);
+      }
+    }
     res.status(500).json({ error: 'Failed to upload call recording' });
   }
 };
@@ -105,29 +122,21 @@ const deleteCallRecording = async (req, res) => {
   try {
     const { id } = req.params;
     
-    // Find the call recording first to get the file path
+    // Find the call recording first
     const callRecording = await CallRecording.findById(id);
     if (!callRecording) {
       return res.status(404).json({ error: 'Call recording not found' });
     }
 
-    // Delete the physical file from the uploads directory
-    if (callRecording.recordingUrl) {
-      const filePath = path.join(__dirname, '../../uploads', path.basename(callRecording.recordingUrl));
-      try {
-        await fs.unlink(filePath);
-      } catch (error) {
-        console.error('Error deleting file:', error);
-        // Continue with deletion even if file removal fails
-      }
-    }
+    // Delete from Cloudinary
+    await deleteFromCloudinary(callRecording.cloudinaryPublicId);
 
     // Delete the record from the database
     await CallRecording.findByIdAndDelete(id);
 
     res.json({ message: 'Call recording deleted successfully' });
   } catch (error) {
-    console.error('Error deleting call recording:', error);
+    logger.error('Error deleting call recording:', error);
     res.status(500).json({ error: 'Failed to delete call recording' });
   }
 };

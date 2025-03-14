@@ -1,10 +1,11 @@
-const fs = require('fs');
+const fs = require('fs').promises;
 const path = require('path');
 const Document = require('../models/Document');
 const { logger } = require('../utils/logger');
 const { extractTextFromFile, calculateDocumentMetrics } = require('../services/documentProcessingService');
 const { chunkDocument } = require('../utils/textProcessing');
 const Company = require('../models/Company');
+const { uploadToCloudinary, deleteFromCloudinary } = require('../services/cloudinaryService');
 
 // Upload a new document
 const uploadDocument = async (req, res) => {
@@ -28,12 +29,12 @@ const uploadDocument = async (req, res) => {
       return res.status(404).json({ error: 'Company not found' });
     }
     
-    // Extract text from the uploaded file
-    const fileUrl = `/uploads/${req.file.filename}`;
-    const filePath = path.join(__dirname, '../../', fileUrl);
-    const fileType = req.file.mimetype;
+    // Upload file to Cloudinary
+    const filePath = req.file.path;
+    const { url: fileUrl, public_id: cloudinaryPublicId } = await uploadToCloudinary(filePath, 'documents');
     
     // Extract text from the file
+    const fileType = req.file.mimetype;
     const extractedText = await extractTextFromFile(filePath, fileType);
     
     // Chunk the document
@@ -47,6 +48,7 @@ const uploadDocument = async (req, res) => {
       name: name || req.file.originalname,
       description: description || '',
       fileUrl,
+      cloudinaryPublicId,
       fileType,
       content: extractedText,
       tags: tags ? tags.split(',').map(tag => tag.trim()) : [],
@@ -65,6 +67,9 @@ const uploadDocument = async (req, res) => {
     
     await document.save();
     
+    // Delete local file after upload
+    await fs.unlink(filePath);
+    
     res.status(201).json({
       message: 'Document uploaded successfully',
       document: {
@@ -81,6 +86,14 @@ const uploadDocument = async (req, res) => {
     });
   } catch (error) {
     logger.error('Error uploading document:', error);
+    // Clean up local file if it exists
+    if (req.file && req.file.path) {
+      try {
+        await fs.unlink(req.file.path);
+      } catch (unlinkError) {
+        logger.error('Error deleting local file:', unlinkError);
+      }
+    }
     res.status(500).json({ error: 'Failed to upload document' });
   }
 };
@@ -125,11 +138,8 @@ const deleteDocument = async (req, res) => {
       return res.status(404).json({ error: 'Document not found' });
     }
 
-    // Delete file from filesystem
-    const filePath = path.join(__dirname, '../../', document.fileUrl);
-    if (fs.existsSync(filePath)) {
-      fs.unlinkSync(filePath);
-    }
+    // Delete from Cloudinary
+    await deleteFromCloudinary(document.cloudinaryPublicId);
 
     await Document.findByIdAndDelete(req.params.id);
     res.status(200).json({ message: 'Document deleted successfully' });

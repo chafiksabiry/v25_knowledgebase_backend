@@ -716,3 +716,23 @@
   },
   "stack": "Error: Connection error.\n    at OpenAI.makeRequest (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\openai\\core.js:329:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async processKnowledgeBaseAnalysis (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:309:27)"
 }
+2025-03-14 15:48:55 [ERROR]: Missing required parameter - public_id {
+  "service": "kb-analysis-backend",
+  "name": "Error",
+  "http_code": 400
+}
+2025-03-14 15:48:55 [ERROR]: Missing required parameter - public_id {
+  "service": "kb-analysis-backend",
+  "name": "Error",
+  "http_code": 400
+}
+2025-03-14 15:53:52 [ERROR]: Missing required parameter - public_id {
+  "service": "kb-analysis-backend",
+  "name": "Error",
+  "http_code": 400
+}
+2025-03-14 15:53:52 [ERROR]: Missing required parameter - public_id {
+  "service": "kb-analysis-backend",
+  "name": "Error",
+  "http_code": 400
+}
