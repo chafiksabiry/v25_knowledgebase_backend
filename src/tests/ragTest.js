@@ -4,7 +4,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const API_URL = process.env.API_URL || 'http://localhost:3001';
-const TEST_COMPANY_ID = '65f1a7b2e5c3d4a2b1f8e9d7'; // Replace with a valid company ID from your database
+const TEST_COMPANY_ID = '67d18e2b319c11009f4f2a98'; // Replace with a valid company ID from your database
 
 async function testRAGIntegration() {
   try {

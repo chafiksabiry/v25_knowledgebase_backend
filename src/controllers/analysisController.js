@@ -325,75 +325,119 @@ Instructions for answering:
 Please provide a comprehensive and accurate response.`;
 }
 
-// Function to answer specific questions about company documents
-const askQuestion = async (req, res) => {
-  try {
-    const { companyId, query, documentIds } = req.body;
+/**
+ * Ask a specific question about company documents
+ */
+async function askQuestion(req, res) {
+    try {
+        const { companyId, query } = req.body;
 
-    if (!query) {
-      return res.status(400).json({
-        message: 'Query is required'
-      });
+        if (!companyId) {
+            return res.status(400).json({
+                success: false,
+                error: {
+                    message: 'Company ID is required',
+                    code: 'MISSING_COMPANY_ID'
+                }
+            });
+        }
+
+        if (!query) {
+            return res.status(400).json({
+                success: false,
+                error: {
+                    message: 'Query is required',
+                    code: 'MISSING_QUERY'
+                }
+            });
+        }
+
+        logger.info(`Processing question for company ${companyId}:`, { query });
+
+        // Get current documents from DB
+        const documents = await Document.find({ companyId });
+        
+        if (!documents || documents.length === 0) {
+            return res.status(400).json({
+                success: false,
+                error: {
+                    message: 'No documents found for this company',
+                    code: 'NO_DOCUMENTS'
+                }
+            });
+        }
+
+        // Initialize Vertex AI if not already initialized
+        if (!vertexAIService.vertexAI) {
+            logger.info('Initializing Vertex AI service...');
+            vertexAIService.initialize();
+        }
+
+        // Check if RAG corpus exists and is up to date
+        const corpusStatus = await vertexAIService.checkCorpusStatus(companyId);
+        const needsUpdate = !corpusStatus.exists || corpusStatus.documentCount !== documents.length;
+
+        if (needsUpdate) {
+            logger.info(`Updating RAG corpus for company ${companyId}...`);
+            // Create/update the corpus with current documents
+            await vertexAIService.createRagCorpus(companyId);
+            await vertexAIService.importDocumentsToCorpus(companyId, documents);
+            logger.info(`RAG corpus updated successfully for company ${companyId}`);
+        } else {
+            logger.info(`Using existing RAG corpus for company ${companyId}`);
+        }
+
+        // Create a context-aware prompt
+        const contextAwarePrompt = createContextAwarePrompt(query);
+
+        // Query the knowledge base using Vertex AI
+        const response = await vertexAIService.queryKnowledgeBase(companyId, contextAwarePrompt);
+
+        // Handle different response structures
+        let answer;
+        if (response.candidates && response.candidates[0]) {
+            if (response.candidates[0].content && response.candidates[0].content.parts) {
+                answer = response.candidates[0].content.parts[0].text;
+            } else if (response.candidates[0].text) {
+                answer = response.candidates[0].text;
+            } else {
+                answer = response.candidates[0];
+            }
+        } else if (response.text) {
+            answer = response.text;
+        } else if (typeof response === 'string') {
+            answer = response;
+        } else {
+            throw new Error('Unexpected response structure from Vertex AI');
+        }
+
+        return res.json({
+            success: true,
+            data: {
+                answer,
+                metadata: {
+                    processedAt: new Date().toISOString(),
+                    model: process.env.VERTEX_AI_MODEL,
+                    corpusStatus: {
+                        wasUpdated: needsUpdate,
+                        documentCount: documents.length
+                    }
+                }
+            }
+        });
+
+    } catch (error) {
+        logger.error('Error processing question:', error);
+        return res.status(500).json({
+            success: false,
+            error: {
+                message: 'Failed to process question',
+                code: 'PROCESSING_ERROR',
+                details: error.message
+            }
+        });
     }
-
-    // Get company documents
-    let documents;
-    if (documentIds && documentIds.length > 0) {
-      // If specific documents are requested
-      documents = await Document.find({
-        companyId,
-        _id: { $in: documentIds }
-      });
-    } else {
-      // Get all company documents
-      documents = await Document.find({ companyId });
-    }
-
-    if (!documents || documents.length === 0) {
-      return res.status(400).json({
-        message: 'No documents found for the query'
-      });
-    }
-
-    // Get company information for context
-    const companyContext = {
-      companyName: 'Company', // You might want to fetch this from your company model
-      documentCount: documents.length,
-      documentTypes: [...new Set(documents.map(doc => doc.type))],
-    };
-
-    // Create context-aware prompt
-    const contextAwarePrompt = createContextAwarePrompt(query, companyContext);
-
-    // Query the knowledge base
-    const response = await vertexAIService.queryKnowledgeBase(companyId, contextAwarePrompt);
-
-    // Extract the answer from the response
-    const answer = response.candidates[0].content.parts[0].text;
-
-    // Log the interaction
-    logger.info(`Question answered for company ${companyId}:`, {
-      query,
-      documentCount: documents.length,
-      specificDocuments: !!documentIds
-    });
-
-    return res.status(200).json({
-      answer,
-      metadata: {
-        documentsSearched: documents.length,
-        specificDocuments: documentIds ? documentIds : 'all',
-        timestamp: new Date()
-      }
-    });
-  } catch (error) {
-    logger.error('Error answering question:', error);
-    return res.status(500).json({
-      message: 'Failed to answer question',
-      error: error.message
-    });
-  }
-};
+}
 
 module.exports = {
   analyzeDocumentsWithRAG,

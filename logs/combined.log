@@ -23970,3 +23970,627 @@ To confirm the existence of security-related guidelines, you should refer to the
 All tests completed successfully! ✨ {
   "service": "kb-analysis-backend"
 }
+2025-03-17 10:07:02 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:07:02 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:07:02 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:07:02 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:07:02 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:07:02 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:07:24 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:07:24 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:07:24 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:07:24 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:07:24 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:07:24 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:07:40 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/analysis/ask",
+  "status": 404,
+  "responseTime": "124ms",
+  "userAgent": "PostmanRuntime/7.43.0"
+}
+2025-03-17 10:07:46 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "POST",
+  "url": "/api/analysis/ask",
+  "status": 400,
+  "responseTime": "1ms",
+  "userAgent": "PostmanRuntime/7.43.0",
+  "requestBody": {}
+}
+2025-03-17 10:08:26 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "POST",
+  "url": "/api/analysis/ask",
+  "status": 400,
+  "responseTime": "1ms",
+  "userAgent": "PostmanRuntime/7.43.0",
+  "requestBody": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-17 10:08:53 [INFO]: Processing question for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the main products and services offered by the company?"
+}
+2025-03-17 10:08:53 [ERROR]: Failed to query knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "error": "Vertex AI not initialized",
+  "stack": "Error: Vertex AI not initialized\n    at VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:194:15)\n    at askQuestion (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:358:48)\n    at Layer.handle [as handle_request] (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at Route.dispatch (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\route.js:119:3)\n    at Layer.handle [as handle_request] (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:284:15\n    at Function.process_params (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:346:12)\n    at next (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:280:10)\n    at Function.handle (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:175:3)\n    at router (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:47:12)\n    at Layer.handle [as handle_request] (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at trim_prefix (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:328:13)\n    at C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:286:9\n    at Function.process_params (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:346:12)\n    at next (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:280:10)"
+}
+2025-03-17 10:08:53 [ERROR]: Error processing question: Vertex AI not initialized {
+  "service": "kb-analysis-backend",
+  "stack": "Error: Vertex AI not initialized\n    at VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:194:15)\n    at askQuestion (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:358:48)\n    at Layer.handle [as handle_request] (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at Route.dispatch (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\route.js:119:3)\n    at Layer.handle [as handle_request] (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:284:15\n    at Function.process_params (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:346:12)\n    at next (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:280:10)\n    at Function.handle (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:175:3)\n    at router (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:47:12)\n    at Layer.handle [as handle_request] (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at trim_prefix (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:328:13)\n    at C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:286:9\n    at Function.process_params (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:346:12)\n    at next (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:280:10)"
+}
+2025-03-17 10:08:53 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "POST",
+  "url": "/api/analysis/ask",
+  "status": 500,
+  "responseTime": "24ms",
+  "userAgent": "PostmanRuntime/7.43.0",
+  "requestBody": {
+    "companyId": "67d18e2b319c11009f4f2a98",
+    "query": "What are the main products and services offered by the company?"
+  }
+}
+2025-03-17 10:10:11 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:10:11 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:10:11 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:10:11 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:10:11 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:10:11 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:10:18 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:10:18 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:10:18 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:10:18 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:10:18 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:10:18 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:10:43 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:10:43 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-03-17 10:10:43 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:10:43 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:10:43 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:10:43 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:10:43 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:10:43 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:10:43 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:10:49 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:10:49 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-03-17 10:10:49 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:10:49 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:10:49 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:10:49 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:10:49 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:10:49 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:10:49 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:11:10 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:11:10 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-03-17 10:11:10 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:11:10 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:11:10 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:11:10 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:11:10 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:11:10 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:11:10 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:11:16 [INFO]: Processing question for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the main products and services offered by the company?"
+}
+2025-03-17 10:11:16 [ERROR]: Failed to query knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "error": "No documents found in the knowledge base",
+  "stack": "Error: No documents found in the knowledge base\n    at VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:201:15)\n    at askQuestion (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:367:48)\n    at Layer.handle [as handle_request] (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at Route.dispatch (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\route.js:119:3)\n    at Layer.handle [as handle_request] (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:284:15\n    at Function.process_params (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:346:12)\n    at next (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:280:10)\n    at Function.handle (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:175:3)\n    at router (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:47:12)\n    at Layer.handle [as handle_request] (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at trim_prefix (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:328:13)\n    at C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:286:9\n    at Function.process_params (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:346:12)\n    at next (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:280:10)"
+}
+2025-03-17 10:11:16 [ERROR]: Error processing question: No documents found in the knowledge base {
+  "service": "kb-analysis-backend",
+  "stack": "Error: No documents found in the knowledge base\n    at VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:201:15)\n    at askQuestion (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:367:48)\n    at Layer.handle [as handle_request] (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at Route.dispatch (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\route.js:119:3)\n    at Layer.handle [as handle_request] (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:284:15\n    at Function.process_params (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:346:12)\n    at next (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:280:10)\n    at Function.handle (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:175:3)\n    at router (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:47:12)\n    at Layer.handle [as handle_request] (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at trim_prefix (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:328:13)\n    at C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:286:9\n    at Function.process_params (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:346:12)\n    at next (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:280:10)"
+}
+2025-03-17 10:11:16 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "POST",
+  "url": "/api/analysis/ask",
+  "status": 500,
+  "responseTime": "40ms",
+  "userAgent": "PostmanRuntime/7.43.0",
+  "requestBody": {
+    "companyId": "67d18e2b319c11009f4f2a98",
+    "query": "What are the main products and services offered by the company?"
+  }
+}
+2025-03-17 10:12:29 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:12:29 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-03-17 10:12:29 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:12:29 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:12:29 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:12:29 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:12:29 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:12:29 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:12:29 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:12:33 [INFO]: Processing question for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the main products and services offered by the company?"
+}
+2025-03-17 10:12:33 [ERROR]: Failed to query knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "error": "No documents found in the knowledge base",
+  "stack": "Error: No documents found in the knowledge base\n    at VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:201:15)\n    at askQuestion (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:367:48)\n    at Layer.handle [as handle_request] (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at Route.dispatch (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\route.js:119:3)\n    at Layer.handle [as handle_request] (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:284:15\n    at Function.process_params (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:346:12)\n    at next (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:280:10)\n    at Function.handle (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:175:3)\n    at router (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:47:12)\n    at Layer.handle [as handle_request] (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at trim_prefix (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:328:13)\n    at C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:286:9\n    at Function.process_params (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:346:12)\n    at next (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:280:10)"
+}
+2025-03-17 10:12:33 [ERROR]: Error processing question: No documents found in the knowledge base {
+  "service": "kb-analysis-backend",
+  "stack": "Error: No documents found in the knowledge base\n    at VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:201:15)\n    at askQuestion (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:367:48)\n    at Layer.handle [as handle_request] (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at Route.dispatch (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\route.js:119:3)\n    at Layer.handle [as handle_request] (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:284:15\n    at Function.process_params (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:346:12)\n    at next (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:280:10)\n    at Function.handle (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:175:3)\n    at router (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:47:12)\n    at Layer.handle [as handle_request] (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at trim_prefix (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:328:13)\n    at C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:286:9\n    at Function.process_params (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:346:12)\n    at next (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:280:10)"
+}
+2025-03-17 10:12:33 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "POST",
+  "url": "/api/analysis/ask",
+  "status": 500,
+  "responseTime": "19ms",
+  "userAgent": "PostmanRuntime/7.43.0",
+  "requestBody": {
+    "companyId": "67d18e2b319c11009f4f2a98",
+    "query": "What are the main products and services offered by the company?"
+  }
+}
+2025-03-17 10:13:36 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:13:36 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-03-17 10:13:36 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:13:36 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:13:36 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:13:36 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:13:36 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:13:36 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:13:36 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:14:02 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:14:02 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-03-17 10:14:02 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:14:02 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:14:02 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:14:02 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:14:02 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:14:02 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:14:02 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:19:58 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:19:58 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-03-17 10:19:58 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:19:58 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:19:58 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:19:58 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:19:58 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:19:58 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:19:59 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:20:11 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:20:11 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-03-17 10:20:11 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:20:11 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:20:11 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:20:11 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:20:11 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:20:11 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:20:11 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:21:21 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:21:21 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-03-17 10:21:21 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:21:21 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:21:21 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:21:21 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:21:21 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:21:21 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:21:21 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:21:28 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:21:28 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-03-17 10:21:28 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:21:28 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:21:28 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:21:28 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:21:28 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:21:28 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:21:28 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:21:52 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:21:52 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-03-17 10:21:52 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:21:52 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:21:52 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:21:52 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:21:52 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:21:52 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:21:52 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:22:01 [INFO]: Processing question for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the main products and services offered by the company?"
+}
+2025-03-17 10:22:01 [INFO]: Updating RAG corpus for company 67d18e2b319c11009f4f2a98... {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:22:01 [INFO]: Creating RAG corpus: {
+  "0": "c",
+  "1": "o",
+  "2": "m",
+  "3": "p",
+  "4": "a",
+  "5": "n",
+  "6": "y",
+  "7": "-",
+  "8": "6",
+  "9": "7",
+  "10": "d",
+  "11": "1",
+  "12": "8",
+  "13": "e",
+  "14": "2",
+  "15": "b",
+  "16": "3",
+  "17": "1",
+  "18": "9",
+  "19": "c",
+  "20": "1",
+  "21": "1",
+  "22": "0",
+  "23": "0",
+  "24": "9",
+  "25": "f",
+  "26": "4",
+  "27": "f",
+  "28": "2",
+  "29": "a",
+  "30": "9",
+  "31": "8",
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:22:01 [INFO]: Created RAG corpus for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:22:01 [INFO]: Importing 1 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:22:02 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742206922466.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:22:03 [INFO]: Processed 1 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:22:03 [INFO]: RAG corpus updated successfully for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:22:03 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "You are an AI assistant with access to the company's knowledge base. \nPlease answer the following question based ONLY on the information provided in the context below.\nIf the information is not available in the context, please clearly state that.\n\nQuestion: What are the main products and services offered by the company?\n\nInstructions for answering:\n1. Only use information from the provided context\n2. If relevant, cite specific documents or sections\n3. If the information is incomplete or unclear, mention what additional details would be helpful\n4. Format the response in a clear, structured way\n5. If multiple documents contain relevant information, synthesize it coherently\n\nPlease provide a comprehensive and accurate response."
+}
+2025-03-17 10:22:06 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "POST",
+  "url": "/api/analysis/ask",
+  "status": 200,
+  "responseTime": "4597ms",
+  "userAgent": "PostmanRuntime/7.43.0",
+  "requestBody": {
+    "companyId": "67d18e2b319c11009f4f2a98",
+    "query": "What are the main products and services offered by the company?"
+  }
+}
+2025-03-17 10:43:53 [INFO]: Processing question for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the main products and services offered by the company?"
+}
+2025-03-17 10:43:53 [INFO]: Using existing RAG corpus for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:43:53 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "You are an AI assistant with access to the company's knowledge base. \nPlease answer the following question based ONLY on the information provided in the context below.\nIf the information is not available in the context, please clearly state that.\n\nQuestion: What are the main products and services offered by the company?\n\nInstructions for answering:\n1. Only use information from the provided context\n2. If relevant, cite specific documents or sections\n3. If the information is incomplete or unclear, mention what additional details would be helpful\n4. Format the response in a clear, structured way\n5. If multiple documents contain relevant information, synthesize it coherently\n\nPlease provide a comprehensive and accurate response."
+}
+2025-03-17 10:43:56 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "POST",
+  "url": "/api/analysis/ask",
+  "status": 200,
+  "responseTime": "3574ms",
+  "userAgent": "PostmanRuntime/7.43.0",
+  "requestBody": {
+    "companyId": "67d18e2b319c11009f4f2a98",
+    "query": "What are the main products and services offered by the company?"
+  }
+}
+2025-03-17 10:52:52 [INFO]: Processing question for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "How many levels do we have for the pack confort et Bien-Être, and what is the best one to use"
+}
+2025-03-17 10:52:52 [INFO]: Using existing RAG corpus for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 10:52:52 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "You are an AI assistant with access to the company's knowledge base. \nPlease answer the following question based ONLY on the information provided in the context below.\nIf the information is not available in the context, please clearly state that.\n\nQuestion: How many levels do we have for the pack confort et Bien-Être, and what is the best one to use\n\nInstructions for answering:\n1. Only use information from the provided context\n2. If relevant, cite specific documents or sections\n3. If the information is incomplete or unclear, mention what additional details would be helpful\n4. Format the response in a clear, structured way\n5. If multiple documents contain relevant information, synthesize it coherently\n\nPlease provide a comprehensive and accurate response."
+}
+2025-03-17 10:52:54 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "POST",
+  "url": "/api/analysis/ask",
+  "status": 200,
+  "responseTime": "2404ms",
+  "userAgent": "PostmanRuntime/7.43.0",
+  "requestBody": {
+    "companyId": "67d18e2b319c11009f4f2a98",
+    "query": "How many levels do we have for the pack confort et Bien-Être, and what is the best one to use"
+  }
+}

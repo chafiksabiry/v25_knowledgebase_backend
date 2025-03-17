@@ -232,6 +232,25 @@ Please provide a comprehensive answer based on the information in these document
       throw error;
     }
   }
+
+  async checkCorpusStatus(companyId) {
+    try {
+      if (!this.vertexAI) {
+        throw new Error('Vertex AI not initialized');
+      }
+
+      const corpusId = `company-${companyId}`;
+      const corpus = this.documentStore.get(corpusId);
+
+      return {
+        exists: !!corpus,
+        documentCount: corpus ? corpus.length : 0
+      };
+    } catch (error) {
+      logger.error(`Failed to check corpus status for company ${companyId}:`, error);
+      throw error;
+    }
+  }
 }
 
 // Create and export a singleton instance
