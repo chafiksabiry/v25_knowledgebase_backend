@@ -8,7 +8,8 @@
     "dev": "nodemon src/index.js",
     "test": "jest",
     "test:rag": "node src/tests/ragTest.js",
-    "test:vertex": "node src/tests/vertexAITest.js"
+    "test:vertex": "node src/tests/vertexAITest.js",
+    "test:prompts": "node src/tests/analysisPrompts.test.js"
   },
   "dependencies": {
     "@google-cloud/vertexai": "^0.5.0",

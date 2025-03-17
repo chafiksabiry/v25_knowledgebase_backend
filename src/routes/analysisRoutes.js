@@ -1,14 +1,17 @@
 const express = require('express');
 const router = express.Router();
-const { analyzeKnowledgeBase, getAnalysisById, getAllAnalyses } = require('../controllers/analysisController');
+const { startAnalysis, getAnalysis, getAllAnalyses, askQuestion } = require('../controllers/analysisController');
 
-// Route to analyze the entire knowledge base
-router.post('/knowledge-base', analyzeKnowledgeBase);
+// Start a new analysis for a company
+router.post('/start', startAnalysis);
 
-// Route to get a specific analysis by ID
-router.get('/:id', getAnalysisById);
+// Ask a specific question about company documents
+router.post('/ask', askQuestion);
 
-// Route to get all analyses for a company
-router.get('/', getAllAnalyses);
+// Get the latest analysis for a company
+router.get('/:companyId', getAnalysis);
+
+// Get all analyses for a company
+router.get('/:companyId/all', getAllAnalyses);
 
 module.exports = router; 

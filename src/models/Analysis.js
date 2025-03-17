@@ -13,8 +13,8 @@ const AnalysisSchema = new Schema(
     },
     status: { 
       type: String, 
-      enum: ['idle', 'processing', 'completed', 'failed'],
-      default: 'idle'
+      enum: ['in_progress', 'completed', 'failed'],
+      default: 'in_progress'
     },
     summary: { type: String },
     topicAnalysis: {
@@ -47,7 +47,11 @@ const AnalysisSchema = new Schema(
         enum: ['small', 'medium', 'large']
       }
     }],
-    companyId: { type: String, required: true },
+    companyId: {
+      type: String,
+      required: true,
+      index: true
+    },
     processingTime: { type: Number },
     error: { type: String },
     // Progress tracking fields
@@ -69,10 +73,42 @@ const AnalysisSchema = new Schema(
     totalBatches: {
       type: Number,
       default: 0
+    },
+    documentCount: {
+      type: Number,
+      required: true
+    },
+    documentIds: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Document'
+    }],
+    startTime: {
+      type: Date,
+      required: true
+    },
+    endTime: {
+      type: Date
+    },
+    results: {
+      topics: {
+        type: String
+      },
+      gaps: {
+        type: String
+      },
+      relationships: {
+        type: String
+      },
+      recommendations: {
+        type: String
+      }
     }
   },
   { timestamps: true }
 );
+
+// Add index for efficient querying
+AnalysisSchema.index({ companyId: 1, startTime: -1 });
 
 // Create and export the Analysis model
 module.exports = mongoose.model('Analysis', AnalysisSchema); 

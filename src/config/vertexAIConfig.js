@@ -3,6 +3,8 @@ const dotenv = require('dotenv');
 const { logger } = require('../utils/logger');
 const path = require('path');
 const axios = require('axios');
+const fs = require('fs').promises;
+const { extractTextFromFile } = require('../services/documentProcessingService');
 
 dotenv.config();
 
@@ -70,10 +72,37 @@ class VertexAIService {
 
   async fetchDocumentContent(url) {
     try {
-      const response = await axios.get(url);
-      return response.data;
+      // Create a temporary directory for downloads if it doesn't exist
+      const tempDir = path.join(__dirname, '../../temp');
+      await fs.mkdir(tempDir, { recursive: true });
+
+      // Download the file
+      const response = await axios({
+        method: 'get',
+        url: url,
+        responseType: 'arraybuffer'
+      });
+
+      // Determine file type from URL or Content-Type header
+      const fileType = response.headers['content-type'] || 'application/pdf';
+      
+      // Create a temporary file
+      const tempFile = path.join(tempDir, `temp-${Date.now()}.pdf`);
+      await fs.writeFile(tempFile, response.data);
+
+      // Extract text from the file
+      const extractedText = await extractTextFromFile(tempFile, fileType);
+
+      // Clean up the temporary file
+      await fs.unlink(tempFile);
+
+      if (!extractedText) {
+        throw new Error('Failed to extract text from document');
+      }
+
+      return extractedText;
     } catch (error) {
-      logger.error(`Failed to fetch document content from ${url}:`, error);
+      logger.error(`Failed to fetch and process document from ${url}:`, error);
       return null;
     }
   }
