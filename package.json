@@ -6,9 +6,12 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
-    "test": "jest"
+    "test": "jest",
+    "test:rag": "node src/tests/ragTest.js",
+    "test:vertex": "node src/tests/vertexAITest.js"
   },
   "dependencies": {
+    "@google-cloud/vertexai": "^0.5.0",
     "axios": "^1.8.2",
     "cloudinary": "^2.6.0",
     "cors": "^2.8.5",

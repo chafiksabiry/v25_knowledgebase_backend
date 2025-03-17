@@ -21229,3 +21229,1237 @@
     "companyId": "67d18e2b319c11009f4f2a98"
   }
 }
+2025-03-14 16:22:08 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/documents?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "20ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-14 16:22:08 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/analysis?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "21ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-14 16:22:08 [INFO]: Starting knowledge base analysis for company: 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-14 16:22:08 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "POST",
+  "url": "/api/analysis/knowledge-base",
+  "status": 202,
+  "responseTime": "16ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "requestBody": {
+    "companyId": "67d18e2b319c11009f4f2a98",
+    "documentIds": [
+      "67d45653731e15e75e62eb2d"
+    ]
+  }
+}
+2025-03-14 16:22:14 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/analysis/67d457b0731e15e75e62eba6",
+  "status": 200,
+  "responseTime": "3ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36"
+}
+2025-03-14 16:22:19 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/analysis/67d457b0731e15e75e62eba6",
+  "status": 304,
+  "responseTime": "5ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36"
+}
+2025-03-14 16:22:24 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/analysis/67d457b0731e15e75e62eba6",
+  "status": 200,
+  "responseTime": "2ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36"
+}
+2025-03-14 16:22:27 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/documents?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "4ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-14 16:22:27 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/analysis?companyId=67d18e2b319c11009f4f2a98",
+  "status": 200,
+  "responseTime": "12ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-14 16:22:27 [INFO]: Starting knowledge base analysis for company: 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-14 16:22:27 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "POST",
+  "url": "/api/analysis/knowledge-base",
+  "status": 202,
+  "responseTime": "7ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "requestBody": {
+    "companyId": "67d18e2b319c11009f4f2a98",
+    "documentIds": [
+      "67d45653731e15e75e62eb2d"
+    ]
+  }
+}
+2025-03-14 16:22:29 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/analysis/67d457b0731e15e75e62eba6",
+  "status": 304,
+  "responseTime": "4ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36"
+}
+2025-03-14 16:22:33 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/analysis/67d457c3731e15e75e62ebe5",
+  "status": 200,
+  "responseTime": "6ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36"
+}
+2025-03-14 16:22:34 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/analysis/67d457b0731e15e75e62eba6",
+  "status": 304,
+  "responseTime": "3ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36"
+}
+2025-03-14 16:22:36 [INFO]: Knowledge base analysis completed for company: 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-14 16:22:37 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/documents?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "2ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-14 16:22:37 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/documents?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "3ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-14 16:22:37 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/call-recordings?companyId=67d18e2b319c11009f4f2a98",
+  "status": 200,
+  "responseTime": "13ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-14 16:22:37 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/call-recordings?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "2ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-14 16:22:37 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/analysis/67d457c3731e15e75e62ebe5",
+  "status": 304,
+  "responseTime": "475ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36"
+}
+2025-03-14 16:22:38 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/analysis/67d457b0731e15e75e62eba6",
+  "status": 200,
+  "responseTime": "4ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36"
+}
+2025-03-14 16:22:39 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/documents?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "4ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-14 16:22:39 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/documents?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "5ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-14 16:22:39 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/analysis?companyId=67d18e2b319c11009f4f2a98",
+  "status": 200,
+  "responseTime": "19ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-14 16:22:39 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/analysis?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "15ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-14 16:22:39 [INFO]: Starting knowledge base analysis for company: 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-14 16:22:39 [INFO]: Starting knowledge base analysis for company: 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-14 16:22:39 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "POST",
+  "url": "/api/analysis/knowledge-base",
+  "status": 202,
+  "responseTime": "12ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "requestBody": {
+    "companyId": "67d18e2b319c11009f4f2a98",
+    "documentIds": []
+  }
+}
+2025-03-14 16:22:39 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "POST",
+  "url": "/api/analysis/knowledge-base",
+  "status": 202,
+  "responseTime": "15ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "requestBody": {
+    "companyId": "67d18e2b319c11009f4f2a98",
+    "documentIds": []
+  }
+}
+2025-03-14 16:22:42 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/analysis/67d457c3731e15e75e62ebe5",
+  "status": 304,
+  "responseTime": "5ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36"
+}
+2025-03-14 16:22:44 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/analysis/67d457cf731e15e75e62ec60",
+  "status": 200,
+  "responseTime": "4ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36"
+}
+2025-03-14 16:22:44 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/analysis/67d457cf731e15e75e62ec62",
+  "status": 200,
+  "responseTime": "12ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36"
+}
+2025-03-14 16:22:47 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/analysis/67d457c3731e15e75e62ebe5",
+  "status": 200,
+  "responseTime": "3ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36"
+}
+2025-03-14 16:22:49 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/analysis/67d457cf731e15e75e62ec60",
+  "status": 304,
+  "responseTime": "4ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36"
+}
+2025-03-14 16:22:49 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/analysis/67d457cf731e15e75e62ec62",
+  "status": 304,
+  "responseTime": "3ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36"
+}
+2025-03-14 16:22:52 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/analysis/67d457c3731e15e75e62ebe5",
+  "status": 304,
+  "responseTime": "3ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36"
+}
+2025-03-14 16:22:54 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/analysis/67d457cf731e15e75e62ec60",
+  "status": 200,
+  "responseTime": "6ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36"
+}
+2025-03-14 16:22:54 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/analysis/67d457cf731e15e75e62ec62",
+  "status": 200,
+  "responseTime": "10ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36"
+}
+2025-03-14 16:22:57 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/analysis/67d457c3731e15e75e62ebe5",
+  "status": 304,
+  "responseTime": "4ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36"
+}
+2025-03-14 16:22:59 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/analysis/67d457cf731e15e75e62ec60",
+  "status": 304,
+  "responseTime": "4ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36"
+}
+2025-03-14 16:22:59 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/analysis/67d457cf731e15e75e62ec62",
+  "status": 304,
+  "responseTime": "6ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36"
+}
+2025-03-14 16:23:01 [INFO]: Knowledge base analysis completed for company: 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-14 16:23:02 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/analysis/67d457c3731e15e75e62ebe5",
+  "status": 200,
+  "responseTime": "3ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36"
+}
+2025-03-14 16:23:04 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/analysis/67d457cf731e15e75e62ec60",
+  "status": 304,
+  "responseTime": "3ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36"
+}
+2025-03-14 16:23:04 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/analysis/67d457cf731e15e75e62ec62",
+  "status": 304,
+  "responseTime": "4ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36"
+}
+2025-03-14 16:23:06 [INFO]: Knowledge base analysis completed for company: 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-14 16:23:09 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/analysis/67d457cf731e15e75e62ec60",
+  "status": 304,
+  "responseTime": "3ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36"
+}
+2025-03-14 16:23:09 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/analysis/67d457cf731e15e75e62ec62",
+  "status": 200,
+  "responseTime": "6ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36"
+}
+2025-03-14 16:23:12 [INFO]: Knowledge base analysis completed for company: 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-14 16:23:14 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/analysis/67d457cf731e15e75e62ec60",
+  "status": 200,
+  "responseTime": "6ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36"
+}
+2025-03-14 16:26:24 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-14 16:26:24 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-14 16:26:24 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-14 16:26:24 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-14 16:26:24 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-14 16:26:24 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-14 16:27:06 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-14 16:27:06 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-14 16:27:06 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-14 16:27:06 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-14 16:27:06 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-14 16:27:06 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:34:56 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:34:56 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:34:56 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:34:56 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:34:56 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:34:57 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:35:46 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:35:46 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:35:46 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:35:46 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:35:46 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:35:46 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:36:10 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:36:10 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:36:10 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:36:10 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:36:10 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:36:10 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:36:14 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:36:14 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:36:14 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:36:14 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:36:14 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:36:14 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:36:45 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:36:45 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:36:46 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:36:46 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:36:46 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:36:46 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:36:48 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:36:48 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:36:48 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:36:48 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:36:48 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:36:48 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:37:06 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:37:06 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:37:06 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:37:06 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:37:06 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:37:06 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:37:18 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:37:18 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:37:18 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:37:18 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:37:18 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:37:18 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:38:03 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:38:03 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:38:03 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:38:03 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:38:03 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:38:03 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:38:07 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:38:07 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:38:07 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:38:07 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:38:07 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:38:07 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:38:18 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:38:18 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:38:18 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:38:18 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:38:18 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:38:18 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:38:21 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:38:21 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:38:21 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:38:21 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:38:21 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:38:21 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:45:10 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:45:10 [ERROR]: Failed to create RAG corpus for company 65f1a7b2e5c3d4a2b1f8e9d7: Cannot read properties of undefined (reading 'createCorpus') {
+  "service": "kb-analysis-backend",
+  "stack": "TypeError: Cannot read properties of undefined (reading 'createCorpus')\n    at VertexAIService.createRagCorpus (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:57:34)\n    at initializeCompanyCorpus (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\ragController.js:24:42)\n    at Layer.handle [as handle_request] (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at Route.dispatch (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\route.js:119:3)\n    at Layer.handle [as handle_request] (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:284:15\n    at Function.process_params (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:346:12)\n    at next (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:280:10)\n    at Function.handle (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:175:3)\n    at router (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:47:12)\n    at Layer.handle [as handle_request] (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at trim_prefix (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:328:13)\n    at C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:286:9\n    at Function.process_params (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:346:12)\n    at next (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:280:10)"
+}
+2025-03-17 05:45:10 [ERROR]: Error initializing RAG corpus: Cannot read properties of undefined (reading 'createCorpus') {
+  "service": "kb-analysis-backend",
+  "stack": "TypeError: Cannot read properties of undefined (reading 'createCorpus')\n    at VertexAIService.createRagCorpus (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:57:34)\n    at initializeCompanyCorpus (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\ragController.js:24:42)\n    at Layer.handle [as handle_request] (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at Route.dispatch (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\route.js:119:3)\n    at Layer.handle [as handle_request] (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:284:15\n    at Function.process_params (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:346:12)\n    at next (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:280:10)\n    at Function.handle (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:175:3)\n    at router (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:47:12)\n    at Layer.handle [as handle_request] (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at trim_prefix (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:328:13)\n    at C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:286:9\n    at Function.process_params (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:346:12)\n    at next (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:280:10)"
+}
+2025-03-17 05:45:10 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "POST",
+  "url": "/api/rag/corpus/initialize",
+  "status": 500,
+  "responseTime": "145ms",
+  "userAgent": "axios/1.8.2",
+  "requestBody": {
+    "companyId": "65f1a7b2e5c3d4a2b1f8e9d7"
+  }
+}
+2025-03-17 05:46:17 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:46:17 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:46:17 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:46:17 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:46:17 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:46:17 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:46:29 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:46:29 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:46:29 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:46:29 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:46:29 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:46:29 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:48:30 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:48:30 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:48:30 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:48:30 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:48:30 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:48:30 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:48:35 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:48:35 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:48:35 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:48:35 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:48:35 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:48:35 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:52:49 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:52:49 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:52:49 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:52:49 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:52:49 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:52:49 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:53:41 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:53:41 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:53:41 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:53:41 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:53:41 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:53:41 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:54:35 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:54:35 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:54:35 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:54:35 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:54:35 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:54:35 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:54:39 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:54:39 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:54:39 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:54:39 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:54:39 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:54:39 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:54:55 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:54:55 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:54:55 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:54:55 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:54:55 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:54:55 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:54:58 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:54:58 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:54:58 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:54:58 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:54:58 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:54:58 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:55:26 [INFO]: Testing Vertex AI initialization... {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:55:26 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-03-17 05:55:26 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:55:26 [INFO]: ✓ Vertex AI initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:55:26 [INFO]: Testing RAG corpus creation... {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:55:26 [INFO]: Creating RAG corpus: {
+  "0": "c",
+  "1": "o",
+  "2": "m",
+  "3": "p",
+  "4": "a",
+  "5": "n",
+  "6": "y",
+  "7": "-",
+  "8": "6",
+  "9": "7",
+  "10": "d",
+  "11": "1",
+  "12": "8",
+  "13": "e",
+  "14": "2",
+  "15": "b",
+  "16": "3",
+  "17": "1",
+  "18": "9",
+  "19": "c",
+  "20": "1",
+  "21": "1",
+  "22": "0",
+  "23": "0",
+  "24": "9",
+  "25": "f",
+  "26": "4",
+  "27": "f",
+  "28": "2",
+  "29": "a",
+  "30": "9",
+  "31": "8",
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:55:31 [INFO]: Created RAG corpus for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:55:31 [INFO]: ✓ RAG corpus created: {
+  "service": "kb-analysis-backend",
+  "name": "projects/harx-technologies-inc/locations/us-central1/corpuses/company-67d18e2b319c11009f4f2a98",
+  "displayName": "Knowledge Base for Company 67d18e2b319c11009f4f2a98",
+  "status": "CREATED"
+}
+2025-03-17 05:55:32 [INFO]: Testing document import... {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:55:32 [INFO]: Importing 2 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:55:33 [INFO]: Processed 2 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:55:33 [INFO]: ✓ Documents imported: {
+  "service": "kb-analysis-backend",
+  "processedDocuments": [
+    {
+      "id": "doc1",
+      "url": "https://example.com/doc1.pdf",
+      "status": "PROCESSED"
+    },
+    {
+      "id": "doc2",
+      "url": "https://example.com/doc2.pdf",
+      "status": "PROCESSED"
+    }
+  ],
+  "status": "SUCCESS"
+}
+2025-03-17 05:55:33 [INFO]: Testing knowledge base query... {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:55:33 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the main topics covered in the documentation?"
+}
+2025-03-17 05:55:35 [INFO]: ✓ Query result: {
+  "service": "kb-analysis-backend",
+  "candidates": [
+    {
+      "content": {
+        "role": "model",
+        "parts": [
+          {
+            "text": "I do not have access to external websites or specific company databases like the one you mentioned (67d18e2b319c11009f4f2a98). Therefore, I cannot provide information about the main topics covered in their documentation. \n\nTo get this information, you would need to:\n\n* **Access the documentation:** This could be on a company website, a shared drive, or a specific document repository.\n* **Review the content:** Skim through the documentation and identify key topics or themes.\n* **Identify main sections:** Many documents have clear sections or chapters which provide clues about the content.\n\nPlease provide me with the actual documentation or access to it, and I can help you identify the main topics. \n"
+          }
+        ]
+      },
+      "finishReason": "STOP",
+      "safetyRatings": [
+        {
+          "category": "HARM_CATEGORY_HATE_SPEECH",
+          "probability": "NEGLIGIBLE",
+          "probabilityScore": 0.036865234,
+          "severity": "HARM_SEVERITY_NEGLIGIBLE",
+          "severityScore": 0.052734375
+        },
+        {
+          "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
+          "probability": "NEGLIGIBLE",
+          "probabilityScore": 0.044677734,
+          "severity": "HARM_SEVERITY_NEGLIGIBLE",
+          "severityScore": 0.027954102
+        },
+        {
+          "category": "HARM_CATEGORY_HARASSMENT",
+          "probability": "NEGLIGIBLE",
+          "probabilityScore": 0.05493164,
+          "severity": "HARM_SEVERITY_NEGLIGIBLE",
+          "severityScore": 0.02368164
+        },
+        {
+          "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+          "probability": "NEGLIGIBLE",
+          "probabilityScore": 0.05493164,
+          "severity": "HARM_SEVERITY_NEGLIGIBLE",
+          "severityScore": 0.030273438
+        }
+      ],
+      "avgLogprobs": -0.4511995315551758
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 87,
+    "candidatesTokenCount": 160,
+    "totalTokenCount": 247,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 87
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 160
+      }
+    ]
+  },
+  "modelVersion": "gemini-1.5-flash-001",
+  "createTime": "2025-03-17T05:55:33.471108Z",
+  "responseId": "VbnXZ8TgHNOYmecPr5DR6Ao"
+}
+2025-03-17 05:55:35 [INFO]: All tests completed successfully! ✨ {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:57:10 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:57:10 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:57:10 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:57:10 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:57:10 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:57:10 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:57:41 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:57:41 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:57:41 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:57:41 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:57:41 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:57:41 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:58:09 [INFO]: Testing Vertex AI initialization... {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:58:09 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-03-17 05:58:09 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:58:09 [INFO]: ✓ Vertex AI initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:58:09 [INFO]: Testing RAG corpus creation... {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:58:09 [INFO]: Creating RAG corpus: {
+  "0": "c",
+  "1": "o",
+  "2": "m",
+  "3": "p",
+  "4": "a",
+  "5": "n",
+  "6": "y",
+  "7": "-",
+  "8": "6",
+  "9": "7",
+  "10": "d",
+  "11": "1",
+  "12": "8",
+  "13": "e",
+  "14": "2",
+  "15": "b",
+  "16": "3",
+  "17": "1",
+  "18": "9",
+  "19": "c",
+  "20": "1",
+  "21": "1",
+  "22": "0",
+  "23": "0",
+  "24": "9",
+  "25": "f",
+  "26": "4",
+  "27": "f",
+  "28": "2",
+  "29": "a",
+  "30": "9",
+  "31": "8",
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:58:09 [INFO]: Created RAG corpus for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:58:09 [INFO]: ✓ RAG corpus created: {
+  "service": "kb-analysis-backend",
+  "name": "projects/harx-technologies-inc/locations/us-central1/corpuses/company-67d18e2b319c11009f4f2a98",
+  "displayName": "Knowledge Base for Company 67d18e2b319c11009f4f2a98",
+  "status": "CREATED"
+}
+2025-03-17 05:58:09 [INFO]: Testing document import... {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:58:09 [INFO]: Importing 2 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:58:09 [INFO]: Processed 2 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:58:09 [INFO]: ✓ Documents imported: {
+  "service": "kb-analysis-backend",
+  "processedDocuments": [
+    {
+      "id": "doc1",
+      "url": "https://raw.githubusercontent.com/example/doc1.txt",
+      "status": "PROCESSED"
+    },
+    {
+      "id": "doc2",
+      "url": "https://raw.githubusercontent.com/example/doc2.txt",
+      "status": "PROCESSED"
+    }
+  ],
+  "status": "SUCCESS"
+}
+2025-03-17 05:58:09 [INFO]: Testing knowledge base query... {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 05:58:09 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the main components of RAG systems and best practices for knowledge base management?"
+}
+2025-03-17 05:58:13 [INFO]: ✓ Query result: {
+  "service": "kb-analysis-backend",
+  "candidates": [
+    {
+      "content": {
+        "role": "model",
+        "parts": [
+          {
+            "text": "## Main Components of RAG Systems:\n\nRAG systems, or Retrieval-Augmented Generation systems, combine the strengths of retrieval and generation models to create more accurate and reliable AI responses. The main components of RAG systems are:\n\n1. **Document Processing and Chunking:** This involves breaking down large documents into smaller, manageable chunks that are easier to process and search. This step is crucial for efficient information retrieval.\n2. **Semantic Search and Retrieval:** RAG systems use semantic search techniques to understand the meaning of user queries and retrieve relevant documents from the knowledge base. This goes beyond keyword matching, allowing for more accurate and context-aware results.\n3. **Context-aware Generation:**  Once relevant documents are retrieved, the system uses a generation model to create a response that is coherent, informative, and grounded in the retrieved information. The generation model takes into account the context of the user query and the retrieved documents.\n\n## Best Practices for Knowledge Base Management:\n\nTo ensure the effectiveness of a knowledge base, which is the foundation for any RAG system, the following best practices should be implemented:\n\n1. **Regular Content Updates:** Keeping the knowledge base up-to-date is crucial. This involves regularly adding new information, updating existing information, and removing outdated or irrelevant content.\n2. **Proper Document Organization:**  A well-structured knowledge base is essential for efficient retrieval. This can be achieved through clear categorization, tagging, and metadata management.\n3. **Quality Control Measures:** Ensuring the accuracy, reliability, and completeness of the information is vital. This requires quality control measures like validation processes, expert reviews, and feedback mechanisms.\n4. **User Feedback Integration:**  User feedback is valuable for identifying gaps in the knowledge base and improving its content. It can help identify relevant information that needs to be added or address any inconsistencies or errors.\n\nBy implementing these best practices, organizations can create a robust knowledge base that effectively supports RAG systems and improves the quality of AI responses. \n"
+          }
+        ]
+      },
+      "finishReason": "STOP",
+      "safetyRatings": [
+        {
+          "category": "HARM_CATEGORY_HATE_SPEECH",
+          "probability": "NEGLIGIBLE",
+          "probabilityScore": 0.036865234,
+          "severity": "HARM_SEVERITY_NEGLIGIBLE",
+          "severityScore": 0.05493164
+        },
+        {
+          "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
+          "probability": "NEGLIGIBLE",
+          "probabilityScore": 0.05493164,
+          "severity": "HARM_SEVERITY_NEGLIGIBLE",
+          "severityScore": 0.046142578
+        },
+        {
+          "category": "HARM_CATEGORY_HARASSMENT",
+          "probability": "NEGLIGIBLE",
+          "probabilityScore": 0.11425781,
+          "severity": "HARM_SEVERITY_NEGLIGIBLE",
+          "severityScore": 0.046142578
+        },
+        {
+          "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+          "probability": "NEGLIGIBLE",
+          "probabilityScore": 0.022583008,
+          "severity": "HARM_SEVERITY_NEGLIGIBLE",
+          "severityScore": 0.03857422
+        }
+      ],
+      "avgLogprobs": -0.42256523358939896
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 201,
+    "candidatesTokenCount": 404,
+    "totalTokenCount": 605,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 201
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 404
+      }
+    ]
+  },
+  "modelVersion": "gemini-1.5-flash-001",
+  "createTime": "2025-03-17T05:58:10.368575Z",
+  "responseId": "8rnXZ7-_FtOYmecPr5DR6Ao"
+}
+2025-03-17 05:58:13 [INFO]: All tests completed successfully! ✨ {
+  "service": "kb-analysis-backend"
+}
