@@ -216,10 +216,10 @@ Please provide a comprehensive answer based on the information in these document
       const result = await this.generativeModel.generateContent({
         contents: [{ role: 'user', parts: [{ text: prompt }] }],
         generationConfig: {
-          temperature: 0.3,
+          temperature: 0.7,
           topK: 40,
-          topP: 0.8,
-          maxOutputTokens: 1024,
+          topP: 0.95,
+          maxOutputTokens: 2048,
         }
       });
 

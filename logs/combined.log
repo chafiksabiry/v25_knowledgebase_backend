@@ -24594,3 +24594,249 @@ All tests completed successfully! ✨ {
     "query": "How many levels do we have for the pack confort et Bien-Être, and what is the best one to use"
   }
 }
+2025-03-17 11:23:36 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 11:23:36 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-03-17 11:23:36 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 11:23:36 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 11:23:36 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 11:23:36 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 11:23:36 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 11:23:36 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 11:23:36 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 11:23:54 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 11:23:54 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-03-17 11:23:54 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 11:23:54 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 11:23:54 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 11:23:54 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 11:23:54 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 11:23:54 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 11:23:54 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 11:24:53 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 11:24:53 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-03-17 11:24:53 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 11:24:53 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 11:24:53 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 11:24:53 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 11:24:53 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 11:24:53 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 11:24:53 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 11:25:12 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 11:25:12 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-03-17 11:25:12 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 11:25:12 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 11:25:12 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 11:25:12 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 11:25:12 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 11:25:12 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 11:25:12 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 11:25:29 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 11:25:29 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-03-17 11:25:29 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 11:25:29 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 11:25:29 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 11:25:29 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 11:25:29 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 11:25:29 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 11:25:29 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 11:25:39 [INFO]: Processing question for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "How many levels do we have for the pack confort et Bien-Être, and what is the best one to use"
+}
+2025-03-17 11:25:39 [INFO]: Updating RAG corpus for company 67d18e2b319c11009f4f2a98... {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 11:25:39 [INFO]: Creating RAG corpus: {
+  "0": "c",
+  "1": "o",
+  "2": "m",
+  "3": "p",
+  "4": "a",
+  "5": "n",
+  "6": "y",
+  "7": "-",
+  "8": "6",
+  "9": "7",
+  "10": "d",
+  "11": "1",
+  "12": "8",
+  "13": "e",
+  "14": "2",
+  "15": "b",
+  "16": "3",
+  "17": "1",
+  "18": "9",
+  "19": "c",
+  "20": "1",
+  "21": "1",
+  "22": "0",
+  "23": "0",
+  "24": "9",
+  "25": "f",
+  "26": "4",
+  "27": "f",
+  "28": "2",
+  "29": "a",
+  "30": "9",
+  "31": "8",
+  "service": "kb-analysis-backend"
+}
+2025-03-17 11:25:39 [INFO]: Created RAG corpus for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 11:25:39 [INFO]: Importing 1 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 11:25:40 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742210740198.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 11:25:40 [INFO]: Processed 1 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 11:25:40 [INFO]: RAG corpus updated successfully for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 11:25:40 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "You are an expert AI assistant with deep knowledge in analyzing and interpreting business documents. You have access to the company's knowledge base.\n\nYour task is to provide comprehensive, analytical, and actionable insights based on the information in the documents. While staying faithful to the source material, you should:\n\n1. ANALYZE the information thoroughly\n2. SYNTHESIZE related information from different parts of the documents\n3. STRUCTURE your response in a clear, user-friendly format\n4. HIGHLIGHT key points, numbers, and comparisons using markdown formatting\n5. PROVIDE practical insights and recommendations when relevant\n6. If comparing options or levels, CREATE tables or structured comparisons\n7. When numbers or specific data are available, INCLUDE them in your analysis\n\nQuestion: How many levels do we have for the pack confort et Bien-Être, and what is the best one to use\n\nWhen answering:\n- Start with a clear, direct answer to the question\n- Use bullet points, tables, or sections to organize information\n- Bold important terms and numbers for emphasis\n- If the documents don't explicitly state something but it can be reasonably inferred from the provided information, you may include such insights while clearly indicating they are derived from the context\n- If information is missing or unclear, specify what additional details would be helpful\n- Use markdown formatting to make your response more readable\n\nContext will be provided below. Please analyze it thoroughly and provide a comprehensive response that helps the user make informed decisions."
+}
+2025-03-17 11:25:45 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "POST",
+  "url": "/api/analysis/ask",
+  "status": 200,
+  "responseTime": "5589ms",
+  "userAgent": "PostmanRuntime/7.43.0",
+  "requestBody": {
+    "companyId": "67d18e2b319c11009f4f2a98",
+    "query": "How many levels do we have for the pack confort et Bien-Être, and what is the best one to use"
+  }
+}
+2025-03-17 11:28:33 [INFO]: Processing question for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the main products and services offered by the company?"
+}
+2025-03-17 11:28:33 [INFO]: Using existing RAG corpus for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 11:28:33 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "You are an expert AI assistant with deep knowledge in analyzing and interpreting business documents. You have access to the company's knowledge base.\n\nYour task is to provide comprehensive, analytical, and actionable insights based on the information in the documents. While staying faithful to the source material, you should:\n\n1. ANALYZE the information thoroughly\n2. SYNTHESIZE related information from different parts of the documents\n3. STRUCTURE your response in a clear, user-friendly format\n4. HIGHLIGHT key points, numbers, and comparisons using markdown formatting\n5. PROVIDE practical insights and recommendations when relevant\n6. If comparing options or levels, CREATE tables or structured comparisons\n7. When numbers or specific data are available, INCLUDE them in your analysis\n\nQuestion: What are the main products and services offered by the company?\n\nWhen answering:\n- Start with a clear, direct answer to the question\n- Use bullet points, tables, or sections to organize information\n- Bold important terms and numbers for emphasis\n- If the documents don't explicitly state something but it can be reasonably inferred from the provided information, you may include such insights while clearly indicating they are derived from the context\n- If information is missing or unclear, specify what additional details would be helpful\n- Use markdown formatting to make your response more readable\n\nContext will be provided below. Please analyze it thoroughly and provide a comprehensive response that helps the user make informed decisions."
+}
+2025-03-17 11:28:38 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "POST",
+  "url": "/api/analysis/ask",
+  "status": 200,
+  "responseTime": "5909ms",
+  "userAgent": "PostmanRuntime/7.43.0",
+  "requestBody": {
+    "companyId": "67d18e2b319c11009f4f2a98",
+    "query": "What are the main products and services offered by the company?"
+  }
+}
