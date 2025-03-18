@@ -4,7 +4,6 @@ const Analysis = require('../models/Analysis');
 const OpenAI = require('openai');
 const dotenv = require('dotenv');
 const { vertexAIService } = require('../config/vertexAIConfig');
-const { getIO } = require('../config/socketConfig');
 
 // Load environment variables
 dotenv.config();
@@ -198,18 +197,34 @@ async function analyzeDocumentsWithRAG(companyId, documents) {
 const startAnalysis = async (req, res) => {
   try {
     const { companyId } = req.body;
-    const io = getIO();
 
-    // Check if there's already an ongoing analysis
-    const existingAnalysis = await Analysis.findOne({
+    // Enhanced check for ongoing analysis
+    const ongoingAnalyses = await Analysis.find({
       companyId,
-      status: 'in_progress'
+      status: 'in_progress',
+      startTime: { $gt: new Date(Date.now() - 30 * 60 * 1000) } // Within the last 30 minutes
     });
 
-    if (existingAnalysis) {
-      return res.status(400).json({
+    if (ongoingAnalyses.length > 0) {
+      logger.warn(`Rejected analysis request: Analysis already in progress for company ${companyId}`);
+      return res.status(429).json({
         success: false,
-        message: 'An analysis is already in progress for this company'
+        message: 'An analysis is already in progress for this company',
+        analysisId: ongoingAnalyses[0]._id
+      });
+    }
+
+    // Rate limiting - check if there was a recent analysis (success or failure) in the past 10 seconds
+    const recentAnalyses = await Analysis.find({
+      companyId,
+      startTime: { $gt: new Date(Date.now() - 10 * 1000) } // Within the last 10 seconds
+    });
+
+    if (recentAnalyses.length > 0) {
+      logger.warn(`Rejected analysis request: Rate limit exceeded for company ${companyId}`);
+      return res.status(429).json({
+        success: false,
+        message: 'Please wait at least 10 seconds between analysis requests'
       });
     }
 
@@ -251,13 +266,6 @@ const startAnalysis = async (req, res) => {
 
     await analysis.save();
 
-    // Emit analysis started event
-    io.to(`company-${companyId}`).emit('analysis_update', {
-      status: 'started',
-      analysisId: analysis._id,
-      progress: 0
-    });
-
     // Start RAG analysis in the background
     analyzeDocumentsWithRAG(companyId, documents)
       .then(async (results) => {
@@ -267,14 +275,6 @@ const startAnalysis = async (req, res) => {
         analysis.endTime = new Date();
         await analysis.save();
         
-        // Emit completion event with results
-        io.to(`company-${companyId}`).emit('analysis_update', {
-          status: 'completed',
-          analysisId: analysis._id,
-          progress: 100,
-          results
-        });
-        
         logger.info(`Analysis completed for company ${companyId}`);
       })
       .catch(async (error) => {
@@ -283,13 +283,6 @@ const startAnalysis = async (req, res) => {
         analysis.error = error.message;
         analysis.endTime = new Date();
         await analysis.save();
-        
-        // Emit error event
-        io.to(`company-${companyId}`).emit('analysis_update', {
-          status: 'failed',
-          analysisId: analysis._id,
-          error: error.message
-        });
         
         logger.error(`Analysis failed for company ${companyId}:`, error);
       });
