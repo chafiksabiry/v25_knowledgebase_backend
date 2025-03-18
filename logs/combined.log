@@ -24840,3 +24840,448 @@ All tests completed successfully! ✨ {
     "query": "What are the main products and services offered by the company?"
   }
 }
+2025-03-17 12:27:25 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 12:27:25 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-03-17 12:27:25 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 12:27:25 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 12:27:25 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 12:27:25 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 12:27:25 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 12:27:25 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 12:27:25 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 12:32:27 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/documents?companyId=67d18e2b319c11009f4f2a98",
+  "status": 200,
+  "responseTime": "98ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-17 12:32:27 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/call-recordings?companyId=67d18e2b319c11009f4f2a98",
+  "status": 200,
+  "responseTime": "94ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-17 12:32:27 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/documents?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "8ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-17 12:32:27 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/call-recordings?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "16ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-17 12:32:55 [INFO]: Processing uploaded file: Guides.pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 12:32:58 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\uploads\file-1742214775542-848065183.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 12:33:00 [INFO]: Split document into 49 chunks {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 12:33:00 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "POST",
+  "url": "/api/documents/upload",
+  "status": 201,
+  "responseTime": "5106ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "requestBody": {
+    "name": "Guide des réclamtions - APRIL",
+    "description": "Ce document représente comment la société APRIL traite les réclamations de ses clients",
+    "tags": "",
+    "uploadedBy": "Current User",
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-17 12:33:15 [INFO]: Processing question for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the main products and services offered by the company?"
+}
+2025-03-17 12:33:15 [INFO]: Updating RAG corpus for company 67d18e2b319c11009f4f2a98... {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 12:33:15 [INFO]: Creating RAG corpus: {
+  "0": "c",
+  "1": "o",
+  "2": "m",
+  "3": "p",
+  "4": "a",
+  "5": "n",
+  "6": "y",
+  "7": "-",
+  "8": "6",
+  "9": "7",
+  "10": "d",
+  "11": "1",
+  "12": "8",
+  "13": "e",
+  "14": "2",
+  "15": "b",
+  "16": "3",
+  "17": "1",
+  "18": "9",
+  "19": "c",
+  "20": "1",
+  "21": "1",
+  "22": "0",
+  "23": "0",
+  "24": "9",
+  "25": "f",
+  "26": "4",
+  "27": "f",
+  "28": "2",
+  "29": "a",
+  "30": "9",
+  "31": "8",
+  "service": "kb-analysis-backend"
+}
+2025-03-17 12:33:15 [INFO]: Created RAG corpus for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 12:33:15 [INFO]: Importing 2 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 12:33:16 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742214796239.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 12:33:16 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742214796948.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 12:33:17 [INFO]: Processed 2 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 12:33:17 [INFO]: RAG corpus updated successfully for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 12:33:17 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "You are an expert AI assistant with deep knowledge in analyzing and interpreting business documents. You have access to the company's knowledge base.\n\nYour task is to provide comprehensive, analytical, and actionable insights based on the information in the documents. While staying faithful to the source material, you should:\n\n1. ANALYZE the information thoroughly\n2. SYNTHESIZE related information from different parts of the documents\n3. STRUCTURE your response in a clear, user-friendly format\n4. HIGHLIGHT key points, numbers, and comparisons using markdown formatting\n5. PROVIDE practical insights and recommendations when relevant\n6. If comparing options or levels, CREATE tables or structured comparisons\n7. When numbers or specific data are available, INCLUDE them in your analysis\n\nQuestion: What are the main products and services offered by the company?\n\nWhen answering:\n- Start with a clear, direct answer to the question\n- Use bullet points, tables, or sections to organize information\n- Bold important terms and numbers for emphasis\n- If the documents don't explicitly state something but it can be reasonably inferred from the provided information, you may include such insights while clearly indicating they are derived from the context\n- If information is missing or unclear, specify what additional details would be helpful\n- Use markdown formatting to make your response more readable\n\nContext will be provided below. Please analyze it thoroughly and provide a comprehensive response that helps the user make informed decisions."
+}
+2025-03-17 12:33:26 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "POST",
+  "url": "/api/analysis/ask",
+  "status": 200,
+  "responseTime": "10500ms",
+  "userAgent": "PostmanRuntime/7.43.0",
+  "requestBody": {
+    "companyId": "67d18e2b319c11009f4f2a98",
+    "query": "What are the main products and services offered by the company?"
+  }
+}
+2025-03-17 12:35:44 [INFO]: Processing question for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "Qu'est-ce qu'une réclamation selon la définition de l’ACPR ?"
+}
+2025-03-17 12:35:44 [INFO]: Using existing RAG corpus for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 12:35:44 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "You are an expert AI assistant with deep knowledge in analyzing and interpreting business documents. You have access to the company's knowledge base.\n\nYour task is to provide comprehensive, analytical, and actionable insights based on the information in the documents. While staying faithful to the source material, you should:\n\n1. ANALYZE the information thoroughly\n2. SYNTHESIZE related information from different parts of the documents\n3. STRUCTURE your response in a clear, user-friendly format\n4. HIGHLIGHT key points, numbers, and comparisons using markdown formatting\n5. PROVIDE practical insights and recommendations when relevant\n6. If comparing options or levels, CREATE tables or structured comparisons\n7. When numbers or specific data are available, INCLUDE them in your analysis\n\nQuestion: Qu'est-ce qu'une réclamation selon la définition de l’ACPR ?\n\nWhen answering:\n- Start with a clear, direct answer to the question\n- Use bullet points, tables, or sections to organize information\n- Bold important terms and numbers for emphasis\n- If the documents don't explicitly state something but it can be reasonably inferred from the provided information, you may include such insights while clearly indicating they are derived from the context\n- If information is missing or unclear, specify what additional details would be helpful\n- Use markdown formatting to make your response more readable\n\nContext will be provided below. Please analyze it thoroughly and provide a comprehensive response that helps the user make informed decisions."
+}
+2025-03-17 12:35:50 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "POST",
+  "url": "/api/analysis/ask",
+  "status": 200,
+  "responseTime": "6056ms",
+  "userAgent": "PostmanRuntime/7.43.0",
+  "requestBody": {
+    "companyId": "67d18e2b319c11009f4f2a98",
+    "query": "Qu'est-ce qu'une réclamation selon la définition de l’ACPR ?"
+  }
+}
+2025-03-17 12:42:32 [INFO]: Processing question for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "Quels sont les canaux pour envoyer une réclamation à COVERITY ?"
+}
+2025-03-17 12:42:32 [INFO]: Using existing RAG corpus for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 12:42:32 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "You are an expert AI assistant with deep knowledge in analyzing and interpreting business documents. You have access to the company's knowledge base.\n\nYour task is to provide comprehensive, analytical, and actionable insights based on the information in the documents. While staying faithful to the source material, you should:\n\n1. ANALYZE the information thoroughly\n2. SYNTHESIZE related information from different parts of the documents\n3. STRUCTURE your response in a clear, user-friendly format\n4. HIGHLIGHT key points, numbers, and comparisons using markdown formatting\n5. PROVIDE practical insights and recommendations when relevant\n6. If comparing options or levels, CREATE tables or structured comparisons\n7. When numbers or specific data are available, INCLUDE them in your analysis\n\nQuestion: Quels sont les canaux pour envoyer une réclamation à COVERITY ?\n\nWhen answering:\n- Start with a clear, direct answer to the question\n- Use bullet points, tables, or sections to organize information\n- Bold important terms and numbers for emphasis\n- If the documents don't explicitly state something but it can be reasonably inferred from the provided information, you may include such insights while clearly indicating they are derived from the context\n- If information is missing or unclear, specify what additional details would be helpful\n- Use markdown formatting to make your response more readable\n\nContext will be provided below. Please analyze it thoroughly and provide a comprehensive response that helps the user make informed decisions."
+}
+2025-03-17 12:42:38 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "POST",
+  "url": "/api/analysis/ask",
+  "status": 200,
+  "responseTime": "5802ms",
+  "userAgent": "PostmanRuntime/7.43.0",
+  "requestBody": {
+    "companyId": "67d18e2b319c11009f4f2a98",
+    "query": "Quels sont les canaux pour envoyer une réclamation à COVERITY ?"
+  }
+}
+2025-03-17 12:50:34 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/analysis/start",
+  "status": 404,
+  "responseTime": "113ms",
+  "userAgent": "PostmanRuntime/7.43.0"
+}
+2025-03-17 12:50:43 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "POST",
+  "url": "/api/analysis/start",
+  "status": 400,
+  "responseTime": "28ms",
+  "userAgent": "PostmanRuntime/7.43.0",
+  "requestBody": {}
+}
+2025-03-17 12:50:55 [ERROR]: Error starting analysis: Analysis validation failed: modelId: Path `modelId` is required., documentId: Path `documentId` is required. {
+  "service": "kb-analysis-backend",
+  "errors": {
+    "modelId": {
+      "name": "ValidatorError",
+      "message": "Path `modelId` is required.",
+      "properties": {
+        "message": "Path `modelId` is required.",
+        "type": "required",
+        "path": "modelId"
+      },
+      "kind": "required",
+      "path": "modelId"
+    },
+    "documentId": {
+      "name": "ValidatorError",
+      "message": "Path `documentId` is required.",
+      "properties": {
+        "message": "Path `documentId` is required.",
+        "type": "required",
+        "path": "documentId"
+      },
+      "kind": "required",
+      "path": "documentId"
+    }
+  },
+  "_message": "Analysis validation failed",
+  "stack": "ValidationError: Analysis validation failed: modelId: Path `modelId` is required., documentId: Path `documentId` is required.\n    at Document.invalidate (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\document.js:3219:32)\n    at C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\document.js:3012:17\n    at C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\schematype.js:1368:9\n    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)"
+}
+2025-03-17 12:50:55 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "POST",
+  "url": "/api/analysis/start",
+  "status": 500,
+  "responseTime": "131ms",
+  "userAgent": "PostmanRuntime/7.43.0",
+  "requestBody": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-17 12:55:10 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 12:55:10 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-03-17 12:55:10 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 12:55:10 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 12:55:10 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 12:55:10 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 12:55:10 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 12:55:10 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 12:55:10 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 12:55:40 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 12:55:40 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-03-17 12:55:40 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 12:55:40 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 12:55:40 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 12:55:40 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 12:55:40 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 12:55:40 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 12:55:40 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 12:55:56 [INFO]: Creating RAG corpus: {
+  "0": "c",
+  "1": "o",
+  "2": "m",
+  "3": "p",
+  "4": "a",
+  "5": "n",
+  "6": "y",
+  "7": "-",
+  "8": "6",
+  "9": "7",
+  "10": "d",
+  "11": "1",
+  "12": "8",
+  "13": "e",
+  "14": "2",
+  "15": "b",
+  "16": "3",
+  "17": "1",
+  "18": "9",
+  "19": "c",
+  "20": "1",
+  "21": "1",
+  "22": "0",
+  "23": "0",
+  "24": "9",
+  "25": "f",
+  "26": "4",
+  "27": "f",
+  "28": "2",
+  "29": "a",
+  "30": "9",
+  "31": "8",
+  "service": "kb-analysis-backend"
+}
+2025-03-17 12:55:56 [INFO]: Created RAG corpus for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 12:55:56 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "POST",
+  "url": "/api/analysis/start",
+  "status": 200,
+  "responseTime": "75ms",
+  "userAgent": "PostmanRuntime/7.43.0",
+  "requestBody": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-17 12:55:56 [INFO]: Importing 2 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 12:55:56 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742216156509.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 12:55:57 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742216157400.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 12:55:57 [INFO]: Processed 2 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 12:55:57 [INFO]: Running analysis query for topics... {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 12:55:57 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the main topics and themes covered in these documents? Please provide a structured analysis with main topics and subtopics."
+}
+2025-03-17 12:56:06 [INFO]: Running analysis query for gaps... {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 12:56:06 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the potential knowledge gaps or missing information in these documents? Consider completeness, clarity, and areas that might need more detail."
+}
+2025-03-17 12:56:16 [INFO]: Running analysis query for relationships... {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 12:56:16 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the key relationships and connections between different topics in these documents? How do they relate to each other?"
+}
+2025-03-17 12:56:22 [INFO]: Running analysis query for recommendations... {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 12:56:22 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What specific recommendations can you make to improve this knowledge base? Consider organization, completeness, and clarity."
+}
+2025-03-17 12:56:30 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/analysis/67d18e2b319c11009f4f2a98",
+  "status": 200,
+  "responseTime": "13ms",
+  "userAgent": "PostmanRuntime/7.43.0"
+}
+2025-03-17 12:56:31 [INFO]: Analysis completed for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-17 12:56:39 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/analysis/67d18e2b319c11009f4f2a98",
+  "status": 200,
+  "responseTime": "3ms",
+  "userAgent": "PostmanRuntime/7.43.0"
+}
