@@ -910,3 +910,220 @@
   "name": "ClientError",
   "stack": "ClientError: [VertexAI.ClientError]: got status: 429 Too Many Requests. {\"error\":{\"code\":429,\"message\":\"Quota exceeded for aiplatform.googleapis.com/generate_content_requests_per_minute_per_project_per_base_model with base model: gemini-1.5-flash. Please submit a quota increase request. https://cloud.google.com/vertex-ai/docs/generative-ai/quotas-genai.\",\"status\":\"RESOURCE_EXHAUSTED\"}}\n    at throwErrorIfNotOK (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\post_fetch_processing.js:31:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async generateContent (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\generate_content.js:52:5)\n    at async VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:216:22)\n    at async analyzeDocumentsWithRAG (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:159:24)"
 }
+2025-03-18 15:12:07 [ERROR]: Unhandled Rejection: Analysis validation failed: results.recommendations: Cast to string failed for value "{
+  summary: "Recommendations focus on enhancing the knowledge base's organization, clarity, and user experience.",
+  priorities: [
+    {
+      recommendation: 'Create a clear and consistent document hierarchy.',
+      priority: 'HIGH',
+      rationale: 'The current structure lacks a logical hierarchy, making it difficult to navigate and find specific information.',
+      implementation: 'Develop a table of contents, chapter headings, and subheadings to organize the content into logical sections.',
+      relatedGaps: [Array],
+      affectedDocuments: [Array]
+    },
+    {
+      recommendation: 'Improve readability and accessibility.',
+      priority: 'HIGH',
+      rationale: 'The content is dense and difficult to read due to formatting inconsistencies and excessive use of bolding and underlines.',
+      implementation: 'Use clear and concise language, consistent formatting, and appropriate headings and subheadings.',
+      relatedGaps: [Array],
+      affectedDocuments: [Array]
+    },
+    {
+      recommendation: 'Standardize terminology and define key concepts.',
+      priority: 'MEDIUM',
+      rationale: 'Inconsistent terminology and lack of definitions for key concepts can lead to confusion for users.',
+      implementation: 'Create a glossary of terms and definitions, and consistently use standardized terminology throughout the knowledge base.',
+      relatedGaps: [Array],
+      affectedDocuments: [Array]
+    },
+    {
+      recommendation: 'Provide clear and concise contact information.',
+      priority: 'MEDIUM',
+      rationale: 'Users need to know how to reach the appropriate contact for support or inquiries.',
+      implementation: 'Include a dedicated section with contact information, including email addresses, phone numbers, and relevant department contacts.',
+      relatedGaps: [Array],
+      affectedDocuments: [Array]
+    },
+    {
+      recommendation: 'Implement a search function.',
+      priority: 'MEDIUM',
+      rationale: 'A search function allows users to quickly find relevant information within the knowledge base.',
+      implementation: 'Integrate a robust search functionality into the knowledge base platform.',
+      relatedGaps: [Array]
+    },
+    {
+      recommendation: 'Consider using a more user-friendly platform for the knowledge base.',
+      priority: 'LOW',
+      rationale: 'The current format may not be ideal for a dynamic knowledge base.',
+      implementation: 'Evaluate user-friendly knowledge base platforms that offer features such as intuitive navigation, search functionality, and content management tools.',
+      relatedGaps: [Array]
+    }
+  ]
+}" (type Object) at path "results.recommendations" {
+  "service": "kb-analysis-backend",
+  "errors": {
+    "results.recommendations": {
+      "stringValue": "\"{\n  summary: \"Recommendations focus on enhancing the knowledge base's organization, clarity, and user experience.\",\n  priorities: [\n    {\n      recommendation: 'Create a clear and consistent document hierarchy.',\n      priority: 'HIGH',\n      rationale: 'The current structure lacks a logical hierarchy, making it difficult to navigate and find specific information.',\n      implementation: 'Develop a table of contents, chapter headings, and subheadings to organize the content into logical sections.',\n      relatedGaps: [Array],\n      affectedDocuments: [Array]\n    },\n    {\n      recommendation: 'Improve readability and accessibility.',\n      priority: 'HIGH',\n      rationale: 'The content is dense and difficult to read due to formatting inconsistencies and excessive use of bolding and underlines.',\n      implementation: 'Use clear and concise language, consistent formatting, and appropriate headings and subheadings.',\n      relatedGaps: [Array],\n      affectedDocuments: [Array]\n    },\n    {\n      recommendation: 'Standardize terminology and define key concepts.',\n      priority: 'MEDIUM',\n      rationale: 'Inconsistent terminology and lack of definitions for key concepts can lead to confusion for users.',\n      implementation: 'Create a glossary of terms and definitions, and consistently use standardized terminology throughout the knowledge base.',\n      relatedGaps: [Array],\n      affectedDocuments: [Array]\n    },\n    {\n      recommendation: 'Provide clear and concise contact information.',\n      priority: 'MEDIUM',\n      rationale: 'Users need to know how to reach the appropriate contact for support or inquiries.',\n      implementation: 'Include a dedicated section with contact information, including email addresses, phone numbers, and relevant department contacts.',\n      relatedGaps: [Array],\n      affectedDocuments: [Array]\n    },\n    {\n      recommendation: 'Implement a search function.',\n      priority: 'MEDIUM',\n      rationale: 'A search function allows users to quickly find relevant information within the knowledge base.',\n      implementation: 'Integrate a robust search functionality into the knowledge base platform.',\n      relatedGaps: [Array]\n    },\n    {\n      recommendation: 'Consider using a more user-friendly platform for the knowledge base.',\n      priority: 'LOW',\n      rationale: 'The current format may not be ideal for a dynamic knowledge base.',\n      implementation: 'Evaluate user-friendly knowledge base platforms that offer features such as intuitive navigation, search functionality, and content management tools.',\n      relatedGaps: [Array]\n    }\n  ]\n}\"",
+      "valueType": "Object",
+      "kind": "string",
+      "value": {
+        "summary": "Recommendations focus on enhancing the knowledge base's organization, clarity, and user experience.",
+        "priorities": [
+          {
+            "recommendation": "Create a clear and consistent document hierarchy.",
+            "priority": "HIGH",
+            "rationale": "The current structure lacks a logical hierarchy, making it difficult to navigate and find specific information.",
+            "implementation": "Develop a table of contents, chapter headings, and subheadings to organize the content into logical sections.",
+            "relatedGaps": [
+              "Lack of clear organization within documents."
+            ],
+            "affectedDocuments": [
+              {
+                "name": "CIBLES ET GARANTIES"
+              },
+              {
+                "name": "Convention de Partenariat - Annexe 1"
+              },
+              {
+                "name": "Convention de Partenariat - Annexe 2"
+              },
+              {
+                "name": "Convention de Partenariat - Annexe 3"
+              },
+              {
+                "name": "Convention de Partenariat - Annexe 4"
+              },
+              {
+                "name": "Convention de Partenariat - Annexe 5"
+              },
+              {
+                "name": "CHARTE D’UTILISATION DE LA MARQUE COVERITY"
+              },
+              {
+                "name": "Réf. 50415 – 05/2023"
+              }
+            ]
+          },
+          {
+            "recommendation": "Improve readability and accessibility.",
+            "priority": "HIGH",
+            "rationale": "The content is dense and difficult to read due to formatting inconsistencies and excessive use of bolding and underlines.",
+            "implementation": "Use clear and concise language, consistent formatting, and appropriate headings and subheadings.",
+            "relatedGaps": [
+              "Overuse of bolding and underlines.",
+              "Inconsistent formatting.",
+              "Dense and difficult to read content."
+            ],
+            "affectedDocuments": [
+              {
+                "name": "CIBLES ET GARANTIES"
+              },
+              {
+                "name": "Convention de Partenariat - Annexe 1"
+              },
+              {
+                "name": "Convention de Partenariat - Annexe 2"
+              },
+              {
+                "name": "Convention de Partenariat - Annexe 3"
+              },
+              {
+                "name": "Convention de Partenariat - Annexe 4"
+              },
+              {
+                "name": "Convention de Partenariat - Annexe 5"
+              },
+              {
+                "name": "CHARTE D’UTILISATION DE LA MARQUE COVERITY"
+              },
+              {
+                "name": "Réf. 50415 – 05/2023"
+              }
+            ]
+          },
+          {
+            "recommendation": "Standardize terminology and define key concepts.",
+            "priority": "MEDIUM",
+            "rationale": "Inconsistent terminology and lack of definitions for key concepts can lead to confusion for users.",
+            "implementation": "Create a glossary of terms and definitions, and consistently use standardized terminology throughout the knowledge base.",
+            "relatedGaps": [
+              "Inconsistent terminology.",
+              "Lack of clear definitions for key concepts."
+            ],
+            "affectedDocuments": [
+              {
+                "name": "CIBLES ET GARANTIES"
+              },
+              {
+                "name": "Convention de Partenariat - Annexe 1"
+              },
+              {
+                "name": "Convention de Partenariat - Annexe 2"
+              },
+              {
+                "name": "Convention de Partenariat - Annexe 3"
+              },
+              {
+                "name": "Convention de Partenariat - Annexe 4"
+              },
+              {
+                "name": "Convention de Partenariat - Annexe 5"
+              },
+              {
+                "name": "CHARTE D’UTILISATION DE LA MARQUE COVERITY"
+              },
+              {
+                "name": "Réf. 50415 – 05/2023"
+              }
+            ]
+          },
+          {
+            "recommendation": "Provide clear and concise contact information.",
+            "priority": "MEDIUM",
+            "rationale": "Users need to know how to reach the appropriate contact for support or inquiries.",
+            "implementation": "Include a dedicated section with contact information, including email addresses, phone numbers, and relevant department contacts.",
+            "relatedGaps": [
+              "Lack of centralized contact information."
+            ],
+            "affectedDocuments": [
+              {
+                "name": "Convention de Partenariat - Annexe 1"
+              },
+              {
+                "name": "Convention de Partenariat - Annexe 3"
+              },
+              {
+                "name": "CHARTE D’UTILISATION DE LA MARQUE COVERITY"
+              }
+            ]
+          },
+          {
+            "recommendation": "Implement a search function.",
+            "priority": "MEDIUM",
+            "rationale": "A search function allows users to quickly find relevant information within the knowledge base.",
+            "implementation": "Integrate a robust search functionality into the knowledge base platform.",
+            "relatedGaps": [
+              "Lack of search functionality."
+            ]
+          },
+          {
+            "recommendation": "Consider using a more user-friendly platform for the knowledge base.",
+            "priority": "LOW",
+            "rationale": "The current format may not be ideal for a dynamic knowledge base.",
+            "implementation": "Evaluate user-friendly knowledge base platforms that offer features such as intuitive navigation, search functionality, and content management tools.",
+            "relatedGaps": [
+              "Limited functionality of the current platform."
+            ]
+          }
+        ]
+      },
+      "path": "results.recommendations",
+      "reason": null,
+      "name": "CastError",
+      "message": "Cast to string failed for value \"{\n  summary: \"Recommendations focus on enhancing the knowledge base's organization, clarity, and user experience.\",\n  priorities: [\n    {\n      recommendation: 'Create a clear and consistent document hierarchy.',\n      priority: 'HIGH',\n      rationale: 'The current structure lacks a logical hierarchy, making it difficult to navigate and find specific information.',\n      implementation: 'Develop a table of contents, chapter headings, and subheadings to organize the content into logical sections.',\n      relatedGaps: [Array],\n      affectedDocuments: [Array]\n    },\n    {\n      recommendation: 'Improve readability and accessibility.',\n      priority: 'HIGH',\n      rationale: 'The content is dense and difficult to read due to formatting inconsistencies and excessive use of bolding and underlines.',\n      implementation: 'Use clear and concise language, consistent formatting, and appropriate headings and subheadings.',\n      relatedGaps: [Array],\n      affectedDocuments: [Array]\n    },\n    {\n      recommendation: 'Standardize terminology and define key concepts.',\n      priority: 'MEDIUM',\n      rationale: 'Inconsistent terminology and lack of definitions for key concepts can lead to confusion for users.',\n      implementation: 'Create a glossary of terms and definitions, and consistently use standardized terminology throughout the knowledge base.',\n      relatedGaps: [Array],\n      affectedDocuments: [Array]\n    },\n    {\n      recommendation: 'Provide clear and concise contact information.',\n      priority: 'MEDIUM',\n      rationale: 'Users need to know how to reach the appropriate contact for support or inquiries.',\n      implementation: 'Include a dedicated section with contact information, including email addresses, phone numbers, and relevant department contacts.',\n      relatedGaps: [Array],\n      affectedDocuments: [Array]\n    },\n    {\n      recommendation: 'Implement a search function.',\n      priority: 'MEDIUM',\n      rationale: 'A search function allows users to quickly find relevant information within the knowledge base.',\n      implementation: 'Integrate a robust search functionality into the knowledge base platform.',\n      relatedGaps: [Array]\n    },\n    {\n      recommendation: 'Consider using a more user-friendly platform for the knowledge base.',\n      priority: 'LOW',\n      rationale: 'The current format may not be ideal for a dynamic knowledge base.',\n      implementation: 'Evaluate user-friendly knowledge base platforms that offer features such as intuitive navigation, search functionality, and content management tools.',\n      relatedGaps: [Array]\n    }\n  ]\n}\" (type Object) at path \"results.recommendations\""
+    }
+  },
+  "_message": "Analysis validation failed",
+  "stack": "ValidationError: Analysis validation failed: results.recommendations: Cast to string failed for value \"{\n  summary: \"Recommendations focus on enhancing the knowledge base's organization, clarity, and user experience.\",\n  priorities: [\n    {\n      recommendation: 'Create a clear and consistent document hierarchy.',\n      priority: 'HIGH',\n      rationale: 'The current structure lacks a logical hierarchy, making it difficult to navigate and find specific information.',\n      implementation: 'Develop a table of contents, chapter headings, and subheadings to organize the content into logical sections.',\n      relatedGaps: [Array],\n      affectedDocuments: [Array]\n    },\n    {\n      recommendation: 'Improve readability and accessibility.',\n      priority: 'HIGH',\n      rationale: 'The content is dense and difficult to read due to formatting inconsistencies and excessive use of bolding and underlines.',\n      implementation: 'Use clear and concise language, consistent formatting, and appropriate headings and subheadings.',\n      relatedGaps: [Array],\n      affectedDocuments: [Array]\n    },\n    {\n      recommendation: 'Standardize terminology and define key concepts.',\n      priority: 'MEDIUM',\n      rationale: 'Inconsistent terminology and lack of definitions for key concepts can lead to confusion for users.',\n      implementation: 'Create a glossary of terms and definitions, and consistently use standardized terminology throughout the knowledge base.',\n      relatedGaps: [Array],\n      affectedDocuments: [Array]\n    },\n    {\n      recommendation: 'Provide clear and concise contact information.',\n      priority: 'MEDIUM',\n      rationale: 'Users need to know how to reach the appropriate contact for support or inquiries.',\n      implementation: 'Include a dedicated section with contact information, including email addresses, phone numbers, and relevant department contacts.',\n      relatedGaps: [Array],\n      affectedDocuments: [Array]\n    },\n    {\n      recommendation: 'Implement a search function.',\n      priority: 'MEDIUM',\n      rationale: 'A search function allows users to quickly find relevant information within the knowledge base.',\n      implementation: 'Integrate a robust search functionality into the knowledge base platform.',\n      relatedGaps: [Array]\n    },\n    {\n      recommendation: 'Consider using a more user-friendly platform for the knowledge base.',\n      priority: 'LOW',\n      rationale: 'The current format may not be ideal for a dynamic knowledge base.',\n      implementation: 'Evaluate user-friendly knowledge base platforms that offer features such as intuitive navigation, search functionality, and content management tools.',\n      relatedGaps: [Array]\n    }\n  ]\n}\" (type Object) at path \"results.recommendations\"\n    at Document.invalidate (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\document.js:3219:32)\n    at _complete (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\document.js:2918:16)\n    at complete (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\document.js:3020:19)\n    at C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\document.js:3014:20\n    at C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\schematype.js:1360:11\n    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)"
+}
