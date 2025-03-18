@@ -27110,3 +27110,450 @@ All tests completed successfully! ✨ {
 2025-03-18 10:50:38 [INFO]: Analysis completed for company 67d18e2b319c11009f4f2a98 {
   "service": "kb-analysis-backend"
 }
+2025-03-18 11:57:43 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 11:57:43 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-03-18 11:57:43 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 11:57:43 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 11:57:43 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 11:57:43 [INFO]: WebSocket server initialized {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 11:57:43 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 11:57:43 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 11:57:43 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 11:58:12 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 11:58:12 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-03-18 11:58:12 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 11:58:12 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 11:58:12 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 11:58:12 [INFO]: WebSocket server initialized {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 11:58:12 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 11:58:12 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 11:58:12 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 11:58:33 [INFO]: Creating RAG corpus: {
+  "0": "c",
+  "1": "o",
+  "2": "m",
+  "3": "p",
+  "4": "a",
+  "5": "n",
+  "6": "y",
+  "7": "-",
+  "8": "6",
+  "9": "7",
+  "10": "d",
+  "11": "1",
+  "12": "8",
+  "13": "e",
+  "14": "2",
+  "15": "b",
+  "16": "3",
+  "17": "1",
+  "18": "9",
+  "19": "c",
+  "20": "1",
+  "21": "1",
+  "22": "0",
+  "23": "0",
+  "24": "9",
+  "25": "f",
+  "26": "4",
+  "27": "f",
+  "28": "2",
+  "29": "a",
+  "30": "9",
+  "31": "8",
+  "service": "kb-analysis-backend"
+}
+2025-03-18 11:58:33 [INFO]: Created RAG corpus for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 11:58:33 [INFO]: Importing 3 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 11:58:33 [INFO]: Creating RAG corpus: {
+  "0": "c",
+  "1": "o",
+  "2": "m",
+  "3": "p",
+  "4": "a",
+  "5": "n",
+  "6": "y",
+  "7": "-",
+  "8": "6",
+  "9": "7",
+  "10": "d",
+  "11": "1",
+  "12": "8",
+  "13": "e",
+  "14": "2",
+  "15": "b",
+  "16": "3",
+  "17": "1",
+  "18": "9",
+  "19": "c",
+  "20": "1",
+  "21": "1",
+  "22": "0",
+  "23": "0",
+  "24": "9",
+  "25": "f",
+  "26": "4",
+  "27": "f",
+  "28": "2",
+  "29": "a",
+  "30": "9",
+  "31": "8",
+  "service": "kb-analysis-backend"
+}
+2025-03-18 11:58:33 [INFO]: Created RAG corpus for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 11:58:33 [INFO]: Importing 3 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 11:58:34 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742299114187.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 11:58:34 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742299114812.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 11:58:35 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742299115586.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 11:58:36 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742299116489.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 11:58:37 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742299117324.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 11:58:37 [INFO]: Processed 3 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 11:58:37 [INFO]: Running analysis query for topics... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 11:58:37 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the main topics and themes covered in these documents? Please provide a structured analysis with main topics and subtopics."
+}
+2025-03-18 11:58:37 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742299117423.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 11:58:37 [INFO]: Processed 3 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 11:58:37 [INFO]: Running analysis query for topics... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 11:58:37 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the main topics and themes covered in these documents? Please provide a structured analysis with main topics and subtopics."
+}
+2025-03-18 11:58:50 [INFO]: Running analysis query for gaps... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 11:58:50 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the potential knowledge gaps or missing information in these documents? Consider completeness, clarity, and areas that might need more detail."
+}
+2025-03-18 11:58:54 [INFO]: Running analysis query for gaps... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 11:58:54 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the potential knowledge gaps or missing information in these documents? Consider completeness, clarity, and areas that might need more detail."
+}
+2025-03-18 11:58:54 [INFO]: Running analysis query for relationships... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 11:58:54 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the key relationships and connections between different topics in these documents? How do they relate to each other?"
+}
+2025-03-18 11:58:58 [INFO]: Running analysis query for relationships... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 11:58:58 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the key relationships and connections between different topics in these documents? How do they relate to each other?"
+}
+2025-03-18 11:59:07 [INFO]: Running analysis query for recommendations... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 11:59:07 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What specific recommendations can you make to improve this knowledge base? Consider organization, completeness, and clarity."
+}
+2025-03-18 11:59:08 [INFO]: Running analysis query for recommendations... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 11:59:08 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What specific recommendations can you make to improve this knowledge base? Consider organization, completeness, and clarity."
+}
+2025-03-18 11:59:15 [INFO]: Analysis completed for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 11:59:19 [INFO]: Analysis completed for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 12:01:35 [INFO]: Processing question for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "Hi, comment cv ?"
+}
+2025-03-18 12:01:35 [INFO]: Updating RAG corpus for company 67d18e2b319c11009f4f2a98... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 12:01:35 [INFO]: Creating RAG corpus: {
+  "0": "c",
+  "1": "o",
+  "2": "m",
+  "3": "p",
+  "4": "a",
+  "5": "n",
+  "6": "y",
+  "7": "-",
+  "8": "6",
+  "9": "7",
+  "10": "d",
+  "11": "1",
+  "12": "8",
+  "13": "e",
+  "14": "2",
+  "15": "b",
+  "16": "3",
+  "17": "1",
+  "18": "9",
+  "19": "c",
+  "20": "1",
+  "21": "1",
+  "22": "0",
+  "23": "0",
+  "24": "9",
+  "25": "f",
+  "26": "4",
+  "27": "f",
+  "28": "2",
+  "29": "a",
+  "30": "9",
+  "31": "8",
+  "service": "kb-analysis-backend"
+}
+2025-03-18 12:01:35 [INFO]: Created RAG corpus for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 12:01:35 [INFO]: Importing 3 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 12:01:36 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742299296233.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 12:01:37 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742299297042.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 12:01:37 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742299297954.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 12:01:38 [INFO]: Processed 3 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 12:01:38 [INFO]: RAG corpus updated successfully for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 12:01:38 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "You are an expert AI assistant with deep knowledge in analyzing and interpreting business documents. You have access to the company's knowledge base.\n\nYour task is to provide comprehensive, analytical, and actionable insights based on the information in the documents. While staying faithful to the source material, you should:\n\n1. ANALYZE the information thoroughly\n2. SYNTHESIZE related information from different parts of the documents\n3. STRUCTURE your response in a clear, user-friendly format\n4. HIGHLIGHT key points, numbers, and comparisons using markdown formatting\n5. PROVIDE practical insights and recommendations when relevant\n6. If comparing options or levels, CREATE tables or structured comparisons\n7. When numbers or specific data are available, INCLUDE them in your analysis\n\nQuestion: Hi, comment cv ?\n\nWhen answering:\n- Start with a clear, direct answer to the question\n- Use bullet points, tables, or sections to organize information\n- Bold important terms and numbers for emphasis\n- If the documents don't explicitly state something but it can be reasonably inferred from the provided information, you may include such insights while clearly indicating they are derived from the context\n- If information is missing or unclear, specify what additional details would be helpful\n- Use markdown formatting to make your response more readable\n\nContext will be provided below. Please analyze it thoroughly and provide a comprehensive response that helps the user make informed decisions."
+}
+2025-03-18 12:09:43 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 12:09:43 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-03-18 12:09:43 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 12:09:43 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 12:09:43 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 12:09:43 [INFO]: WebSocket server initialized {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 12:09:43 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 12:09:43 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 12:09:43 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 12:10:31 [INFO]: Processing question for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "Quels sont les canaux pour envoyer une réclamation à COVERITY ? Donne moi la réponse briévement sans plus de détails"
+}
+2025-03-18 12:10:31 [INFO]: Updating RAG corpus for company 67d18e2b319c11009f4f2a98... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 12:10:31 [INFO]: Creating RAG corpus: {
+  "0": "c",
+  "1": "o",
+  "2": "m",
+  "3": "p",
+  "4": "a",
+  "5": "n",
+  "6": "y",
+  "7": "-",
+  "8": "6",
+  "9": "7",
+  "10": "d",
+  "11": "1",
+  "12": "8",
+  "13": "e",
+  "14": "2",
+  "15": "b",
+  "16": "3",
+  "17": "1",
+  "18": "9",
+  "19": "c",
+  "20": "1",
+  "21": "1",
+  "22": "0",
+  "23": "0",
+  "24": "9",
+  "25": "f",
+  "26": "4",
+  "27": "f",
+  "28": "2",
+  "29": "a",
+  "30": "9",
+  "31": "8",
+  "service": "kb-analysis-backend"
+}
+2025-03-18 12:10:31 [INFO]: Created RAG corpus for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 12:10:31 [INFO]: Importing 3 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 12:10:31 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742299831824.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 12:10:32 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742299832616.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 12:10:33 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742299833133.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 12:10:33 [INFO]: Processed 3 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 12:10:33 [INFO]: RAG corpus updated successfully for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 12:10:33 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "You are an expert AI assistant with deep knowledge in analyzing and interpreting business documents. You have access to the company's knowledge base.\n\nYour task is to provide comprehensive, analytical, and actionable insights based on the information in the documents. While staying faithful to the source material, you should:\n\n1. ANALYZE the information thoroughly\n2. SYNTHESIZE related information from different parts of the documents\n3. STRUCTURE your response in a clear, user-friendly format\n4. HIGHLIGHT key points, numbers, and comparisons using markdown formatting\n5. PROVIDE practical insights and recommendations when relevant\n6. If comparing options or levels, CREATE tables or structured comparisons\n7. When numbers or specific data are available, INCLUDE them in your analysis\n\nQuestion: Quels sont les canaux pour envoyer une réclamation à COVERITY ? Donne moi la réponse briévement sans plus de détails\n\nWhen answering:\n- Start with a clear, direct answer to the question\n- Use bullet points, tables, or sections to organize information\n- Bold important terms and numbers for emphasis\n- If the documents don't explicitly state something but it can be reasonably inferred from the provided information, you may include such insights while clearly indicating they are derived from the context\n- If information is missing or unclear, specify what additional details would be helpful\n- Use markdown formatting to make your response more readable\n\nContext will be provided below. Please analyze it thoroughly and provide a comprehensive response that helps the user make informed decisions."
+}
+2025-03-18 12:12:35 [INFO]: Processing question for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "combien dure la période de traitement des réclamations par APRIL ? "
+}
+2025-03-18 12:12:35 [INFO]: Using existing RAG corpus for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 12:12:35 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "You are an expert AI assistant with deep knowledge in analyzing and interpreting business documents. You have access to the company's knowledge base.\n\nYour task is to provide comprehensive, analytical, and actionable insights based on the information in the documents. While staying faithful to the source material, you should:\n\n1. ANALYZE the information thoroughly\n2. SYNTHESIZE related information from different parts of the documents\n3. STRUCTURE your response in a clear, user-friendly format\n4. HIGHLIGHT key points, numbers, and comparisons using markdown formatting\n5. PROVIDE practical insights and recommendations when relevant\n6. If comparing options or levels, CREATE tables or structured comparisons\n7. When numbers or specific data are available, INCLUDE them in your analysis\n\nQuestion: combien dure la période de traitement des réclamations par APRIL ? \n\nWhen answering:\n- Start with a clear, direct answer to the question\n- Use bullet points, tables, or sections to organize information\n- Bold important terms and numbers for emphasis\n- If the documents don't explicitly state something but it can be reasonably inferred from the provided information, you may include such insights while clearly indicating they are derived from the context\n- If information is missing or unclear, specify what additional details would be helpful\n- Use markdown formatting to make your response more readable\n\nContext will be provided below. Please analyze it thoroughly and provide a comprehensive response that helps the user make informed decisions."
+}
+2025-03-18 12:15:37 [INFO]: Processing question for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "Quel sonts les services offerts par APRIL, réponds en françis"
+}
+2025-03-18 12:15:37 [INFO]: Using existing RAG corpus for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 12:15:37 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "You are an expert AI assistant with deep knowledge in analyzing and interpreting business documents. You have access to the company's knowledge base.\n\nYour task is to provide comprehensive, analytical, and actionable insights based on the information in the documents. While staying faithful to the source material, you should:\n\n1. ANALYZE the information thoroughly\n2. SYNTHESIZE related information from different parts of the documents\n3. STRUCTURE your response in a clear, user-friendly format\n4. HIGHLIGHT key points, numbers, and comparisons using markdown formatting\n5. PROVIDE practical insights and recommendations when relevant\n6. If comparing options or levels, CREATE tables or structured comparisons\n7. When numbers or specific data are available, INCLUDE them in your analysis\n\nQuestion: Quel sonts les services offerts par APRIL, réponds en françis\n\nWhen answering:\n- Start with a clear, direct answer to the question\n- Use bullet points, tables, or sections to organize information\n- Bold important terms and numbers for emphasis\n- If the documents don't explicitly state something but it can be reasonably inferred from the provided information, you may include such insights while clearly indicating they are derived from the context\n- If information is missing or unclear, specify what additional details would be helpful\n- Use markdown formatting to make your response more readable\n\nContext will be provided below. Please analyze it thoroughly and provide a comprehensive response that helps the user make informed decisions."
+}
+2025-03-18 12:17:36 [INFO]: Processing question for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "Quels sont les points fort de :  APRIL Santé  Globale +"
+}
+2025-03-18 12:17:36 [INFO]: Using existing RAG corpus for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 12:17:36 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "You are an expert AI assistant with deep knowledge in analyzing and interpreting business documents. You have access to the company's knowledge base.\n\nYour task is to provide comprehensive, analytical, and actionable insights based on the information in the documents. While staying faithful to the source material, you should:\n\n1. ANALYZE the information thoroughly\n2. SYNTHESIZE related information from different parts of the documents\n3. STRUCTURE your response in a clear, user-friendly format\n4. HIGHLIGHT key points, numbers, and comparisons using markdown formatting\n5. PROVIDE practical insights and recommendations when relevant\n6. If comparing options or levels, CREATE tables or structured comparisons\n7. When numbers or specific data are available, INCLUDE them in your analysis\n\nQuestion: Quels sont les points fort de :  APRIL Santé  Globale +\n\nWhen answering:\n- Start with a clear, direct answer to the question\n- Use bullet points, tables, or sections to organize information\n- Bold important terms and numbers for emphasis\n- If the documents don't explicitly state something but it can be reasonably inferred from the provided information, you may include such insights while clearly indicating they are derived from the context\n- If information is missing or unclear, specify what additional details would be helpful\n- Use markdown formatting to make your response more readable\n\nContext will be provided below. Please analyze it thoroughly and provide a comprehensive response that helps the user make informed decisions."
+}
+2025-03-18 12:19:27 [INFO]: Processing question for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "A qui s'adresse l'offre APRIL Santé Globale +? "
+}
+2025-03-18 12:19:27 [INFO]: Using existing RAG corpus for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 12:19:27 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "You are an expert AI assistant with deep knowledge in analyzing and interpreting business documents. You have access to the company's knowledge base.\n\nYour task is to provide comprehensive, analytical, and actionable insights based on the information in the documents. While staying faithful to the source material, you should:\n\n1. ANALYZE the information thoroughly\n2. SYNTHESIZE related information from different parts of the documents\n3. STRUCTURE your response in a clear, user-friendly format\n4. HIGHLIGHT key points, numbers, and comparisons using markdown formatting\n5. PROVIDE practical insights and recommendations when relevant\n6. If comparing options or levels, CREATE tables or structured comparisons\n7. When numbers or specific data are available, INCLUDE them in your analysis\n\nQuestion: A qui s'adresse l'offre APRIL Santé Globale +? \n\nWhen answering:\n- Start with a clear, direct answer to the question\n- Use bullet points, tables, or sections to organize information\n- Bold important terms and numbers for emphasis\n- If the documents don't explicitly state something but it can be reasonably inferred from the provided information, you may include such insights while clearly indicating they are derived from the context\n- If information is missing or unclear, specify what additional details would be helpful\n- Use markdown formatting to make your response more readable\n\nContext will be provided below. Please analyze it thoroughly and provide a comprehensive response that helps the user make informed decisions."
+}
+2025-03-18 12:22:40 [INFO]: Processing question for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "I'am a teneager of 23 years old, can i benifit from insurance offer given by april ??"
+}
+2025-03-18 12:22:40 [INFO]: Using existing RAG corpus for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 12:22:40 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "You are an expert AI assistant with deep knowledge in analyzing and interpreting business documents. You have access to the company's knowledge base.\n\nYour task is to provide comprehensive, analytical, and actionable insights based on the information in the documents. While staying faithful to the source material, you should:\n\n1. ANALYZE the information thoroughly\n2. SYNTHESIZE related information from different parts of the documents\n3. STRUCTURE your response in a clear, user-friendly format\n4. HIGHLIGHT key points, numbers, and comparisons using markdown formatting\n5. PROVIDE practical insights and recommendations when relevant\n6. If comparing options or levels, CREATE tables or structured comparisons\n7. When numbers or specific data are available, INCLUDE them in your analysis\n\nQuestion: I'am a teneager of 23 years old, can i benifit from insurance offer given by april ??\n\nWhen answering:\n- Start with a clear, direct answer to the question\n- Use bullet points, tables, or sections to organize information\n- Bold important terms and numbers for emphasis\n- If the documents don't explicitly state something but it can be reasonably inferred from the provided information, you may include such insights while clearly indicating they are derived from the context\n- If information is missing or unclear, specify what additional details would be helpful\n- Use markdown formatting to make your response more readable\n\nContext will be provided below. Please analyze it thoroughly and provide a comprehensive response that helps the user make informed decisions."
+}
