@@ -25285,3 +25285,1828 @@ All tests completed successfully! ✨ {
   "responseTime": "3ms",
   "userAgent": "PostmanRuntime/7.43.0"
 }
+2025-03-18 09:28:22 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:28:22 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-03-18 09:28:22 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:28:22 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:28:22 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:28:22 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:28:22 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:28:22 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:28:22 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:30:16 [INFO]: Processing question for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "Quels sont les canaux pour envoyer une réclamation à COVERITY ? Donne moi le réponse briévement sans plus de détails"
+}
+2025-03-18 09:30:16 [INFO]: Updating RAG corpus for company 67d18e2b319c11009f4f2a98... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:30:16 [INFO]: Creating RAG corpus: {
+  "0": "c",
+  "1": "o",
+  "2": "m",
+  "3": "p",
+  "4": "a",
+  "5": "n",
+  "6": "y",
+  "7": "-",
+  "8": "6",
+  "9": "7",
+  "10": "d",
+  "11": "1",
+  "12": "8",
+  "13": "e",
+  "14": "2",
+  "15": "b",
+  "16": "3",
+  "17": "1",
+  "18": "9",
+  "19": "c",
+  "20": "1",
+  "21": "1",
+  "22": "0",
+  "23": "0",
+  "24": "9",
+  "25": "f",
+  "26": "4",
+  "27": "f",
+  "28": "2",
+  "29": "a",
+  "30": "9",
+  "31": "8",
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:30:16 [INFO]: Created RAG corpus for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:30:16 [INFO]: Importing 2 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:30:16 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742290216841.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:30:18 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742290218260.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:30:19 [INFO]: Processed 2 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:30:19 [INFO]: RAG corpus updated successfully for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:30:19 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "You are an expert AI assistant with deep knowledge in analyzing and interpreting business documents. You have access to the company's knowledge base.\n\nYour task is to provide comprehensive, analytical, and actionable insights based on the information in the documents. While staying faithful to the source material, you should:\n\n1. ANALYZE the information thoroughly\n2. SYNTHESIZE related information from different parts of the documents\n3. STRUCTURE your response in a clear, user-friendly format\n4. HIGHLIGHT key points, numbers, and comparisons using markdown formatting\n5. PROVIDE practical insights and recommendations when relevant\n6. If comparing options or levels, CREATE tables or structured comparisons\n7. When numbers or specific data are available, INCLUDE them in your analysis\n\nQuestion: Quels sont les canaux pour envoyer une réclamation à COVERITY ? Donne moi le réponse briévement sans plus de détails\n\nWhen answering:\n- Start with a clear, direct answer to the question\n- Use bullet points, tables, or sections to organize information\n- Bold important terms and numbers for emphasis\n- If the documents don't explicitly state something but it can be reasonably inferred from the provided information, you may include such insights while clearly indicating they are derived from the context\n- If information is missing or unclear, specify what additional details would be helpful\n- Use markdown formatting to make your response more readable\n\nContext will be provided below. Please analyze it thoroughly and provide a comprehensive response that helps the user make informed decisions."
+}
+2025-03-18 09:30:23 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "POST",
+  "url": "/api/analysis/ask",
+  "status": 200,
+  "responseTime": "6844ms",
+  "userAgent": "PostmanRuntime/7.43.0",
+  "requestBody": {
+    "companyId": "67d18e2b319c11009f4f2a98",
+    "query": "Quels sont les canaux pour envoyer une réclamation à COVERITY ? Donne moi le réponse briévement sans plus de détails"
+  }
+}
+2025-03-18 09:40:07 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:40:07 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-03-18 09:40:07 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:40:07 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:40:07 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:40:07 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:40:07 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:40:07 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:40:07 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:44:29 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:44:29 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-03-18 09:44:29 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:44:29 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:44:29 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:44:29 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:44:29 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:44:29 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:44:29 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:44:42 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:44:42 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-03-18 09:44:42 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:44:42 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:44:42 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:44:42 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:44:42 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:44:42 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:44:42 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:46:36 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/call-recordings?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "497ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-18 09:46:36 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/documents?companyId=67d18e2b319c11009f4f2a98",
+  "status": 200,
+  "responseTime": "549ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-18 09:46:36 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/call-recordings?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "16ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-18 09:46:36 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/documents?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "13ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-18 09:46:40 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/documents?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "7ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-18 09:46:40 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/api/documents?companyId=67d18e2b319c11009f4f2a98",
+  "status": 304,
+  "responseTime": "6ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-18 09:46:40 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/socket.io/?EIO=4&transport=polling&t=b71y5qdg",
+  "status": 404,
+  "responseTime": "4ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "EIO": "4",
+    "transport": "polling",
+    "t": "b71y5qdg"
+  }
+}
+2025-03-18 09:46:40 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/socket.io/?EIO=4&transport=polling&t=b71yy40t",
+  "status": 404,
+  "responseTime": "2ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "EIO": "4",
+    "transport": "polling",
+    "t": "b71yy40t"
+  }
+}
+2025-03-18 09:46:41 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/socket.io/?EIO=4&transport=polling&t=b72t0hgh",
+  "status": 404,
+  "responseTime": "0ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "EIO": "4",
+    "transport": "polling",
+    "t": "b72t0hgh"
+  }
+}
+2025-03-18 09:46:41 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/socket.io/?EIO=4&transport=polling&t=b731llxv",
+  "status": 404,
+  "responseTime": "1ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "EIO": "4",
+    "transport": "polling",
+    "t": "b731llxv"
+  }
+}
+2025-03-18 09:46:43 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/socket.io/?EIO=4&transport=polling&t=b745ihyz",
+  "status": 404,
+  "responseTime": "0ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "EIO": "4",
+    "transport": "polling",
+    "t": "b745ihyz"
+  }
+}
+2025-03-18 09:46:43 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/socket.io/?EIO=4&transport=polling&t=b74pp5ah",
+  "status": 404,
+  "responseTime": "0ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "EIO": "4",
+    "transport": "polling",
+    "t": "b74pp5ah"
+  }
+}
+2025-03-18 09:46:48 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/socket.io/?EIO=4&transport=polling&t=b780q0ca",
+  "status": 404,
+  "responseTime": "0ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "EIO": "4",
+    "transport": "polling",
+    "t": "b780q0ca"
+  }
+}
+2025-03-18 09:46:48 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/socket.io/?EIO=4&transport=polling&t=b78kxp5u",
+  "status": 404,
+  "responseTime": "1ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "EIO": "4",
+    "transport": "polling",
+    "t": "b78kxp5u"
+  }
+}
+2025-03-18 09:46:50 [ERROR]: Error starting analysis: Socket.io not initialized {
+  "service": "kb-analysis-backend",
+  "stack": "Error: Socket.io not initialized\n    at getIO (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\socketConfig.js:35:11)\n    at startAnalysis (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:201:16)\n    at Layer.handle [as handle_request] (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at Route.dispatch (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\route.js:119:3)\n    at Layer.handle [as handle_request] (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:284:15\n    at Function.process_params (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:346:12)\n    at next (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:280:10)\n    at Function.handle (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:175:3)\n    at router (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:47:12)\n    at Layer.handle [as handle_request] (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at trim_prefix (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:328:13)\n    at C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:286:9\n    at Function.process_params (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:346:12)\n    at next (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:280:10)"
+}
+2025-03-18 09:46:50 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "POST",
+  "url": "/api/analysis/start",
+  "status": 500,
+  "responseTime": "12ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "requestBody": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-18 09:46:53 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/socket.io/?EIO=4&transport=polling&t=b7bw10gj",
+  "status": 404,
+  "responseTime": "1ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "EIO": "4",
+    "transport": "polling",
+    "t": "b7bw10gj"
+  }
+}
+2025-03-18 09:46:53 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/socket.io/?EIO=4&transport=polling&t=b7cgtowv",
+  "status": 404,
+  "responseTime": "1ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "EIO": "4",
+    "transport": "polling",
+    "t": "b7cgtowv"
+  }
+}
+2025-03-18 09:46:55 [ERROR]: Error starting analysis: Socket.io not initialized {
+  "service": "kb-analysis-backend",
+  "stack": "Error: Socket.io not initialized\n    at getIO (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\socketConfig.js:35:11)\n    at startAnalysis (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:201:16)\n    at Layer.handle [as handle_request] (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at Route.dispatch (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\route.js:119:3)\n    at Layer.handle [as handle_request] (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:284:15\n    at Function.process_params (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:346:12)\n    at next (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:280:10)\n    at Function.handle (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:175:3)\n    at router (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:47:12)\n    at Layer.handle [as handle_request] (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at trim_prefix (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:328:13)\n    at C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:286:9\n    at Function.process_params (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:346:12)\n    at next (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:280:10)"
+}
+2025-03-18 09:46:55 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "POST",
+  "url": "/api/analysis/start",
+  "status": 500,
+  "responseTime": "10ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "requestBody": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-18 09:46:57 [ERROR]: Error starting analysis: Socket.io not initialized {
+  "service": "kb-analysis-backend",
+  "stack": "Error: Socket.io not initialized\n    at getIO (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\socketConfig.js:35:11)\n    at startAnalysis (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:201:16)\n    at Layer.handle [as handle_request] (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at Route.dispatch (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\route.js:119:3)\n    at Layer.handle [as handle_request] (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:284:15\n    at Function.process_params (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:346:12)\n    at next (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:280:10)\n    at Function.handle (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:175:3)\n    at router (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:47:12)\n    at Layer.handle [as handle_request] (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at trim_prefix (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:328:13)\n    at C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:286:9\n    at Function.process_params (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:346:12)\n    at next (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:280:10)"
+}
+2025-03-18 09:46:57 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "POST",
+  "url": "/api/analysis/start",
+  "status": 500,
+  "responseTime": "13ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "requestBody": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-18 09:46:58 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/socket.io/?EIO=4&transport=polling&t=b7frirrn",
+  "status": 404,
+  "responseTime": "1ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "EIO": "4",
+    "transport": "polling",
+    "t": "b7frirrn"
+  }
+}
+2025-03-18 09:46:58 [ERROR]: Error starting analysis: Socket.io not initialized {
+  "service": "kb-analysis-backend",
+  "stack": "Error: Socket.io not initialized\n    at getIO (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\socketConfig.js:35:11)\n    at startAnalysis (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:201:16)\n    at Layer.handle [as handle_request] (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at Route.dispatch (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\route.js:119:3)\n    at Layer.handle [as handle_request] (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:284:15\n    at Function.process_params (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:346:12)\n    at next (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:280:10)\n    at Function.handle (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:175:3)\n    at router (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:47:12)\n    at Layer.handle [as handle_request] (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at trim_prefix (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:328:13)\n    at C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:286:9\n    at Function.process_params (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:346:12)\n    at next (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\express\\lib\\router\\index.js:280:10)"
+}
+2025-03-18 09:46:58 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "POST",
+  "url": "/api/analysis/start",
+  "status": 500,
+  "responseTime": "11ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "requestBody": {
+    "companyId": "67d18e2b319c11009f4f2a98"
+  }
+}
+2025-03-18 09:46:58 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/socket.io/?EIO=4&transport=polling&t=b7gc40y3",
+  "status": 404,
+  "responseTime": "0ms",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+  "query": {
+    "EIO": "4",
+    "transport": "polling",
+    "t": "b7gc40y3"
+  }
+}
+2025-03-18 09:47:03 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/socket.io/?EIO=4&transport=polling&t=b7jn1vbk",
+  "status": 404,
+  "responseTime": "0ms",
+  "userAgent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Mobile Safari/537.36",
+  "query": {
+    "EIO": "4",
+    "transport": "polling",
+    "t": "b7jn1vbk"
+  }
+}
+2025-03-18 09:47:03 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/socket.io/?EIO=4&transport=polling&t=b7k7al30",
+  "status": 404,
+  "responseTime": "1ms",
+  "userAgent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Mobile Safari/537.36",
+  "query": {
+    "EIO": "4",
+    "transport": "polling",
+    "t": "b7k7al30"
+  }
+}
+2025-03-18 09:47:08 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/socket.io/?EIO=4&transport=polling&t=b7nl9t4e",
+  "status": 404,
+  "responseTime": "0ms",
+  "userAgent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Mobile Safari/537.36",
+  "query": {
+    "EIO": "4",
+    "transport": "polling",
+    "t": "b7nl9t4e"
+  }
+}
+2025-03-18 09:47:08 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/socket.io/?EIO=4&transport=polling&t=b7o2vpzs",
+  "status": 404,
+  "responseTime": "1ms",
+  "userAgent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Mobile Safari/537.36",
+  "query": {
+    "EIO": "4",
+    "transport": "polling",
+    "t": "b7o2vpzs"
+  }
+}
+2025-03-18 09:47:13 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/socket.io/?EIO=4&transport=polling&t=b7rqwth3",
+  "status": 404,
+  "responseTime": "0ms",
+  "userAgent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Mobile Safari/537.36",
+  "query": {
+    "EIO": "4",
+    "transport": "polling",
+    "t": "b7rqwth3"
+  }
+}
+2025-03-18 09:47:14 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/socket.io/?EIO=4&transport=polling&t=b7sienvr",
+  "status": 404,
+  "responseTime": "0ms",
+  "userAgent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Mobile Safari/537.36",
+  "query": {
+    "EIO": "4",
+    "transport": "polling",
+    "t": "b7sienvr"
+  }
+}
+2025-03-18 09:47:19 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/socket.io/?EIO=4&transport=polling&t=b7wdjcw0",
+  "status": 404,
+  "responseTime": "1ms",
+  "userAgent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Mobile Safari/537.36",
+  "query": {
+    "EIO": "4",
+    "transport": "polling",
+    "t": "b7wdjcw0"
+  }
+}
+2025-03-18 09:47:20 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/socket.io/?EIO=4&transport=polling&t=b7x4zgd1",
+  "status": 404,
+  "responseTime": "0ms",
+  "userAgent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Mobile Safari/537.36",
+  "query": {
+    "EIO": "4",
+    "transport": "polling",
+    "t": "b7x4zgd1"
+  }
+}
+2025-03-18 09:47:25 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/socket.io/?EIO=4&transport=polling&t=b8101nyt",
+  "status": 404,
+  "responseTime": "1ms",
+  "userAgent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Mobile Safari/537.36",
+  "query": {
+    "EIO": "4",
+    "transport": "polling",
+    "t": "b8101nyt"
+  }
+}
+2025-03-18 09:47:26 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/socket.io/?EIO=4&transport=polling&t=b81rw3ur",
+  "status": 404,
+  "responseTime": "0ms",
+  "userAgent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Mobile Safari/537.36",
+  "query": {
+    "EIO": "4",
+    "transport": "polling",
+    "t": "b81rw3ur"
+  }
+}
+2025-03-18 09:47:31 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/socket.io/?EIO=4&transport=polling&t=b85mxp0a",
+  "status": 404,
+  "responseTime": "1ms",
+  "userAgent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Mobile Safari/537.36",
+  "query": {
+    "EIO": "4",
+    "transport": "polling",
+    "t": "b85mxp0a"
+  }
+}
+2025-03-18 09:47:32 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/socket.io/?EIO=4&transport=polling&t=b86eoqcu",
+  "status": 404,
+  "responseTime": "0ms",
+  "userAgent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Mobile Safari/537.36",
+  "query": {
+    "EIO": "4",
+    "transport": "polling",
+    "t": "b86eoqcu"
+  }
+}
+2025-03-18 09:47:37 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/socket.io/?EIO=4&transport=polling&t=b8a980lc",
+  "status": 404,
+  "responseTime": "0ms",
+  "userAgent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Mobile Safari/537.36",
+  "query": {
+    "EIO": "4",
+    "transport": "polling",
+    "t": "b8a980lc"
+  }
+}
+2025-03-18 09:47:38 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/socket.io/?EIO=4&transport=polling&t=b8b11rva",
+  "status": 404,
+  "responseTime": "0ms",
+  "userAgent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Mobile Safari/537.36",
+  "query": {
+    "EIO": "4",
+    "transport": "polling",
+    "t": "b8b11rva"
+  }
+}
+2025-03-18 09:47:43 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/socket.io/?EIO=4&transport=polling&t=b8ew1o8g",
+  "status": 404,
+  "responseTime": "1ms",
+  "userAgent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Mobile Safari/537.36",
+  "query": {
+    "EIO": "4",
+    "transport": "polling",
+    "t": "b8ew1o8g"
+  }
+}
+2025-03-18 09:47:44 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/socket.io/?EIO=4&transport=polling&t=b8fnobk3",
+  "status": 404,
+  "responseTime": "0ms",
+  "userAgent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Mobile Safari/537.36",
+  "query": {
+    "EIO": "4",
+    "transport": "polling",
+    "t": "b8fnobk3"
+  }
+}
+2025-03-18 09:47:48 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/socket.io/?EIO=4&transport=polling&t=b8ivv4d7",
+  "status": 404,
+  "responseTime": "0ms",
+  "userAgent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Mobile Safari/537.36",
+  "query": {
+    "EIO": "4",
+    "transport": "polling",
+    "t": "b8ivv4d7"
+  }
+}
+2025-03-18 09:47:49 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/socket.io/?EIO=4&transport=polling&t=b8jj6k1i",
+  "status": 404,
+  "responseTime": "0ms",
+  "userAgent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Mobile Safari/537.36",
+  "query": {
+    "EIO": "4",
+    "transport": "polling",
+    "t": "b8jj6k1i"
+  }
+}
+2025-03-18 09:47:54 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/socket.io/?EIO=4&transport=polling&t=b8ndkv84",
+  "status": 404,
+  "responseTime": "0ms",
+  "userAgent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Mobile Safari/537.36",
+  "query": {
+    "EIO": "4",
+    "transport": "polling",
+    "t": "b8ndkv84"
+  }
+}
+2025-03-18 09:47:55 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/socket.io/?EIO=4&transport=polling&t=b8o5etfo",
+  "status": 404,
+  "responseTime": "1ms",
+  "userAgent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Mobile Safari/537.36",
+  "query": {
+    "EIO": "4",
+    "transport": "polling",
+    "t": "b8o5etfo"
+  }
+}
+2025-03-18 09:48:00 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/socket.io/?EIO=4&transport=polling&t=b8s06eil",
+  "status": 404,
+  "responseTime": "0ms",
+  "userAgent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Mobile Safari/537.36",
+  "query": {
+    "EIO": "4",
+    "transport": "polling",
+    "t": "b8s06eil"
+  }
+}
+2025-03-18 09:48:01 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/socket.io/?EIO=4&transport=polling&t=b8ss6qpz",
+  "status": 404,
+  "responseTime": "0ms",
+  "userAgent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Mobile Safari/537.36",
+  "query": {
+    "EIO": "4",
+    "transport": "polling",
+    "t": "b8ss6qpz"
+  }
+}
+2025-03-18 09:48:06 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/socket.io/?EIO=4&transport=polling&t=b8wmtuwr",
+  "status": 404,
+  "responseTime": "1ms",
+  "userAgent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Mobile Safari/537.36",
+  "query": {
+    "EIO": "4",
+    "transport": "polling",
+    "t": "b8wmtuwr"
+  }
+}
+2025-03-18 09:48:07 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/socket.io/?EIO=4&transport=polling&t=b8xelu5y",
+  "status": 404,
+  "responseTime": "1ms",
+  "userAgent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Mobile Safari/537.36",
+  "query": {
+    "EIO": "4",
+    "transport": "polling",
+    "t": "b8xelu5y"
+  }
+}
+2025-03-18 09:48:12 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/socket.io/?EIO=4&transport=polling&t=b919sz7z",
+  "status": 404,
+  "responseTime": "0ms",
+  "userAgent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Mobile Safari/537.36",
+  "query": {
+    "EIO": "4",
+    "transport": "polling",
+    "t": "b919sz7z"
+  }
+}
+2025-03-18 09:48:13 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/socket.io/?EIO=4&transport=polling&t=b921l47l",
+  "status": 404,
+  "responseTime": "1ms",
+  "userAgent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Mobile Safari/537.36",
+  "query": {
+    "EIO": "4",
+    "transport": "polling",
+    "t": "b921l47l"
+  }
+}
+2025-03-18 09:48:18 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/socket.io/?EIO=4&transport=polling&t=b95w2yyh",
+  "status": 404,
+  "responseTime": "1ms",
+  "userAgent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Mobile Safari/537.36",
+  "query": {
+    "EIO": "4",
+    "transport": "polling",
+    "t": "b95w2yyh"
+  }
+}
+2025-03-18 09:48:19 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/socket.io/?EIO=4&transport=polling&t=b96o5n4b",
+  "status": 404,
+  "responseTime": "0ms",
+  "userAgent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Mobile Safari/537.36",
+  "query": {
+    "EIO": "4",
+    "transport": "polling",
+    "t": "b96o5n4b"
+  }
+}
+2025-03-18 09:48:24 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/socket.io/?EIO=4&transport=polling&t=b9aiw5ct",
+  "status": 404,
+  "responseTime": "0ms",
+  "userAgent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Mobile Safari/537.36",
+  "query": {
+    "EIO": "4",
+    "transport": "polling",
+    "t": "b9aiw5ct"
+  }
+}
+2025-03-18 09:48:25 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/socket.io/?EIO=4&transport=polling&t=b9bal4hr",
+  "status": 404,
+  "responseTime": "0ms",
+  "userAgent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Mobile Safari/537.36",
+  "query": {
+    "EIO": "4",
+    "transport": "polling",
+    "t": "b9bal4hr"
+  }
+}
+2025-03-18 09:48:30 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/socket.io/?EIO=4&transport=polling&t=b9f5tj8e",
+  "status": 404,
+  "responseTime": "0ms",
+  "userAgent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Mobile Safari/537.36",
+  "query": {
+    "EIO": "4",
+    "transport": "polling",
+    "t": "b9f5tj8e"
+  }
+}
+2025-03-18 09:48:31 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/socket.io/?EIO=4&transport=polling&t=b9fxb7zl",
+  "status": 404,
+  "responseTime": "0ms",
+  "userAgent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Mobile Safari/537.36",
+  "query": {
+    "EIO": "4",
+    "transport": "polling",
+    "t": "b9fxb7zl"
+  }
+}
+2025-03-18 09:48:36 [INFO]: API Request {
+  "service": "kb-analysis-backend",
+  "method": "GET",
+  "url": "/socket.io/?EIO=4&transport=polling&t=b9js9t0g",
+  "status": 404,
+  "responseTime": "1ms",
+  "userAgent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Mobile Safari/537.36",
+  "query": {
+    "EIO": "4",
+    "transport": "polling",
+    "t": "b9js9t0g"
+  }
+}
+2025-03-18 09:48:39 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:48:39 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-03-18 09:48:39 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:48:39 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:48:39 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:48:39 [INFO]: WebSocket server initialized {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:48:39 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:48:39 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:48:39 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:48:43 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:48:43 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-03-18 09:48:43 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:48:43 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:48:43 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:48:43 [INFO]: WebSocket server initialized {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:48:43 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:48:43 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:48:43 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:58:36 [INFO]: Creating RAG corpus: {
+  "0": "c",
+  "1": "o",
+  "2": "m",
+  "3": "p",
+  "4": "a",
+  "5": "n",
+  "6": "y",
+  "7": "-",
+  "8": "6",
+  "9": "7",
+  "10": "d",
+  "11": "1",
+  "12": "8",
+  "13": "e",
+  "14": "2",
+  "15": "b",
+  "16": "3",
+  "17": "1",
+  "18": "9",
+  "19": "c",
+  "20": "1",
+  "21": "1",
+  "22": "0",
+  "23": "0",
+  "24": "9",
+  "25": "f",
+  "26": "4",
+  "27": "f",
+  "28": "2",
+  "29": "a",
+  "30": "9",
+  "31": "8",
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:58:36 [INFO]: Created RAG corpus for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:58:36 [INFO]: Importing 2 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:58:37 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742291917271.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:58:38 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742291918253.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:58:39 [INFO]: Processed 2 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:58:39 [INFO]: Running analysis query for topics... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:58:39 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the main topics and themes covered in these documents? Please provide a structured analysis with main topics and subtopics."
+}
+2025-03-18 09:58:58 [INFO]: Running analysis query for gaps... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:58:58 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the potential knowledge gaps or missing information in these documents? Consider completeness, clarity, and areas that might need more detail."
+}
+2025-03-18 09:59:09 [INFO]: Running analysis query for relationships... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:59:09 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the key relationships and connections between different topics in these documents? How do they relate to each other?"
+}
+2025-03-18 09:59:15 [INFO]: Running analysis query for recommendations... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 09:59:15 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What specific recommendations can you make to improve this knowledge base? Consider organization, completeness, and clarity."
+}
+2025-03-18 09:59:23 [INFO]: Analysis completed for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:19:40 [INFO]: Creating RAG corpus: {
+  "0": "c",
+  "1": "o",
+  "2": "m",
+  "3": "p",
+  "4": "a",
+  "5": "n",
+  "6": "y",
+  "7": "-",
+  "8": "6",
+  "9": "7",
+  "10": "d",
+  "11": "1",
+  "12": "8",
+  "13": "e",
+  "14": "2",
+  "15": "b",
+  "16": "3",
+  "17": "1",
+  "18": "9",
+  "19": "c",
+  "20": "1",
+  "21": "1",
+  "22": "0",
+  "23": "0",
+  "24": "9",
+  "25": "f",
+  "26": "4",
+  "27": "f",
+  "28": "2",
+  "29": "a",
+  "30": "9",
+  "31": "8",
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:19:40 [INFO]: Created RAG corpus for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:19:40 [INFO]: Importing 2 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:19:40 [INFO]: Creating RAG corpus: {
+  "0": "c",
+  "1": "o",
+  "2": "m",
+  "3": "p",
+  "4": "a",
+  "5": "n",
+  "6": "y",
+  "7": "-",
+  "8": "6",
+  "9": "7",
+  "10": "d",
+  "11": "1",
+  "12": "8",
+  "13": "e",
+  "14": "2",
+  "15": "b",
+  "16": "3",
+  "17": "1",
+  "18": "9",
+  "19": "c",
+  "20": "1",
+  "21": "1",
+  "22": "0",
+  "23": "0",
+  "24": "9",
+  "25": "f",
+  "26": "4",
+  "27": "f",
+  "28": "2",
+  "29": "a",
+  "30": "9",
+  "31": "8",
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:19:40 [INFO]: Created RAG corpus for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:19:40 [INFO]: Importing 2 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:19:40 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742293180859.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:19:41 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742293181586.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:19:42 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742293182706.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:19:43 [INFO]: Processed 2 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:19:43 [INFO]: Running analysis query for topics... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:19:43 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the main topics and themes covered in these documents? Please provide a structured analysis with main topics and subtopics."
+}
+2025-03-18 10:19:43 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742293183965.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:19:44 [INFO]: Processed 2 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:19:44 [INFO]: Running analysis query for topics... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:19:44 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the main topics and themes covered in these documents? Please provide a structured analysis with main topics and subtopics."
+}
+2025-03-18 10:19:52 [INFO]: Running analysis query for gaps... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:19:52 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the potential knowledge gaps or missing information in these documents? Consider completeness, clarity, and areas that might need more detail."
+}
+2025-03-18 10:20:00 [INFO]: Running analysis query for relationships... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:20:00 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the key relationships and connections between different topics in these documents? How do they relate to each other?"
+}
+2025-03-18 10:20:04 [INFO]: Running analysis query for gaps... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:20:04 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the potential knowledge gaps or missing information in these documents? Consider completeness, clarity, and areas that might need more detail."
+}
+2025-03-18 10:20:08 [INFO]: Running analysis query for recommendations... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:20:08 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What specific recommendations can you make to improve this knowledge base? Consider organization, completeness, and clarity."
+}
+2025-03-18 10:20:08 [INFO]: Running analysis query for relationships... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:20:08 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the key relationships and connections between different topics in these documents? How do they relate to each other?"
+}
+2025-03-18 10:20:09 [ERROR]: Failed to query knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "error": "[VertexAI.ClientError]: got status: 429 Too Many Requests. {\"error\":{\"code\":429,\"message\":\"Quota exceeded for aiplatform.googleapis.com/generate_content_requests_per_minute_per_project_per_base_model with base model: gemini-1.5-flash. Please submit a quota increase request. https://cloud.google.com/vertex-ai/docs/generative-ai/quotas-genai.\",\"status\":\"RESOURCE_EXHAUSTED\"}}",
+  "stack": "ClientError: [VertexAI.ClientError]: got status: 429 Too Many Requests. {\"error\":{\"code\":429,\"message\":\"Quota exceeded for aiplatform.googleapis.com/generate_content_requests_per_minute_per_project_per_base_model with base model: gemini-1.5-flash. Please submit a quota increase request. https://cloud.google.com/vertex-ai/docs/generative-ai/quotas-genai.\",\"status\":\"RESOURCE_EXHAUSTED\"}}\n    at throwErrorIfNotOK (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\post_fetch_processing.js:31:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async generateContent (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\generate_content.js:52:5)\n    at async VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:216:22)\n    at async analyzeDocumentsWithRAG (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:160:24)"
+}
+2025-03-18 10:20:09 [ERROR]: Error in RAG analysis: [VertexAI.ClientError]: got status: 429 Too Many Requests. {"error":{"code":429,"message":"Quota exceeded for aiplatform.googleapis.com/generate_content_requests_per_minute_per_project_per_base_model with base model: gemini-1.5-flash. Please submit a quota increase request. https://cloud.google.com/vertex-ai/docs/generative-ai/quotas-genai.","status":"RESOURCE_EXHAUSTED"}} {
+  "service": "kb-analysis-backend",
+  "name": "ClientError",
+  "stack": "ClientError: [VertexAI.ClientError]: got status: 429 Too Many Requests. {\"error\":{\"code\":429,\"message\":\"Quota exceeded for aiplatform.googleapis.com/generate_content_requests_per_minute_per_project_per_base_model with base model: gemini-1.5-flash. Please submit a quota increase request. https://cloud.google.com/vertex-ai/docs/generative-ai/quotas-genai.\",\"status\":\"RESOURCE_EXHAUSTED\"}}\n    at throwErrorIfNotOK (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\post_fetch_processing.js:31:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async generateContent (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\generate_content.js:52:5)\n    at async VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:216:22)\n    at async analyzeDocumentsWithRAG (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:160:24)"
+}
+2025-03-18 10:20:09 [ERROR]: Analysis failed for company 67d18e2b319c11009f4f2a98: [VertexAI.ClientError]: got status: 429 Too Many Requests. {"error":{"code":429,"message":"Quota exceeded for aiplatform.googleapis.com/generate_content_requests_per_minute_per_project_per_base_model with base model: gemini-1.5-flash. Please submit a quota increase request. https://cloud.google.com/vertex-ai/docs/generative-ai/quotas-genai.","status":"RESOURCE_EXHAUSTED"}} {
+  "service": "kb-analysis-backend",
+  "name": "ClientError",
+  "stack": "ClientError: [VertexAI.ClientError]: got status: 429 Too Many Requests. {\"error\":{\"code\":429,\"message\":\"Quota exceeded for aiplatform.googleapis.com/generate_content_requests_per_minute_per_project_per_base_model with base model: gemini-1.5-flash. Please submit a quota increase request. https://cloud.google.com/vertex-ai/docs/generative-ai/quotas-genai.\",\"status\":\"RESOURCE_EXHAUSTED\"}}\n    at throwErrorIfNotOK (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\post_fetch_processing.js:31:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async generateContent (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\generate_content.js:52:5)\n    at async VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:216:22)\n    at async analyzeDocumentsWithRAG (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:160:24)"
+}
+2025-03-18 10:20:17 [INFO]: Analysis completed for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:29:39 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:29:39 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-03-18 10:29:39 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:29:39 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:29:39 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:29:39 [INFO]: WebSocket server initialized {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:29:39 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:29:39 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:29:39 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:30:02 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:30:02 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-03-18 10:30:02 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:30:02 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:30:02 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:30:02 [INFO]: WebSocket server initialized {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:30:02 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:30:02 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:30:02 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:33:24 [INFO]: Client connected to socket {
+  "service": "kb-analysis-backend",
+  "socketId": "SH_nCQGYVasGH-o8AAEJ"
+}
+2025-03-18 10:33:24 [INFO]: Client connected to socket {
+  "service": "kb-analysis-backend",
+  "socketId": "A_ZrSaKOsf3yNH1ZAAEL"
+}
+2025-03-18 10:34:08 [INFO]: Client connected to socket {
+  "service": "kb-analysis-backend",
+  "socketId": "S31TSXsUgLKjIoiHAAEN"
+}
+2025-03-18 10:34:08 [INFO]: Client connected to socket {
+  "service": "kb-analysis-backend",
+  "socketId": "9l_Vo1Z5t1_oMaf6AAEP"
+}
+2025-03-18 10:34:08 [INFO]: Creating RAG corpus: {
+  "0": "c",
+  "1": "o",
+  "2": "m",
+  "3": "p",
+  "4": "a",
+  "5": "n",
+  "6": "y",
+  "7": "-",
+  "8": "6",
+  "9": "7",
+  "10": "d",
+  "11": "1",
+  "12": "8",
+  "13": "e",
+  "14": "2",
+  "15": "b",
+  "16": "3",
+  "17": "1",
+  "18": "9",
+  "19": "c",
+  "20": "1",
+  "21": "1",
+  "22": "0",
+  "23": "0",
+  "24": "9",
+  "25": "f",
+  "26": "4",
+  "27": "f",
+  "28": "2",
+  "29": "a",
+  "30": "9",
+  "31": "8",
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:34:08 [INFO]: Created RAG corpus for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:34:08 [INFO]: Importing 2 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:34:08 [INFO]: Creating RAG corpus: {
+  "0": "c",
+  "1": "o",
+  "2": "m",
+  "3": "p",
+  "4": "a",
+  "5": "n",
+  "6": "y",
+  "7": "-",
+  "8": "6",
+  "9": "7",
+  "10": "d",
+  "11": "1",
+  "12": "8",
+  "13": "e",
+  "14": "2",
+  "15": "b",
+  "16": "3",
+  "17": "1",
+  "18": "9",
+  "19": "c",
+  "20": "1",
+  "21": "1",
+  "22": "0",
+  "23": "0",
+  "24": "9",
+  "25": "f",
+  "26": "4",
+  "27": "f",
+  "28": "2",
+  "29": "a",
+  "30": "9",
+  "31": "8",
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:34:08 [INFO]: Created RAG corpus for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:34:08 [INFO]: Importing 2 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:34:09 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742294049267.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:34:09 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742294049866.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:34:10 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742294050432.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:34:11 [INFO]: Processed 2 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:34:11 [INFO]: Running analysis query for topics... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:34:11 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the main topics and themes covered in these documents? Please provide a structured analysis with main topics and subtopics."
+}
+2025-03-18 10:34:11 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742294051487.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:34:12 [INFO]: Processed 2 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:34:12 [INFO]: Running analysis query for topics... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:34:12 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the main topics and themes covered in these documents? Please provide a structured analysis with main topics and subtopics."
+}
+2025-03-18 10:34:19 [INFO]: Running analysis query for gaps... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:34:19 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the potential knowledge gaps or missing information in these documents? Consider completeness, clarity, and areas that might need more detail."
+}
+2025-03-18 10:34:22 [INFO]: Running analysis query for gaps... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:34:22 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the potential knowledge gaps or missing information in these documents? Consider completeness, clarity, and areas that might need more detail."
+}
+2025-03-18 10:34:23 [INFO]: Running analysis query for relationships... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:34:23 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the key relationships and connections between different topics in these documents? How do they relate to each other?"
+}
+2025-03-18 10:34:25 [INFO]: Running analysis query for relationships... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:34:25 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the key relationships and connections between different topics in these documents? How do they relate to each other?"
+}
+2025-03-18 10:34:30 [INFO]: Running analysis query for recommendations... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:34:30 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What specific recommendations can you make to improve this knowledge base? Consider organization, completeness, and clarity."
+}
+2025-03-18 10:34:31 [ERROR]: Failed to query knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "error": "[VertexAI.ClientError]: got status: 429 Too Many Requests. {\"error\":{\"code\":429,\"message\":\"Quota exceeded for aiplatform.googleapis.com/generate_content_requests_per_minute_per_project_per_base_model with base model: gemini-1.5-flash. Please submit a quota increase request. https://cloud.google.com/vertex-ai/docs/generative-ai/quotas-genai.\",\"status\":\"RESOURCE_EXHAUSTED\"}}",
+  "stack": "ClientError: [VertexAI.ClientError]: got status: 429 Too Many Requests. {\"error\":{\"code\":429,\"message\":\"Quota exceeded for aiplatform.googleapis.com/generate_content_requests_per_minute_per_project_per_base_model with base model: gemini-1.5-flash. Please submit a quota increase request. https://cloud.google.com/vertex-ai/docs/generative-ai/quotas-genai.\",\"status\":\"RESOURCE_EXHAUSTED\"}}\n    at throwErrorIfNotOK (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\post_fetch_processing.js:31:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async generateContent (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\generate_content.js:52:5)\n    at async VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:216:22)\n    at async analyzeDocumentsWithRAG (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:160:24)"
+}
+2025-03-18 10:34:31 [ERROR]: Error in RAG analysis: [VertexAI.ClientError]: got status: 429 Too Many Requests. {"error":{"code":429,"message":"Quota exceeded for aiplatform.googleapis.com/generate_content_requests_per_minute_per_project_per_base_model with base model: gemini-1.5-flash. Please submit a quota increase request. https://cloud.google.com/vertex-ai/docs/generative-ai/quotas-genai.","status":"RESOURCE_EXHAUSTED"}} {
+  "service": "kb-analysis-backend",
+  "name": "ClientError",
+  "stack": "ClientError: [VertexAI.ClientError]: got status: 429 Too Many Requests. {\"error\":{\"code\":429,\"message\":\"Quota exceeded for aiplatform.googleapis.com/generate_content_requests_per_minute_per_project_per_base_model with base model: gemini-1.5-flash. Please submit a quota increase request. https://cloud.google.com/vertex-ai/docs/generative-ai/quotas-genai.\",\"status\":\"RESOURCE_EXHAUSTED\"}}\n    at throwErrorIfNotOK (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\post_fetch_processing.js:31:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async generateContent (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\generate_content.js:52:5)\n    at async VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:216:22)\n    at async analyzeDocumentsWithRAG (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:160:24)"
+}
+2025-03-18 10:34:31 [ERROR]: Analysis failed for company 67d18e2b319c11009f4f2a98: [VertexAI.ClientError]: got status: 429 Too Many Requests. {"error":{"code":429,"message":"Quota exceeded for aiplatform.googleapis.com/generate_content_requests_per_minute_per_project_per_base_model with base model: gemini-1.5-flash. Please submit a quota increase request. https://cloud.google.com/vertex-ai/docs/generative-ai/quotas-genai.","status":"RESOURCE_EXHAUSTED"}} {
+  "service": "kb-analysis-backend",
+  "name": "ClientError",
+  "stack": "ClientError: [VertexAI.ClientError]: got status: 429 Too Many Requests. {\"error\":{\"code\":429,\"message\":\"Quota exceeded for aiplatform.googleapis.com/generate_content_requests_per_minute_per_project_per_base_model with base model: gemini-1.5-flash. Please submit a quota increase request. https://cloud.google.com/vertex-ai/docs/generative-ai/quotas-genai.\",\"status\":\"RESOURCE_EXHAUSTED\"}}\n    at throwErrorIfNotOK (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\post_fetch_processing.js:31:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async generateContent (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\generate_content.js:52:5)\n    at async VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:216:22)\n    at async analyzeDocumentsWithRAG (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:160:24)"
+}
+2025-03-18 10:34:33 [INFO]: Running analysis query for recommendations... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:34:33 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What specific recommendations can you make to improve this knowledge base? Consider organization, completeness, and clarity."
+}
+2025-03-18 10:34:34 [ERROR]: Failed to query knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "error": "[VertexAI.ClientError]: got status: 429 Too Many Requests. {\"error\":{\"code\":429,\"message\":\"Quota exceeded for aiplatform.googleapis.com/generate_content_requests_per_minute_per_project_per_base_model with base model: gemini-1.5-flash. Please submit a quota increase request. https://cloud.google.com/vertex-ai/docs/generative-ai/quotas-genai.\",\"status\":\"RESOURCE_EXHAUSTED\"}}",
+  "stack": "ClientError: [VertexAI.ClientError]: got status: 429 Too Many Requests. {\"error\":{\"code\":429,\"message\":\"Quota exceeded for aiplatform.googleapis.com/generate_content_requests_per_minute_per_project_per_base_model with base model: gemini-1.5-flash. Please submit a quota increase request. https://cloud.google.com/vertex-ai/docs/generative-ai/quotas-genai.\",\"status\":\"RESOURCE_EXHAUSTED\"}}\n    at throwErrorIfNotOK (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\post_fetch_processing.js:31:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async generateContent (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\generate_content.js:52:5)\n    at async VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:216:22)\n    at async analyzeDocumentsWithRAG (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:160:24)"
+}
+2025-03-18 10:34:34 [ERROR]: Error in RAG analysis: [VertexAI.ClientError]: got status: 429 Too Many Requests. {"error":{"code":429,"message":"Quota exceeded for aiplatform.googleapis.com/generate_content_requests_per_minute_per_project_per_base_model with base model: gemini-1.5-flash. Please submit a quota increase request. https://cloud.google.com/vertex-ai/docs/generative-ai/quotas-genai.","status":"RESOURCE_EXHAUSTED"}} {
+  "service": "kb-analysis-backend",
+  "name": "ClientError",
+  "stack": "ClientError: [VertexAI.ClientError]: got status: 429 Too Many Requests. {\"error\":{\"code\":429,\"message\":\"Quota exceeded for aiplatform.googleapis.com/generate_content_requests_per_minute_per_project_per_base_model with base model: gemini-1.5-flash. Please submit a quota increase request. https://cloud.google.com/vertex-ai/docs/generative-ai/quotas-genai.\",\"status\":\"RESOURCE_EXHAUSTED\"}}\n    at throwErrorIfNotOK (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\post_fetch_processing.js:31:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async generateContent (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\generate_content.js:52:5)\n    at async VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:216:22)\n    at async analyzeDocumentsWithRAG (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:160:24)"
+}
+2025-03-18 10:34:34 [ERROR]: Analysis failed for company 67d18e2b319c11009f4f2a98: [VertexAI.ClientError]: got status: 429 Too Many Requests. {"error":{"code":429,"message":"Quota exceeded for aiplatform.googleapis.com/generate_content_requests_per_minute_per_project_per_base_model with base model: gemini-1.5-flash. Please submit a quota increase request. https://cloud.google.com/vertex-ai/docs/generative-ai/quotas-genai.","status":"RESOURCE_EXHAUSTED"}} {
+  "service": "kb-analysis-backend",
+  "name": "ClientError",
+  "stack": "ClientError: [VertexAI.ClientError]: got status: 429 Too Many Requests. {\"error\":{\"code\":429,\"message\":\"Quota exceeded for aiplatform.googleapis.com/generate_content_requests_per_minute_per_project_per_base_model with base model: gemini-1.5-flash. Please submit a quota increase request. https://cloud.google.com/vertex-ai/docs/generative-ai/quotas-genai.\",\"status\":\"RESOURCE_EXHAUSTED\"}}\n    at throwErrorIfNotOK (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\post_fetch_processing.js:31:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async generateContent (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\generate_content.js:52:5)\n    at async VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:216:22)\n    at async analyzeDocumentsWithRAG (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:160:24)"
+}
+2025-03-18 10:37:49 [INFO]: Client connected to socket {
+  "service": "kb-analysis-backend",
+  "socketId": "mN2B6NuP75Mwu-UMAAER"
+}
+2025-03-18 10:37:49 [INFO]: Client connected to socket {
+  "service": "kb-analysis-backend",
+  "socketId": "HJyRqOUj0NJimmKSAAET"
+}
+2025-03-18 10:37:54 [INFO]: Creating RAG corpus: {
+  "0": "c",
+  "1": "o",
+  "2": "m",
+  "3": "p",
+  "4": "a",
+  "5": "n",
+  "6": "y",
+  "7": "-",
+  "8": "6",
+  "9": "7",
+  "10": "d",
+  "11": "1",
+  "12": "8",
+  "13": "e",
+  "14": "2",
+  "15": "b",
+  "16": "3",
+  "17": "1",
+  "18": "9",
+  "19": "c",
+  "20": "1",
+  "21": "1",
+  "22": "0",
+  "23": "0",
+  "24": "9",
+  "25": "f",
+  "26": "4",
+  "27": "f",
+  "28": "2",
+  "29": "a",
+  "30": "9",
+  "31": "8",
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:37:54 [INFO]: Created RAG corpus for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:37:54 [INFO]: Importing 2 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:37:54 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742294274365.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:37:55 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742294275146.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:37:55 [INFO]: Processed 2 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:37:55 [INFO]: Running analysis query for topics... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:37:55 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the main topics and themes covered in these documents? Please provide a structured analysis with main topics and subtopics."
+}
+2025-03-18 10:38:13 [INFO]: Running analysis query for gaps... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:38:13 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the potential knowledge gaps or missing information in these documents? Consider completeness, clarity, and areas that might need more detail."
+}
+2025-03-18 10:38:18 [INFO]: Running analysis query for relationships... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:38:18 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the key relationships and connections between different topics in these documents? How do they relate to each other?"
+}
+2025-03-18 10:38:25 [INFO]: Running analysis query for recommendations... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:38:25 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What specific recommendations can you make to improve this knowledge base? Consider organization, completeness, and clarity."
+}
+2025-03-18 10:38:28 [INFO]: Analysis completed for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:43:06 [INFO]: Client connected to socket {
+  "service": "kb-analysis-backend",
+  "socketId": "xNBfFi-z9vp8OiVdAAEV"
+}
+2025-03-18 10:43:06 [INFO]: Client connected to socket {
+  "service": "kb-analysis-backend",
+  "socketId": "MFRweDOUVVWDSF2wAAEX"
+}
+2025-03-18 10:43:21 [INFO]: Client connected to socket {
+  "service": "kb-analysis-backend",
+  "socketId": "TIkb72BqiNNaBpc3AAEZ"
+}
+2025-03-18 10:43:21 [INFO]: Client connected to socket {
+  "service": "kb-analysis-backend",
+  "socketId": "2oLiR0fx9PlCpPWGAAEb"
+}
+2025-03-18 10:43:25 [INFO]: Creating RAG corpus: {
+  "0": "c",
+  "1": "o",
+  "2": "m",
+  "3": "p",
+  "4": "a",
+  "5": "n",
+  "6": "y",
+  "7": "-",
+  "8": "6",
+  "9": "7",
+  "10": "d",
+  "11": "1",
+  "12": "8",
+  "13": "e",
+  "14": "2",
+  "15": "b",
+  "16": "3",
+  "17": "1",
+  "18": "9",
+  "19": "c",
+  "20": "1",
+  "21": "1",
+  "22": "0",
+  "23": "0",
+  "24": "9",
+  "25": "f",
+  "26": "4",
+  "27": "f",
+  "28": "2",
+  "29": "a",
+  "30": "9",
+  "31": "8",
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:43:25 [INFO]: Created RAG corpus for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:43:25 [INFO]: Importing 2 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:43:26 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742294606031.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:43:26 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742294606928.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:43:27 [INFO]: Processed 2 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:43:27 [INFO]: Running analysis query for topics... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:43:27 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the main topics and themes covered in these documents? Please provide a structured analysis with main topics and subtopics."
+}
+2025-03-18 10:43:38 [INFO]: Running analysis query for gaps... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:43:38 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the potential knowledge gaps or missing information in these documents? Consider completeness, clarity, and areas that might need more detail."
+}
+2025-03-18 10:43:52 [INFO]: Running analysis query for relationships... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:43:52 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the key relationships and connections between different topics in these documents? How do they relate to each other?"
+}
+2025-03-18 10:43:59 [INFO]: Running analysis query for recommendations... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:43:59 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What specific recommendations can you make to improve this knowledge base? Consider organization, completeness, and clarity."
+}
+2025-03-18 10:44:05 [INFO]: Analysis completed for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:50:12 [INFO]: Creating RAG corpus: {
+  "0": "c",
+  "1": "o",
+  "2": "m",
+  "3": "p",
+  "4": "a",
+  "5": "n",
+  "6": "y",
+  "7": "-",
+  "8": "6",
+  "9": "7",
+  "10": "d",
+  "11": "1",
+  "12": "8",
+  "13": "e",
+  "14": "2",
+  "15": "b",
+  "16": "3",
+  "17": "1",
+  "18": "9",
+  "19": "c",
+  "20": "1",
+  "21": "1",
+  "22": "0",
+  "23": "0",
+  "24": "9",
+  "25": "f",
+  "26": "4",
+  "27": "f",
+  "28": "2",
+  "29": "a",
+  "30": "9",
+  "31": "8",
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:50:12 [INFO]: Created RAG corpus for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:50:12 [INFO]: Importing 2 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:50:12 [INFO]: Creating RAG corpus: {
+  "0": "c",
+  "1": "o",
+  "2": "m",
+  "3": "p",
+  "4": "a",
+  "5": "n",
+  "6": "y",
+  "7": "-",
+  "8": "6",
+  "9": "7",
+  "10": "d",
+  "11": "1",
+  "12": "8",
+  "13": "e",
+  "14": "2",
+  "15": "b",
+  "16": "3",
+  "17": "1",
+  "18": "9",
+  "19": "c",
+  "20": "1",
+  "21": "1",
+  "22": "0",
+  "23": "0",
+  "24": "9",
+  "25": "f",
+  "26": "4",
+  "27": "f",
+  "28": "2",
+  "29": "a",
+  "30": "9",
+  "31": "8",
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:50:12 [INFO]: Created RAG corpus for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:50:12 [INFO]: Importing 2 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:50:13 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742295013104.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:50:13 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742295013105.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:50:14 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742295014292.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:50:14 [INFO]: Processed 2 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:50:14 [INFO]: Running analysis query for topics... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:50:14 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the main topics and themes covered in these documents? Please provide a structured analysis with main topics and subtopics."
+}
+2025-03-18 10:50:15 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742295014974.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:50:15 [INFO]: Processed 2 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:50:15 [INFO]: Running analysis query for topics... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:50:15 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the main topics and themes covered in these documents? Please provide a structured analysis with main topics and subtopics."
+}
+2025-03-18 10:50:20 [INFO]: Running analysis query for gaps... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:50:20 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the potential knowledge gaps or missing information in these documents? Consider completeness, clarity, and areas that might need more detail."
+}
+2025-03-18 10:50:23 [INFO]: Running analysis query for gaps... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:50:23 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the potential knowledge gaps or missing information in these documents? Consider completeness, clarity, and areas that might need more detail."
+}
+2025-03-18 10:50:25 [INFO]: Running analysis query for relationships... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:50:25 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the key relationships and connections between different topics in these documents? How do they relate to each other?"
+}
+2025-03-18 10:50:27 [INFO]: Running analysis query for relationships... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:50:27 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the key relationships and connections between different topics in these documents? How do they relate to each other?"
+}
+2025-03-18 10:50:29 [INFO]: Running analysis query for recommendations... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:50:29 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What specific recommendations can you make to improve this knowledge base? Consider organization, completeness, and clarity."
+}
+2025-03-18 10:50:33 [INFO]: Running analysis query for recommendations... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:50:33 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What specific recommendations can you make to improve this knowledge base? Consider organization, completeness, and clarity."
+}
+2025-03-18 10:50:35 [INFO]: Analysis completed for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 10:50:38 [INFO]: Analysis completed for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}

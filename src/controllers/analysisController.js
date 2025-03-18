@@ -4,6 +4,7 @@ const Analysis = require('../models/Analysis');
 const OpenAI = require('openai');
 const dotenv = require('dotenv');
 const { vertexAIService } = require('../config/vertexAIConfig');
+const { getIO } = require('../config/socketConfig');
 
 // Load environment variables
 dotenv.config();
@@ -197,6 +198,7 @@ async function analyzeDocumentsWithRAG(companyId, documents) {
 const startAnalysis = async (req, res) => {
   try {
     const { companyId } = req.body;
+    const io = getIO();
 
     // Check if there's already an ongoing analysis
     const existingAnalysis = await Analysis.findOne({
@@ -206,16 +208,35 @@ const startAnalysis = async (req, res) => {
 
     if (existingAnalysis) {
       return res.status(400).json({
+        success: false,
         message: 'An analysis is already in progress for this company'
       });
     }
 
-    // Get all documents for the company
+    // Check if we need to run a new analysis
+    const latestAnalysis = await Analysis.findOne({ 
+      companyId, 
+      status: 'completed' 
+    }).sort({ startTime: -1 });
+
+    // Get current documents
     const documents = await Document.find({ companyId });
 
     if (!documents || documents.length === 0) {
       return res.status(400).json({
+        success: false,
         message: 'No documents found for analysis'
+      });
+    }
+
+    // Check if we need a new analysis
+    if (latestAnalysis && latestAnalysis.documentCount === documents.length) {
+      // Return existing analysis if document count hasn't changed
+      return res.status(200).json({
+        success: true,
+        message: 'Using existing analysis',
+        analysisId: latestAnalysis._id,
+        results: latestAnalysis.results
       });
     }
 
@@ -230,6 +251,13 @@ const startAnalysis = async (req, res) => {
 
     await analysis.save();
 
+    // Emit analysis started event
+    io.to(`company-${companyId}`).emit('analysis_update', {
+      status: 'started',
+      analysisId: analysis._id,
+      progress: 0
+    });
+
     // Start RAG analysis in the background
     analyzeDocumentsWithRAG(companyId, documents)
       .then(async (results) => {
@@ -238,6 +266,14 @@ const startAnalysis = async (req, res) => {
         analysis.status = 'completed';
         analysis.endTime = new Date();
         await analysis.save();
+        
+        // Emit completion event with results
+        io.to(`company-${companyId}`).emit('analysis_update', {
+          status: 'completed',
+          analysisId: analysis._id,
+          progress: 100,
+          results
+        });
         
         logger.info(`Analysis completed for company ${companyId}`);
       })
@@ -248,16 +284,25 @@ const startAnalysis = async (req, res) => {
         analysis.endTime = new Date();
         await analysis.save();
         
+        // Emit error event
+        io.to(`company-${companyId}`).emit('analysis_update', {
+          status: 'failed',
+          analysisId: analysis._id,
+          error: error.message
+        });
+        
         logger.error(`Analysis failed for company ${companyId}:`, error);
       });
 
     return res.status(200).json({
+      success: true,
       message: 'Analysis started successfully',
       analysisId: analysis._id
     });
   } catch (error) {
     logger.error('Error starting analysis:', error);
     return res.status(500).json({
+      success: false,
       message: 'Failed to start analysis',
       error: error.message
     });
@@ -273,13 +318,10 @@ const getAnalysis = async (req, res) => {
     const analysis = await Analysis.findOne({ companyId })
       .sort({ startTime: -1 });
 
-    if (!analysis) {
-      return res.status(404).json({
-        message: 'No analysis found for this company'
-      });
-    }
-
-    return res.status(200).json(analysis);
+    return res.status(200).json({
+      exists: !!analysis,
+      analysis: analysis || null
+    });
   } catch (error) {
     logger.error('Error fetching analysis:', error);
     return res.status(500).json({
