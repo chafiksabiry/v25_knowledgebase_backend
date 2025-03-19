@@ -27557,3 +27557,1235 @@ All tests completed successfully! ✨ {
   "service": "kb-analysis-backend",
   "query": "You are an expert AI assistant with deep knowledge in analyzing and interpreting business documents. You have access to the company's knowledge base.\n\nYour task is to provide comprehensive, analytical, and actionable insights based on the information in the documents. While staying faithful to the source material, you should:\n\n1. ANALYZE the information thoroughly\n2. SYNTHESIZE related information from different parts of the documents\n3. STRUCTURE your response in a clear, user-friendly format\n4. HIGHLIGHT key points, numbers, and comparisons using markdown formatting\n5. PROVIDE practical insights and recommendations when relevant\n6. If comparing options or levels, CREATE tables or structured comparisons\n7. When numbers or specific data are available, INCLUDE them in your analysis\n\nQuestion: I'am a teneager of 23 years old, can i benifit from insurance offer given by april ??\n\nWhen answering:\n- Start with a clear, direct answer to the question\n- Use bullet points, tables, or sections to organize information\n- Bold important terms and numbers for emphasis\n- If the documents don't explicitly state something but it can be reasonably inferred from the provided information, you may include such insights while clearly indicating they are derived from the context\n- If information is missing or unclear, specify what additional details would be helpful\n- Use markdown formatting to make your response more readable\n\nContext will be provided below. Please analyze it thoroughly and provide a comprehensive response that helps the user make informed decisions."
 }
+2025-03-18 14:37:54 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:37:54 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-03-18 14:37:54 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:37:54 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:37:54 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:37:54 [INFO]: WebSocket server initialized {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:37:54 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:37:54 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:37:54 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:45:45 [INFO]: Creating RAG corpus: {
+  "0": "c",
+  "1": "o",
+  "2": "m",
+  "3": "p",
+  "4": "a",
+  "5": "n",
+  "6": "y",
+  "7": "-",
+  "8": "6",
+  "9": "7",
+  "10": "d",
+  "11": "1",
+  "12": "8",
+  "13": "e",
+  "14": "2",
+  "15": "b",
+  "16": "3",
+  "17": "1",
+  "18": "9",
+  "19": "c",
+  "20": "1",
+  "21": "1",
+  "22": "0",
+  "23": "0",
+  "24": "9",
+  "25": "f",
+  "26": "4",
+  "27": "f",
+  "28": "2",
+  "29": "a",
+  "30": "9",
+  "31": "8",
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:45:45 [INFO]: Created RAG corpus for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:45:45 [INFO]: Importing 3 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:45:45 [INFO]: Creating RAG corpus: {
+  "0": "c",
+  "1": "o",
+  "2": "m",
+  "3": "p",
+  "4": "a",
+  "5": "n",
+  "6": "y",
+  "7": "-",
+  "8": "6",
+  "9": "7",
+  "10": "d",
+  "11": "1",
+  "12": "8",
+  "13": "e",
+  "14": "2",
+  "15": "b",
+  "16": "3",
+  "17": "1",
+  "18": "9",
+  "19": "c",
+  "20": "1",
+  "21": "1",
+  "22": "0",
+  "23": "0",
+  "24": "9",
+  "25": "f",
+  "26": "4",
+  "27": "f",
+  "28": "2",
+  "29": "a",
+  "30": "9",
+  "31": "8",
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:45:45 [INFO]: Created RAG corpus for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:45:45 [INFO]: Importing 3 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:45:45 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742309145732.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:45:47 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742309147005.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:45:47 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742309147693.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:45:48 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742309148491.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:45:48 [INFO]: Processed 3 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:45:48 [INFO]: Running analysis query for topics... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:45:48 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the main topics and themes covered in these documents? Please provide a structured analysis with main topics and subtopics."
+}
+2025-03-18 14:45:48 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742309148598.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:45:49 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742309149309.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:45:49 [INFO]: Processed 3 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:45:49 [INFO]: Running analysis query for topics... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:45:49 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the main topics and themes covered in these documents? Please provide a structured analysis with main topics and subtopics."
+}
+2025-03-18 14:45:58 [INFO]: Running analysis query for gaps... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:45:58 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the potential knowledge gaps or missing information in these documents? Consider completeness, clarity, and areas that might need more detail."
+}
+2025-03-18 14:46:02 [INFO]: Running analysis query for gaps... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:46:02 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the potential knowledge gaps or missing information in these documents? Consider completeness, clarity, and areas that might need more detail."
+}
+2025-03-18 14:46:06 [INFO]: Running analysis query for relationships... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:46:06 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the key relationships and connections between different topics in these documents? How do they relate to each other?"
+}
+2025-03-18 14:46:06 [INFO]: Running analysis query for relationships... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:46:06 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the key relationships and connections between different topics in these documents? How do they relate to each other?"
+}
+2025-03-18 14:46:13 [INFO]: Running analysis query for recommendations... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:46:13 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What specific recommendations can you make to improve this knowledge base? Consider organization, completeness, and clarity."
+}
+2025-03-18 14:46:14 [INFO]: Running analysis query for recommendations... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:46:14 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What specific recommendations can you make to improve this knowledge base? Consider organization, completeness, and clarity."
+}
+2025-03-18 14:46:15 [ERROR]: Failed to query knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "error": "[VertexAI.ClientError]: got status: 429 Too Many Requests. {\"error\":{\"code\":429,\"message\":\"Quota exceeded for aiplatform.googleapis.com/generate_content_requests_per_minute_per_project_per_base_model with base model: gemini-1.5-flash. Please submit a quota increase request. https://cloud.google.com/vertex-ai/docs/generative-ai/quotas-genai.\",\"status\":\"RESOURCE_EXHAUSTED\"}}",
+  "stack": "ClientError: [VertexAI.ClientError]: got status: 429 Too Many Requests. {\"error\":{\"code\":429,\"message\":\"Quota exceeded for aiplatform.googleapis.com/generate_content_requests_per_minute_per_project_per_base_model with base model: gemini-1.5-flash. Please submit a quota increase request. https://cloud.google.com/vertex-ai/docs/generative-ai/quotas-genai.\",\"status\":\"RESOURCE_EXHAUSTED\"}}\n    at throwErrorIfNotOK (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\post_fetch_processing.js:31:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async generateContent (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\generate_content.js:52:5)\n    at async VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:216:22)\n    at async analyzeDocumentsWithRAG (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:160:24)"
+}
+2025-03-18 14:46:15 [ERROR]: Error in RAG analysis: [VertexAI.ClientError]: got status: 429 Too Many Requests. {"error":{"code":429,"message":"Quota exceeded for aiplatform.googleapis.com/generate_content_requests_per_minute_per_project_per_base_model with base model: gemini-1.5-flash. Please submit a quota increase request. https://cloud.google.com/vertex-ai/docs/generative-ai/quotas-genai.","status":"RESOURCE_EXHAUSTED"}} {
+  "service": "kb-analysis-backend",
+  "name": "ClientError",
+  "stack": "ClientError: [VertexAI.ClientError]: got status: 429 Too Many Requests. {\"error\":{\"code\":429,\"message\":\"Quota exceeded for aiplatform.googleapis.com/generate_content_requests_per_minute_per_project_per_base_model with base model: gemini-1.5-flash. Please submit a quota increase request. https://cloud.google.com/vertex-ai/docs/generative-ai/quotas-genai.\",\"status\":\"RESOURCE_EXHAUSTED\"}}\n    at throwErrorIfNotOK (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\post_fetch_processing.js:31:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async generateContent (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\generate_content.js:52:5)\n    at async VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:216:22)\n    at async analyzeDocumentsWithRAG (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:160:24)"
+}
+2025-03-18 14:46:15 [ERROR]: Analysis failed for company 67d18e2b319c11009f4f2a98: [VertexAI.ClientError]: got status: 429 Too Many Requests. {"error":{"code":429,"message":"Quota exceeded for aiplatform.googleapis.com/generate_content_requests_per_minute_per_project_per_base_model with base model: gemini-1.5-flash. Please submit a quota increase request. https://cloud.google.com/vertex-ai/docs/generative-ai/quotas-genai.","status":"RESOURCE_EXHAUSTED"}} {
+  "service": "kb-analysis-backend",
+  "name": "ClientError",
+  "stack": "ClientError: [VertexAI.ClientError]: got status: 429 Too Many Requests. {\"error\":{\"code\":429,\"message\":\"Quota exceeded for aiplatform.googleapis.com/generate_content_requests_per_minute_per_project_per_base_model with base model: gemini-1.5-flash. Please submit a quota increase request. https://cloud.google.com/vertex-ai/docs/generative-ai/quotas-genai.\",\"status\":\"RESOURCE_EXHAUSTED\"}}\n    at throwErrorIfNotOK (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\post_fetch_processing.js:31:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async generateContent (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\generate_content.js:52:5)\n    at async VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:216:22)\n    at async analyzeDocumentsWithRAG (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:160:24)"
+}
+2025-03-18 14:46:21 [INFO]: Analysis completed for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:46:59 [INFO]: Creating RAG corpus: {
+  "0": "c",
+  "1": "o",
+  "2": "m",
+  "3": "p",
+  "4": "a",
+  "5": "n",
+  "6": "y",
+  "7": "-",
+  "8": "6",
+  "9": "7",
+  "10": "d",
+  "11": "1",
+  "12": "8",
+  "13": "e",
+  "14": "2",
+  "15": "b",
+  "16": "3",
+  "17": "1",
+  "18": "9",
+  "19": "c",
+  "20": "1",
+  "21": "1",
+  "22": "0",
+  "23": "0",
+  "24": "9",
+  "25": "f",
+  "26": "4",
+  "27": "f",
+  "28": "2",
+  "29": "a",
+  "30": "9",
+  "31": "8",
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:46:59 [INFO]: Created RAG corpus for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:46:59 [INFO]: Importing 3 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:47:00 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742309220108.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:47:00 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742309220885.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:47:01 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742309221614.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:47:01 [INFO]: Processed 3 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:47:01 [INFO]: Running analysis query for topics... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:47:01 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the main topics and themes covered in these documents? Please provide a structured analysis with main topics and subtopics."
+}
+2025-03-18 14:47:12 [INFO]: Running analysis query for gaps... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:47:12 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the potential knowledge gaps or missing information in these documents? Consider completeness, clarity, and areas that might need more detail."
+}
+2025-03-18 14:47:28 [INFO]: Running analysis query for relationships... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:47:28 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the key relationships and connections between different topics in these documents? How do they relate to each other?"
+}
+2025-03-18 14:47:42 [INFO]: Running analysis query for recommendations... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:47:42 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What specific recommendations can you make to improve this knowledge base? Consider organization, completeness, and clarity."
+}
+2025-03-18 14:47:49 [INFO]: Analysis completed for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:51:05 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:51:05 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-03-18 14:51:05 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:51:05 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:51:05 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:51:05 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:51:05 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:51:05 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:51:22 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:51:22 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-03-18 14:51:22 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:51:22 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:51:22 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:51:22 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:51:22 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:51:22 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:52:15 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:52:15 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-03-18 14:52:15 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:52:15 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:52:15 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:52:15 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:52:15 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:52:15 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:52:41 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:52:41 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-03-18 14:52:41 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:52:41 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:52:41 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:52:41 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:52:41 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:52:41 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:53:59 [INFO]: Creating RAG corpus: {
+  "0": "c",
+  "1": "o",
+  "2": "m",
+  "3": "p",
+  "4": "a",
+  "5": "n",
+  "6": "y",
+  "7": "-",
+  "8": "6",
+  "9": "7",
+  "10": "d",
+  "11": "1",
+  "12": "8",
+  "13": "e",
+  "14": "2",
+  "15": "b",
+  "16": "3",
+  "17": "1",
+  "18": "9",
+  "19": "c",
+  "20": "1",
+  "21": "1",
+  "22": "0",
+  "23": "0",
+  "24": "9",
+  "25": "f",
+  "26": "4",
+  "27": "f",
+  "28": "2",
+  "29": "a",
+  "30": "9",
+  "31": "8",
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:53:59 [INFO]: Created RAG corpus for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:53:59 [INFO]: Importing 3 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:53:59 [INFO]: Creating RAG corpus: {
+  "0": "c",
+  "1": "o",
+  "2": "m",
+  "3": "p",
+  "4": "a",
+  "5": "n",
+  "6": "y",
+  "7": "-",
+  "8": "6",
+  "9": "7",
+  "10": "d",
+  "11": "1",
+  "12": "8",
+  "13": "e",
+  "14": "2",
+  "15": "b",
+  "16": "3",
+  "17": "1",
+  "18": "9",
+  "19": "c",
+  "20": "1",
+  "21": "1",
+  "22": "0",
+  "23": "0",
+  "24": "9",
+  "25": "f",
+  "26": "4",
+  "27": "f",
+  "28": "2",
+  "29": "a",
+  "30": "9",
+  "31": "8",
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:53:59 [INFO]: Created RAG corpus for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:53:59 [INFO]: Importing 3 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:54:00 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742309640157.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:54:01 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742309641103.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:54:02 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742309642216.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:54:03 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742309643054.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:54:03 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742309643698.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:54:03 [INFO]: Processed 3 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:54:03 [INFO]: Running analysis query for topics... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:54:03 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the main topics and themes covered in these documents? Please provide a structured analysis with main topics and subtopics."
+}
+2025-03-18 14:54:03 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742309643939.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:54:04 [INFO]: Processed 3 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:54:04 [INFO]: Running analysis query for topics... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:54:04 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the main topics and themes covered in these documents? Please provide a structured analysis with main topics and subtopics."
+}
+2025-03-18 14:54:10 [INFO]: Running analysis query for gaps... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:54:10 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the potential knowledge gaps or missing information in these documents? Consider completeness, clarity, and areas that might need more detail."
+}
+2025-03-18 14:54:12 [INFO]: Running analysis query for gaps... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:54:12 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the potential knowledge gaps or missing information in these documents? Consider completeness, clarity, and areas that might need more detail."
+}
+2025-03-18 14:54:15 [INFO]: Running analysis query for relationships... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:54:15 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the key relationships and connections between different topics in these documents? How do they relate to each other?"
+}
+2025-03-18 14:54:18 [INFO]: Running analysis query for relationships... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:54:18 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the key relationships and connections between different topics in these documents? How do they relate to each other?"
+}
+2025-03-18 14:54:21 [INFO]: Running analysis query for recommendations... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:54:21 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What specific recommendations can you make to improve this knowledge base? Consider organization, completeness, and clarity."
+}
+2025-03-18 14:54:21 [INFO]: Running analysis query for recommendations... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 14:54:21 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What specific recommendations can you make to improve this knowledge base? Consider organization, completeness, and clarity."
+}
+2025-03-18 14:54:22 [ERROR]: Failed to query knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "error": "[VertexAI.ClientError]: got status: 429 Too Many Requests. {\"error\":{\"code\":429,\"message\":\"Quota exceeded for aiplatform.googleapis.com/generate_content_requests_per_minute_per_project_per_base_model with base model: gemini-1.5-flash. Please submit a quota increase request. https://cloud.google.com/vertex-ai/docs/generative-ai/quotas-genai.\",\"status\":\"RESOURCE_EXHAUSTED\"}}",
+  "stack": "ClientError: [VertexAI.ClientError]: got status: 429 Too Many Requests. {\"error\":{\"code\":429,\"message\":\"Quota exceeded for aiplatform.googleapis.com/generate_content_requests_per_minute_per_project_per_base_model with base model: gemini-1.5-flash. Please submit a quota increase request. https://cloud.google.com/vertex-ai/docs/generative-ai/quotas-genai.\",\"status\":\"RESOURCE_EXHAUSTED\"}}\n    at throwErrorIfNotOK (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\post_fetch_processing.js:31:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async generateContent (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\generate_content.js:52:5)\n    at async VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:216:22)\n    at async analyzeDocumentsWithRAG (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:159:24)"
+}
+2025-03-18 14:54:22 [ERROR]: Error in RAG analysis: [VertexAI.ClientError]: got status: 429 Too Many Requests. {"error":{"code":429,"message":"Quota exceeded for aiplatform.googleapis.com/generate_content_requests_per_minute_per_project_per_base_model with base model: gemini-1.5-flash. Please submit a quota increase request. https://cloud.google.com/vertex-ai/docs/generative-ai/quotas-genai.","status":"RESOURCE_EXHAUSTED"}} {
+  "service": "kb-analysis-backend",
+  "name": "ClientError",
+  "stack": "ClientError: [VertexAI.ClientError]: got status: 429 Too Many Requests. {\"error\":{\"code\":429,\"message\":\"Quota exceeded for aiplatform.googleapis.com/generate_content_requests_per_minute_per_project_per_base_model with base model: gemini-1.5-flash. Please submit a quota increase request. https://cloud.google.com/vertex-ai/docs/generative-ai/quotas-genai.\",\"status\":\"RESOURCE_EXHAUSTED\"}}\n    at throwErrorIfNotOK (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\post_fetch_processing.js:31:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async generateContent (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\generate_content.js:52:5)\n    at async VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:216:22)\n    at async analyzeDocumentsWithRAG (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:159:24)"
+}
+2025-03-18 14:54:22 [ERROR]: Analysis failed for company 67d18e2b319c11009f4f2a98: [VertexAI.ClientError]: got status: 429 Too Many Requests. {"error":{"code":429,"message":"Quota exceeded for aiplatform.googleapis.com/generate_content_requests_per_minute_per_project_per_base_model with base model: gemini-1.5-flash. Please submit a quota increase request. https://cloud.google.com/vertex-ai/docs/generative-ai/quotas-genai.","status":"RESOURCE_EXHAUSTED"}} {
+  "service": "kb-analysis-backend",
+  "name": "ClientError",
+  "stack": "ClientError: [VertexAI.ClientError]: got status: 429 Too Many Requests. {\"error\":{\"code\":429,\"message\":\"Quota exceeded for aiplatform.googleapis.com/generate_content_requests_per_minute_per_project_per_base_model with base model: gemini-1.5-flash. Please submit a quota increase request. https://cloud.google.com/vertex-ai/docs/generative-ai/quotas-genai.\",\"status\":\"RESOURCE_EXHAUSTED\"}}\n    at throwErrorIfNotOK (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\post_fetch_processing.js:31:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async generateContent (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\generate_content.js:52:5)\n    at async VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:216:22)\n    at async analyzeDocumentsWithRAG (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:159:24)"
+}
+2025-03-18 14:54:22 [ERROR]: Failed to query knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "error": "[VertexAI.ClientError]: got status: 429 Too Many Requests. {\"error\":{\"code\":429,\"message\":\"Quota exceeded for aiplatform.googleapis.com/generate_content_requests_per_minute_per_project_per_base_model with base model: gemini-1.5-flash. Please submit a quota increase request. https://cloud.google.com/vertex-ai/docs/generative-ai/quotas-genai.\",\"status\":\"RESOURCE_EXHAUSTED\"}}",
+  "stack": "ClientError: [VertexAI.ClientError]: got status: 429 Too Many Requests. {\"error\":{\"code\":429,\"message\":\"Quota exceeded for aiplatform.googleapis.com/generate_content_requests_per_minute_per_project_per_base_model with base model: gemini-1.5-flash. Please submit a quota increase request. https://cloud.google.com/vertex-ai/docs/generative-ai/quotas-genai.\",\"status\":\"RESOURCE_EXHAUSTED\"}}\n    at throwErrorIfNotOK (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\post_fetch_processing.js:31:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async generateContent (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\generate_content.js:52:5)\n    at async VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:216:22)\n    at async analyzeDocumentsWithRAG (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:159:24)"
+}
+2025-03-18 14:54:22 [ERROR]: Error in RAG analysis: [VertexAI.ClientError]: got status: 429 Too Many Requests. {"error":{"code":429,"message":"Quota exceeded for aiplatform.googleapis.com/generate_content_requests_per_minute_per_project_per_base_model with base model: gemini-1.5-flash. Please submit a quota increase request. https://cloud.google.com/vertex-ai/docs/generative-ai/quotas-genai.","status":"RESOURCE_EXHAUSTED"}} {
+  "service": "kb-analysis-backend",
+  "name": "ClientError",
+  "stack": "ClientError: [VertexAI.ClientError]: got status: 429 Too Many Requests. {\"error\":{\"code\":429,\"message\":\"Quota exceeded for aiplatform.googleapis.com/generate_content_requests_per_minute_per_project_per_base_model with base model: gemini-1.5-flash. Please submit a quota increase request. https://cloud.google.com/vertex-ai/docs/generative-ai/quotas-genai.\",\"status\":\"RESOURCE_EXHAUSTED\"}}\n    at throwErrorIfNotOK (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\post_fetch_processing.js:31:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async generateContent (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\generate_content.js:52:5)\n    at async VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:216:22)\n    at async analyzeDocumentsWithRAG (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:159:24)"
+}
+2025-03-18 14:54:22 [ERROR]: Analysis failed for company 67d18e2b319c11009f4f2a98: [VertexAI.ClientError]: got status: 429 Too Many Requests. {"error":{"code":429,"message":"Quota exceeded for aiplatform.googleapis.com/generate_content_requests_per_minute_per_project_per_base_model with base model: gemini-1.5-flash. Please submit a quota increase request. https://cloud.google.com/vertex-ai/docs/generative-ai/quotas-genai.","status":"RESOURCE_EXHAUSTED"}} {
+  "service": "kb-analysis-backend",
+  "name": "ClientError",
+  "stack": "ClientError: [VertexAI.ClientError]: got status: 429 Too Many Requests. {\"error\":{\"code\":429,\"message\":\"Quota exceeded for aiplatform.googleapis.com/generate_content_requests_per_minute_per_project_per_base_model with base model: gemini-1.5-flash. Please submit a quota increase request. https://cloud.google.com/vertex-ai/docs/generative-ai/quotas-genai.\",\"status\":\"RESOURCE_EXHAUSTED\"}}\n    at throwErrorIfNotOK (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\post_fetch_processing.js:31:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async generateContent (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\generate_content.js:52:5)\n    at async VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:216:22)\n    at async analyzeDocumentsWithRAG (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:159:24)"
+}
+2025-03-18 15:00:04 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:00:04 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-03-18 15:00:04 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:00:04 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:00:04 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:00:04 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:00:04 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:00:04 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:01:13 [INFO]: Creating RAG corpus: {
+  "0": "c",
+  "1": "o",
+  "2": "m",
+  "3": "p",
+  "4": "a",
+  "5": "n",
+  "6": "y",
+  "7": "-",
+  "8": "6",
+  "9": "7",
+  "10": "d",
+  "11": "1",
+  "12": "8",
+  "13": "e",
+  "14": "2",
+  "15": "b",
+  "16": "3",
+  "17": "1",
+  "18": "9",
+  "19": "c",
+  "20": "1",
+  "21": "1",
+  "22": "0",
+  "23": "0",
+  "24": "9",
+  "25": "f",
+  "26": "4",
+  "27": "f",
+  "28": "2",
+  "29": "a",
+  "30": "9",
+  "31": "8",
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:01:13 [INFO]: Created RAG corpus for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:01:13 [INFO]: Importing 3 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:01:14 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742310074745.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:01:16 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742310076108.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:01:17 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742310077034.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:01:17 [INFO]: Processed 3 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:01:17 [INFO]: Running analysis query for topics... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:01:17 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the main topics and themes covered in these documents? Please provide a structured analysis with main topics and subtopics."
+}
+2025-03-18 15:01:50 [INFO]: Running analysis query for gaps... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:01:50 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the potential knowledge gaps or missing information in these documents? Consider completeness, clarity, and areas that might need more detail."
+}
+2025-03-18 15:02:06 [INFO]: Running analysis query for relationships... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:02:06 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What are the key relationships and connections between different topics in these documents? How do they relate to each other?"
+}
+2025-03-18 15:02:14 [INFO]: Running analysis query for recommendations... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:02:14 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "What specific recommendations can you make to improve this knowledge base? Consider organization, completeness, and clarity."
+}
+2025-03-18 15:02:22 [INFO]: Analysis completed for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:08:43 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:08:43 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-03-18 15:08:43 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:08:43 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:08:43 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:08:43 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:08:43 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:08:43 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:11:13 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:11:13 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-03-18 15:11:13 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:11:13 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:11:13 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:11:13 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:11:13 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:11:13 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:11:43 [INFO]: Creating RAG corpus: {
+  "0": "c",
+  "1": "o",
+  "2": "m",
+  "3": "p",
+  "4": "a",
+  "5": "n",
+  "6": "y",
+  "7": "-",
+  "8": "6",
+  "9": "7",
+  "10": "d",
+  "11": "1",
+  "12": "8",
+  "13": "e",
+  "14": "2",
+  "15": "b",
+  "16": "3",
+  "17": "1",
+  "18": "9",
+  "19": "c",
+  "20": "1",
+  "21": "1",
+  "22": "0",
+  "23": "0",
+  "24": "9",
+  "25": "f",
+  "26": "4",
+  "27": "f",
+  "28": "2",
+  "29": "a",
+  "30": "9",
+  "31": "8",
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:11:43 [INFO]: Created RAG corpus for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:11:43 [INFO]: Importing 3 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:11:44 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742310704075.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:11:45 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742310705516.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:11:46 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742310706398.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:11:46 [INFO]: Processed 3 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:11:46 [INFO]: Running analysis query for topics... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:11:46 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "Analyze the main topics and themes in these documents. Return your analysis as a structured JSON object in this exact format:\n{\n  \"topicAnalysis\": {\n    \"summary\": \"Brief 2-3 sentence overview of main topics\",\n    \"mainTopics\": [\n      {\n        \"topic\": \"Name of topic\",\n        \"description\": \"Brief description\",\n        \"relatedDocuments\": [\n          {\n            \"id\": \"document id if available, otherwise omit this field\",\n            \"name\": \"document name\",\n            \"relevance\": \"Brief explanation of relevance\"\n          }\n        ]\n      }\n    ]\n  }\n}\n\nDo not include any explanatory text or additional fields outside this JSON structure. Ensure your response is valid JSON."
+}
+2025-03-18 15:11:53 [INFO]: Running analysis query for gaps... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:11:53 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "Identify knowledge gaps or missing information in these documents. Return your analysis as a structured JSON object in this exact format:\n{\n  \"knowledgeGaps\": {\n    \"summary\": \"Brief overview of main gaps\",\n    \"gaps\": [\n      {\n        \"gap\": \"Description of the gap\",\n        \"impact\": \"Brief description of the impact\",\n        \"affectedAreas\": [\"Area 1\", \"Area 2\"],\n        \"relatedDocuments\": [\n          {\n            \"id\": \"document id if available, otherwise omit this field\",\n            \"name\": \"document name\",\n            \"context\": \"Why this document is relevant to the gap\"\n          }\n        ]\n      }\n    ]\n  }\n}\n\nDo not include any explanatory text or additional fields outside this JSON structure. Ensure your response is valid JSON."
+}
+2025-03-18 15:11:58 [INFO]: Running analysis query for recommendations... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:11:59 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "Provide specific recommendations to improve this knowledge base. Return your analysis as a structured JSON object in this exact format:\n{\n  \"recommendations\": {\n    \"summary\": \"Brief overview of recommendations\",\n    \"priorities\": [\n      {\n        \"recommendation\": \"Specific recommendation\",\n        \"priority\": \"HIGH|MEDIUM|LOW\",\n        \"rationale\": \"Brief explanation\",\n        \"implementation\": \"Quick implementation guide\",\n        \"relatedGaps\": [\"Reference to specific gaps\"],\n        \"affectedDocuments\": [\n          {\n            \"id\": \"document id if available, otherwise omit this field\",\n            \"name\": \"document name\"\n          }\n        ]\n      }\n    ]\n  }\n}\n\nDo not include any explanatory text or additional fields outside this JSON structure. Ensure your response is valid JSON."
+}
+2025-03-18 15:12:07 [ERROR]: Unhandled Rejection: Analysis validation failed: results.recommendations: Cast to string failed for value "{
+  summary: "Recommendations focus on enhancing the knowledge base's organization, clarity, and user experience.",
+  priorities: [
+    {
+      recommendation: 'Create a clear and consistent document hierarchy.',
+      priority: 'HIGH',
+      rationale: 'The current structure lacks a logical hierarchy, making it difficult to navigate and find specific information.',
+      implementation: 'Develop a table of contents, chapter headings, and subheadings to organize the content into logical sections.',
+      relatedGaps: [Array],
+      affectedDocuments: [Array]
+    },
+    {
+      recommendation: 'Improve readability and accessibility.',
+      priority: 'HIGH',
+      rationale: 'The content is dense and difficult to read due to formatting inconsistencies and excessive use of bolding and underlines.',
+      implementation: 'Use clear and concise language, consistent formatting, and appropriate headings and subheadings.',
+      relatedGaps: [Array],
+      affectedDocuments: [Array]
+    },
+    {
+      recommendation: 'Standardize terminology and define key concepts.',
+      priority: 'MEDIUM',
+      rationale: 'Inconsistent terminology and lack of definitions for key concepts can lead to confusion for users.',
+      implementation: 'Create a glossary of terms and definitions, and consistently use standardized terminology throughout the knowledge base.',
+      relatedGaps: [Array],
+      affectedDocuments: [Array]
+    },
+    {
+      recommendation: 'Provide clear and concise contact information.',
+      priority: 'MEDIUM',
+      rationale: 'Users need to know how to reach the appropriate contact for support or inquiries.',
+      implementation: 'Include a dedicated section with contact information, including email addresses, phone numbers, and relevant department contacts.',
+      relatedGaps: [Array],
+      affectedDocuments: [Array]
+    },
+    {
+      recommendation: 'Implement a search function.',
+      priority: 'MEDIUM',
+      rationale: 'A search function allows users to quickly find relevant information within the knowledge base.',
+      implementation: 'Integrate a robust search functionality into the knowledge base platform.',
+      relatedGaps: [Array]
+    },
+    {
+      recommendation: 'Consider using a more user-friendly platform for the knowledge base.',
+      priority: 'LOW',
+      rationale: 'The current format may not be ideal for a dynamic knowledge base.',
+      implementation: 'Evaluate user-friendly knowledge base platforms that offer features such as intuitive navigation, search functionality, and content management tools.',
+      relatedGaps: [Array]
+    }
+  ]
+}" (type Object) at path "results.recommendations" {
+  "service": "kb-analysis-backend",
+  "errors": {
+    "results.recommendations": {
+      "stringValue": "\"{\n  summary: \"Recommendations focus on enhancing the knowledge base's organization, clarity, and user experience.\",\n  priorities: [\n    {\n      recommendation: 'Create a clear and consistent document hierarchy.',\n      priority: 'HIGH',\n      rationale: 'The current structure lacks a logical hierarchy, making it difficult to navigate and find specific information.',\n      implementation: 'Develop a table of contents, chapter headings, and subheadings to organize the content into logical sections.',\n      relatedGaps: [Array],\n      affectedDocuments: [Array]\n    },\n    {\n      recommendation: 'Improve readability and accessibility.',\n      priority: 'HIGH',\n      rationale: 'The content is dense and difficult to read due to formatting inconsistencies and excessive use of bolding and underlines.',\n      implementation: 'Use clear and concise language, consistent formatting, and appropriate headings and subheadings.',\n      relatedGaps: [Array],\n      affectedDocuments: [Array]\n    },\n    {\n      recommendation: 'Standardize terminology and define key concepts.',\n      priority: 'MEDIUM',\n      rationale: 'Inconsistent terminology and lack of definitions for key concepts can lead to confusion for users.',\n      implementation: 'Create a glossary of terms and definitions, and consistently use standardized terminology throughout the knowledge base.',\n      relatedGaps: [Array],\n      affectedDocuments: [Array]\n    },\n    {\n      recommendation: 'Provide clear and concise contact information.',\n      priority: 'MEDIUM',\n      rationale: 'Users need to know how to reach the appropriate contact for support or inquiries.',\n      implementation: 'Include a dedicated section with contact information, including email addresses, phone numbers, and relevant department contacts.',\n      relatedGaps: [Array],\n      affectedDocuments: [Array]\n    },\n    {\n      recommendation: 'Implement a search function.',\n      priority: 'MEDIUM',\n      rationale: 'A search function allows users to quickly find relevant information within the knowledge base.',\n      implementation: 'Integrate a robust search functionality into the knowledge base platform.',\n      relatedGaps: [Array]\n    },\n    {\n      recommendation: 'Consider using a more user-friendly platform for the knowledge base.',\n      priority: 'LOW',\n      rationale: 'The current format may not be ideal for a dynamic knowledge base.',\n      implementation: 'Evaluate user-friendly knowledge base platforms that offer features such as intuitive navigation, search functionality, and content management tools.',\n      relatedGaps: [Array]\n    }\n  ]\n}\"",
+      "valueType": "Object",
+      "kind": "string",
+      "value": {
+        "summary": "Recommendations focus on enhancing the knowledge base's organization, clarity, and user experience.",
+        "priorities": [
+          {
+            "recommendation": "Create a clear and consistent document hierarchy.",
+            "priority": "HIGH",
+            "rationale": "The current structure lacks a logical hierarchy, making it difficult to navigate and find specific information.",
+            "implementation": "Develop a table of contents, chapter headings, and subheadings to organize the content into logical sections.",
+            "relatedGaps": [
+              "Lack of clear organization within documents."
+            ],
+            "affectedDocuments": [
+              {
+                "name": "CIBLES ET GARANTIES"
+              },
+              {
+                "name": "Convention de Partenariat - Annexe 1"
+              },
+              {
+                "name": "Convention de Partenariat - Annexe 2"
+              },
+              {
+                "name": "Convention de Partenariat - Annexe 3"
+              },
+              {
+                "name": "Convention de Partenariat - Annexe 4"
+              },
+              {
+                "name": "Convention de Partenariat - Annexe 5"
+              },
+              {
+                "name": "CHARTE D’UTILISATION DE LA MARQUE COVERITY"
+              },
+              {
+                "name": "Réf. 50415 – 05/2023"
+              }
+            ]
+          },
+          {
+            "recommendation": "Improve readability and accessibility.",
+            "priority": "HIGH",
+            "rationale": "The content is dense and difficult to read due to formatting inconsistencies and excessive use of bolding and underlines.",
+            "implementation": "Use clear and concise language, consistent formatting, and appropriate headings and subheadings.",
+            "relatedGaps": [
+              "Overuse of bolding and underlines.",
+              "Inconsistent formatting.",
+              "Dense and difficult to read content."
+            ],
+            "affectedDocuments": [
+              {
+                "name": "CIBLES ET GARANTIES"
+              },
+              {
+                "name": "Convention de Partenariat - Annexe 1"
+              },
+              {
+                "name": "Convention de Partenariat - Annexe 2"
+              },
+              {
+                "name": "Convention de Partenariat - Annexe 3"
+              },
+              {
+                "name": "Convention de Partenariat - Annexe 4"
+              },
+              {
+                "name": "Convention de Partenariat - Annexe 5"
+              },
+              {
+                "name": "CHARTE D’UTILISATION DE LA MARQUE COVERITY"
+              },
+              {
+                "name": "Réf. 50415 – 05/2023"
+              }
+            ]
+          },
+          {
+            "recommendation": "Standardize terminology and define key concepts.",
+            "priority": "MEDIUM",
+            "rationale": "Inconsistent terminology and lack of definitions for key concepts can lead to confusion for users.",
+            "implementation": "Create a glossary of terms and definitions, and consistently use standardized terminology throughout the knowledge base.",
+            "relatedGaps": [
+              "Inconsistent terminology.",
+              "Lack of clear definitions for key concepts."
+            ],
+            "affectedDocuments": [
+              {
+                "name": "CIBLES ET GARANTIES"
+              },
+              {
+                "name": "Convention de Partenariat - Annexe 1"
+              },
+              {
+                "name": "Convention de Partenariat - Annexe 2"
+              },
+              {
+                "name": "Convention de Partenariat - Annexe 3"
+              },
+              {
+                "name": "Convention de Partenariat - Annexe 4"
+              },
+              {
+                "name": "Convention de Partenariat - Annexe 5"
+              },
+              {
+                "name": "CHARTE D’UTILISATION DE LA MARQUE COVERITY"
+              },
+              {
+                "name": "Réf. 50415 – 05/2023"
+              }
+            ]
+          },
+          {
+            "recommendation": "Provide clear and concise contact information.",
+            "priority": "MEDIUM",
+            "rationale": "Users need to know how to reach the appropriate contact for support or inquiries.",
+            "implementation": "Include a dedicated section with contact information, including email addresses, phone numbers, and relevant department contacts.",
+            "relatedGaps": [
+              "Lack of centralized contact information."
+            ],
+            "affectedDocuments": [
+              {
+                "name": "Convention de Partenariat - Annexe 1"
+              },
+              {
+                "name": "Convention de Partenariat - Annexe 3"
+              },
+              {
+                "name": "CHARTE D’UTILISATION DE LA MARQUE COVERITY"
+              }
+            ]
+          },
+          {
+            "recommendation": "Implement a search function.",
+            "priority": "MEDIUM",
+            "rationale": "A search function allows users to quickly find relevant information within the knowledge base.",
+            "implementation": "Integrate a robust search functionality into the knowledge base platform.",
+            "relatedGaps": [
+              "Lack of search functionality."
+            ]
+          },
+          {
+            "recommendation": "Consider using a more user-friendly platform for the knowledge base.",
+            "priority": "LOW",
+            "rationale": "The current format may not be ideal for a dynamic knowledge base.",
+            "implementation": "Evaluate user-friendly knowledge base platforms that offer features such as intuitive navigation, search functionality, and content management tools.",
+            "relatedGaps": [
+              "Limited functionality of the current platform."
+            ]
+          }
+        ]
+      },
+      "path": "results.recommendations",
+      "reason": null,
+      "name": "CastError",
+      "message": "Cast to string failed for value \"{\n  summary: \"Recommendations focus on enhancing the knowledge base's organization, clarity, and user experience.\",\n  priorities: [\n    {\n      recommendation: 'Create a clear and consistent document hierarchy.',\n      priority: 'HIGH',\n      rationale: 'The current structure lacks a logical hierarchy, making it difficult to navigate and find specific information.',\n      implementation: 'Develop a table of contents, chapter headings, and subheadings to organize the content into logical sections.',\n      relatedGaps: [Array],\n      affectedDocuments: [Array]\n    },\n    {\n      recommendation: 'Improve readability and accessibility.',\n      priority: 'HIGH',\n      rationale: 'The content is dense and difficult to read due to formatting inconsistencies and excessive use of bolding and underlines.',\n      implementation: 'Use clear and concise language, consistent formatting, and appropriate headings and subheadings.',\n      relatedGaps: [Array],\n      affectedDocuments: [Array]\n    },\n    {\n      recommendation: 'Standardize terminology and define key concepts.',\n      priority: 'MEDIUM',\n      rationale: 'Inconsistent terminology and lack of definitions for key concepts can lead to confusion for users.',\n      implementation: 'Create a glossary of terms and definitions, and consistently use standardized terminology throughout the knowledge base.',\n      relatedGaps: [Array],\n      affectedDocuments: [Array]\n    },\n    {\n      recommendation: 'Provide clear and concise contact information.',\n      priority: 'MEDIUM',\n      rationale: 'Users need to know how to reach the appropriate contact for support or inquiries.',\n      implementation: 'Include a dedicated section with contact information, including email addresses, phone numbers, and relevant department contacts.',\n      relatedGaps: [Array],\n      affectedDocuments: [Array]\n    },\n    {\n      recommendation: 'Implement a search function.',\n      priority: 'MEDIUM',\n      rationale: 'A search function allows users to quickly find relevant information within the knowledge base.',\n      implementation: 'Integrate a robust search functionality into the knowledge base platform.',\n      relatedGaps: [Array]\n    },\n    {\n      recommendation: 'Consider using a more user-friendly platform for the knowledge base.',\n      priority: 'LOW',\n      rationale: 'The current format may not be ideal for a dynamic knowledge base.',\n      implementation: 'Evaluate user-friendly knowledge base platforms that offer features such as intuitive navigation, search functionality, and content management tools.',\n      relatedGaps: [Array]\n    }\n  ]\n}\" (type Object) at path \"results.recommendations\""
+    }
+  },
+  "_message": "Analysis validation failed",
+  "stack": "ValidationError: Analysis validation failed: results.recommendations: Cast to string failed for value \"{\n  summary: \"Recommendations focus on enhancing the knowledge base's organization, clarity, and user experience.\",\n  priorities: [\n    {\n      recommendation: 'Create a clear and consistent document hierarchy.',\n      priority: 'HIGH',\n      rationale: 'The current structure lacks a logical hierarchy, making it difficult to navigate and find specific information.',\n      implementation: 'Develop a table of contents, chapter headings, and subheadings to organize the content into logical sections.',\n      relatedGaps: [Array],\n      affectedDocuments: [Array]\n    },\n    {\n      recommendation: 'Improve readability and accessibility.',\n      priority: 'HIGH',\n      rationale: 'The content is dense and difficult to read due to formatting inconsistencies and excessive use of bolding and underlines.',\n      implementation: 'Use clear and concise language, consistent formatting, and appropriate headings and subheadings.',\n      relatedGaps: [Array],\n      affectedDocuments: [Array]\n    },\n    {\n      recommendation: 'Standardize terminology and define key concepts.',\n      priority: 'MEDIUM',\n      rationale: 'Inconsistent terminology and lack of definitions for key concepts can lead to confusion for users.',\n      implementation: 'Create a glossary of terms and definitions, and consistently use standardized terminology throughout the knowledge base.',\n      relatedGaps: [Array],\n      affectedDocuments: [Array]\n    },\n    {\n      recommendation: 'Provide clear and concise contact information.',\n      priority: 'MEDIUM',\n      rationale: 'Users need to know how to reach the appropriate contact for support or inquiries.',\n      implementation: 'Include a dedicated section with contact information, including email addresses, phone numbers, and relevant department contacts.',\n      relatedGaps: [Array],\n      affectedDocuments: [Array]\n    },\n    {\n      recommendation: 'Implement a search function.',\n      priority: 'MEDIUM',\n      rationale: 'A search function allows users to quickly find relevant information within the knowledge base.',\n      implementation: 'Integrate a robust search functionality into the knowledge base platform.',\n      relatedGaps: [Array]\n    },\n    {\n      recommendation: 'Consider using a more user-friendly platform for the knowledge base.',\n      priority: 'LOW',\n      rationale: 'The current format may not be ideal for a dynamic knowledge base.',\n      implementation: 'Evaluate user-friendly knowledge base platforms that offer features such as intuitive navigation, search functionality, and content management tools.',\n      relatedGaps: [Array]\n    }\n  ]\n}\" (type Object) at path \"results.recommendations\"\n    at Document.invalidate (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\document.js:3219:32)\n    at _complete (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\document.js:2918:16)\n    at complete (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\document.js:3020:19)\n    at C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\document.js:3014:20\n    at C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\schematype.js:1360:11\n    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)"
+}
+2025-03-18 15:16:01 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:16:01 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-03-18 15:16:01 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:16:01 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:16:02 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:16:02 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:16:02 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:16:02 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:16:28 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:16:28 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-03-18 15:16:28 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:16:28 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:16:28 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:16:28 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:16:28 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:16:28 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:17:04 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:17:04 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-03-18 15:17:04 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:17:04 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:17:04 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:17:04 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:17:04 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:17:04 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:17:25 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:17:25 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-03-18 15:17:25 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:17:25 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:17:25 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:17:25 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:17:25 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:17:25 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:18:00 [INFO]: Creating RAG corpus: {
+  "0": "c",
+  "1": "o",
+  "2": "m",
+  "3": "p",
+  "4": "a",
+  "5": "n",
+  "6": "y",
+  "7": "-",
+  "8": "6",
+  "9": "7",
+  "10": "d",
+  "11": "1",
+  "12": "8",
+  "13": "e",
+  "14": "2",
+  "15": "b",
+  "16": "3",
+  "17": "1",
+  "18": "9",
+  "19": "c",
+  "20": "1",
+  "21": "1",
+  "22": "0",
+  "23": "0",
+  "24": "9",
+  "25": "f",
+  "26": "4",
+  "27": "f",
+  "28": "2",
+  "29": "a",
+  "30": "9",
+  "31": "8",
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:18:00 [INFO]: Created RAG corpus for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:18:00 [INFO]: Importing 3 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:18:01 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742311081177.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:18:02 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742311082612.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:18:03 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1742311083832.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:18:03 [INFO]: Processed 3 documents for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:18:03 [INFO]: Running comprehensive analysis query for company 67d18e2b319c11009f4f2a98... {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:18:03 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "Analyze the provided documents comprehensively to identify topics, knowledge gaps, and recommendations. \nReturn your analysis as a structured JSON object with three main sections:\n\n{\n  \"topicAnalysis\": {\n    \"summary\": \"Brief 2-3 sentence overview of main topics\",\n    \"mainTopics\": [\n      {\n        \"topic\": \"Name of topic\",\n        \"description\": \"Brief description\",\n        \"relatedDocuments\": [\n          {\n            \"id\": \"document id if available, otherwise omit this field\",\n            \"name\": \"document name\",\n            \"relevance\": \"Brief explanation of relevance\"\n          }\n        ]\n      }\n    ]\n  },\n  \"knowledgeGaps\": {\n    \"summary\": \"Brief overview of main gaps\",\n    \"gaps\": [\n      {\n        \"gap\": \"Description of the gap\",\n        \"impact\": \"Brief description of the impact\",\n        \"affectedAreas\": [\"Area 1\", \"Area 2\"],\n        \"relatedDocuments\": [\n          {\n            \"id\": \"document id if available, otherwise omit this field\",\n            \"name\": \"document name\",\n            \"context\": \"Why this document is relevant to the gap\"\n          }\n        ]\n      }\n    ]\n  },\n  \"recommendations\": {\n    \"summary\": \"Brief overview of recommendations\",\n    \"priorities\": [\n      {\n        \"recommendation\": \"Specific recommendation\",\n        \"priority\": \"HIGH|MEDIUM|LOW\",\n        \"rationale\": \"Brief explanation\",\n        \"implementation\": \"Quick implementation guide\",\n        \"relatedGaps\": [\"Reference to specific gaps\"],\n        \"affectedDocuments\": [\n          {\n            \"id\": \"document id if available, otherwise omit this field\",\n            \"name\": \"document name\"\n          }\n        ]\n      }\n    ]\n  }\n}\n\nEnsure your response contains only valid JSON - no introductory or explanatory text before or after the JSON structure."
+}
+2025-03-18 15:18:18 [INFO]: Analysis completed for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:20:06 [INFO]: Processing question for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "what is COVERTY"
+}
+2025-03-18 15:20:06 [INFO]: Using existing RAG corpus for company 67d18e2b319c11009f4f2a98 {
+  "service": "kb-analysis-backend"
+}
+2025-03-18 15:20:06 [INFO]: Querying knowledge base for company 67d18e2b319c11009f4f2a98: {
+  "service": "kb-analysis-backend",
+  "query": "You are an expert AI assistant with deep knowledge in analyzing and interpreting business documents. You have access to the company's knowledge base.\n\nYour task is to provide comprehensive, analytical, and actionable insights based on the information in the documents. While staying faithful to the source material, you should:\n\n1. ANALYZE the information thoroughly\n2. SYNTHESIZE related information from different parts of the documents\n3. STRUCTURE your response in a clear, user-friendly format\n4. HIGHLIGHT key points, numbers, and comparisons using markdown formatting\n5. PROVIDE practical insights and recommendations when relevant\n6. If comparing options or levels, CREATE tables or structured comparisons\n7. When numbers or specific data are available, INCLUDE them in your analysis\n\nQuestion: what is COVERTY\n\nWhen answering:\n- Start with a clear, direct answer to the question\n- Use bullet points, tables, or sections to organize information\n- Bold important terms and numbers for emphasis\n- If the documents don't explicitly state something but it can be reasonably inferred from the provided information, you may include such insights while clearly indicating they are derived from the context\n- If information is missing or unclear, specify what additional details would be helpful\n- Use markdown formatting to make your response more readable\n\nContext will be provided below. Please analyze it thoroughly and provide a comprehensive response that helps the user make informed decisions."
+}
