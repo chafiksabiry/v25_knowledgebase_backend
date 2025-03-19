@@ -6,7 +6,6 @@ const path = require('path');
 const http = require('http');
 const { logger } = require('./utils/logger');
 const { vertexAIService } = require('./config/vertexAIConfig');
-const { initializeSocket } = require('./config/socketConfig');
 const documentRoutes = require('./routes/documentRoutes');
 const fineTuningRoutes = require('./routes/fineTuningRoutes');
 const analysisRoutes = require('./routes/analysisRoutes');
@@ -20,9 +19,6 @@ dotenv.config();
 // Create Express app and HTTP server
 const app = express();
 const server = http.createServer(app);
-
-// Initialize Socket.io
-initializeSocket(server);
 
 const PORT = process.env.PORT || 3001;
 
@@ -67,7 +63,6 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/kb-analys
     // Start the server
     server.listen(PORT, () => {
       logger.info(`Server running on port ${PORT}`);
-      logger.info(`WebSocket server initialized`);
       logger.info(`Health check: http://localhost:${PORT}/health`);
       logger.info(`Documents API: http://localhost:${PORT}/api/documents`);
       logger.info(`Fine-tuning API: http://localhost:${PORT}/api/fine-tuning/jobs`);

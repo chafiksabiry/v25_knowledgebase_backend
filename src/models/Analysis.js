@@ -38,18 +38,8 @@ const AnalysisSchema = new Schema(
       type: String 
     },
     results: {
-      topics: {
-        type: String
-      },
-      gaps: {
-        type: String
-      },
-      relationships: {
-        type: String
-      },
-      recommendations: {
-        type: String
-      }
+      type: mongoose.Schema.Types.Mixed,
+      default: {}
     },
     // Optional detailed analysis fields
     topicAnalysis: {

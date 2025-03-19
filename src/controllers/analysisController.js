@@ -4,7 +4,6 @@ const Analysis = require('../models/Analysis');
 const OpenAI = require('openai');
 const dotenv = require('dotenv');
 const { vertexAIService } = require('../config/vertexAIConfig');
-const { getIO } = require('../config/socketConfig');
 
 // Load environment variables
 dotenv.config();
@@ -133,61 +132,113 @@ async function analyzeDocumentsWithRAG(companyId, documents) {
     // Import documents to the corpus
     await vertexAIService.importDocumentsToCorpus(companyId, documents);
 
-    // Prepare analysis queries
-    const analysisQueries = [
-      {
-        type: 'topics',
-        query: 'What are the main topics and themes covered in these documents? Please provide a structured analysis with main topics and subtopics.'
-      },
-      {
-        type: 'gaps',
-        query: 'What are the potential knowledge gaps or missing information in these documents? Consider completeness, clarity, and areas that might need more detail.'
-      },
-      {
-        type: 'relationships',
-        query: 'What are the key relationships and connections between different topics in these documents? How do they relate to each other?'
-      },
-      {
-        type: 'recommendations',
-        query: 'What specific recommendations can you make to improve this knowledge base? Consider organization, completeness, and clarity.'
-      }
-    ];
+    // Single comprehensive query with all three aspects
+    const query = `Analyze the provided documents comprehensively to identify topics, knowledge gaps, and recommendations. 
+Return your analysis as a structured JSON object with three main sections:
 
-    // Execute analysis queries
-    const analysisResults = {};
-    for (const { type, query } of analysisQueries) {
-      logger.info(`Running analysis query for ${type}...`);
-      const response = await vertexAIService.queryKnowledgeBase(companyId, query);
+{
+  "topicAnalysis": {
+    "summary": "Brief 2-3 sentence overview of main topics",
+    "mainTopics": [
+      {
+        "topic": "Name of topic",
+        "description": "Brief description",
+        "relatedDocuments": [
+          {
+            "id": "document id if available, otherwise omit this field",
+            "name": "document name",
+            "relevance": "Brief explanation of relevance"
+          }
+        ]
+      }
+    ]
+  },
+  "knowledgeGaps": {
+    "summary": "Brief overview of main gaps",
+    "gaps": [
+      {
+        "gap": "Description of the gap",
+        "impact": "Brief description of the impact",
+        "affectedAreas": ["Area 1", "Area 2"],
+        "relatedDocuments": [
+          {
+            "id": "document id if available, otherwise omit this field",
+            "name": "document name",
+            "context": "Why this document is relevant to the gap"
+          }
+        ]
+      }
+    ]
+  },
+  "recommendations": {
+    "summary": "Brief overview of recommendations",
+    "priorities": [
+      {
+        "recommendation": "Specific recommendation",
+        "priority": "HIGH|MEDIUM|LOW",
+        "rationale": "Brief explanation",
+        "implementation": "Quick implementation guide",
+        "relatedGaps": ["Reference to specific gaps"],
+        "affectedDocuments": [
+          {
+            "id": "document id if available, otherwise omit this field",
+            "name": "document name"
+          }
+        ]
+      }
+    ]
+  }
+}
+
+Ensure your response contains only valid JSON - no introductory or explanatory text before or after the JSON structure.`;
+
+    // Execute the single unified query
+    logger.info(`Running comprehensive analysis query for company ${companyId}...`);
+    const response = await vertexAIService.queryKnowledgeBase(companyId, query);
       
-      // Add debug logging
-      logger.debug('Response structure:', JSON.stringify(response, null, 2));
-      
-      // Handle different response structures
-      let resultText;
-      if (response.candidates && response.candidates[0]) {
-        if (response.candidates[0].content && response.candidates[0].content.parts) {
-          resultText = response.candidates[0].content.parts[0].text;
-        } else if (response.candidates[0].text) {
-          resultText = response.candidates[0].text;
-        } else if (typeof response.candidates[0] === 'string') {
-          resultText = response.candidates[0];
-        } else {
-          logger.warn(`Unexpected response structure for ${type}:`, response);
-          resultText = 'Analysis result structure not recognized';
-        }
-      } else if (response.text) {
-        resultText = response.text;
-      } else if (typeof response === 'string') {
-        resultText = response;
+    // Handle different response structures and parse JSON
+    let resultText;
+    if (response.candidates && response.candidates[0]) {
+      if (response.candidates[0].content && response.candidates[0].content.parts) {
+        resultText = response.candidates[0].content.parts[0].text;
+      } else if (response.candidates[0].text) {
+        resultText = response.candidates[0].text;
+      } else if (typeof response.candidates[0] === 'string') {
+        resultText = response.candidates[0];
       } else {
-        logger.warn(`Unable to extract text from response for ${type}:`, response);
-        resultText = 'Unable to extract analysis result';
+        logger.warn(`Unexpected response structure:`, response);
+        resultText = 'Analysis result structure not recognized';
       }
-
-      analysisResults[type] = resultText;
+    } else if (response.text) {
+      resultText = response.text;
+    } else if (typeof response === 'string') {
+      resultText = response;
+    } else {
+      logger.warn(`Unable to extract text from response:`, response);
+      resultText = 'Unable to extract analysis result';
     }
 
-    return analysisResults;
+    // Parse the JSON response
+    try {
+      let parsedResult;
+      if (typeof resultText === 'string') {
+        // Extract JSON from the text if it's embedded (looking for { } pattern)
+        const jsonMatch = resultText.match(/\{[\s\S]*\}/);
+        const jsonString = jsonMatch ? jsonMatch[0] : resultText;
+        parsedResult = JSON.parse(jsonString);
+      } else {
+        parsedResult = resultText;
+      }
+      
+      return parsedResult;
+    } catch (e) {
+      logger.error('Failed to parse analysis results as JSON:', e);
+      // Return a simplified structure with the error message
+      return {
+        error: "Failed to parse analysis results as JSON",
+        rawText: resultText
+      };
+    }
   } catch (error) {
     logger.error('Error in RAG analysis:', error);
     throw error;
@@ -198,18 +249,34 @@ async function analyzeDocumentsWithRAG(companyId, documents) {
 const startAnalysis = async (req, res) => {
   try {
     const { companyId } = req.body;
-    const io = getIO();
 
-    // Check if there's already an ongoing analysis
-    const existingAnalysis = await Analysis.findOne({
+    // Enhanced check for ongoing analysis
+    const ongoingAnalyses = await Analysis.find({
       companyId,
-      status: 'in_progress'
+      status: 'in_progress',
+      startTime: { $gt: new Date(Date.now() - 30 * 60 * 1000) } // Within the last 30 minutes
     });
 
-    if (existingAnalysis) {
-      return res.status(400).json({
+    if (ongoingAnalyses.length > 0) {
+      logger.warn(`Rejected analysis request: Analysis already in progress for company ${companyId}`);
+      return res.status(429).json({
         success: false,
-        message: 'An analysis is already in progress for this company'
+        message: 'An analysis is already in progress for this company',
+        analysisId: ongoingAnalyses[0]._id
+      });
+    }
+
+    // Rate limiting - check if there was a recent analysis (success or failure) in the past 10 seconds
+    const recentAnalyses = await Analysis.find({
+      companyId,
+      startTime: { $gt: new Date(Date.now() - 10 * 1000) } // Within the last 10 seconds
+    });
+
+    if (recentAnalyses.length > 0) {
+      logger.warn(`Rejected analysis request: Rate limit exceeded for company ${companyId}`);
+      return res.status(429).json({
+        success: false,
+        message: 'Please wait at least 10 seconds between analysis requests'
       });
     }
 
@@ -251,13 +318,6 @@ const startAnalysis = async (req, res) => {
 
     await analysis.save();
 
-    // Emit analysis started event
-    io.to(`company-${companyId}`).emit('analysis_update', {
-      status: 'started',
-      analysisId: analysis._id,
-      progress: 0
-    });
-
     // Start RAG analysis in the background
     analyzeDocumentsWithRAG(companyId, documents)
       .then(async (results) => {
@@ -267,14 +327,6 @@ const startAnalysis = async (req, res) => {
         analysis.endTime = new Date();
         await analysis.save();
         
-        // Emit completion event with results
-        io.to(`company-${companyId}`).emit('analysis_update', {
-          status: 'completed',
-          analysisId: analysis._id,
-          progress: 100,
-          results
-        });
-        
         logger.info(`Analysis completed for company ${companyId}`);
       })
       .catch(async (error) => {
@@ -283,13 +335,6 @@ const startAnalysis = async (req, res) => {
         analysis.error = error.message;
         analysis.endTime = new Date();
         await analysis.save();
-        
-        // Emit error event
-        io.to(`company-${companyId}`).emit('analysis_update', {
-          status: 'failed',
-          analysisId: analysis._id,
-          error: error.message
-        });
         
         logger.error(`Analysis failed for company ${companyId}:`, error);
       });
@@ -490,11 +535,105 @@ async function askQuestion(req, res) {
     }
 }
 
+// Controller function to analyze company documents with RAG
+const analyzeCompanyDocuments = async (req, res) => {
+  try {
+    const { companyId } = req.params;
+    const { documentIds } = req.body;
+    
+    // Check for ongoing analysis for this company
+    const ongoingAnalysis = await Analysis.findOne({
+      companyId,
+      status: 'in-progress'
+    });
+    
+    if (ongoingAnalysis) {
+      return res.status(429).json({
+        message: 'Analysis already in progress for this company',
+        analysisId: ongoingAnalysis._id
+      });
+    }
+
+    // Fetch documents from database
+    let documents = [];
+    if (documentIds && documentIds.length > 0) {
+      documents = await Document.find({
+        _id: { $in: documentIds },
+        companyId
+      });
+    } else {
+      documents = await Document.find({ companyId });
+    }
+
+    if (!documents || documents.length === 0) {
+      return res.status(404).json({
+        message: 'No documents found for analysis'
+      });
+    }
+
+    // Create new analysis record
+    const analysis = new Analysis({
+      companyId,
+      status: 'in-progress',
+      type: 'rag',
+      documentCount: documents.length,
+      documentIds: documents.map(doc => doc._id),
+      startTime: new Date()
+    });
+
+    await analysis.save();
+
+    // Run RAG analysis in the background
+    (async () => {
+      try {
+        // Format documents for RAG processing
+        const formattedDocs = documents.map(doc => ({
+          id: doc._id.toString(),
+          name: doc.title || 'Untitled',
+          content: doc.content
+        }));
+
+        // Perform analysis
+        const analysisResults = await analyzeDocumentsWithRAG(companyId, formattedDocs);
+
+        // Update analysis record with results
+        analysis.status = 'completed';
+        analysis.endTime = new Date();
+        analysis.results = analysisResults;
+
+        await analysis.save();
+        logger.info(`Analysis completed for company ${companyId}`);
+      } catch (error) {
+        // Update analysis record with error
+        analysis.status = 'failed';
+        analysis.endTime = new Date();
+        analysis.error = error.message || 'Unknown error occurred during analysis';
+        
+        await analysis.save();
+        logger.error(`Analysis failed for company ${companyId}:`, error);
+      }
+    })();
+
+    // Return immediate response with analysis ID
+    return res.status(202).json({
+      message: 'Analysis started',
+      analysisId: analysis._id
+    });
+  } catch (error) {
+    logger.error('Error initiating analysis:', error);
+    return res.status(500).json({
+      message: 'Failed to initiate analysis',
+      error: error.message
+    });
+  }
+};
+
 module.exports = {
   analyzeDocumentsWithRAG,
   startAnalysis,
   getAnalysis,
   getAllAnalyses,
   askQuestion,
-  createContextAwarePrompt
+  createContextAwarePrompt,
+  analyzeCompanyDocuments
 }; 
