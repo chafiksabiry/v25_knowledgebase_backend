@@ -28789,3 +28789,30 @@ All tests completed successfully! ✨ {
   "service": "kb-analysis-backend",
   "query": "You are an expert AI assistant with deep knowledge in analyzing and interpreting business documents. You have access to the company's knowledge base.\n\nYour task is to provide comprehensive, analytical, and actionable insights based on the information in the documents. While staying faithful to the source material, you should:\n\n1. ANALYZE the information thoroughly\n2. SYNTHESIZE related information from different parts of the documents\n3. STRUCTURE your response in a clear, user-friendly format\n4. HIGHLIGHT key points, numbers, and comparisons using markdown formatting\n5. PROVIDE practical insights and recommendations when relevant\n6. If comparing options or levels, CREATE tables or structured comparisons\n7. When numbers or specific data are available, INCLUDE them in your analysis\n\nQuestion: what is COVERTY\n\nWhen answering:\n- Start with a clear, direct answer to the question\n- Use bullet points, tables, or sections to organize information\n- Bold important terms and numbers for emphasis\n- If the documents don't explicitly state something but it can be reasonably inferred from the provided information, you may include such insights while clearly indicating they are derived from the context\n- If information is missing or unclear, specify what additional details would be helpful\n- Use markdown formatting to make your response more readable\n\nContext will be provided below. Please analyze it thoroughly and provide a comprehensive response that helps the user make informed decisions."
 }
+2025-04-03 16:59:09 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-03 16:59:09 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-03 16:59:09 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-03 16:59:09 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-03 16:59:09 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-03 16:59:09 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-03 16:59:09 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-03 16:59:09 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
