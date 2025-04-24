@@ -1,6 +1,7 @@
 const { logger } = require('../utils/logger');
 const Document = require('../models/Document');
 const Analysis = require('../models/Analysis');
+const Company = require('../models/Company');
 const OpenAI = require('openai');
 const dotenv = require('dotenv');
 const { vertexAIService } = require('../config/vertexAIConfig');
@@ -42,7 +43,7 @@ const extractDocumentSections = (content) => {
 const extractMainTopics = (content) => {
   // Extract headings and main points
   const topics = new Set();
-  
+
   // Look for markdown-style headings
   const headingMatches = content.match(/^#{1,3}\s+(.+)$/gm) || [];
   headingMatches.forEach(heading => {
@@ -74,7 +75,7 @@ const extractKeyPoints = (content) => {
     'important', 'note', 'key', 'must', 'should',
     'remember', 'essential', 'critical', 'crucial'
   ];
-  
+
   const sentences = content.match(/[^.!?]+[.!?]+/g) || [];
   sentences.forEach(sentence => {
     if (importantPhrases.some(phrase => sentence.toLowerCase().includes(phrase))) {
@@ -87,39 +88,39 @@ const extractKeyPoints = (content) => {
 
 const identifyTopics = (doc) => {
   const topics = new Set();
-  
+
   // Add topics from tags
   if (doc.tags && doc.tags.length > 0) {
     doc.tags.forEach(tag => topics.add(tag));
   }
-  
+
   // Add topics from title/name
   const titleWords = doc.name.split(/\s+/)
     .filter(word => word.length > 3)
     .map(word => word.toLowerCase());
   titleWords.forEach(word => topics.add(word));
-  
+
   // Add topics from content headings
   const extractedTopics = extractMainTopics(doc.content);
   extractedTopics.forEach(topic => topics.add(topic));
-  
+
   return Array.from(topics);
 };
 
 const calculateTopicRelevance = (doc, topic) => {
   const topicLower = topic.toLowerCase();
   let relevance = 0;
-  
+
   // Check title relevance
   if (doc.name.toLowerCase().includes(topicLower)) relevance += 3;
-  
+
   // Check tags relevance
   if (doc.tags.some(tag => tag.toLowerCase().includes(topicLower))) relevance += 2;
-  
+
   // Check content relevance (basic word frequency)
   const wordCount = (doc.content.toLowerCase().match(new RegExp(topicLower, 'g')) || []).length;
   relevance += Math.min(wordCount / 10, 5); // Cap at 5 points
-  
+
   return Math.min(relevance / 10, 1); // Normalize to 0-1
 };
 
@@ -128,7 +129,7 @@ async function analyzeDocumentsWithRAG(companyId, documents) {
   try {
     // Initialize RAG corpus for the company
     await vertexAIService.createRagCorpus(companyId);
-    
+
     // Import documents to the corpus
     await vertexAIService.importDocumentsToCorpus(companyId, documents);
 
@@ -195,7 +196,7 @@ Ensure your response contains only valid JSON - no introductory or explanatory t
     // Execute the single unified query
     logger.info(`Running comprehensive analysis query for company ${companyId}...`);
     const response = await vertexAIService.queryKnowledgeBase(companyId, query);
-      
+
     // Handle different response structures and parse JSON
     let resultText;
     if (response.candidates && response.candidates[0]) {
@@ -229,7 +230,7 @@ Ensure your response contains only valid JSON - no introductory or explanatory t
       } else {
         parsedResult = resultText;
       }
-      
+
       return parsedResult;
     } catch (e) {
       logger.error('Failed to parse analysis results as JSON:', e);
@@ -281,9 +282,9 @@ const startAnalysis = async (req, res) => {
     }
 
     // Check if we need to run a new analysis
-    const latestAnalysis = await Analysis.findOne({ 
-      companyId, 
-      status: 'completed' 
+    const latestAnalysis = await Analysis.findOne({
+      companyId,
+      status: 'completed'
     }).sort({ startTime: -1 });
 
     // Get current documents
@@ -326,7 +327,7 @@ const startAnalysis = async (req, res) => {
         analysis.status = 'completed';
         analysis.endTime = new Date();
         await analysis.save();
-        
+
         logger.info(`Analysis completed for company ${companyId}`);
       })
       .catch(async (error) => {
@@ -335,7 +336,7 @@ const startAnalysis = async (req, res) => {
         analysis.error = error.message;
         analysis.endTime = new Date();
         await analysis.save();
-        
+
         logger.error(`Analysis failed for company ${companyId}:`, error);
       });
 
@@ -425,114 +426,107 @@ Context will be provided below. Please analyze it thoroughly and provide a compr
  * Ask a specific question about company documents
  */
 async function askQuestion(req, res) {
-    try {
-        const { companyId, query } = req.body;
-
-        if (!companyId) {
-            return res.status(400).json({
-                success: false,
-                error: {
-                    message: 'Company ID is required',
-                    code: 'MISSING_COMPANY_ID'
-                }
-            });
+  try {
+    const { userId, query } = req.body;
+    if (!userId || !query) {
+      return res.status(400).json({
+        success: false,
+        error: {
+          message: 'User ID and query are required',
+          code: 'MISSING_USER_ID_AND_QUERY'
         }
-
-        if (!query) {
-            return res.status(400).json({
-                success: false,
-                error: {
-                    message: 'Query is required',
-                    code: 'MISSING_QUERY'
-                }
-            });
-        }
-
-        logger.info(`Processing question for company ${companyId}:`, { query });
-
-        // Get current documents from DB
-        const documents = await Document.find({ companyId });
-        
-        if (!documents || documents.length === 0) {
-            return res.status(400).json({
-                success: false,
-                error: {
-                    message: 'No documents found for this company',
-                    code: 'NO_DOCUMENTS'
-                }
-            });
-        }
-
-        // Initialize Vertex AI if not already initialized
-        if (!vertexAIService.vertexAI) {
-            logger.info('Initializing Vertex AI service...');
-            vertexAIService.initialize();
-        }
-
-        // Check if RAG corpus exists and is up to date
-        const corpusStatus = await vertexAIService.checkCorpusStatus(companyId);
-        const needsUpdate = !corpusStatus.exists || corpusStatus.documentCount !== documents.length;
-
-        if (needsUpdate) {
-            logger.info(`Updating RAG corpus for company ${companyId}...`);
-            // Create/update the corpus with current documents
-            await vertexAIService.createRagCorpus(companyId);
-            await vertexAIService.importDocumentsToCorpus(companyId, documents);
-            logger.info(`RAG corpus updated successfully for company ${companyId}`);
-        } else {
-            logger.info(`Using existing RAG corpus for company ${companyId}`);
-        }
-
-        // Create a context-aware prompt
-        const contextAwarePrompt = createContextAwarePrompt(query);
-
-        // Query the knowledge base using Vertex AI
-        const response = await vertexAIService.queryKnowledgeBase(companyId, contextAwarePrompt);
-
-        // Handle different response structures
-        let answer;
-        if (response.candidates && response.candidates[0]) {
-            if (response.candidates[0].content && response.candidates[0].content.parts) {
-                answer = response.candidates[0].content.parts[0].text;
-            } else if (response.candidates[0].text) {
-                answer = response.candidates[0].text;
-            } else {
-                answer = response.candidates[0];
-            }
-        } else if (response.text) {
-            answer = response.text;
-        } else if (typeof response === 'string') {
-            answer = response;
-        } else {
-            throw new Error('Unexpected response structure from Vertex AI');
-        }
-
-        return res.json({
-            success: true,
-            data: {
-                answer,
-                metadata: {
-                    processedAt: new Date().toISOString(),
-                    model: process.env.VERTEX_AI_MODEL,
-                    corpusStatus: {
-                        wasUpdated: needsUpdate,
-                        documentCount: documents.length
-                    }
-                }
-            }
-        });
-
-    } catch (error) {
-        logger.error('Error processing question:', error);
-        return res.status(500).json({
-            success: false,
-            error: {
-                message: 'Failed to process question',
-                code: 'PROCESSING_ERROR',
-                details: error.message
-            }
-        });
+      });
     }
+
+    // Get companyId from userId
+    const company = await Company.findOne({ userId });
+    const companyId = company._id;
+
+    logger.info(`Processing question for company ${companyId}:`, { query });
+
+    // Get current documents from DB
+    const documents = await Document.find({ companyId });
+
+    if (!documents || documents.length === 0) {
+      return res.status(400).json({
+        success: false,
+        error: {
+          message: 'No documents found for this company',
+          code: 'NO_DOCUMENTS'
+        }
+      });
+    }
+
+    // Initialize Vertex AI if not already initialized
+    if (!vertexAIService.vertexAI) {
+      logger.info('Initializing Vertex AI service...');
+      vertexAIService.initialize();
+    }
+
+    // Check if RAG corpus exists and is up to date
+    const corpusStatus = await vertexAIService.checkCorpusStatus(companyId);
+    const needsUpdate = !corpusStatus.exists || corpusStatus.documentCount !== documents.length;
+
+    if (needsUpdate) {
+      logger.info(`Updating RAG corpus for company ${companyId}...`);
+      // Create/update the corpus with current documents
+      await vertexAIService.createRagCorpus(companyId);
+      await vertexAIService.importDocumentsToCorpus(companyId, documents);
+      logger.info(`RAG corpus updated successfully for company ${companyId}`);
+    } else {
+      logger.info(`Using existing RAG corpus for company ${companyId}`);
+    }
+
+    // Create a context-aware prompt
+    const contextAwarePrompt = createContextAwarePrompt(query);
+
+    // Query the knowledge base using Vertex AI
+    const response = await vertexAIService.queryKnowledgeBase(companyId, contextAwarePrompt);
+
+    // Handle different response structures
+    let answer;
+    if (response.candidates && response.candidates[0]) {
+      if (response.candidates[0].content && response.candidates[0].content.parts) {
+        answer = response.candidates[0].content.parts[0].text;
+      } else if (response.candidates[0].text) {
+        answer = response.candidates[0].text;
+      } else {
+        answer = response.candidates[0];
+      }
+    } else if (response.text) {
+      answer = response.text;
+    } else if (typeof response === 'string') {
+      answer = response;
+    } else {
+      throw new Error('Unexpected response structure from Vertex AI');
+    }
+
+    return res.json({
+      success: true,
+      data: {
+        answer,
+        metadata: {
+          processedAt: new Date().toISOString(),
+          model: process.env.VERTEX_AI_MODEL,
+          corpusStatus: {
+            wasUpdated: needsUpdate,
+            documentCount: documents.length
+          }
+        }
+      }
+    });
+
+  } catch (error) {
+    logger.error('Error processing question:', error);
+    return res.status(500).json({
+      success: false,
+      error: {
+        message: 'Failed to process question',
+        code: 'PROCESSING_ERROR',
+        details: error.message
+      }
+    });
+  }
 }
 
 // Controller function to analyze company documents with RAG
@@ -540,13 +534,13 @@ const analyzeCompanyDocuments = async (req, res) => {
   try {
     const { companyId } = req.params;
     const { documentIds } = req.body;
-    
+
     // Check for ongoing analysis for this company
     const ongoingAnalysis = await Analysis.findOne({
       companyId,
       status: 'in-progress'
     });
-    
+
     if (ongoingAnalysis) {
       return res.status(429).json({
         message: 'Analysis already in progress for this company',
@@ -608,7 +602,7 @@ const analyzeCompanyDocuments = async (req, res) => {
         analysis.status = 'failed';
         analysis.endTime = new Date();
         analysis.error = error.message || 'Unknown error occurred during analysis';
-        
+
         await analysis.save();
         logger.error(`Analysis failed for company ${companyId}:`, error);
       }

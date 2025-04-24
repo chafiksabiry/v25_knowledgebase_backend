@@ -14,35 +14,37 @@ const uploadDocument = async (req, res) => {
       return res.status(400).json({ error: 'No file uploaded' });
     }
 
-    const { name, description, tags, uploadedBy, companyId } = req.body;
-    
+    const { name, description, tags, uploadedBy, userId } = req.body;
+
     // Check if companyId is provided
-    if (!companyId) {
-      return res.status(400).json({ error: 'Company ID is required' });
+    if (!userId) {
+      return res.status(400).json({ error: 'User ID is required' });
     }
 
     logger.info(`Processing uploaded file: ${req.file.originalname}`);
 
     // Validate companyId
-    const company = await Company.findById(companyId);
+    const company = await Company.findOne({ userId });
     if (!company) {
       return res.status(404).json({ error: 'Company not found' });
     }
-    
+
+    const companyId = company._id;
+
     // Upload file to Cloudinary
     const filePath = req.file.path;
     const { url: fileUrl, public_id: cloudinaryPublicId } = await uploadToCloudinary(filePath, 'documents');
-    
+
     // Extract text from the file
     const fileType = req.file.mimetype;
     const extractedText = await extractTextFromFile(filePath, fileType);
-    
+
     // Chunk the document
     const chunks = chunkDocument(extractedText);
-    
+
     // Calculate document metrics
     const metrics = calculateDocumentMetrics(extractedText);
-    
+
     // Create document record
     const document = new Document({
       name: name || req.file.originalname,
@@ -64,12 +66,12 @@ const uploadDocument = async (req, res) => {
         modifiedAt: new Date()
       }
     });
-    
+
     await document.save();
-    
+
     // Delete local file after upload
     await fs.unlink(filePath);
-    
+
     res.status(201).json({
       message: 'Document uploaded successfully',
       document: {
@@ -101,12 +103,20 @@ const uploadDocument = async (req, res) => {
 // Get all documents
 const getAllDocuments = async (req, res) => {
   try {
-    const { companyId } = req.query;
-    
+    const { userId } = req.query;
+
     // Check if companyId is provided
-    if (!companyId) {
-      return res.status(400).json({ error: 'Company ID is required' });
+    if (!userId) {
+      return res.status(400).json({ error: 'User ID is required' });
     }
+    // Find the company associated with the userId
+    const company = await Company.findOne({ userId });
+
+    if (!company) {
+      return res.status(404).json({ error: 'No company found for this user' });
+    }
+
+    const companyId = company._id;
 
     const documents = await Document.find({ companyId }).select('-content -chunks');
     res.status(200).json({ documents });
@@ -154,7 +164,7 @@ const updateDocument = async (req, res) => {
   try {
     const { name, description, tags } = req.body;
     const document = await Document.findById(req.params.id);
-    
+
     if (!document) {
       return res.status(404).json({ error: 'Document not found' });
     }
@@ -164,7 +174,7 @@ const updateDocument = async (req, res) => {
     if (tags) document.tags = tags.split(',').map(tag => tag.trim());
 
     await document.save();
-    
+
     res.status(200).json({
       message: 'Document updated successfully',
       document: {
