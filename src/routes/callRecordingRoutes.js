@@ -29,18 +29,18 @@ const upload = multer({
 
 // Retrieve call recordings for a given company
 router.get('/', async (req, res) => {
-  const { companyId } = req.query;
-  if (!companyId) {
-    return res.status(400).json({ error: 'Company ID is required' });
+  const { userId } = req.query;
+  if (!userId) {
+    return res.status(400).json({ error: 'User ID is required' });
   }
   await getCallRecordings(req, res);
 });
 
 // Upload a new call recording
 router.post('/upload', upload.single('file'), async (req, res, next) => {
-  const { companyId } = req.body;
-  if (!companyId) {
-    return res.status(400).json({ error: 'Company ID is required' });
+  const { userId } = req.body;
+  if (!userId) {
+    return res.status(400).json({ error: 'User ID is required' });
   }
   await uploadCallRecording(req, res, next);
 });
