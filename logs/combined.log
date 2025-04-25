@@ -28816,3 +28816,2165 @@ All tests completed successfully! ✨ {
 2025-04-03 16:59:09 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
   "service": "kb-analysis-backend"
 }
+2025-04-23 11:50:31 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 11:50:31 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-23 11:50:31 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 11:50:31 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 11:50:31 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 11:50:31 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 11:50:31 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 11:50:31 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:34:12 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:34:12 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-23 14:34:12 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:34:12 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:34:12 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:34:12 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:34:12 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:34:12 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:34:25 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:34:25 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-23 14:34:25 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:34:25 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:34:25 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:34:25 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:34:25 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:34:25 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:35:01 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:35:01 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-23 14:35:01 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:35:01 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:35:01 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:35:01 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:35:01 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:35:01 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:35:17 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:35:17 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-23 14:35:17 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:35:17 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:35:17 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:35:17 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:35:17 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:35:17 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:35:25 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:35:25 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-23 14:35:25 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:35:25 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:35:25 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:35:25 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:35:25 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:35:25 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:35:28 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:35:28 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-23 14:35:28 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:35:28 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:35:28 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:35:28 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:35:28 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:35:28 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:35:33 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:35:33 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-23 14:35:33 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:35:33 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:35:33 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:35:33 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:35:33 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:35:33 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:38:11 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:38:11 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-23 14:38:11 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:38:11 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:38:11 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:38:11 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:38:11 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:38:11 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:38:34 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:38:34 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-23 14:38:34 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:38:34 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:38:34 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:38:34 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:38:34 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:38:34 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:38:49 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:38:49 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-23 14:38:49 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:38:49 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:38:49 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:38:49 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:38:49 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:38:49 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:40:38 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:40:38 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-23 14:40:38 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:40:38 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:40:38 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:40:38 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:40:38 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:40:38 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:41:19 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:41:22 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:41:22 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-23 14:41:22 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:41:22 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:41:22 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:41:22 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:41:22 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:41:22 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:42:26 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:42:26 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-23 14:42:26 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:42:26 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:42:26 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:42:26 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:42:26 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:42:26 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:42:43 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:42:43 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-23 14:42:43 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:42:43 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:42:43 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:42:43 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:42:43 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:42:43 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:43:46 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:43:46 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-23 14:43:46 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:43:46 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:43:46 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:43:46 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:43:46 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:43:46 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:43:54 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:43:54 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-23 14:43:54 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:43:54 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:43:54 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:43:54 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:43:54 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:43:54 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:44:08 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:44:08 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-23 14:44:08 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:44:08 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:44:08 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:44:08 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:44:08 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 14:44:08 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:25:12 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:25:12 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-23 15:25:12 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:25:12 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:25:12 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:25:12 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:25:12 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:25:12 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:29:38 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:29:38 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-23 15:29:38 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:29:38 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:29:38 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:29:39 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:29:39 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:29:39 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:29:41 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:29:41 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-23 15:29:41 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:29:41 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:29:41 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:29:41 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:29:41 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:29:41 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:32:29 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:32:29 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-23 15:32:29 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:32:29 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:32:29 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:32:29 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:32:29 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:32:29 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:32:35 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:32:35 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-23 15:32:35 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:32:35 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:32:35 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:32:35 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:32:35 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:32:35 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:33:02 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:33:02 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-23 15:33:02 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:33:02 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:33:02 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:33:02 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:33:02 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:33:02 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:35:26 [INFO]: Processing uploaded file: Guides.pdf {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:35:31 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\uploads\file-1745418926885-509665966.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:35:33 [INFO]: Split document into 49 chunks {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:08 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:08 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-23 15:45:08 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:08 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:08 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:08 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:08 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:08 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:12 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:12 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-23 15:45:12 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:12 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:12 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:12 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:12 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:12 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:16 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:16 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-23 15:45:16 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:16 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:16 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:16 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:16 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:16 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:20 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:20 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-23 15:45:20 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:20 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:20 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:20 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:20 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:20 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:31 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:31 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-23 15:45:31 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:31 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:31 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:31 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:31 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:31 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:37 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:37 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-23 15:45:37 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:37 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:37 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:37 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:37 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:37 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:40 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:40 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-23 15:45:40 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:40 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:40 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:40 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:40 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:40 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:43 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:43 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-23 15:45:43 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:43 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:43 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:43 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:43 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:43 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:47 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:47 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-23 15:45:47 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:47 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:47 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:47 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:47 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:47 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:53 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:53 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-23 15:45:53 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:53 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:53 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:53 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:53 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:53 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:57 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:57 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-23 15:45:57 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:57 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:57 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:57 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:57 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:45:57 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:46:30 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:46:30 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-23 15:46:30 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:46:30 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:46:30 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:46:30 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:46:30 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:46:30 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:46:51 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:46:51 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-23 15:46:51 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:46:51 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:46:51 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:46:51 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:46:51 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:46:51 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:46:54 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:46:54 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-23 15:46:54 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:46:54 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:46:54 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:46:54 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:46:54 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:46:54 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:47:04 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:47:04 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-23 15:47:04 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:47:04 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:47:04 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:47:04 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:47:04 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:47:04 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:47:08 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:47:08 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-23 15:47:08 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:47:08 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:47:08 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:47:08 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:47:08 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:47:08 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:47:18 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:47:18 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-23 15:47:18 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:47:18 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:47:18 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:47:18 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:47:18 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:47:18 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:48:34 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:48:34 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-23 15:48:34 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:48:34 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:48:34 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:48:34 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:48:34 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:48:34 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:50:15 [INFO]: Processing question for company 6808f54f5736a7a7cf24519d: {
+  "service": "kb-analysis-backend",
+  "query": "c quoi covertir"
+}
+2025-04-23 15:50:15 [INFO]: Updating RAG corpus for company 6808f54f5736a7a7cf24519d... {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:50:15 [INFO]: Creating RAG corpus: {
+  "0": "c",
+  "1": "o",
+  "2": "m",
+  "3": "p",
+  "4": "a",
+  "5": "n",
+  "6": "y",
+  "7": "-",
+  "8": "6",
+  "9": "8",
+  "10": "0",
+  "11": "8",
+  "12": "f",
+  "13": "5",
+  "14": "4",
+  "15": "f",
+  "16": "5",
+  "17": "7",
+  "18": "3",
+  "19": "6",
+  "20": "a",
+  "21": "7",
+  "22": "a",
+  "23": "7",
+  "24": "c",
+  "25": "f",
+  "26": "2",
+  "27": "4",
+  "28": "5",
+  "29": "1",
+  "30": "9",
+  "31": "d",
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:50:15 [INFO]: Created RAG corpus for company 6808f54f5736a7a7cf24519d {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:50:15 [INFO]: Importing 1 documents for company 6808f54f5736a7a7cf24519d {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:50:17 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1745419817239.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:50:17 [INFO]: Processed 1 documents for company 6808f54f5736a7a7cf24519d {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:50:17 [INFO]: RAG corpus updated successfully for company 6808f54f5736a7a7cf24519d {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:50:17 [INFO]: Querying knowledge base for company 6808f54f5736a7a7cf24519d: {
+  "service": "kb-analysis-backend",
+  "query": "You are an expert AI assistant with deep knowledge in analyzing and interpreting business documents. You have access to the company's knowledge base.\n\nYour task is to provide comprehensive, analytical, and actionable insights based on the information in the documents. While staying faithful to the source material, you should:\n\n1. ANALYZE the information thoroughly\n2. SYNTHESIZE related information from different parts of the documents\n3. STRUCTURE your response in a clear, user-friendly format\n4. HIGHLIGHT key points, numbers, and comparisons using markdown formatting\n5. PROVIDE practical insights and recommendations when relevant\n6. If comparing options or levels, CREATE tables or structured comparisons\n7. When numbers or specific data are available, INCLUDE them in your analysis\n\nQuestion: c quoi covertir\n\nWhen answering:\n- Start with a clear, direct answer to the question\n- Use bullet points, tables, or sections to organize information\n- Bold important terms and numbers for emphasis\n- If the documents don't explicitly state something but it can be reasonably inferred from the provided information, you may include such insights while clearly indicating they are derived from the context\n- If information is missing or unclear, specify what additional details would be helpful\n- Use markdown formatting to make your response more readable\n\nContext will be provided below. Please analyze it thoroughly and provide a comprehensive response that helps the user make informed decisions."
+}
+2025-04-23 15:50:19 [ERROR]: Failed to query knowledge base for company 6808f54f5736a7a7cf24519d: {
+  "service": "kb-analysis-backend",
+  "error": "[VertexAI.ClientError]: got status: 403 Forbidden. {\"error\":{\"code\":403,\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\",\"status\":\"PERMISSION_DENIED\",\"details\":[{\"@type\":\"type.googleapis.com/google.rpc.ErrorInfo\",\"reason\":\"BILLING_DISABLED\",\"domain\":\"googleapis.com\",\"metadata\":{\"consumer\":\"projects/harx-technologies-inc\",\"service\":\"aiplatform.googleapis.com\",\"containerInfo\":\"harx-technologies-inc\"}},{\"@type\":\"type.googleapis.com/google.rpc.LocalizedMessage\",\"locale\":\"en-US\",\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\"},{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Google developers console billing\",\"url\":\"https://console.developers.google.com/billing/enable?project=harx-technologies-inc\"}]}]}}",
+  "stack": "ClientError: [VertexAI.ClientError]: got status: 403 Forbidden. {\"error\":{\"code\":403,\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\",\"status\":\"PERMISSION_DENIED\",\"details\":[{\"@type\":\"type.googleapis.com/google.rpc.ErrorInfo\",\"reason\":\"BILLING_DISABLED\",\"domain\":\"googleapis.com\",\"metadata\":{\"consumer\":\"projects/harx-technologies-inc\",\"service\":\"aiplatform.googleapis.com\",\"containerInfo\":\"harx-technologies-inc\"}},{\"@type\":\"type.googleapis.com/google.rpc.LocalizedMessage\",\"locale\":\"en-US\",\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\"},{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Google developers console billing\",\"url\":\"https://console.developers.google.com/billing/enable?project=harx-technologies-inc\"}]}]}}\n    at throwErrorIfNotOK (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\post_fetch_processing.js:31:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async generateContent (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\generate_content.js:52:5)\n    at async VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:216:22)\n    at async askQuestion (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:484:22)"
+}
+2025-04-23 15:50:19 [ERROR]: Error processing question: [VertexAI.ClientError]: got status: 403 Forbidden. {"error":{"code":403,"message":"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.","status":"PERMISSION_DENIED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"BILLING_DISABLED","domain":"googleapis.com","metadata":{"consumer":"projects/harx-technologies-inc","service":"aiplatform.googleapis.com","containerInfo":"harx-technologies-inc"}},{"@type":"type.googleapis.com/google.rpc.LocalizedMessage","locale":"en-US","message":"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry."},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Google developers console billing","url":"https://console.developers.google.com/billing/enable?project=harx-technologies-inc"}]}]}} {
+  "service": "kb-analysis-backend",
+  "name": "ClientError",
+  "stack": "ClientError: [VertexAI.ClientError]: got status: 403 Forbidden. {\"error\":{\"code\":403,\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\",\"status\":\"PERMISSION_DENIED\",\"details\":[{\"@type\":\"type.googleapis.com/google.rpc.ErrorInfo\",\"reason\":\"BILLING_DISABLED\",\"domain\":\"googleapis.com\",\"metadata\":{\"consumer\":\"projects/harx-technologies-inc\",\"service\":\"aiplatform.googleapis.com\",\"containerInfo\":\"harx-technologies-inc\"}},{\"@type\":\"type.googleapis.com/google.rpc.LocalizedMessage\",\"locale\":\"en-US\",\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\"},{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Google developers console billing\",\"url\":\"https://console.developers.google.com/billing/enable?project=harx-technologies-inc\"}]}]}}\n    at throwErrorIfNotOK (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\post_fetch_processing.js:31:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async generateContent (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\generate_content.js:52:5)\n    at async VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:216:22)\n    at async askQuestion (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:484:22)"
+}
+2025-04-23 15:57:09 [INFO]: Processing question for company 6808f54f5736a7a7cf24519d: {
+  "service": "kb-analysis-backend",
+  "query": "c quoi covertir"
+}
+2025-04-23 15:57:09 [INFO]: Using existing RAG corpus for company 6808f54f5736a7a7cf24519d {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 15:57:09 [INFO]: Querying knowledge base for company 6808f54f5736a7a7cf24519d: {
+  "service": "kb-analysis-backend",
+  "query": "You are an expert AI assistant with deep knowledge in analyzing and interpreting business documents. You have access to the company's knowledge base.\n\nYour task is to provide comprehensive, analytical, and actionable insights based on the information in the documents. While staying faithful to the source material, you should:\n\n1. ANALYZE the information thoroughly\n2. SYNTHESIZE related information from different parts of the documents\n3. STRUCTURE your response in a clear, user-friendly format\n4. HIGHLIGHT key points, numbers, and comparisons using markdown formatting\n5. PROVIDE practical insights and recommendations when relevant\n6. If comparing options or levels, CREATE tables or structured comparisons\n7. When numbers or specific data are available, INCLUDE them in your analysis\n\nQuestion: c quoi covertir\n\nWhen answering:\n- Start with a clear, direct answer to the question\n- Use bullet points, tables, or sections to organize information\n- Bold important terms and numbers for emphasis\n- If the documents don't explicitly state something but it can be reasonably inferred from the provided information, you may include such insights while clearly indicating they are derived from the context\n- If information is missing or unclear, specify what additional details would be helpful\n- Use markdown formatting to make your response more readable\n\nContext will be provided below. Please analyze it thoroughly and provide a comprehensive response that helps the user make informed decisions."
+}
+2025-04-23 15:57:11 [ERROR]: Failed to query knowledge base for company 6808f54f5736a7a7cf24519d: {
+  "service": "kb-analysis-backend",
+  "error": "[VertexAI.ClientError]: got status: 403 Forbidden. {\"error\":{\"code\":403,\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\",\"status\":\"PERMISSION_DENIED\",\"details\":[{\"@type\":\"type.googleapis.com/google.rpc.ErrorInfo\",\"reason\":\"BILLING_DISABLED\",\"domain\":\"googleapis.com\",\"metadata\":{\"consumer\":\"projects/harx-technologies-inc\",\"service\":\"aiplatform.googleapis.com\",\"containerInfo\":\"harx-technologies-inc\"}},{\"@type\":\"type.googleapis.com/google.rpc.LocalizedMessage\",\"locale\":\"en-US\",\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\"},{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Google developers console billing\",\"url\":\"https://console.developers.google.com/billing/enable?project=harx-technologies-inc\"}]}]}}",
+  "stack": "ClientError: [VertexAI.ClientError]: got status: 403 Forbidden. {\"error\":{\"code\":403,\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\",\"status\":\"PERMISSION_DENIED\",\"details\":[{\"@type\":\"type.googleapis.com/google.rpc.ErrorInfo\",\"reason\":\"BILLING_DISABLED\",\"domain\":\"googleapis.com\",\"metadata\":{\"consumer\":\"projects/harx-technologies-inc\",\"service\":\"aiplatform.googleapis.com\",\"containerInfo\":\"harx-technologies-inc\"}},{\"@type\":\"type.googleapis.com/google.rpc.LocalizedMessage\",\"locale\":\"en-US\",\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\"},{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Google developers console billing\",\"url\":\"https://console.developers.google.com/billing/enable?project=harx-technologies-inc\"}]}]}}\n    at throwErrorIfNotOK (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\post_fetch_processing.js:31:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async generateContent (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\generate_content.js:52:5)\n    at async VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:216:22)\n    at async askQuestion (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:484:22)"
+}
+2025-04-23 15:57:11 [ERROR]: Error processing question: [VertexAI.ClientError]: got status: 403 Forbidden. {"error":{"code":403,"message":"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.","status":"PERMISSION_DENIED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"BILLING_DISABLED","domain":"googleapis.com","metadata":{"consumer":"projects/harx-technologies-inc","service":"aiplatform.googleapis.com","containerInfo":"harx-technologies-inc"}},{"@type":"type.googleapis.com/google.rpc.LocalizedMessage","locale":"en-US","message":"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry."},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Google developers console billing","url":"https://console.developers.google.com/billing/enable?project=harx-technologies-inc"}]}]}} {
+  "service": "kb-analysis-backend",
+  "name": "ClientError",
+  "stack": "ClientError: [VertexAI.ClientError]: got status: 403 Forbidden. {\"error\":{\"code\":403,\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\",\"status\":\"PERMISSION_DENIED\",\"details\":[{\"@type\":\"type.googleapis.com/google.rpc.ErrorInfo\",\"reason\":\"BILLING_DISABLED\",\"domain\":\"googleapis.com\",\"metadata\":{\"consumer\":\"projects/harx-technologies-inc\",\"service\":\"aiplatform.googleapis.com\",\"containerInfo\":\"harx-technologies-inc\"}},{\"@type\":\"type.googleapis.com/google.rpc.LocalizedMessage\",\"locale\":\"en-US\",\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\"},{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Google developers console billing\",\"url\":\"https://console.developers.google.com/billing/enable?project=harx-technologies-inc\"}]}]}}\n    at throwErrorIfNotOK (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\post_fetch_processing.js:31:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async generateContent (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\generate_content.js:52:5)\n    at async VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:216:22)\n    at async askQuestion (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:484:22)"
+}
+2025-04-23 16:31:41 [INFO]: Creating RAG corpus: {
+  "0": "c",
+  "1": "o",
+  "2": "m",
+  "3": "p",
+  "4": "a",
+  "5": "n",
+  "6": "y",
+  "7": "-",
+  "8": "6",
+  "9": "8",
+  "10": "0",
+  "11": "8",
+  "12": "f",
+  "13": "5",
+  "14": "4",
+  "15": "f",
+  "16": "5",
+  "17": "7",
+  "18": "3",
+  "19": "6",
+  "20": "a",
+  "21": "7",
+  "22": "a",
+  "23": "7",
+  "24": "c",
+  "25": "f",
+  "26": "2",
+  "27": "4",
+  "28": "5",
+  "29": "1",
+  "30": "9",
+  "31": "d",
+  "service": "kb-analysis-backend"
+}
+2025-04-23 16:31:41 [INFO]: Created RAG corpus for company 6808f54f5736a7a7cf24519d {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 16:31:41 [INFO]: Importing 1 documents for company 6808f54f5736a7a7cf24519d {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 16:31:42 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1745422302712.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 16:31:43 [INFO]: Processed 1 documents for company 6808f54f5736a7a7cf24519d {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 16:31:43 [INFO]: Running comprehensive analysis query for company 6808f54f5736a7a7cf24519d... {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 16:31:43 [INFO]: Querying knowledge base for company 6808f54f5736a7a7cf24519d: {
+  "service": "kb-analysis-backend",
+  "query": "Analyze the provided documents comprehensively to identify topics, knowledge gaps, and recommendations. \nReturn your analysis as a structured JSON object with three main sections:\n\n{\n  \"topicAnalysis\": {\n    \"summary\": \"Brief 2-3 sentence overview of main topics\",\n    \"mainTopics\": [\n      {\n        \"topic\": \"Name of topic\",\n        \"description\": \"Brief description\",\n        \"relatedDocuments\": [\n          {\n            \"id\": \"document id if available, otherwise omit this field\",\n            \"name\": \"document name\",\n            \"relevance\": \"Brief explanation of relevance\"\n          }\n        ]\n      }\n    ]\n  },\n  \"knowledgeGaps\": {\n    \"summary\": \"Brief overview of main gaps\",\n    \"gaps\": [\n      {\n        \"gap\": \"Description of the gap\",\n        \"impact\": \"Brief description of the impact\",\n        \"affectedAreas\": [\"Area 1\", \"Area 2\"],\n        \"relatedDocuments\": [\n          {\n            \"id\": \"document id if available, otherwise omit this field\",\n            \"name\": \"document name\",\n            \"context\": \"Why this document is relevant to the gap\"\n          }\n        ]\n      }\n    ]\n  },\n  \"recommendations\": {\n    \"summary\": \"Brief overview of recommendations\",\n    \"priorities\": [\n      {\n        \"recommendation\": \"Specific recommendation\",\n        \"priority\": \"HIGH|MEDIUM|LOW\",\n        \"rationale\": \"Brief explanation\",\n        \"implementation\": \"Quick implementation guide\",\n        \"relatedGaps\": [\"Reference to specific gaps\"],\n        \"affectedDocuments\": [\n          {\n            \"id\": \"document id if available, otherwise omit this field\",\n            \"name\": \"document name\"\n          }\n        ]\n      }\n    ]\n  }\n}\n\nEnsure your response contains only valid JSON - no introductory or explanatory text before or after the JSON structure."
+}
+2025-04-23 16:31:44 [ERROR]: Failed to query knowledge base for company 6808f54f5736a7a7cf24519d: {
+  "service": "kb-analysis-backend",
+  "error": "[VertexAI.ClientError]: got status: 403 Forbidden. {\"error\":{\"code\":403,\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\",\"status\":\"PERMISSION_DENIED\",\"details\":[{\"@type\":\"type.googleapis.com/google.rpc.ErrorInfo\",\"reason\":\"BILLING_DISABLED\",\"domain\":\"googleapis.com\",\"metadata\":{\"containerInfo\":\"harx-technologies-inc\",\"consumer\":\"projects/harx-technologies-inc\",\"service\":\"aiplatform.googleapis.com\"}},{\"@type\":\"type.googleapis.com/google.rpc.LocalizedMessage\",\"locale\":\"en-US\",\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\"},{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Google developers console billing\",\"url\":\"https://console.developers.google.com/billing/enable?project=harx-technologies-inc\"}]}]}}",
+  "stack": "ClientError: [VertexAI.ClientError]: got status: 403 Forbidden. {\"error\":{\"code\":403,\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\",\"status\":\"PERMISSION_DENIED\",\"details\":[{\"@type\":\"type.googleapis.com/google.rpc.ErrorInfo\",\"reason\":\"BILLING_DISABLED\",\"domain\":\"googleapis.com\",\"metadata\":{\"containerInfo\":\"harx-technologies-inc\",\"consumer\":\"projects/harx-technologies-inc\",\"service\":\"aiplatform.googleapis.com\"}},{\"@type\":\"type.googleapis.com/google.rpc.LocalizedMessage\",\"locale\":\"en-US\",\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\"},{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Google developers console billing\",\"url\":\"https://console.developers.google.com/billing/enable?project=harx-technologies-inc\"}]}]}}\n    at throwErrorIfNotOK (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\post_fetch_processing.js:31:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async generateContent (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\generate_content.js:52:5)\n    at async VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:216:22)\n    at async analyzeDocumentsWithRAG (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:198:22)"
+}
+2025-04-23 16:31:44 [ERROR]: Error in RAG analysis: [VertexAI.ClientError]: got status: 403 Forbidden. {"error":{"code":403,"message":"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.","status":"PERMISSION_DENIED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"BILLING_DISABLED","domain":"googleapis.com","metadata":{"containerInfo":"harx-technologies-inc","consumer":"projects/harx-technologies-inc","service":"aiplatform.googleapis.com"}},{"@type":"type.googleapis.com/google.rpc.LocalizedMessage","locale":"en-US","message":"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry."},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Google developers console billing","url":"https://console.developers.google.com/billing/enable?project=harx-technologies-inc"}]}]}} {
+  "service": "kb-analysis-backend",
+  "name": "ClientError",
+  "stack": "ClientError: [VertexAI.ClientError]: got status: 403 Forbidden. {\"error\":{\"code\":403,\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\",\"status\":\"PERMISSION_DENIED\",\"details\":[{\"@type\":\"type.googleapis.com/google.rpc.ErrorInfo\",\"reason\":\"BILLING_DISABLED\",\"domain\":\"googleapis.com\",\"metadata\":{\"containerInfo\":\"harx-technologies-inc\",\"consumer\":\"projects/harx-technologies-inc\",\"service\":\"aiplatform.googleapis.com\"}},{\"@type\":\"type.googleapis.com/google.rpc.LocalizedMessage\",\"locale\":\"en-US\",\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\"},{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Google developers console billing\",\"url\":\"https://console.developers.google.com/billing/enable?project=harx-technologies-inc\"}]}]}}\n    at throwErrorIfNotOK (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\post_fetch_processing.js:31:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async generateContent (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\generate_content.js:52:5)\n    at async VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:216:22)\n    at async analyzeDocumentsWithRAG (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:198:22)"
+}
+2025-04-23 16:31:45 [ERROR]: Analysis failed for company 6808f54f5736a7a7cf24519d: [VertexAI.ClientError]: got status: 403 Forbidden. {"error":{"code":403,"message":"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.","status":"PERMISSION_DENIED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"BILLING_DISABLED","domain":"googleapis.com","metadata":{"containerInfo":"harx-technologies-inc","consumer":"projects/harx-technologies-inc","service":"aiplatform.googleapis.com"}},{"@type":"type.googleapis.com/google.rpc.LocalizedMessage","locale":"en-US","message":"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry."},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Google developers console billing","url":"https://console.developers.google.com/billing/enable?project=harx-technologies-inc"}]}]}} {
+  "service": "kb-analysis-backend",
+  "name": "ClientError",
+  "stack": "ClientError: [VertexAI.ClientError]: got status: 403 Forbidden. {\"error\":{\"code\":403,\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\",\"status\":\"PERMISSION_DENIED\",\"details\":[{\"@type\":\"type.googleapis.com/google.rpc.ErrorInfo\",\"reason\":\"BILLING_DISABLED\",\"domain\":\"googleapis.com\",\"metadata\":{\"containerInfo\":\"harx-technologies-inc\",\"consumer\":\"projects/harx-technologies-inc\",\"service\":\"aiplatform.googleapis.com\"}},{\"@type\":\"type.googleapis.com/google.rpc.LocalizedMessage\",\"locale\":\"en-US\",\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\"},{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Google developers console billing\",\"url\":\"https://console.developers.google.com/billing/enable?project=harx-technologies-inc\"}]}]}}\n    at throwErrorIfNotOK (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\post_fetch_processing.js:31:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async generateContent (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\generate_content.js:52:5)\n    at async VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:216:22)\n    at async analyzeDocumentsWithRAG (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:198:22)"
+}
+2025-04-23 17:08:55 [INFO]: Creating RAG corpus: {
+  "0": "c",
+  "1": "o",
+  "2": "m",
+  "3": "p",
+  "4": "a",
+  "5": "n",
+  "6": "y",
+  "7": "-",
+  "8": "6",
+  "9": "8",
+  "10": "0",
+  "11": "8",
+  "12": "f",
+  "13": "5",
+  "14": "4",
+  "15": "f",
+  "16": "5",
+  "17": "7",
+  "18": "3",
+  "19": "6",
+  "20": "a",
+  "21": "7",
+  "22": "a",
+  "23": "7",
+  "24": "c",
+  "25": "f",
+  "26": "2",
+  "27": "4",
+  "28": "5",
+  "29": "1",
+  "30": "9",
+  "31": "d",
+  "service": "kb-analysis-backend"
+}
+2025-04-23 17:08:55 [INFO]: Created RAG corpus for company 6808f54f5736a7a7cf24519d {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 17:08:55 [INFO]: Importing 1 documents for company 6808f54f5736a7a7cf24519d {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 17:08:57 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1745424537522.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 17:08:58 [INFO]: Processed 1 documents for company 6808f54f5736a7a7cf24519d {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 17:08:58 [INFO]: Running comprehensive analysis query for company 6808f54f5736a7a7cf24519d... {
+  "service": "kb-analysis-backend"
+}
+2025-04-23 17:08:58 [INFO]: Querying knowledge base for company 6808f54f5736a7a7cf24519d: {
+  "service": "kb-analysis-backend",
+  "query": "Analyze the provided documents comprehensively to identify topics, knowledge gaps, and recommendations. \nReturn your analysis as a structured JSON object with three main sections:\n\n{\n  \"topicAnalysis\": {\n    \"summary\": \"Brief 2-3 sentence overview of main topics\",\n    \"mainTopics\": [\n      {\n        \"topic\": \"Name of topic\",\n        \"description\": \"Brief description\",\n        \"relatedDocuments\": [\n          {\n            \"id\": \"document id if available, otherwise omit this field\",\n            \"name\": \"document name\",\n            \"relevance\": \"Brief explanation of relevance\"\n          }\n        ]\n      }\n    ]\n  },\n  \"knowledgeGaps\": {\n    \"summary\": \"Brief overview of main gaps\",\n    \"gaps\": [\n      {\n        \"gap\": \"Description of the gap\",\n        \"impact\": \"Brief description of the impact\",\n        \"affectedAreas\": [\"Area 1\", \"Area 2\"],\n        \"relatedDocuments\": [\n          {\n            \"id\": \"document id if available, otherwise omit this field\",\n            \"name\": \"document name\",\n            \"context\": \"Why this document is relevant to the gap\"\n          }\n        ]\n      }\n    ]\n  },\n  \"recommendations\": {\n    \"summary\": \"Brief overview of recommendations\",\n    \"priorities\": [\n      {\n        \"recommendation\": \"Specific recommendation\",\n        \"priority\": \"HIGH|MEDIUM|LOW\",\n        \"rationale\": \"Brief explanation\",\n        \"implementation\": \"Quick implementation guide\",\n        \"relatedGaps\": [\"Reference to specific gaps\"],\n        \"affectedDocuments\": [\n          {\n            \"id\": \"document id if available, otherwise omit this field\",\n            \"name\": \"document name\"\n          }\n        ]\n      }\n    ]\n  }\n}\n\nEnsure your response contains only valid JSON - no introductory or explanatory text before or after the JSON structure."
+}
+2025-04-23 17:08:59 [ERROR]: Failed to query knowledge base for company 6808f54f5736a7a7cf24519d: {
+  "service": "kb-analysis-backend",
+  "error": "[VertexAI.ClientError]: got status: 403 Forbidden. {\"error\":{\"code\":403,\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\",\"status\":\"PERMISSION_DENIED\",\"details\":[{\"@type\":\"type.googleapis.com/google.rpc.ErrorInfo\",\"reason\":\"BILLING_DISABLED\",\"domain\":\"googleapis.com\",\"metadata\":{\"service\":\"aiplatform.googleapis.com\",\"consumer\":\"projects/harx-technologies-inc\",\"containerInfo\":\"harx-technologies-inc\"}},{\"@type\":\"type.googleapis.com/google.rpc.LocalizedMessage\",\"locale\":\"en-US\",\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\"},{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Google developers console billing\",\"url\":\"https://console.developers.google.com/billing/enable?project=harx-technologies-inc\"}]}]}}",
+  "stack": "ClientError: [VertexAI.ClientError]: got status: 403 Forbidden. {\"error\":{\"code\":403,\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\",\"status\":\"PERMISSION_DENIED\",\"details\":[{\"@type\":\"type.googleapis.com/google.rpc.ErrorInfo\",\"reason\":\"BILLING_DISABLED\",\"domain\":\"googleapis.com\",\"metadata\":{\"service\":\"aiplatform.googleapis.com\",\"consumer\":\"projects/harx-technologies-inc\",\"containerInfo\":\"harx-technologies-inc\"}},{\"@type\":\"type.googleapis.com/google.rpc.LocalizedMessage\",\"locale\":\"en-US\",\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\"},{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Google developers console billing\",\"url\":\"https://console.developers.google.com/billing/enable?project=harx-technologies-inc\"}]}]}}\n    at throwErrorIfNotOK (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\post_fetch_processing.js:31:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async generateContent (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\generate_content.js:52:5)\n    at async VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:216:22)\n    at async analyzeDocumentsWithRAG (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:198:22)"
+}
+2025-04-23 17:08:59 [ERROR]: Error in RAG analysis: [VertexAI.ClientError]: got status: 403 Forbidden. {"error":{"code":403,"message":"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.","status":"PERMISSION_DENIED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"BILLING_DISABLED","domain":"googleapis.com","metadata":{"service":"aiplatform.googleapis.com","consumer":"projects/harx-technologies-inc","containerInfo":"harx-technologies-inc"}},{"@type":"type.googleapis.com/google.rpc.LocalizedMessage","locale":"en-US","message":"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry."},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Google developers console billing","url":"https://console.developers.google.com/billing/enable?project=harx-technologies-inc"}]}]}} {
+  "service": "kb-analysis-backend",
+  "name": "ClientError",
+  "stack": "ClientError: [VertexAI.ClientError]: got status: 403 Forbidden. {\"error\":{\"code\":403,\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\",\"status\":\"PERMISSION_DENIED\",\"details\":[{\"@type\":\"type.googleapis.com/google.rpc.ErrorInfo\",\"reason\":\"BILLING_DISABLED\",\"domain\":\"googleapis.com\",\"metadata\":{\"service\":\"aiplatform.googleapis.com\",\"consumer\":\"projects/harx-technologies-inc\",\"containerInfo\":\"harx-technologies-inc\"}},{\"@type\":\"type.googleapis.com/google.rpc.LocalizedMessage\",\"locale\":\"en-US\",\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\"},{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Google developers console billing\",\"url\":\"https://console.developers.google.com/billing/enable?project=harx-technologies-inc\"}]}]}}\n    at throwErrorIfNotOK (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\post_fetch_processing.js:31:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async generateContent (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\generate_content.js:52:5)\n    at async VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:216:22)\n    at async analyzeDocumentsWithRAG (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:198:22)"
+}
+2025-04-23 17:08:59 [ERROR]: Analysis failed for company 6808f54f5736a7a7cf24519d: [VertexAI.ClientError]: got status: 403 Forbidden. {"error":{"code":403,"message":"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.","status":"PERMISSION_DENIED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"BILLING_DISABLED","domain":"googleapis.com","metadata":{"service":"aiplatform.googleapis.com","consumer":"projects/harx-technologies-inc","containerInfo":"harx-technologies-inc"}},{"@type":"type.googleapis.com/google.rpc.LocalizedMessage","locale":"en-US","message":"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry."},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Google developers console billing","url":"https://console.developers.google.com/billing/enable?project=harx-technologies-inc"}]}]}} {
+  "service": "kb-analysis-backend",
+  "name": "ClientError",
+  "stack": "ClientError: [VertexAI.ClientError]: got status: 403 Forbidden. {\"error\":{\"code\":403,\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\",\"status\":\"PERMISSION_DENIED\",\"details\":[{\"@type\":\"type.googleapis.com/google.rpc.ErrorInfo\",\"reason\":\"BILLING_DISABLED\",\"domain\":\"googleapis.com\",\"metadata\":{\"service\":\"aiplatform.googleapis.com\",\"consumer\":\"projects/harx-technologies-inc\",\"containerInfo\":\"harx-technologies-inc\"}},{\"@type\":\"type.googleapis.com/google.rpc.LocalizedMessage\",\"locale\":\"en-US\",\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\"},{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Google developers console billing\",\"url\":\"https://console.developers.google.com/billing/enable?project=harx-technologies-inc\"}]}]}}\n    at throwErrorIfNotOK (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\post_fetch_processing.js:31:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async generateContent (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\generate_content.js:52:5)\n    at async VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:216:22)\n    at async analyzeDocumentsWithRAG (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:198:22)"
+}
+2025-04-24 10:47:41 [INFO]: Creating RAG corpus: {
+  "0": "c",
+  "1": "o",
+  "2": "m",
+  "3": "p",
+  "4": "a",
+  "5": "n",
+  "6": "y",
+  "7": "-",
+  "8": "6",
+  "9": "8",
+  "10": "0",
+  "11": "8",
+  "12": "f",
+  "13": "5",
+  "14": "4",
+  "15": "f",
+  "16": "5",
+  "17": "7",
+  "18": "3",
+  "19": "6",
+  "20": "a",
+  "21": "7",
+  "22": "a",
+  "23": "7",
+  "24": "c",
+  "25": "f",
+  "26": "2",
+  "27": "4",
+  "28": "5",
+  "29": "1",
+  "30": "9",
+  "31": "d",
+  "service": "kb-analysis-backend"
+}
+2025-04-24 10:47:41 [INFO]: Created RAG corpus for company 6808f54f5736a7a7cf24519d {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 10:47:41 [INFO]: Importing 1 documents for company 6808f54f5736a7a7cf24519d {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 10:47:42 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1745488062143.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 10:47:43 [INFO]: Processed 1 documents for company 6808f54f5736a7a7cf24519d {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 10:47:43 [INFO]: Running comprehensive analysis query for company 6808f54f5736a7a7cf24519d... {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 10:47:43 [INFO]: Querying knowledge base for company 6808f54f5736a7a7cf24519d: {
+  "service": "kb-analysis-backend",
+  "query": "Analyze the provided documents comprehensively to identify topics, knowledge gaps, and recommendations. \nReturn your analysis as a structured JSON object with three main sections:\n\n{\n  \"topicAnalysis\": {\n    \"summary\": \"Brief 2-3 sentence overview of main topics\",\n    \"mainTopics\": [\n      {\n        \"topic\": \"Name of topic\",\n        \"description\": \"Brief description\",\n        \"relatedDocuments\": [\n          {\n            \"id\": \"document id if available, otherwise omit this field\",\n            \"name\": \"document name\",\n            \"relevance\": \"Brief explanation of relevance\"\n          }\n        ]\n      }\n    ]\n  },\n  \"knowledgeGaps\": {\n    \"summary\": \"Brief overview of main gaps\",\n    \"gaps\": [\n      {\n        \"gap\": \"Description of the gap\",\n        \"impact\": \"Brief description of the impact\",\n        \"affectedAreas\": [\"Area 1\", \"Area 2\"],\n        \"relatedDocuments\": [\n          {\n            \"id\": \"document id if available, otherwise omit this field\",\n            \"name\": \"document name\",\n            \"context\": \"Why this document is relevant to the gap\"\n          }\n        ]\n      }\n    ]\n  },\n  \"recommendations\": {\n    \"summary\": \"Brief overview of recommendations\",\n    \"priorities\": [\n      {\n        \"recommendation\": \"Specific recommendation\",\n        \"priority\": \"HIGH|MEDIUM|LOW\",\n        \"rationale\": \"Brief explanation\",\n        \"implementation\": \"Quick implementation guide\",\n        \"relatedGaps\": [\"Reference to specific gaps\"],\n        \"affectedDocuments\": [\n          {\n            \"id\": \"document id if available, otherwise omit this field\",\n            \"name\": \"document name\"\n          }\n        ]\n      }\n    ]\n  }\n}\n\nEnsure your response contains only valid JSON - no introductory or explanatory text before or after the JSON structure."
+}
+2025-04-24 10:47:44 [ERROR]: Failed to query knowledge base for company 6808f54f5736a7a7cf24519d: {
+  "service": "kb-analysis-backend",
+  "error": "[VertexAI.ClientError]: got status: 403 Forbidden. {\"error\":{\"code\":403,\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\",\"status\":\"PERMISSION_DENIED\",\"details\":[{\"@type\":\"type.googleapis.com/google.rpc.ErrorInfo\",\"reason\":\"BILLING_DISABLED\",\"domain\":\"googleapis.com\",\"metadata\":{\"service\":\"aiplatform.googleapis.com\",\"containerInfo\":\"harx-technologies-inc\",\"consumer\":\"projects/harx-technologies-inc\"}},{\"@type\":\"type.googleapis.com/google.rpc.LocalizedMessage\",\"locale\":\"en-US\",\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\"},{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Google developers console billing\",\"url\":\"https://console.developers.google.com/billing/enable?project=harx-technologies-inc\"}]}]}}",
+  "stack": "ClientError: [VertexAI.ClientError]: got status: 403 Forbidden. {\"error\":{\"code\":403,\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\",\"status\":\"PERMISSION_DENIED\",\"details\":[{\"@type\":\"type.googleapis.com/google.rpc.ErrorInfo\",\"reason\":\"BILLING_DISABLED\",\"domain\":\"googleapis.com\",\"metadata\":{\"service\":\"aiplatform.googleapis.com\",\"containerInfo\":\"harx-technologies-inc\",\"consumer\":\"projects/harx-technologies-inc\"}},{\"@type\":\"type.googleapis.com/google.rpc.LocalizedMessage\",\"locale\":\"en-US\",\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\"},{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Google developers console billing\",\"url\":\"https://console.developers.google.com/billing/enable?project=harx-technologies-inc\"}]}]}}\n    at throwErrorIfNotOK (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\post_fetch_processing.js:31:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async generateContent (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\generate_content.js:52:5)\n    at async VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:216:22)\n    at async analyzeDocumentsWithRAG (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:198:22)"
+}
+2025-04-24 10:47:44 [ERROR]: Error in RAG analysis: [VertexAI.ClientError]: got status: 403 Forbidden. {"error":{"code":403,"message":"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.","status":"PERMISSION_DENIED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"BILLING_DISABLED","domain":"googleapis.com","metadata":{"service":"aiplatform.googleapis.com","containerInfo":"harx-technologies-inc","consumer":"projects/harx-technologies-inc"}},{"@type":"type.googleapis.com/google.rpc.LocalizedMessage","locale":"en-US","message":"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry."},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Google developers console billing","url":"https://console.developers.google.com/billing/enable?project=harx-technologies-inc"}]}]}} {
+  "service": "kb-analysis-backend",
+  "name": "ClientError",
+  "stack": "ClientError: [VertexAI.ClientError]: got status: 403 Forbidden. {\"error\":{\"code\":403,\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\",\"status\":\"PERMISSION_DENIED\",\"details\":[{\"@type\":\"type.googleapis.com/google.rpc.ErrorInfo\",\"reason\":\"BILLING_DISABLED\",\"domain\":\"googleapis.com\",\"metadata\":{\"service\":\"aiplatform.googleapis.com\",\"containerInfo\":\"harx-technologies-inc\",\"consumer\":\"projects/harx-technologies-inc\"}},{\"@type\":\"type.googleapis.com/google.rpc.LocalizedMessage\",\"locale\":\"en-US\",\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\"},{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Google developers console billing\",\"url\":\"https://console.developers.google.com/billing/enable?project=harx-technologies-inc\"}]}]}}\n    at throwErrorIfNotOK (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\post_fetch_processing.js:31:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async generateContent (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\generate_content.js:52:5)\n    at async VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:216:22)\n    at async analyzeDocumentsWithRAG (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:198:22)"
+}
+2025-04-24 10:47:44 [ERROR]: Analysis failed for company 6808f54f5736a7a7cf24519d: [VertexAI.ClientError]: got status: 403 Forbidden. {"error":{"code":403,"message":"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.","status":"PERMISSION_DENIED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"BILLING_DISABLED","domain":"googleapis.com","metadata":{"service":"aiplatform.googleapis.com","containerInfo":"harx-technologies-inc","consumer":"projects/harx-technologies-inc"}},{"@type":"type.googleapis.com/google.rpc.LocalizedMessage","locale":"en-US","message":"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry."},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Google developers console billing","url":"https://console.developers.google.com/billing/enable?project=harx-technologies-inc"}]}]}} {
+  "service": "kb-analysis-backend",
+  "name": "ClientError",
+  "stack": "ClientError: [VertexAI.ClientError]: got status: 403 Forbidden. {\"error\":{\"code\":403,\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\",\"status\":\"PERMISSION_DENIED\",\"details\":[{\"@type\":\"type.googleapis.com/google.rpc.ErrorInfo\",\"reason\":\"BILLING_DISABLED\",\"domain\":\"googleapis.com\",\"metadata\":{\"service\":\"aiplatform.googleapis.com\",\"containerInfo\":\"harx-technologies-inc\",\"consumer\":\"projects/harx-technologies-inc\"}},{\"@type\":\"type.googleapis.com/google.rpc.LocalizedMessage\",\"locale\":\"en-US\",\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\"},{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Google developers console billing\",\"url\":\"https://console.developers.google.com/billing/enable?project=harx-technologies-inc\"}]}]}}\n    at throwErrorIfNotOK (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\post_fetch_processing.js:31:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async generateContent (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\generate_content.js:52:5)\n    at async VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:216:22)\n    at async analyzeDocumentsWithRAG (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:198:22)"
+}
+2025-04-24 15:29:08 [INFO]: Creating RAG corpus: {
+  "0": "c",
+  "1": "o",
+  "2": "m",
+  "3": "p",
+  "4": "a",
+  "5": "n",
+  "6": "y",
+  "7": "-",
+  "8": "6",
+  "9": "8",
+  "10": "0",
+  "11": "8",
+  "12": "f",
+  "13": "5",
+  "14": "4",
+  "15": "f",
+  "16": "5",
+  "17": "7",
+  "18": "3",
+  "19": "6",
+  "20": "a",
+  "21": "7",
+  "22": "a",
+  "23": "7",
+  "24": "c",
+  "25": "f",
+  "26": "2",
+  "27": "4",
+  "28": "5",
+  "29": "1",
+  "30": "9",
+  "31": "d",
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:29:08 [INFO]: Created RAG corpus for company 6808f54f5736a7a7cf24519d {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:29:08 [INFO]: Importing 1 documents for company 6808f54f5736a7a7cf24519d {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:29:10 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1745504950209.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:29:11 [INFO]: Processed 1 documents for company 6808f54f5736a7a7cf24519d {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:29:11 [INFO]: Running comprehensive analysis query for company 6808f54f5736a7a7cf24519d... {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:29:11 [INFO]: Querying knowledge base for company 6808f54f5736a7a7cf24519d: {
+  "service": "kb-analysis-backend",
+  "query": "Analyze the provided documents comprehensively to identify topics, knowledge gaps, and recommendations. \nReturn your analysis as a structured JSON object with three main sections:\n\n{\n  \"topicAnalysis\": {\n    \"summary\": \"Brief 2-3 sentence overview of main topics\",\n    \"mainTopics\": [\n      {\n        \"topic\": \"Name of topic\",\n        \"description\": \"Brief description\",\n        \"relatedDocuments\": [\n          {\n            \"id\": \"document id if available, otherwise omit this field\",\n            \"name\": \"document name\",\n            \"relevance\": \"Brief explanation of relevance\"\n          }\n        ]\n      }\n    ]\n  },\n  \"knowledgeGaps\": {\n    \"summary\": \"Brief overview of main gaps\",\n    \"gaps\": [\n      {\n        \"gap\": \"Description of the gap\",\n        \"impact\": \"Brief description of the impact\",\n        \"affectedAreas\": [\"Area 1\", \"Area 2\"],\n        \"relatedDocuments\": [\n          {\n            \"id\": \"document id if available, otherwise omit this field\",\n            \"name\": \"document name\",\n            \"context\": \"Why this document is relevant to the gap\"\n          }\n        ]\n      }\n    ]\n  },\n  \"recommendations\": {\n    \"summary\": \"Brief overview of recommendations\",\n    \"priorities\": [\n      {\n        \"recommendation\": \"Specific recommendation\",\n        \"priority\": \"HIGH|MEDIUM|LOW\",\n        \"rationale\": \"Brief explanation\",\n        \"implementation\": \"Quick implementation guide\",\n        \"relatedGaps\": [\"Reference to specific gaps\"],\n        \"affectedDocuments\": [\n          {\n            \"id\": \"document id if available, otherwise omit this field\",\n            \"name\": \"document name\"\n          }\n        ]\n      }\n    ]\n  }\n}\n\nEnsure your response contains only valid JSON - no introductory or explanatory text before or after the JSON structure."
+}
+2025-04-24 15:29:12 [ERROR]: Failed to query knowledge base for company 6808f54f5736a7a7cf24519d: {
+  "service": "kb-analysis-backend",
+  "error": "[VertexAI.ClientError]: got status: 403 Forbidden. {\"error\":{\"code\":403,\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\",\"status\":\"PERMISSION_DENIED\",\"details\":[{\"@type\":\"type.googleapis.com/google.rpc.ErrorInfo\",\"reason\":\"BILLING_DISABLED\",\"domain\":\"googleapis.com\",\"metadata\":{\"service\":\"aiplatform.googleapis.com\",\"containerInfo\":\"harx-technologies-inc\",\"consumer\":\"projects/harx-technologies-inc\"}},{\"@type\":\"type.googleapis.com/google.rpc.LocalizedMessage\",\"locale\":\"en-US\",\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\"},{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Google developers console billing\",\"url\":\"https://console.developers.google.com/billing/enable?project=harx-technologies-inc\"}]}]}}",
+  "stack": "ClientError: [VertexAI.ClientError]: got status: 403 Forbidden. {\"error\":{\"code\":403,\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\",\"status\":\"PERMISSION_DENIED\",\"details\":[{\"@type\":\"type.googleapis.com/google.rpc.ErrorInfo\",\"reason\":\"BILLING_DISABLED\",\"domain\":\"googleapis.com\",\"metadata\":{\"service\":\"aiplatform.googleapis.com\",\"containerInfo\":\"harx-technologies-inc\",\"consumer\":\"projects/harx-technologies-inc\"}},{\"@type\":\"type.googleapis.com/google.rpc.LocalizedMessage\",\"locale\":\"en-US\",\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\"},{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Google developers console billing\",\"url\":\"https://console.developers.google.com/billing/enable?project=harx-technologies-inc\"}]}]}}\n    at throwErrorIfNotOK (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\post_fetch_processing.js:31:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async generateContent (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\generate_content.js:52:5)\n    at async VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:216:22)\n    at async analyzeDocumentsWithRAG (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:198:22)"
+}
+2025-04-24 15:29:12 [ERROR]: Error in RAG analysis: [VertexAI.ClientError]: got status: 403 Forbidden. {"error":{"code":403,"message":"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.","status":"PERMISSION_DENIED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"BILLING_DISABLED","domain":"googleapis.com","metadata":{"service":"aiplatform.googleapis.com","containerInfo":"harx-technologies-inc","consumer":"projects/harx-technologies-inc"}},{"@type":"type.googleapis.com/google.rpc.LocalizedMessage","locale":"en-US","message":"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry."},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Google developers console billing","url":"https://console.developers.google.com/billing/enable?project=harx-technologies-inc"}]}]}} {
+  "service": "kb-analysis-backend",
+  "name": "ClientError",
+  "stack": "ClientError: [VertexAI.ClientError]: got status: 403 Forbidden. {\"error\":{\"code\":403,\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\",\"status\":\"PERMISSION_DENIED\",\"details\":[{\"@type\":\"type.googleapis.com/google.rpc.ErrorInfo\",\"reason\":\"BILLING_DISABLED\",\"domain\":\"googleapis.com\",\"metadata\":{\"service\":\"aiplatform.googleapis.com\",\"containerInfo\":\"harx-technologies-inc\",\"consumer\":\"projects/harx-technologies-inc\"}},{\"@type\":\"type.googleapis.com/google.rpc.LocalizedMessage\",\"locale\":\"en-US\",\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\"},{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Google developers console billing\",\"url\":\"https://console.developers.google.com/billing/enable?project=harx-technologies-inc\"}]}]}}\n    at throwErrorIfNotOK (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\post_fetch_processing.js:31:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async generateContent (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\generate_content.js:52:5)\n    at async VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:216:22)\n    at async analyzeDocumentsWithRAG (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:198:22)"
+}
+2025-04-24 15:29:12 [ERROR]: Analysis failed for company 6808f54f5736a7a7cf24519d: [VertexAI.ClientError]: got status: 403 Forbidden. {"error":{"code":403,"message":"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.","status":"PERMISSION_DENIED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"BILLING_DISABLED","domain":"googleapis.com","metadata":{"service":"aiplatform.googleapis.com","containerInfo":"harx-technologies-inc","consumer":"projects/harx-technologies-inc"}},{"@type":"type.googleapis.com/google.rpc.LocalizedMessage","locale":"en-US","message":"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry."},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Google developers console billing","url":"https://console.developers.google.com/billing/enable?project=harx-technologies-inc"}]}]}} {
+  "service": "kb-analysis-backend",
+  "name": "ClientError",
+  "stack": "ClientError: [VertexAI.ClientError]: got status: 403 Forbidden. {\"error\":{\"code\":403,\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\",\"status\":\"PERMISSION_DENIED\",\"details\":[{\"@type\":\"type.googleapis.com/google.rpc.ErrorInfo\",\"reason\":\"BILLING_DISABLED\",\"domain\":\"googleapis.com\",\"metadata\":{\"service\":\"aiplatform.googleapis.com\",\"containerInfo\":\"harx-technologies-inc\",\"consumer\":\"projects/harx-technologies-inc\"}},{\"@type\":\"type.googleapis.com/google.rpc.LocalizedMessage\",\"locale\":\"en-US\",\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\"},{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Google developers console billing\",\"url\":\"https://console.developers.google.com/billing/enable?project=harx-technologies-inc\"}]}]}}\n    at throwErrorIfNotOK (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\post_fetch_processing.js:31:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async generateContent (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\generate_content.js:52:5)\n    at async VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:216:22)\n    at async analyzeDocumentsWithRAG (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:198:22)"
+}
+2025-04-24 15:32:01 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:32:01 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-24 15:32:01 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:32:01 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:32:01 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:32:01 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:32:01 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:32:01 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:33:35 [INFO]: Creating RAG corpus: {
+  "0": "c",
+  "1": "o",
+  "2": "m",
+  "3": "p",
+  "4": "a",
+  "5": "n",
+  "6": "y",
+  "7": "-",
+  "8": "6",
+  "9": "8",
+  "10": "0",
+  "11": "8",
+  "12": "f",
+  "13": "5",
+  "14": "4",
+  "15": "f",
+  "16": "5",
+  "17": "7",
+  "18": "3",
+  "19": "6",
+  "20": "a",
+  "21": "7",
+  "22": "a",
+  "23": "7",
+  "24": "c",
+  "25": "f",
+  "26": "2",
+  "27": "4",
+  "28": "5",
+  "29": "1",
+  "30": "9",
+  "31": "d",
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:33:35 [INFO]: Created RAG corpus for company 6808f54f5736a7a7cf24519d {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:33:35 [INFO]: Importing 1 documents for company 6808f54f5736a7a7cf24519d {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:33:36 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1745505216155.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:33:37 [INFO]: Processed 1 documents for company 6808f54f5736a7a7cf24519d {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:33:37 [INFO]: Running comprehensive analysis query for company 6808f54f5736a7a7cf24519d... {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:33:37 [INFO]: Querying knowledge base for company 6808f54f5736a7a7cf24519d: {
+  "service": "kb-analysis-backend",
+  "query": "Analyze the provided documents comprehensively to identify topics, knowledge gaps, and recommendations. \nReturn your analysis as a structured JSON object with three main sections:\n\n{\n  \"topicAnalysis\": {\n    \"summary\": \"Brief 2-3 sentence overview of main topics\",\n    \"mainTopics\": [\n      {\n        \"topic\": \"Name of topic\",\n        \"description\": \"Brief description\",\n        \"relatedDocuments\": [\n          {\n            \"id\": \"document id if available, otherwise omit this field\",\n            \"name\": \"document name\",\n            \"relevance\": \"Brief explanation of relevance\"\n          }\n        ]\n      }\n    ]\n  },\n  \"knowledgeGaps\": {\n    \"summary\": \"Brief overview of main gaps\",\n    \"gaps\": [\n      {\n        \"gap\": \"Description of the gap\",\n        \"impact\": \"Brief description of the impact\",\n        \"affectedAreas\": [\"Area 1\", \"Area 2\"],\n        \"relatedDocuments\": [\n          {\n            \"id\": \"document id if available, otherwise omit this field\",\n            \"name\": \"document name\",\n            \"context\": \"Why this document is relevant to the gap\"\n          }\n        ]\n      }\n    ]\n  },\n  \"recommendations\": {\n    \"summary\": \"Brief overview of recommendations\",\n    \"priorities\": [\n      {\n        \"recommendation\": \"Specific recommendation\",\n        \"priority\": \"HIGH|MEDIUM|LOW\",\n        \"rationale\": \"Brief explanation\",\n        \"implementation\": \"Quick implementation guide\",\n        \"relatedGaps\": [\"Reference to specific gaps\"],\n        \"affectedDocuments\": [\n          {\n            \"id\": \"document id if available, otherwise omit this field\",\n            \"name\": \"document name\"\n          }\n        ]\n      }\n    ]\n  }\n}\n\nEnsure your response contains only valid JSON - no introductory or explanatory text before or after the JSON structure."
+}
+2025-04-24 15:33:39 [ERROR]: Failed to query knowledge base for company 6808f54f5736a7a7cf24519d: {
+  "service": "kb-analysis-backend",
+  "error": "[VertexAI.ClientError]: got status: 403 Forbidden. {\"error\":{\"code\":403,\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\",\"status\":\"PERMISSION_DENIED\",\"details\":[{\"@type\":\"type.googleapis.com/google.rpc.ErrorInfo\",\"reason\":\"BILLING_DISABLED\",\"domain\":\"googleapis.com\",\"metadata\":{\"consumer\":\"projects/harx-technologies-inc\",\"service\":\"aiplatform.googleapis.com\",\"containerInfo\":\"harx-technologies-inc\"}},{\"@type\":\"type.googleapis.com/google.rpc.LocalizedMessage\",\"locale\":\"en-US\",\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\"},{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Google developers console billing\",\"url\":\"https://console.developers.google.com/billing/enable?project=harx-technologies-inc\"}]}]}}",
+  "stack": "ClientError: [VertexAI.ClientError]: got status: 403 Forbidden. {\"error\":{\"code\":403,\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\",\"status\":\"PERMISSION_DENIED\",\"details\":[{\"@type\":\"type.googleapis.com/google.rpc.ErrorInfo\",\"reason\":\"BILLING_DISABLED\",\"domain\":\"googleapis.com\",\"metadata\":{\"consumer\":\"projects/harx-technologies-inc\",\"service\":\"aiplatform.googleapis.com\",\"containerInfo\":\"harx-technologies-inc\"}},{\"@type\":\"type.googleapis.com/google.rpc.LocalizedMessage\",\"locale\":\"en-US\",\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\"},{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Google developers console billing\",\"url\":\"https://console.developers.google.com/billing/enable?project=harx-technologies-inc\"}]}]}}\n    at throwErrorIfNotOK (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\post_fetch_processing.js:31:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async generateContent (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\generate_content.js:52:5)\n    at async VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:216:22)\n    at async analyzeDocumentsWithRAG (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:198:22)"
+}
+2025-04-24 15:33:39 [ERROR]: Error in RAG analysis: [VertexAI.ClientError]: got status: 403 Forbidden. {"error":{"code":403,"message":"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.","status":"PERMISSION_DENIED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"BILLING_DISABLED","domain":"googleapis.com","metadata":{"consumer":"projects/harx-technologies-inc","service":"aiplatform.googleapis.com","containerInfo":"harx-technologies-inc"}},{"@type":"type.googleapis.com/google.rpc.LocalizedMessage","locale":"en-US","message":"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry."},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Google developers console billing","url":"https://console.developers.google.com/billing/enable?project=harx-technologies-inc"}]}]}} {
+  "service": "kb-analysis-backend",
+  "name": "ClientError",
+  "stack": "ClientError: [VertexAI.ClientError]: got status: 403 Forbidden. {\"error\":{\"code\":403,\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\",\"status\":\"PERMISSION_DENIED\",\"details\":[{\"@type\":\"type.googleapis.com/google.rpc.ErrorInfo\",\"reason\":\"BILLING_DISABLED\",\"domain\":\"googleapis.com\",\"metadata\":{\"consumer\":\"projects/harx-technologies-inc\",\"service\":\"aiplatform.googleapis.com\",\"containerInfo\":\"harx-technologies-inc\"}},{\"@type\":\"type.googleapis.com/google.rpc.LocalizedMessage\",\"locale\":\"en-US\",\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\"},{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Google developers console billing\",\"url\":\"https://console.developers.google.com/billing/enable?project=harx-technologies-inc\"}]}]}}\n    at throwErrorIfNotOK (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\post_fetch_processing.js:31:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async generateContent (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\generate_content.js:52:5)\n    at async VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:216:22)\n    at async analyzeDocumentsWithRAG (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:198:22)"
+}
+2025-04-24 15:33:39 [ERROR]: Analysis failed for company 6808f54f5736a7a7cf24519d: [VertexAI.ClientError]: got status: 403 Forbidden. {"error":{"code":403,"message":"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.","status":"PERMISSION_DENIED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"BILLING_DISABLED","domain":"googleapis.com","metadata":{"consumer":"projects/harx-technologies-inc","service":"aiplatform.googleapis.com","containerInfo":"harx-technologies-inc"}},{"@type":"type.googleapis.com/google.rpc.LocalizedMessage","locale":"en-US","message":"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry."},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Google developers console billing","url":"https://console.developers.google.com/billing/enable?project=harx-technologies-inc"}]}]}} {
+  "service": "kb-analysis-backend",
+  "name": "ClientError",
+  "stack": "ClientError: [VertexAI.ClientError]: got status: 403 Forbidden. {\"error\":{\"code\":403,\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\",\"status\":\"PERMISSION_DENIED\",\"details\":[{\"@type\":\"type.googleapis.com/google.rpc.ErrorInfo\",\"reason\":\"BILLING_DISABLED\",\"domain\":\"googleapis.com\",\"metadata\":{\"consumer\":\"projects/harx-technologies-inc\",\"service\":\"aiplatform.googleapis.com\",\"containerInfo\":\"harx-technologies-inc\"}},{\"@type\":\"type.googleapis.com/google.rpc.LocalizedMessage\",\"locale\":\"en-US\",\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\"},{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Google developers console billing\",\"url\":\"https://console.developers.google.com/billing/enable?project=harx-technologies-inc\"}]}]}}\n    at throwErrorIfNotOK (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\post_fetch_processing.js:31:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async generateContent (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\generate_content.js:52:5)\n    at async VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:216:22)\n    at async analyzeDocumentsWithRAG (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:198:22)"
+}
+2025-04-24 15:37:35 [INFO]: Creating RAG corpus: {
+  "0": "c",
+  "1": "o",
+  "2": "m",
+  "3": "p",
+  "4": "a",
+  "5": "n",
+  "6": "y",
+  "7": "-",
+  "8": "6",
+  "9": "8",
+  "10": "0",
+  "11": "8",
+  "12": "f",
+  "13": "5",
+  "14": "4",
+  "15": "f",
+  "16": "5",
+  "17": "7",
+  "18": "3",
+  "19": "6",
+  "20": "a",
+  "21": "7",
+  "22": "a",
+  "23": "7",
+  "24": "c",
+  "25": "f",
+  "26": "2",
+  "27": "4",
+  "28": "5",
+  "29": "1",
+  "30": "9",
+  "31": "d",
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:37:35 [INFO]: Created RAG corpus for company 6808f54f5736a7a7cf24519d {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:37:35 [INFO]: Importing 1 documents for company 6808f54f5736a7a7cf24519d {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:37:36 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1745505456666.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:37:37 [INFO]: Processed 1 documents for company 6808f54f5736a7a7cf24519d {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:37:37 [INFO]: Running comprehensive analysis query for company 6808f54f5736a7a7cf24519d... {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:37:37 [INFO]: Querying knowledge base for company 6808f54f5736a7a7cf24519d: {
+  "service": "kb-analysis-backend",
+  "query": "Analyze the provided documents comprehensively to identify topics, knowledge gaps, and recommendations. \nReturn your analysis as a structured JSON object with three main sections:\n\n{\n  \"topicAnalysis\": {\n    \"summary\": \"Brief 2-3 sentence overview of main topics\",\n    \"mainTopics\": [\n      {\n        \"topic\": \"Name of topic\",\n        \"description\": \"Brief description\",\n        \"relatedDocuments\": [\n          {\n            \"id\": \"document id if available, otherwise omit this field\",\n            \"name\": \"document name\",\n            \"relevance\": \"Brief explanation of relevance\"\n          }\n        ]\n      }\n    ]\n  },\n  \"knowledgeGaps\": {\n    \"summary\": \"Brief overview of main gaps\",\n    \"gaps\": [\n      {\n        \"gap\": \"Description of the gap\",\n        \"impact\": \"Brief description of the impact\",\n        \"affectedAreas\": [\"Area 1\", \"Area 2\"],\n        \"relatedDocuments\": [\n          {\n            \"id\": \"document id if available, otherwise omit this field\",\n            \"name\": \"document name\",\n            \"context\": \"Why this document is relevant to the gap\"\n          }\n        ]\n      }\n    ]\n  },\n  \"recommendations\": {\n    \"summary\": \"Brief overview of recommendations\",\n    \"priorities\": [\n      {\n        \"recommendation\": \"Specific recommendation\",\n        \"priority\": \"HIGH|MEDIUM|LOW\",\n        \"rationale\": \"Brief explanation\",\n        \"implementation\": \"Quick implementation guide\",\n        \"relatedGaps\": [\"Reference to specific gaps\"],\n        \"affectedDocuments\": [\n          {\n            \"id\": \"document id if available, otherwise omit this field\",\n            \"name\": \"document name\"\n          }\n        ]\n      }\n    ]\n  }\n}\n\nEnsure your response contains only valid JSON - no introductory or explanatory text before or after the JSON structure."
+}
+2025-04-24 15:37:38 [ERROR]: Failed to query knowledge base for company 6808f54f5736a7a7cf24519d: {
+  "service": "kb-analysis-backend",
+  "error": "[VertexAI.ClientError]: got status: 403 Forbidden. {\"error\":{\"code\":403,\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\",\"status\":\"PERMISSION_DENIED\",\"details\":[{\"@type\":\"type.googleapis.com/google.rpc.ErrorInfo\",\"reason\":\"BILLING_DISABLED\",\"domain\":\"googleapis.com\",\"metadata\":{\"service\":\"aiplatform.googleapis.com\",\"containerInfo\":\"harx-technologies-inc\",\"consumer\":\"projects/harx-technologies-inc\"}},{\"@type\":\"type.googleapis.com/google.rpc.LocalizedMessage\",\"locale\":\"en-US\",\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\"},{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Google developers console billing\",\"url\":\"https://console.developers.google.com/billing/enable?project=harx-technologies-inc\"}]}]}}",
+  "stack": "ClientError: [VertexAI.ClientError]: got status: 403 Forbidden. {\"error\":{\"code\":403,\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\",\"status\":\"PERMISSION_DENIED\",\"details\":[{\"@type\":\"type.googleapis.com/google.rpc.ErrorInfo\",\"reason\":\"BILLING_DISABLED\",\"domain\":\"googleapis.com\",\"metadata\":{\"service\":\"aiplatform.googleapis.com\",\"containerInfo\":\"harx-technologies-inc\",\"consumer\":\"projects/harx-technologies-inc\"}},{\"@type\":\"type.googleapis.com/google.rpc.LocalizedMessage\",\"locale\":\"en-US\",\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\"},{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Google developers console billing\",\"url\":\"https://console.developers.google.com/billing/enable?project=harx-technologies-inc\"}]}]}}\n    at throwErrorIfNotOK (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\post_fetch_processing.js:31:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async generateContent (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\generate_content.js:52:5)\n    at async VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:216:22)\n    at async analyzeDocumentsWithRAG (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:198:22)"
+}
+2025-04-24 15:37:38 [ERROR]: Error in RAG analysis: [VertexAI.ClientError]: got status: 403 Forbidden. {"error":{"code":403,"message":"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.","status":"PERMISSION_DENIED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"BILLING_DISABLED","domain":"googleapis.com","metadata":{"service":"aiplatform.googleapis.com","containerInfo":"harx-technologies-inc","consumer":"projects/harx-technologies-inc"}},{"@type":"type.googleapis.com/google.rpc.LocalizedMessage","locale":"en-US","message":"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry."},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Google developers console billing","url":"https://console.developers.google.com/billing/enable?project=harx-technologies-inc"}]}]}} {
+  "service": "kb-analysis-backend",
+  "name": "ClientError",
+  "stack": "ClientError: [VertexAI.ClientError]: got status: 403 Forbidden. {\"error\":{\"code\":403,\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\",\"status\":\"PERMISSION_DENIED\",\"details\":[{\"@type\":\"type.googleapis.com/google.rpc.ErrorInfo\",\"reason\":\"BILLING_DISABLED\",\"domain\":\"googleapis.com\",\"metadata\":{\"service\":\"aiplatform.googleapis.com\",\"containerInfo\":\"harx-technologies-inc\",\"consumer\":\"projects/harx-technologies-inc\"}},{\"@type\":\"type.googleapis.com/google.rpc.LocalizedMessage\",\"locale\":\"en-US\",\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\"},{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Google developers console billing\",\"url\":\"https://console.developers.google.com/billing/enable?project=harx-technologies-inc\"}]}]}}\n    at throwErrorIfNotOK (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\post_fetch_processing.js:31:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async generateContent (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\generate_content.js:52:5)\n    at async VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:216:22)\n    at async analyzeDocumentsWithRAG (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:198:22)"
+}
+2025-04-24 15:37:38 [ERROR]: Analysis failed for company 6808f54f5736a7a7cf24519d: [VertexAI.ClientError]: got status: 403 Forbidden. {"error":{"code":403,"message":"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.","status":"PERMISSION_DENIED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"BILLING_DISABLED","domain":"googleapis.com","metadata":{"service":"aiplatform.googleapis.com","containerInfo":"harx-technologies-inc","consumer":"projects/harx-technologies-inc"}},{"@type":"type.googleapis.com/google.rpc.LocalizedMessage","locale":"en-US","message":"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry."},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Google developers console billing","url":"https://console.developers.google.com/billing/enable?project=harx-technologies-inc"}]}]}} {
+  "service": "kb-analysis-backend",
+  "name": "ClientError",
+  "stack": "ClientError: [VertexAI.ClientError]: got status: 403 Forbidden. {\"error\":{\"code\":403,\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\",\"status\":\"PERMISSION_DENIED\",\"details\":[{\"@type\":\"type.googleapis.com/google.rpc.ErrorInfo\",\"reason\":\"BILLING_DISABLED\",\"domain\":\"googleapis.com\",\"metadata\":{\"service\":\"aiplatform.googleapis.com\",\"containerInfo\":\"harx-technologies-inc\",\"consumer\":\"projects/harx-technologies-inc\"}},{\"@type\":\"type.googleapis.com/google.rpc.LocalizedMessage\",\"locale\":\"en-US\",\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\"},{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Google developers console billing\",\"url\":\"https://console.developers.google.com/billing/enable?project=harx-technologies-inc\"}]}]}}\n    at throwErrorIfNotOK (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\post_fetch_processing.js:31:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async generateContent (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\generate_content.js:52:5)\n    at async VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:216:22)\n    at async analyzeDocumentsWithRAG (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:198:22)"
+}
+2025-04-24 15:37:47 [INFO]: Creating RAG corpus: {
+  "0": "c",
+  "1": "o",
+  "2": "m",
+  "3": "p",
+  "4": "a",
+  "5": "n",
+  "6": "y",
+  "7": "-",
+  "8": "6",
+  "9": "8",
+  "10": "0",
+  "11": "8",
+  "12": "f",
+  "13": "5",
+  "14": "4",
+  "15": "f",
+  "16": "5",
+  "17": "7",
+  "18": "3",
+  "19": "6",
+  "20": "a",
+  "21": "7",
+  "22": "a",
+  "23": "7",
+  "24": "c",
+  "25": "f",
+  "26": "2",
+  "27": "4",
+  "28": "5",
+  "29": "1",
+  "30": "9",
+  "31": "d",
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:37:47 [INFO]: Created RAG corpus for company 6808f54f5736a7a7cf24519d {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:37:47 [INFO]: Importing 1 documents for company 6808f54f5736a7a7cf24519d {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:37:47 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1745505467862.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:37:48 [INFO]: Processed 1 documents for company 6808f54f5736a7a7cf24519d {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:37:48 [INFO]: Running comprehensive analysis query for company 6808f54f5736a7a7cf24519d... {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:37:48 [INFO]: Querying knowledge base for company 6808f54f5736a7a7cf24519d: {
+  "service": "kb-analysis-backend",
+  "query": "Analyze the provided documents comprehensively to identify topics, knowledge gaps, and recommendations. \nReturn your analysis as a structured JSON object with three main sections:\n\n{\n  \"topicAnalysis\": {\n    \"summary\": \"Brief 2-3 sentence overview of main topics\",\n    \"mainTopics\": [\n      {\n        \"topic\": \"Name of topic\",\n        \"description\": \"Brief description\",\n        \"relatedDocuments\": [\n          {\n            \"id\": \"document id if available, otherwise omit this field\",\n            \"name\": \"document name\",\n            \"relevance\": \"Brief explanation of relevance\"\n          }\n        ]\n      }\n    ]\n  },\n  \"knowledgeGaps\": {\n    \"summary\": \"Brief overview of main gaps\",\n    \"gaps\": [\n      {\n        \"gap\": \"Description of the gap\",\n        \"impact\": \"Brief description of the impact\",\n        \"affectedAreas\": [\"Area 1\", \"Area 2\"],\n        \"relatedDocuments\": [\n          {\n            \"id\": \"document id if available, otherwise omit this field\",\n            \"name\": \"document name\",\n            \"context\": \"Why this document is relevant to the gap\"\n          }\n        ]\n      }\n    ]\n  },\n  \"recommendations\": {\n    \"summary\": \"Brief overview of recommendations\",\n    \"priorities\": [\n      {\n        \"recommendation\": \"Specific recommendation\",\n        \"priority\": \"HIGH|MEDIUM|LOW\",\n        \"rationale\": \"Brief explanation\",\n        \"implementation\": \"Quick implementation guide\",\n        \"relatedGaps\": [\"Reference to specific gaps\"],\n        \"affectedDocuments\": [\n          {\n            \"id\": \"document id if available, otherwise omit this field\",\n            \"name\": \"document name\"\n          }\n        ]\n      }\n    ]\n  }\n}\n\nEnsure your response contains only valid JSON - no introductory or explanatory text before or after the JSON structure."
+}
+2025-04-24 15:37:49 [ERROR]: Failed to query knowledge base for company 6808f54f5736a7a7cf24519d: {
+  "service": "kb-analysis-backend",
+  "error": "[VertexAI.ClientError]: got status: 403 Forbidden. {\"error\":{\"code\":403,\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\",\"status\":\"PERMISSION_DENIED\",\"details\":[{\"@type\":\"type.googleapis.com/google.rpc.ErrorInfo\",\"reason\":\"BILLING_DISABLED\",\"domain\":\"googleapis.com\",\"metadata\":{\"containerInfo\":\"harx-technologies-inc\",\"consumer\":\"projects/harx-technologies-inc\",\"service\":\"aiplatform.googleapis.com\"}},{\"@type\":\"type.googleapis.com/google.rpc.LocalizedMessage\",\"locale\":\"en-US\",\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\"},{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Google developers console billing\",\"url\":\"https://console.developers.google.com/billing/enable?project=harx-technologies-inc\"}]}]}}",
+  "stack": "ClientError: [VertexAI.ClientError]: got status: 403 Forbidden. {\"error\":{\"code\":403,\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\",\"status\":\"PERMISSION_DENIED\",\"details\":[{\"@type\":\"type.googleapis.com/google.rpc.ErrorInfo\",\"reason\":\"BILLING_DISABLED\",\"domain\":\"googleapis.com\",\"metadata\":{\"containerInfo\":\"harx-technologies-inc\",\"consumer\":\"projects/harx-technologies-inc\",\"service\":\"aiplatform.googleapis.com\"}},{\"@type\":\"type.googleapis.com/google.rpc.LocalizedMessage\",\"locale\":\"en-US\",\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\"},{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Google developers console billing\",\"url\":\"https://console.developers.google.com/billing/enable?project=harx-technologies-inc\"}]}]}}\n    at throwErrorIfNotOK (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\post_fetch_processing.js:31:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async generateContent (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\generate_content.js:52:5)\n    at async VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:216:22)\n    at async analyzeDocumentsWithRAG (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:198:22)"
+}
+2025-04-24 15:37:49 [ERROR]: Error in RAG analysis: [VertexAI.ClientError]: got status: 403 Forbidden. {"error":{"code":403,"message":"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.","status":"PERMISSION_DENIED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"BILLING_DISABLED","domain":"googleapis.com","metadata":{"containerInfo":"harx-technologies-inc","consumer":"projects/harx-technologies-inc","service":"aiplatform.googleapis.com"}},{"@type":"type.googleapis.com/google.rpc.LocalizedMessage","locale":"en-US","message":"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry."},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Google developers console billing","url":"https://console.developers.google.com/billing/enable?project=harx-technologies-inc"}]}]}} {
+  "service": "kb-analysis-backend",
+  "name": "ClientError",
+  "stack": "ClientError: [VertexAI.ClientError]: got status: 403 Forbidden. {\"error\":{\"code\":403,\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\",\"status\":\"PERMISSION_DENIED\",\"details\":[{\"@type\":\"type.googleapis.com/google.rpc.ErrorInfo\",\"reason\":\"BILLING_DISABLED\",\"domain\":\"googleapis.com\",\"metadata\":{\"containerInfo\":\"harx-technologies-inc\",\"consumer\":\"projects/harx-technologies-inc\",\"service\":\"aiplatform.googleapis.com\"}},{\"@type\":\"type.googleapis.com/google.rpc.LocalizedMessage\",\"locale\":\"en-US\",\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\"},{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Google developers console billing\",\"url\":\"https://console.developers.google.com/billing/enable?project=harx-technologies-inc\"}]}]}}\n    at throwErrorIfNotOK (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\post_fetch_processing.js:31:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async generateContent (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\generate_content.js:52:5)\n    at async VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:216:22)\n    at async analyzeDocumentsWithRAG (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:198:22)"
+}
+2025-04-24 15:37:49 [ERROR]: Analysis failed for company 6808f54f5736a7a7cf24519d: [VertexAI.ClientError]: got status: 403 Forbidden. {"error":{"code":403,"message":"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.","status":"PERMISSION_DENIED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"BILLING_DISABLED","domain":"googleapis.com","metadata":{"containerInfo":"harx-technologies-inc","consumer":"projects/harx-technologies-inc","service":"aiplatform.googleapis.com"}},{"@type":"type.googleapis.com/google.rpc.LocalizedMessage","locale":"en-US","message":"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry."},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Google developers console billing","url":"https://console.developers.google.com/billing/enable?project=harx-technologies-inc"}]}]}} {
+  "service": "kb-analysis-backend",
+  "name": "ClientError",
+  "stack": "ClientError: [VertexAI.ClientError]: got status: 403 Forbidden. {\"error\":{\"code\":403,\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\",\"status\":\"PERMISSION_DENIED\",\"details\":[{\"@type\":\"type.googleapis.com/google.rpc.ErrorInfo\",\"reason\":\"BILLING_DISABLED\",\"domain\":\"googleapis.com\",\"metadata\":{\"containerInfo\":\"harx-technologies-inc\",\"consumer\":\"projects/harx-technologies-inc\",\"service\":\"aiplatform.googleapis.com\"}},{\"@type\":\"type.googleapis.com/google.rpc.LocalizedMessage\",\"locale\":\"en-US\",\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\"},{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Google developers console billing\",\"url\":\"https://console.developers.google.com/billing/enable?project=harx-technologies-inc\"}]}]}}\n    at throwErrorIfNotOK (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\post_fetch_processing.js:31:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async generateContent (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\generate_content.js:52:5)\n    at async VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:216:22)\n    at async analyzeDocumentsWithRAG (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:198:22)"
+}
+2025-04-24 15:49:17 [INFO]: Creating RAG corpus: {
+  "0": "c",
+  "1": "o",
+  "2": "m",
+  "3": "p",
+  "4": "a",
+  "5": "n",
+  "6": "y",
+  "7": "-",
+  "8": "6",
+  "9": "8",
+  "10": "0",
+  "11": "8",
+  "12": "f",
+  "13": "5",
+  "14": "4",
+  "15": "f",
+  "16": "5",
+  "17": "7",
+  "18": "3",
+  "19": "6",
+  "20": "a",
+  "21": "7",
+  "22": "a",
+  "23": "7",
+  "24": "c",
+  "25": "f",
+  "26": "2",
+  "27": "4",
+  "28": "5",
+  "29": "1",
+  "30": "9",
+  "31": "d",
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:49:17 [INFO]: Created RAG corpus for company 6808f54f5736a7a7cf24519d {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:49:17 [INFO]: Importing 1 documents for company 6808f54f5736a7a7cf24519d {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:49:17 [INFO]: Extracting text from C:\Users\hp\Documents\harx-bolt\ai-knowledge\backend\temp\temp-1745506157915.pdf of type application/pdf {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:49:18 [INFO]: Processed 1 documents for company 6808f54f5736a7a7cf24519d {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:49:18 [INFO]: Running comprehensive analysis query for company 6808f54f5736a7a7cf24519d... {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:49:18 [INFO]: Querying knowledge base for company 6808f54f5736a7a7cf24519d: {
+  "service": "kb-analysis-backend",
+  "query": "Analyze the provided documents comprehensively to identify topics, knowledge gaps, and recommendations. \nReturn your analysis as a structured JSON object with three main sections:\n\n{\n  \"topicAnalysis\": {\n    \"summary\": \"Brief 2-3 sentence overview of main topics\",\n    \"mainTopics\": [\n      {\n        \"topic\": \"Name of topic\",\n        \"description\": \"Brief description\",\n        \"relatedDocuments\": [\n          {\n            \"id\": \"document id if available, otherwise omit this field\",\n            \"name\": \"document name\",\n            \"relevance\": \"Brief explanation of relevance\"\n          }\n        ]\n      }\n    ]\n  },\n  \"knowledgeGaps\": {\n    \"summary\": \"Brief overview of main gaps\",\n    \"gaps\": [\n      {\n        \"gap\": \"Description of the gap\",\n        \"impact\": \"Brief description of the impact\",\n        \"affectedAreas\": [\"Area 1\", \"Area 2\"],\n        \"relatedDocuments\": [\n          {\n            \"id\": \"document id if available, otherwise omit this field\",\n            \"name\": \"document name\",\n            \"context\": \"Why this document is relevant to the gap\"\n          }\n        ]\n      }\n    ]\n  },\n  \"recommendations\": {\n    \"summary\": \"Brief overview of recommendations\",\n    \"priorities\": [\n      {\n        \"recommendation\": \"Specific recommendation\",\n        \"priority\": \"HIGH|MEDIUM|LOW\",\n        \"rationale\": \"Brief explanation\",\n        \"implementation\": \"Quick implementation guide\",\n        \"relatedGaps\": [\"Reference to specific gaps\"],\n        \"affectedDocuments\": [\n          {\n            \"id\": \"document id if available, otherwise omit this field\",\n            \"name\": \"document name\"\n          }\n        ]\n      }\n    ]\n  }\n}\n\nEnsure your response contains only valid JSON - no introductory or explanatory text before or after the JSON structure."
+}
+2025-04-24 15:49:19 [ERROR]: Failed to query knowledge base for company 6808f54f5736a7a7cf24519d: {
+  "service": "kb-analysis-backend",
+  "error": "[VertexAI.ClientError]: got status: 403 Forbidden. {\"error\":{\"code\":403,\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\",\"status\":\"PERMISSION_DENIED\",\"details\":[{\"@type\":\"type.googleapis.com/google.rpc.ErrorInfo\",\"reason\":\"BILLING_DISABLED\",\"domain\":\"googleapis.com\",\"metadata\":{\"consumer\":\"projects/harx-technologies-inc\",\"service\":\"aiplatform.googleapis.com\",\"containerInfo\":\"harx-technologies-inc\"}},{\"@type\":\"type.googleapis.com/google.rpc.LocalizedMessage\",\"locale\":\"en-US\",\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\"},{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Google developers console billing\",\"url\":\"https://console.developers.google.com/billing/enable?project=harx-technologies-inc\"}]}]}}",
+  "stack": "ClientError: [VertexAI.ClientError]: got status: 403 Forbidden. {\"error\":{\"code\":403,\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\",\"status\":\"PERMISSION_DENIED\",\"details\":[{\"@type\":\"type.googleapis.com/google.rpc.ErrorInfo\",\"reason\":\"BILLING_DISABLED\",\"domain\":\"googleapis.com\",\"metadata\":{\"consumer\":\"projects/harx-technologies-inc\",\"service\":\"aiplatform.googleapis.com\",\"containerInfo\":\"harx-technologies-inc\"}},{\"@type\":\"type.googleapis.com/google.rpc.LocalizedMessage\",\"locale\":\"en-US\",\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\"},{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Google developers console billing\",\"url\":\"https://console.developers.google.com/billing/enable?project=harx-technologies-inc\"}]}]}}\n    at throwErrorIfNotOK (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\post_fetch_processing.js:31:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async generateContent (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\generate_content.js:52:5)\n    at async VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:216:22)\n    at async analyzeDocumentsWithRAG (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:198:22)"
+}
+2025-04-24 15:49:19 [ERROR]: Error in RAG analysis: [VertexAI.ClientError]: got status: 403 Forbidden. {"error":{"code":403,"message":"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.","status":"PERMISSION_DENIED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"BILLING_DISABLED","domain":"googleapis.com","metadata":{"consumer":"projects/harx-technologies-inc","service":"aiplatform.googleapis.com","containerInfo":"harx-technologies-inc"}},{"@type":"type.googleapis.com/google.rpc.LocalizedMessage","locale":"en-US","message":"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry."},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Google developers console billing","url":"https://console.developers.google.com/billing/enable?project=harx-technologies-inc"}]}]}} {
+  "service": "kb-analysis-backend",
+  "name": "ClientError",
+  "stack": "ClientError: [VertexAI.ClientError]: got status: 403 Forbidden. {\"error\":{\"code\":403,\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\",\"status\":\"PERMISSION_DENIED\",\"details\":[{\"@type\":\"type.googleapis.com/google.rpc.ErrorInfo\",\"reason\":\"BILLING_DISABLED\",\"domain\":\"googleapis.com\",\"metadata\":{\"consumer\":\"projects/harx-technologies-inc\",\"service\":\"aiplatform.googleapis.com\",\"containerInfo\":\"harx-technologies-inc\"}},{\"@type\":\"type.googleapis.com/google.rpc.LocalizedMessage\",\"locale\":\"en-US\",\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\"},{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Google developers console billing\",\"url\":\"https://console.developers.google.com/billing/enable?project=harx-technologies-inc\"}]}]}}\n    at throwErrorIfNotOK (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\post_fetch_processing.js:31:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async generateContent (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\generate_content.js:52:5)\n    at async VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:216:22)\n    at async analyzeDocumentsWithRAG (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:198:22)"
+}
+2025-04-24 15:49:20 [ERROR]: Analysis failed for company 6808f54f5736a7a7cf24519d: [VertexAI.ClientError]: got status: 403 Forbidden. {"error":{"code":403,"message":"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.","status":"PERMISSION_DENIED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"BILLING_DISABLED","domain":"googleapis.com","metadata":{"consumer":"projects/harx-technologies-inc","service":"aiplatform.googleapis.com","containerInfo":"harx-technologies-inc"}},{"@type":"type.googleapis.com/google.rpc.LocalizedMessage","locale":"en-US","message":"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry."},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Google developers console billing","url":"https://console.developers.google.com/billing/enable?project=harx-technologies-inc"}]}]}} {
+  "service": "kb-analysis-backend",
+  "name": "ClientError",
+  "stack": "ClientError: [VertexAI.ClientError]: got status: 403 Forbidden. {\"error\":{\"code\":403,\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\",\"status\":\"PERMISSION_DENIED\",\"details\":[{\"@type\":\"type.googleapis.com/google.rpc.ErrorInfo\",\"reason\":\"BILLING_DISABLED\",\"domain\":\"googleapis.com\",\"metadata\":{\"consumer\":\"projects/harx-technologies-inc\",\"service\":\"aiplatform.googleapis.com\",\"containerInfo\":\"harx-technologies-inc\"}},{\"@type\":\"type.googleapis.com/google.rpc.LocalizedMessage\",\"locale\":\"en-US\",\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\"},{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Google developers console billing\",\"url\":\"https://console.developers.google.com/billing/enable?project=harx-technologies-inc\"}]}]}}\n    at throwErrorIfNotOK (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\post_fetch_processing.js:31:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async generateContent (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\generate_content.js:52:5)\n    at async VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:216:22)\n    at async analyzeDocumentsWithRAG (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:198:22)"
+}
+2025-04-24 15:50:21 [INFO]: Processing question for company 6808f54f5736a7a7cf24519d: {
+  "service": "kb-analysis-backend",
+  "query": "azazsa"
+}
+2025-04-24 15:50:21 [INFO]: Using existing RAG corpus for company 6808f54f5736a7a7cf24519d {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:50:21 [INFO]: Querying knowledge base for company 6808f54f5736a7a7cf24519d: {
+  "service": "kb-analysis-backend",
+  "query": "You are an expert AI assistant with deep knowledge in analyzing and interpreting business documents. You have access to the company's knowledge base.\n\nYour task is to provide comprehensive, analytical, and actionable insights based on the information in the documents. While staying faithful to the source material, you should:\n\n1. ANALYZE the information thoroughly\n2. SYNTHESIZE related information from different parts of the documents\n3. STRUCTURE your response in a clear, user-friendly format\n4. HIGHLIGHT key points, numbers, and comparisons using markdown formatting\n5. PROVIDE practical insights and recommendations when relevant\n6. If comparing options or levels, CREATE tables or structured comparisons\n7. When numbers or specific data are available, INCLUDE them in your analysis\n\nQuestion: azazsa\n\nWhen answering:\n- Start with a clear, direct answer to the question\n- Use bullet points, tables, or sections to organize information\n- Bold important terms and numbers for emphasis\n- If the documents don't explicitly state something but it can be reasonably inferred from the provided information, you may include such insights while clearly indicating they are derived from the context\n- If information is missing or unclear, specify what additional details would be helpful\n- Use markdown formatting to make your response more readable\n\nContext will be provided below. Please analyze it thoroughly and provide a comprehensive response that helps the user make informed decisions."
+}
+2025-04-24 15:50:22 [ERROR]: Failed to query knowledge base for company 6808f54f5736a7a7cf24519d: {
+  "service": "kb-analysis-backend",
+  "error": "[VertexAI.ClientError]: got status: 403 Forbidden. {\"error\":{\"code\":403,\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\",\"status\":\"PERMISSION_DENIED\",\"details\":[{\"@type\":\"type.googleapis.com/google.rpc.ErrorInfo\",\"reason\":\"BILLING_DISABLED\",\"domain\":\"googleapis.com\",\"metadata\":{\"service\":\"aiplatform.googleapis.com\",\"consumer\":\"projects/harx-technologies-inc\",\"containerInfo\":\"harx-technologies-inc\"}},{\"@type\":\"type.googleapis.com/google.rpc.LocalizedMessage\",\"locale\":\"en-US\",\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\"},{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Google developers console billing\",\"url\":\"https://console.developers.google.com/billing/enable?project=harx-technologies-inc\"}]}]}}",
+  "stack": "ClientError: [VertexAI.ClientError]: got status: 403 Forbidden. {\"error\":{\"code\":403,\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\",\"status\":\"PERMISSION_DENIED\",\"details\":[{\"@type\":\"type.googleapis.com/google.rpc.ErrorInfo\",\"reason\":\"BILLING_DISABLED\",\"domain\":\"googleapis.com\",\"metadata\":{\"service\":\"aiplatform.googleapis.com\",\"consumer\":\"projects/harx-technologies-inc\",\"containerInfo\":\"harx-technologies-inc\"}},{\"@type\":\"type.googleapis.com/google.rpc.LocalizedMessage\",\"locale\":\"en-US\",\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\"},{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Google developers console billing\",\"url\":\"https://console.developers.google.com/billing/enable?project=harx-technologies-inc\"}]}]}}\n    at throwErrorIfNotOK (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\post_fetch_processing.js:31:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async generateContent (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\generate_content.js:52:5)\n    at async VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:216:22)\n    at async askQuestion (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:484:22)"
+}
+2025-04-24 15:50:22 [ERROR]: Error processing question: [VertexAI.ClientError]: got status: 403 Forbidden. {"error":{"code":403,"message":"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.","status":"PERMISSION_DENIED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"BILLING_DISABLED","domain":"googleapis.com","metadata":{"service":"aiplatform.googleapis.com","consumer":"projects/harx-technologies-inc","containerInfo":"harx-technologies-inc"}},{"@type":"type.googleapis.com/google.rpc.LocalizedMessage","locale":"en-US","message":"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry."},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Google developers console billing","url":"https://console.developers.google.com/billing/enable?project=harx-technologies-inc"}]}]}} {
+  "service": "kb-analysis-backend",
+  "name": "ClientError",
+  "stack": "ClientError: [VertexAI.ClientError]: got status: 403 Forbidden. {\"error\":{\"code\":403,\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\",\"status\":\"PERMISSION_DENIED\",\"details\":[{\"@type\":\"type.googleapis.com/google.rpc.ErrorInfo\",\"reason\":\"BILLING_DISABLED\",\"domain\":\"googleapis.com\",\"metadata\":{\"service\":\"aiplatform.googleapis.com\",\"consumer\":\"projects/harx-technologies-inc\",\"containerInfo\":\"harx-technologies-inc\"}},{\"@type\":\"type.googleapis.com/google.rpc.LocalizedMessage\",\"locale\":\"en-US\",\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\"},{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Google developers console billing\",\"url\":\"https://console.developers.google.com/billing/enable?project=harx-technologies-inc\"}]}]}}\n    at throwErrorIfNotOK (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\post_fetch_processing.js:31:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async generateContent (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\generate_content.js:52:5)\n    at async VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:216:22)\n    at async askQuestion (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:484:22)"
+}
+2025-04-24 15:52:23 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:52:23 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-24 15:52:23 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:52:23 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:52:23 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:52:23 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:52:23 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:52:23 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:52:26 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:52:26 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-24 15:52:26 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:52:26 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:52:27 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:52:27 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:52:27 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:52:27 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:52:44 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:52:44 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-24 15:52:44 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:52:44 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:52:44 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:52:44 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:52:44 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:52:44 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:52:51 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:52:51 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-24 15:52:51 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:52:51 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:52:51 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:52:51 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:52:51 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:52:51 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:52:56 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:52:56 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-24 15:52:56 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:52:56 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:52:56 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:52:56 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:52:56 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:52:56 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:53:18 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:53:18 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-24 15:53:18 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:53:18 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:53:18 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:53:18 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:53:18 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:53:18 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:54:04 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:54:04 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-24 15:54:04 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:54:04 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:54:04 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:54:04 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:54:04 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:54:04 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:54:09 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:54:09 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-24 15:54:09 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:54:09 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:54:09 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:54:09 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:54:09 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:54:09 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:54:22 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:54:22 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-24 15:54:22 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:54:22 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:54:22 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:54:22 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:54:22 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:54:22 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:54:26 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:54:26 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-24 15:54:26 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:54:26 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:54:26 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:54:26 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:54:26 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:54:26 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:54:28 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:54:28 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-24 15:54:28 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:54:28 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:54:28 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:54:28 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:54:28 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:54:28 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:54:45 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:54:45 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-1.5-flash-001"
+}
+2025-04-24 15:54:45 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:54:45 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:54:45 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:54:45 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:54:45 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-04-24 15:54:45 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}

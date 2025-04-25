@@ -12,10 +12,10 @@ const uploadCallRecording = async (req, res) => {
       return res.status(400).json({ error: 'No file uploaded' });
     }
 
-    const { contactId, date, duration, summary, sentiment, tags, aiInsights, repId, companyId } = req.body;
+    const { contactId, date, duration, summary, sentiment, tags, aiInsights, repId, userId } = req.body;
 
     // Validate companyId
-    const company = await Company.findById(companyId);
+    const company = await Company.findOne({ userId });
     if (!company) {
       return res.status(404).json({ error: 'Company not found' });
     }
@@ -36,7 +36,7 @@ const uploadCallRecording = async (req, res) => {
       tags: tags ? tags.split(',').map(tag => tag.trim()) : [],
       aiInsights: aiInsights ? aiInsights.split(',').map(insight => insight.trim()) : [],
       repId,
-      companyId,
+      companyId: company._id,
       processingOptions: {
         transcription: true,
         sentiment: true,
@@ -89,12 +89,13 @@ const uploadCallRecording = async (req, res) => {
 
 const getCallRecordings = async (req, res) => {
   try {
-    const { companyId } = req.query;
-    if (!companyId) {
-      return res.status(400).json({ error: 'Company ID is required' });
+    const { userId } = req.query;
+    if (!userId) {
+      return res.status(400).json({ error: 'User ID is required' });
     }
 
-    const callRecordings = await CallRecording.find({ companyId });
+    const company = await Company.findOne({ userId });
+    const callRecordings = await CallRecording.find({ companyId: company._id });
     
     // Map the records to include id instead of _id
     const formattedRecordings = callRecordings.map(recording => ({
