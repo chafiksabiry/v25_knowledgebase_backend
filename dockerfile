@@ -10,6 +10,7 @@ COPY . .
 
 ENV MONGODB_URI=mongodb://harx:ix5S3vU6BjKn4MHp@207.180.226.2:27017/V25_HarxPreProd
 ENV FRONTEND_URL=https://preprod-knowledge-base.harx.ai
+ENV QIANKUN_FRONT_URL=https://v25-preprod.harx.ai
 ENV PORT=3001
 ENV OPENAI_API_KEY=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
 ENV NODE_ENV=development
