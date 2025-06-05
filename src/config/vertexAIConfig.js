@@ -15,7 +15,7 @@ const credentialsPath = path.resolve(process.env.GOOGLE_APPLICATION_CREDENTIALS)
 const VERTEX_CONFIG = {
   project: process.env.GOOGLE_CLOUD_PROJECT,
   location: process.env.VERTEX_AI_LOCATION || 'us-central1',
-  modelName: process.env.VERTEX_AI_MODEL || 'gemini-1.5-flash-001',
+  modelName: process.env.VERTEX_AI_MODEL || 'gemini-2.0-flash-lite',
   credentials: credentialsPath
 };
 
