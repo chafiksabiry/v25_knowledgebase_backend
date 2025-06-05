@@ -24,7 +24,7 @@ ENV CLOUDINARY_API_SECRET=i3nxRvfOF1jjfLzMHKE8mP4aXVM
 ENV GOOGLE_CLOUD_PROJECT=harx-technologies-inc
 ENV GOOGLE_APPLICATION_CREDENTIALS=./config/vertex-ai-key.json
 ENV VERTEX_AI_LOCATION=us-central1
-ENV VERTEX_AI_MODEL=gemini-1.5-flash-001 
+ENV VERTEX_AI_MODEL=gemini-2.0-flash-lite
 
 # Test Configuration
 ENV API_URL=https://api-knowledge-base.harx.ai
