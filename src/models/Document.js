@@ -41,11 +41,11 @@ const DocumentSchema = new Schema(
       summary: String,
       domain: String,
       theme: String,
-      mainPoints: String,
+      mainPoints: [String],
       technicalLevel: String,
       targetAudience: String,
-      keyTerms: String,
-      recommendations: String,
+      keyTerms: [String],
+      recommendations: [String],
       analyzedAt: Date
     }
   },
