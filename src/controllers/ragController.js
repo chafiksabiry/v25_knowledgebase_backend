@@ -1,6 +1,7 @@
 const { vertexAIService } = require('../config/vertexAIConfig');
 const Document = require('../models/Document');
 const { logger } = require('../utils/logger');
+const { generateDocumentAnalysisPrompt } = require('../prompts/documentAnalysisPrompt');
 
 /**
  * Initialize a RAG corpus for a company
@@ -129,8 +130,139 @@ const queryKnowledgeBase = async (req, res) => {
   }
 };
 
+/**
+ * Analyze a document using RAG
+ * @param {Object} req - Express request object with documentId in params
+ * @param {Object} res - Express response object
+ */
+const analyzeDocument = async (req, res) => {
+  try {
+    const { id: documentId } = req.params;
+
+    if (!documentId) {
+      return res.status(400).json({ error: 'Document ID is required' });
+    }
+
+    // Get the document
+    const document = await Document.findById(documentId);
+    if (!document) {
+      return res.status(404).json({ error: 'Document not found' });
+    }
+
+    // Initialize Vertex AI if not already initialized
+    if (!vertexAIService.vertexAI) {
+      await vertexAIService.initialize();
+    }
+
+    // Ensure the company's corpus is initialized
+    try {
+      await vertexAIService.createRagCorpus(document.companyId);
+    } catch (error) {
+      logger.info('Corpus might already exist, continuing...');
+    }
+
+    // Sync the document to the corpus
+    logger.info('Syncing document to corpus...');
+    await vertexAIService.importDocumentsToCorpus(document.companyId, [document]);
+    logger.info('Document synced successfully');
+
+    // Generate analysis prompt
+    const analysisPrompt = generateDocumentAnalysisPrompt(document.content);
+
+    // Perform analysis using RAG with a single call
+    const response = await vertexAIService.queryKnowledgeBase(
+      document.companyId,
+      analysisPrompt
+    );
+
+    // Parse the response to get the analysis results
+    let analysisResults;
+    try {
+      logger.info('Raw response from Vertex AI:', JSON.stringify(response, null, 2));
+      
+      // Vérifier la structure de la réponse
+      if (!response || !response.candidates || !response.candidates[0]) {
+        throw new Error('Invalid response structure from Vertex AI');
+      }
+
+      // Extraire le contenu de la réponse
+      let content;
+      if (response.candidates[0].content && response.candidates[0].content.parts) {
+        content = response.candidates[0].content.parts[0].text;
+      } else if (response.candidates[0].text) {
+        content = response.candidates[0].text;
+      } else if (typeof response.candidates[0] === 'string') {
+        content = response.candidates[0];
+      } else {
+        throw new Error('Unable to extract content from response');
+      }
+
+      // Essayer de parser le contenu comme JSON
+      try {
+        // D'abord, essayer de parser directement
+        analysisResults = JSON.parse(content);
+      } catch (jsonError) {
+        // Si ça échoue, essayer d'extraire le JSON avec une regex
+        const jsonMatch = content.match(/\{[\s\S]*\}/);
+        if (jsonMatch) {
+          analysisResults = JSON.parse(jsonMatch[0]);
+        } else {
+          throw new Error('No valid JSON found in response');
+        }
+      }
+
+      // Valider la structure des résultats
+      const requiredFields = ['summary', 'domain', 'theme', 'mainPoints', 'technicalLevel', 'targetAudience', 'keyTerms', 'recommendations'];
+      const missingFields = requiredFields.filter(field => !analysisResults[field]);
+      
+      if (missingFields.length > 0) {
+        logger.warn('Missing fields in analysis results:', missingFields);
+        // Remplir les champs manquants avec des valeurs par défaut
+        missingFields.forEach(field => {
+          if (field === 'mainPoints' || field === 'keyTerms' || field === 'recommendations') {
+            analysisResults[field] = ['Not available'];
+          } else {
+            analysisResults[field] = 'Not available';
+          }
+        });
+      }
+
+    } catch (parseError) {
+      logger.error('Error parsing analysis results:', {
+        error: parseError.message,
+        response: response,
+        stack: parseError.stack
+      });
+      throw new Error('Failed to parse analysis results: ' + parseError.message);
+    }
+
+    // Update document with analysis results
+    document.analysis = {
+      ...analysisResults,
+      analyzedAt: new Date()
+    };
+    await document.save();
+
+    res.status(200).json(document.analysis);
+
+  } catch (error) {
+    logger.error('Error analyzing document:', {
+      error: error.message,
+      stack: error.stack,
+      details: error.response?.data || error
+    });
+    
+    res.status(500).json({ 
+      error: 'Failed to analyze document',
+      details: error.message,
+      stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+    });
+  }
+};
+
 module.exports = {
   initializeCompanyCorpus,
   syncDocumentsToCorpus,
-  queryKnowledgeBase
+  queryKnowledgeBase,
+  analyzeDocument
 }; 

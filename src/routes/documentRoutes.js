@@ -8,7 +8,8 @@ const {
   getAllDocuments,
   getDocumentById,
   deleteDocument,
-  updateDocument
+  updateDocument,
+  analyzeDocument
 } = require('../controllers/documentController');
 
 // Configure multer for file uploads
@@ -59,6 +60,9 @@ router.get('/', getAllDocuments);
 
 // Get a single document by ID
 router.get('/:id', getDocumentById);
+
+// Analyze a document
+router.get('/:id/analysis', analyzeDocument);
 
 // Delete a document
 router.delete('/:id', deleteDocument);

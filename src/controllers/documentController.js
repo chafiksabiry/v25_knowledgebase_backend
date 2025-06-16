@@ -6,6 +6,7 @@ const { extractTextFromFile, calculateDocumentMetrics } = require('../services/d
 const { chunkDocument } = require('../utils/textProcessing');
 const Company = require('../models/Company');
 const { uploadToCloudinary, deleteFromCloudinary } = require('../services/cloudinaryService');
+const documentService = require('../services/documentService');
 
 // Upload a new document
 const uploadDocument = async (req, res) => {
@@ -190,10 +191,25 @@ const updateDocument = async (req, res) => {
   }
 };
 
+const analyzeDocument = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const analysis = await documentService.analyzeDocument(id);
+    res.json(analysis);
+  } catch (error) {
+    console.error('Error analyzing document:', error);
+    res.status(500).json({ 
+      error: 'Failed to analyze document',
+      details: error.message 
+    });
+  }
+};
+
 module.exports = {
   uploadDocument,
   getAllDocuments,
   getDocumentById,
   deleteDocument,
-  updateDocument
+  updateDocument,
+  analyzeDocument
 }; 
