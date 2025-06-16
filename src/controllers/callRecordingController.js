@@ -4,6 +4,7 @@ const fs = require('fs').promises;
 const path = require('path');
 const { uploadToCloudinary, deleteFromCloudinary } = require('../services/cloudinaryService');
 const { logger } = require('../utils/logger');
+const { getAudioSummaryService } = require('../services/callAnalysisService');
 
 // Upload a new call recording
 const uploadCallRecording = async (req, res) => {
@@ -142,8 +143,65 @@ const deleteCallRecording = async (req, res) => {
   }
 };
 
+// Get audio summary for a call recording
+const getAudioSummary = async (req, res) => {
+    try {
+        const { recordingId } = req.params;
+        
+        // Find the recording
+        const recording = await CallRecording.findById(recordingId);
+        if (!recording) {
+            return res.status(404).json({ error: 'Call recording not found' });
+        }
+
+        // Check if recording has a file URL
+        if (!recording.recordingUrl) {
+            return res.status(400).json({ error: 'No audio file found for this recording' });
+        }
+
+        // Update analysis status
+        recording.analysisStatus = 'processing';
+        await recording.save();
+
+        try {
+            // Get summary from service
+            const summary = await getAudioSummaryService(recording.recordingUrl);
+            
+            // Update recording with summary
+            recording.analysis = {
+                summary: summary,
+                status: 'completed',
+                lastUpdated: new Date()
+            };
+            await recording.save();
+
+            return res.json({
+                message: 'Audio summary generated successfully',
+                summary: summary
+            });
+        } catch (error) {
+            // Update status on error
+            recording.analysisStatus = 'failed';
+            await recording.save();
+            
+            logger.error('Error generating audio summary:', error);
+            return res.status(500).json({ 
+                error: 'Failed to generate audio summary',
+                details: error.message 
+            });
+        }
+    } catch (error) {
+        logger.error('Error in getAudioSummary controller:', error);
+        return res.status(500).json({ 
+            error: 'Internal server error',
+            details: error.message 
+        });
+    }
+};
+
 module.exports = {
   uploadCallRecording,
   getCallRecordings,
-  deleteCallRecording
+  deleteCallRecording,
+  getAudioSummary
 }; 

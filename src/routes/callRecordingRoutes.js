@@ -3,7 +3,12 @@ const router = express.Router();
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
-const { uploadCallRecording, getCallRecordings, deleteCallRecording } = require('../controllers/callRecordingController');
+const { 
+    uploadCallRecording, 
+    getCallRecordings, 
+    deleteCallRecording,
+    getAudioSummary 
+} = require('../controllers/callRecordingController');
 
 // Configure multer for file uploads
 const storage = multer.diskStorage({
@@ -52,6 +57,15 @@ router.delete('/:id', async (req, res) => {
     return res.status(400).json({ error: 'Call Recording ID is required' });
   }
   await deleteCallRecording(req, res);
+});
+
+// Generate summary for a call recording
+router.post('/:recordingId/analyze/summary', async (req, res) => {
+  const { recordingId } = req.params;
+  if (!recordingId) {
+    return res.status(400).json({ error: 'Call Recording ID is required' });
+  }
+  await getAudioSummary(req, res);
 });
 
 module.exports = router; 
