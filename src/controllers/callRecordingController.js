@@ -159,29 +159,57 @@ const getAudioSummary = async (req, res) => {
             return res.status(400).json({ error: 'No audio file found for this recording' });
         }
 
-        // Update analysis status
-        recording.analysisStatus = 'processing';
+        // Check if analysis is already completed
+        if (recording.analysis?.status === 'completed' && recording.analysis?.summary?.keyIdeas?.length > 0) {
+            return res.json({
+                message: 'Audio summary retrieved from cache',
+                summary: recording.analysis.summary
+            });
+        }
+
+        // Update analysis status to processing
+        recording.analysis = {
+            status: 'processing',
+            summary: recording.analysis?.summary || { keyIdeas: [], lastUpdated: null },
+            error: null
+        };
         await recording.save();
 
         try {
             // Get summary from service
             const summary = await getAudioSummaryService(recording.recordingUrl);
             
+            // Transform the summary to match our schema
+            const keyIdeas = summary['key-ideas'].map(idea => {
+                const [title, description] = Object.entries(idea)[0];
+                return {
+                    title,
+                    description
+                };
+            });
+
             // Update recording with summary
             recording.analysis = {
-                summary: summary,
                 status: 'completed',
-                lastUpdated: new Date()
+                summary: {
+                    keyIdeas,
+                    lastUpdated: new Date()
+                },
+                error: null
             };
             await recording.save();
 
             return res.json({
                 message: 'Audio summary generated successfully',
-                summary: summary
+                summary: recording.analysis.summary
             });
         } catch (error) {
             // Update status on error
-            recording.analysisStatus = 'failed';
+            recording.analysis = {
+                status: 'failed',
+                summary: recording.analysis?.summary || { keyIdeas: [], lastUpdated: null },
+                error: error.message
+            };
             await recording.save();
             
             logger.error('Error generating audio summary:', error);

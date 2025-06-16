@@ -24,8 +24,21 @@ const callRecordingSchema = new mongoose.Schema({
   transcriptUrl: {
     type: String
   },
-  summary: {
-    type: String
+
+  analysis: {
+    status: {
+      type: String,
+      enum: ['pending', 'processing', 'completed', 'failed'],
+      default: 'pending'
+    },
+    summary: {
+      type: Object,
+      default: {
+        keyIdeas: [],
+        lastUpdated: null
+      }
+    },
+    error: String
   },
   sentiment: {
     type: String,
