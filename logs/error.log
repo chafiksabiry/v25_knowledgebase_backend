@@ -1277,3 +1277,195 @@
   "name": "ClientError",
   "stack": "ClientError: [VertexAI.ClientError]: got status: 403 Forbidden. {\"error\":{\"code\":403,\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\",\"status\":\"PERMISSION_DENIED\",\"details\":[{\"@type\":\"type.googleapis.com/google.rpc.ErrorInfo\",\"reason\":\"BILLING_DISABLED\",\"domain\":\"googleapis.com\",\"metadata\":{\"service\":\"aiplatform.googleapis.com\",\"consumer\":\"projects/harx-technologies-inc\",\"containerInfo\":\"harx-technologies-inc\"}},{\"@type\":\"type.googleapis.com/google.rpc.LocalizedMessage\",\"locale\":\"en-US\",\"message\":\"This API method requires billing to be enabled. Please enable billing on project #harx-technologies-inc by visiting https://console.developers.google.com/billing/enable?project=harx-technologies-inc then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.\"},{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Google developers console billing\",\"url\":\"https://console.developers.google.com/billing/enable?project=harx-technologies-inc\"}]}]}}\n    at throwErrorIfNotOK (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\post_fetch_processing.js:31:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async generateContent (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\@google-cloud\\vertexai\\build\\src\\functions\\generate_content.js:52:5)\n    at async VertexAIService.queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\config\\vertexAIConfig.js:216:22)\n    at async askQuestion (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\analysisController.js:484:22)"
 }
+2025-06-13 16:26:50 [ERROR]: Error parsing analysis results: response.candidates[0].content.match is not a function {
+  "service": "kb-analysis-backend",
+  "stack": "TypeError: response.candidates[0].content.match is not a function\n    at analyzeDocument (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\ragController.js:195:56)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)"
+}
+2025-06-13 16:26:50 [ERROR]: Error analyzing document: {
+  "service": "kb-analysis-backend",
+  "error": "Failed to parse analysis results",
+  "stack": "Error: Failed to parse analysis results\n    at analyzeDocument (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\ragController.js:203:13)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+  "details": {}
+}
+2025-06-13 16:31:41 [ERROR]: Error parsing analysis results: {
+  "service": "kb-analysis-backend",
+  "error": "Content is not a string",
+  "response": {
+    "candidates": [
+      {
+        "content": {
+          "role": "model",
+          "parts": [
+            {
+              "text": "```json\n{\n  \"summary\": \"This document outlines the procedures for handling customer complaints, adhering to regulatory requirements in the insurance sector, as well as a code of conduct for partnerships with brokers and guidelines for data protection, signature usage and brand utilization.\",\n  \"domain\": \"Insurance & Brokerage\",\n  \"theme\": \"Customer Service, Regulatory Compliance, and Operational Procedures within an Insurance Brokerage\",\n  \"mainPoints\": [\n    \"**Guide to Complaint Handling:**  Details the regulatory framework for complaint handling, defines a 'reclamation' as a customer's expressed dissatisfaction, and outlines a multi-level escalation process (Level 1: Non-sensitive, Level 2: Second claim or Sensitive, Level 3: Mediation) with clear contact points and timelines for responses. It also details the reporting requirements to the ACPR.\",\n    \"**Code of Conduct for Brokers:**  Defines the responsibilities of insurance brokers, particularly grossist underwriters and direct brokers, in terms of information and advice to clients.  It highlights the importance of written partnership agreements, maintaining broker independence, providing clear product information, analyzing client needs, and using a standardized information and advice document. It also emphasizes the need for transparency and adhering to the CSCA code and the interests of the client.\",\n    \"**Anti-Money Laundering (AML) and Combating the Financing of Terrorism (CFT) Procedures:**  Establishes a framework for compliance with laws and regulations regarding AML/CFT. It details client identification, risk assessment (including risk levels: low, medium, and high), the definition of suspicious operations and the obligation to declare them to TRACFIN. This section also includes the rules regarding the conservation of documents and the acceptable means of payment.\",\n    \"**Electronic Signature Usage:** Provides guidance on using electronic signatures within the brokerage, adhering to legal requirements. Includes details on the advantages, scope, trusted third-party (DocuSign), and step-by-step instructions for the process. Additionally, it covers best practices regarding client consent, and contact.\",\n    \"**Data Protection Guidelines:**  Provides an internal checklist with practical measures to ensure the protection of personal data, based on the GDPR. Includes specific requirements for access control, data security, data retention, and information system management.\",\n    \"**Brand Usage Charter:**  Outlines the rules for the use of the COVERITY brand, including the authorized users, the commitment of users, and rules for the reproduction of the logo. It also explains the palette of colors to be used and sanctions in case of non-compliance.\"\n  ],\n  \"technicalLevel\": \"Beginner to Intermediate\",\n  \"targetAudience\": \"Insurance brokers, employees of COVERITY and its partners, and compliance personnel within the insurance industry.\",\n  \"keyTerms\": [\n    \"Reclamation\",\n    \"ACPR (Autorité de Contrôle Prudentiel et de Résolution)\",\n    \"IARD (Incendie, Accidents et Risques Divers)\",\n    \"LCB-FT (Lutte Contre le Blanchiment des Capitaux et le Financement du Terrorisme)\",\n    \"TRACFIN\",\n    \"LCBFT (Lutte contre le blanchiment et le financement du terrorisme)\",\n    \"GAFI (Groupe d'action financière)\",\n    \"PPE (Personnes Politiquement Exposées)\",\n    \"Bénéficiaire Effectif\",\n    \"SEQ (Signature Electronique Qualifiée)\",\n    \"eIDAS (electronic IDentification Authentication and trust Services)\",\n    \"Bloctel\",\n    \"GDPR (General Data Protection Regulation)\",\n    \"CSCA (Chambre Syndicale des Courtiers d'Assurances)\",\n     \"CODIR\"\n  ],\n  \"recommendations\": [\n    \"Establish clear and accessible complaint handling procedures.\",\n    \"Ensure that all brokers involved in client interactions are well-versed in these procedures.\",\n    \"Implement robust AML/CFT protocols, including thorough client identification and ongoing transaction monitoring.\",\n    \"Provide regular training to employees on AML/CFT regulations.\",\n    \"Utilize electronic signatures securely, following the guidelines provided.\",\n    \"Implement strict data protection measures.\",\n    \"Adhere to brand usage guidelines to maintain a consistent image.\"\n  ]\n}\n```"
+            }
+          ]
+        },
+        "finishReason": "STOP",
+        "avgLogprobs": -0.630011991050182
+      }
+    ],
+    "usageMetadata": {
+      "promptTokenCount": 50842,
+      "candidatesTokenCount": 893,
+      "totalTokenCount": 51735,
+      "trafficType": "ON_DEMAND",
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 50842
+        }
+      ],
+      "candidatesTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 893
+        }
+      ]
+    },
+    "modelVersion": "gemini-2.0-flash-lite",
+    "createTime": "2025-06-13T15:31:36.567963Z",
+    "responseId": "WERMaJvVIsuqgLUPuZuGiQE"
+  },
+  "stack": "Error: Content is not a string\n    at analyzeDocument (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\ragController.js:203:15)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)"
+}
+2025-06-13 16:31:41 [ERROR]: Error analyzing document: {
+  "service": "kb-analysis-backend",
+  "error": "Failed to parse analysis results: Content is not a string",
+  "stack": "Error: Failed to parse analysis results: Content is not a string\n    at analyzeDocument (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\ragController.js:233:13)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+  "details": {}
+}
+2025-06-13 16:31:58 [ERROR]: Error parsing analysis results: {
+  "service": "kb-analysis-backend",
+  "error": "Content is not a string",
+  "response": {
+    "candidates": [
+      {
+        "content": {
+          "role": "model",
+          "parts": [
+            {
+              "text": "```json\n{\n  \"summary\": \"This document is a guide for handling customer complaints (Réclamations) at COVERITY, an insurance broker. It outlines the regulatory context, procedures for handling complaints, and reporting requirements. The document also contains annexes that detail a code of conduct for relationships between brokers, procedures for combating money laundering and terrorism financing, and guidelines for using electronic signatures and the COVERITY brand.\",\n  \"domain\": \"Insurance Brokering\",\n  \"theme\": \"Customer Complaints Management, Regulatory Compliance, and Partnership Guidelines\",\n  \"mainPoints\": [\n    \"COVERITY defines a 'Réclamation' as a declaration of customer dissatisfaction, excluding requests for information or service.\",\n    \"The document outlines the legal and regulatory framework governing complaint handling in the insurance and banking sectors, with the ACPR (Autorité de Contrôle Prudentiel et de Résolution) setting the guidelines.\",\n    \"COVERITY manages and processes complaints received through various channels (mail, phone, etc.).\",\n    \"A three-level escalation process exists: Level 1 (non-sensitive complaints), Level 2 (reiteration or sensitive complaints), and Level 3 (Mediation).\",\n    \"The document provides a detailed procedure for the receipt, processing, and recording of complaints, including deadlines and responsibilities of different parties.\",\n    \"Reporting to ACPR, CODIR (Coverity’s management committee), the broker network, and delegates is a requirement.\",\n    \"Training of personnel involved in complaint handling is mandatory.\",\n    \"Annex 2 details the code of conduct for relationships between brokers.\",\n    \"Annex 3 describes the procedures for combating money laundering and terrorism financing and explains how to classify customer risk.\",\n    \"Annex 4 provides information on the use of electronic signatures.\",\n    \"Annex 5 outlines the guidelines for using the COVERITY brand, including permitted uses and color palette, along with the procedure for the brand's use by partners.\"\n  ],\n  \"technicalLevel\": \"Beginner to Intermediate\",\n  \"targetAudience\": \"COVERITY employees, insurance brokers, and partners.\",\n  \"keyTerms\": [\n    \"Réclamation (Complaint)\",\n    \"ACPR (Autorité de Contrôle Prudentiel et de Résolution)\",\n    \"CODIR (Comité de Direction - Management Committee)\",\n    \"Courtier (Broker)\",\n    \"Code des assurances (Insurance Code)\",\n    \"eIDAS (Electronic Identification, Authentication and Trust Services)\",\n    \"LCB-FT (Lutte Contre le Blanchiment des Capitaux et le Financement du Terrorisme - Fight against Money Laundering and Terrorism Financing)\",\n    \"TRACFIN (Traitement du Renseignement et Action contre les Circuits Financiers clandestins - Financial intelligence unit of France)\",\n    \"PPE (Personnes Politiquement Exposées - Politically Exposed Persons)\",\n    \"GAFI (Groupe d'action financière - Financial Action Task Force)\"\n  ],\n  \"recommendations\": [\n    \"Employees must be trained to handle complaints according to the procedures outlined in this guide.\",\n    \"Complaints must be processed within the stipulated deadlines and levels of escalation.\",\n    \"Accurate records of all complaints must be maintained.\",\n    \"Regular reporting to the relevant authorities and internal stakeholders is required.\",\n    \"Adherence to the code of conduct for brokers, the anti-money laundering procedures, electronic signature procedures, and the brand guidelines are essential.\"\n  ]\n}\n```"
+            }
+          ]
+        },
+        "finishReason": "STOP",
+        "citationMetadata": {
+          "citations": [
+            {
+              "startIndex": 2601,
+              "endIndex": 2736,
+              "uri": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX%3A52022DC0800"
+            }
+          ]
+        },
+        "avgLogprobs": -0.4297695081420396
+      }
+    ],
+    "usageMetadata": {
+      "promptTokenCount": 50842,
+      "candidatesTokenCount": 729,
+      "totalTokenCount": 51571,
+      "trafficType": "ON_DEMAND",
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 50842
+        }
+      ],
+      "candidatesTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 729
+        }
+      ]
+    },
+    "modelVersion": "gemini-2.0-flash-lite",
+    "createTime": "2025-06-13T15:31:54.406159Z",
+    "responseId": "akRMaI_lGMWWgLUPvdCV6AU"
+  },
+  "stack": "Error: Content is not a string\n    at analyzeDocument (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\ragController.js:203:15)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)"
+}
+2025-06-13 16:31:58 [ERROR]: Error analyzing document: {
+  "service": "kb-analysis-backend",
+  "error": "Failed to parse analysis results: Content is not a string",
+  "stack": "Error: Failed to parse analysis results: Content is not a string\n    at analyzeDocument (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\ragController.js:233:13)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+  "details": {}
+}
+2025-06-13 16:33:33 [ERROR]: Error analyzing document: {
+  "service": "kb-analysis-backend",
+  "error": "Document validation failed: analysis.mainPoints: Cast to string failed for value \"[\n  \"Definition of a 'Réclamation' (complaint) according to ACPR guidelines.\",\n  \"COVERITY's responsibility for handling complaints within its delegated authority.\",\n  'Three-level escalation process based on sensitivity and repetition of complaints.',\n  'Various channels for receiving complaints (postal mail, email, and phone).',\n  'Differentiated handling of complaints based on level (Level 1: Non-sensitive; Level 2: Sensitive or repeated; Level 3: Mediation).',\n  'Obligations regarding the processing time of complaints.',\n  'Reporting requirements to the ACPR (French Prudential Supervision and Resolution Authority), CODIR (Management Committee), and network of brokers.',\n  'Importance of staff training.',\n  'The document also includes the Code of Conduct between the Courtier Grossistes and Courtier Directs that focuses on the obligations of information and advice for clients.',\n  'The document presents the use of electronic signature with details on the legal aspects and the process to follow to use it.',\n  'The document details the rules of the protection of data.',\n  'The document also includes the terms of use of the Coverity Brand.'\n]\" (type Array) at path \"analysis.mainPoints\", analysis.keyTerms: Cast to string failed for value \"[\n  'Réclamation (Complaint)',\n  'ACPR (Autorité de Contrôle Prudentiel et de Résolution)',\n  'Courtier (Broker)',\n  'Courtier Grossiste (Wholesale Broker)',\n  'Courtier Direct (Direct Broker)',\n  'Reporting',\n  'CODIR (Comité de Direction - Management Committee)',\n  'LCB-FT (Lutte contre le blanchiment des capitaux, le financement du terrorisme)',\n  'TRACFIN',\n  'eIDAS (electronic IDentification, Authentication and trust Services)',\n  'Signature électronique (Electronic Signature)',\n  'PPE (Personnes Politiquement Exposées)'\n]\" (type Array) at path \"analysis.keyTerms\", analysis.recommendations: Cast to string failed for value \"[\n  'Follow the defined procedures for receiving and handling complaints.',\n  'Adhere to the escalation process based on the nature and sensitivity of the complaint.',\n  'Ensure timely responses to clients, within the defined deadlines.',\n  'Maintain accurate records of all complaints and their handling.',\n  'Participate in training to understand and fulfill the obligations related to complaint management.',\n  'Follow the established guidelines to use the electronic signature.',\n  'Respect the rules on the protection of data.',\n  'Respect the terms of use of the Coverity Brand.'\n]\" (type Array) at path \"analysis.recommendations\"",
+  "stack": "ValidationError: Document validation failed: analysis.mainPoints: Cast to string failed for value \"[\n  \"Definition of a 'Réclamation' (complaint) according to ACPR guidelines.\",\n  \"COVERITY's responsibility for handling complaints within its delegated authority.\",\n  'Three-level escalation process based on sensitivity and repetition of complaints.',\n  'Various channels for receiving complaints (postal mail, email, and phone).',\n  'Differentiated handling of complaints based on level (Level 1: Non-sensitive; Level 2: Sensitive or repeated; Level 3: Mediation).',\n  'Obligations regarding the processing time of complaints.',\n  'Reporting requirements to the ACPR (French Prudential Supervision and Resolution Authority), CODIR (Management Committee), and network of brokers.',\n  'Importance of staff training.',\n  'The document also includes the Code of Conduct between the Courtier Grossistes and Courtier Directs that focuses on the obligations of information and advice for clients.',\n  'The document presents the use of electronic signature with details on the legal aspects and the process to follow to use it.',\n  'The document details the rules of the protection of data.',\n  'The document also includes the terms of use of the Coverity Brand.'\n]\" (type Array) at path \"analysis.mainPoints\", analysis.keyTerms: Cast to string failed for value \"[\n  'Réclamation (Complaint)',\n  'ACPR (Autorité de Contrôle Prudentiel et de Résolution)',\n  'Courtier (Broker)',\n  'Courtier Grossiste (Wholesale Broker)',\n  'Courtier Direct (Direct Broker)',\n  'Reporting',\n  'CODIR (Comité de Direction - Management Committee)',\n  'LCB-FT (Lutte contre le blanchiment des capitaux, le financement du terrorisme)',\n  'TRACFIN',\n  'eIDAS (electronic IDentification, Authentication and trust Services)',\n  'Signature électronique (Electronic Signature)',\n  'PPE (Personnes Politiquement Exposées)'\n]\" (type Array) at path \"analysis.keyTerms\", analysis.recommendations: Cast to string failed for value \"[\n  'Follow the defined procedures for receiving and handling complaints.',\n  'Adhere to the escalation process based on the nature and sensitivity of the complaint.',\n  'Ensure timely responses to clients, within the defined deadlines.',\n  'Maintain accurate records of all complaints and their handling.',\n  'Participate in training to understand and fulfill the obligations related to complaint management.',\n  'Follow the established guidelines to use the electronic signature.',\n  'Respect the rules on the protection of data.',\n  'Respect the terms of use of the Coverity Brand.'\n]\" (type Array) at path \"analysis.recommendations\"\n    at Document.invalidate (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\document.js:3219:32)\n    at model.$set (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\document.js:1464:12)\n    at model.$set (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\document.js:1214:14)\n    at model.set [as analysis] (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\helpers\\document\\compile.js:189:13)\n    at analyzeDocument (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\ragController.js:260:23)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+  "details": {
+    "errors": {
+      "analysis.mainPoints": {
+        "stringValue": "\"[\n  \"Definition of a 'Réclamation' (complaint) according to ACPR guidelines.\",\n  \"COVERITY's responsibility for handling complaints within its delegated authority.\",\n  'Three-level escalation process based on sensitivity and repetition of complaints.',\n  'Various channels for receiving complaints (postal mail, email, and phone).',\n  'Differentiated handling of complaints based on level (Level 1: Non-sensitive; Level 2: Sensitive or repeated; Level 3: Mediation).',\n  'Obligations regarding the processing time of complaints.',\n  'Reporting requirements to the ACPR (French Prudential Supervision and Resolution Authority), CODIR (Management Committee), and network of brokers.',\n  'Importance of staff training.',\n  'The document also includes the Code of Conduct between the Courtier Grossistes and Courtier Directs that focuses on the obligations of information and advice for clients.',\n  'The document presents the use of electronic signature with details on the legal aspects and the process to follow to use it.',\n  'The document details the rules of the protection of data.',\n  'The document also includes the terms of use of the Coverity Brand.'\n]\"",
+        "valueType": "Array",
+        "kind": "string",
+        "value": [
+          "Definition of a 'Réclamation' (complaint) according to ACPR guidelines.",
+          "COVERITY's responsibility for handling complaints within its delegated authority.",
+          "Three-level escalation process based on sensitivity and repetition of complaints.",
+          "Various channels for receiving complaints (postal mail, email, and phone).",
+          "Differentiated handling of complaints based on level (Level 1: Non-sensitive; Level 2: Sensitive or repeated; Level 3: Mediation).",
+          "Obligations regarding the processing time of complaints.",
+          "Reporting requirements to the ACPR (French Prudential Supervision and Resolution Authority), CODIR (Management Committee), and network of brokers.",
+          "Importance of staff training.",
+          "The document also includes the Code of Conduct between the Courtier Grossistes and Courtier Directs that focuses on the obligations of information and advice for clients.",
+          "The document presents the use of electronic signature with details on the legal aspects and the process to follow to use it.",
+          "The document details the rules of the protection of data.",
+          "The document also includes the terms of use of the Coverity Brand."
+        ],
+        "path": "analysis.mainPoints",
+        "reason": null,
+        "name": "CastError",
+        "message": "Cast to string failed for value \"[\n  \"Definition of a 'Réclamation' (complaint) according to ACPR guidelines.\",\n  \"COVERITY's responsibility for handling complaints within its delegated authority.\",\n  'Three-level escalation process based on sensitivity and repetition of complaints.',\n  'Various channels for receiving complaints (postal mail, email, and phone).',\n  'Differentiated handling of complaints based on level (Level 1: Non-sensitive; Level 2: Sensitive or repeated; Level 3: Mediation).',\n  'Obligations regarding the processing time of complaints.',\n  'Reporting requirements to the ACPR (French Prudential Supervision and Resolution Authority), CODIR (Management Committee), and network of brokers.',\n  'Importance of staff training.',\n  'The document also includes the Code of Conduct between the Courtier Grossistes and Courtier Directs that focuses on the obligations of information and advice for clients.',\n  'The document presents the use of electronic signature with details on the legal aspects and the process to follow to use it.',\n  'The document details the rules of the protection of data.',\n  'The document also includes the terms of use of the Coverity Brand.'\n]\" (type Array) at path \"analysis.mainPoints\""
+      },
+      "analysis.keyTerms": {
+        "stringValue": "\"[\n  'Réclamation (Complaint)',\n  'ACPR (Autorité de Contrôle Prudentiel et de Résolution)',\n  'Courtier (Broker)',\n  'Courtier Grossiste (Wholesale Broker)',\n  'Courtier Direct (Direct Broker)',\n  'Reporting',\n  'CODIR (Comité de Direction - Management Committee)',\n  'LCB-FT (Lutte contre le blanchiment des capitaux, le financement du terrorisme)',\n  'TRACFIN',\n  'eIDAS (electronic IDentification, Authentication and trust Services)',\n  'Signature électronique (Electronic Signature)',\n  'PPE (Personnes Politiquement Exposées)'\n]\"",
+        "valueType": "Array",
+        "kind": "string",
+        "value": [
+          "Réclamation (Complaint)",
+          "ACPR (Autorité de Contrôle Prudentiel et de Résolution)",
+          "Courtier (Broker)",
+          "Courtier Grossiste (Wholesale Broker)",
+          "Courtier Direct (Direct Broker)",
+          "Reporting",
+          "CODIR (Comité de Direction - Management Committee)",
+          "LCB-FT (Lutte contre le blanchiment des capitaux, le financement du terrorisme)",
+          "TRACFIN",
+          "eIDAS (electronic IDentification, Authentication and trust Services)",
+          "Signature électronique (Electronic Signature)",
+          "PPE (Personnes Politiquement Exposées)"
+        ],
+        "path": "analysis.keyTerms",
+        "reason": null,
+        "name": "CastError",
+        "message": "Cast to string failed for value \"[\n  'Réclamation (Complaint)',\n  'ACPR (Autorité de Contrôle Prudentiel et de Résolution)',\n  'Courtier (Broker)',\n  'Courtier Grossiste (Wholesale Broker)',\n  'Courtier Direct (Direct Broker)',\n  'Reporting',\n  'CODIR (Comité de Direction - Management Committee)',\n  'LCB-FT (Lutte contre le blanchiment des capitaux, le financement du terrorisme)',\n  'TRACFIN',\n  'eIDAS (electronic IDentification, Authentication and trust Services)',\n  'Signature électronique (Electronic Signature)',\n  'PPE (Personnes Politiquement Exposées)'\n]\" (type Array) at path \"analysis.keyTerms\""
+      },
+      "analysis.recommendations": {
+        "stringValue": "\"[\n  'Follow the defined procedures for receiving and handling complaints.',\n  'Adhere to the escalation process based on the nature and sensitivity of the complaint.',\n  'Ensure timely responses to clients, within the defined deadlines.',\n  'Maintain accurate records of all complaints and their handling.',\n  'Participate in training to understand and fulfill the obligations related to complaint management.',\n  'Follow the established guidelines to use the electronic signature.',\n  'Respect the rules on the protection of data.',\n  'Respect the terms of use of the Coverity Brand.'\n]\"",
+        "valueType": "Array",
+        "kind": "string",
+        "value": [
+          "Follow the defined procedures for receiving and handling complaints.",
+          "Adhere to the escalation process based on the nature and sensitivity of the complaint.",
+          "Ensure timely responses to clients, within the defined deadlines.",
+          "Maintain accurate records of all complaints and their handling.",
+          "Participate in training to understand and fulfill the obligations related to complaint management.",
+          "Follow the established guidelines to use the electronic signature.",
+          "Respect the rules on the protection of data.",
+          "Respect the terms of use of the Coverity Brand."
+        ],
+        "path": "analysis.recommendations",
+        "reason": null,
+        "name": "CastError",
+        "message": "Cast to string failed for value \"[\n  'Follow the defined procedures for receiving and handling complaints.',\n  'Adhere to the escalation process based on the nature and sensitivity of the complaint.',\n  'Ensure timely responses to clients, within the defined deadlines.',\n  'Maintain accurate records of all complaints and their handling.',\n  'Participate in training to understand and fulfill the obligations related to complaint management.',\n  'Follow the established guidelines to use the electronic signature.',\n  'Respect the rules on the protection of data.',\n  'Respect the terms of use of the Coverity Brand.'\n]\" (type Array) at path \"analysis.recommendations\""
+      }
+    },
+    "_message": "Document validation failed",
+    "name": "ValidationError",
+    "message": "Document validation failed: analysis.mainPoints: Cast to string failed for value \"[\n  \"Definition of a 'Réclamation' (complaint) according to ACPR guidelines.\",\n  \"COVERITY's responsibility for handling complaints within its delegated authority.\",\n  'Three-level escalation process based on sensitivity and repetition of complaints.',\n  'Various channels for receiving complaints (postal mail, email, and phone).',\n  'Differentiated handling of complaints based on level (Level 1: Non-sensitive; Level 2: Sensitive or repeated; Level 3: Mediation).',\n  'Obligations regarding the processing time of complaints.',\n  'Reporting requirements to the ACPR (French Prudential Supervision and Resolution Authority), CODIR (Management Committee), and network of brokers.',\n  'Importance of staff training.',\n  'The document also includes the Code of Conduct between the Courtier Grossistes and Courtier Directs that focuses on the obligations of information and advice for clients.',\n  'The document presents the use of electronic signature with details on the legal aspects and the process to follow to use it.',\n  'The document details the rules of the protection of data.',\n  'The document also includes the terms of use of the Coverity Brand.'\n]\" (type Array) at path \"analysis.mainPoints\", analysis.keyTerms: Cast to string failed for value \"[\n  'Réclamation (Complaint)',\n  'ACPR (Autorité de Contrôle Prudentiel et de Résolution)',\n  'Courtier (Broker)',\n  'Courtier Grossiste (Wholesale Broker)',\n  'Courtier Direct (Direct Broker)',\n  'Reporting',\n  'CODIR (Comité de Direction - Management Committee)',\n  'LCB-FT (Lutte contre le blanchiment des capitaux, le financement du terrorisme)',\n  'TRACFIN',\n  'eIDAS (electronic IDentification, Authentication and trust Services)',\n  'Signature électronique (Electronic Signature)',\n  'PPE (Personnes Politiquement Exposées)'\n]\" (type Array) at path \"analysis.keyTerms\", analysis.recommendations: Cast to string failed for value \"[\n  'Follow the defined procedures for receiving and handling complaints.',\n  'Adhere to the escalation process based on the nature and sensitivity of the complaint.',\n  'Ensure timely responses to clients, within the defined deadlines.',\n  'Maintain accurate records of all complaints and their handling.',\n  'Participate in training to understand and fulfill the obligations related to complaint management.',\n  'Follow the established guidelines to use the electronic signature.',\n  'Respect the rules on the protection of data.',\n  'Respect the terms of use of the Coverity Brand.'\n]\" (type Array) at path \"analysis.recommendations\""
+  }
+}
