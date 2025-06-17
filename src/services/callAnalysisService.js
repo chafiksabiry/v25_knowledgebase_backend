@@ -4,7 +4,7 @@ const axios = require('axios');
 const path = require("path");
 const { Storage } = require('@google-cloud/storage');
 const { VertexAI } = require('@google-cloud/vertexai');
-//const { generateCallScoringPrompt } = require('../prompts/call-scoring-prompt');
+const { generateCallScoringPrompt } = require('../prompts/callScoringPrompt');
 //const { generateCallPostActionsPrompt } = require('../prompts/call-action-plan');
 const { generateAudioSummaryPrompt } = require('../prompts/audioSummaryPrompt');
 const { parseCleanJson } = require('../parsers/parse-call-scoring-result');
@@ -216,15 +216,19 @@ exports.getAudioTranscriptionService = async (file_uri) => {
 };
 
 // Get the scoring of a call 
-/* exports.getCallScoring = async (file_uri) => {
+exports.getCallScoringService = async (file_uri) => {
     try {
+        // Upload to GCS first
+        const gcsUri = await uploadToGCS(file_uri);
+        console.log('File uploaded to GCS:', gcsUri);
+
         const request = {
             contents: [{
                 role: 'user', parts: [
                     {
                         "file_data": {
-                            "mime_type": "audio/wav", // we can change the mime_type after
-                            "file_uri": file_uri
+                            "mime_type": "audio/wav",
+                            "file_uri": gcsUri
                         }
                     },
                     {
@@ -233,15 +237,21 @@ exports.getAudioTranscriptionService = async (file_uri) => {
                 ]
             }],
         };
-        const result = await generativeVisionModel.generateContent(request);
-        const response = result.response;
-        console.log('Response: ', JSON.stringify(response));
-        return parseCleanJson(response.candidates[0].content.parts[0].text);
+        const streamingResp = await generativeVisionModel.generateContentStream(request);
+        let fullResponse = '';
+        for await (const item of streamingResp.stream) {
+            console.log('stream chunk: ', JSON.stringify(item));
+            if (item.candidates && item.candidates[0].content.parts[0].text) {
+                fullResponse += item.candidates[0].content.parts[0].text;
+            }
+        }
+        console.log('Full scoring response:', fullResponse);
+        return parseCleanJson(fullResponse);
     } catch (error) {
-        console.error("Error analyzing the audio:", error);
-        throw new Error("Audio analyzis failed");
+        console.error("Error scoring the call:", error);
+        throw new Error("Call scoring failed");
     }
-}; */
+};
 
 //getCallPostActions
 /* exports.getCallPostActions = async (file_uri) => {

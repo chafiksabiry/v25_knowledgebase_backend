@@ -8,7 +8,8 @@ const {
     getCallRecordings, 
     deleteCallRecording,
     getAudioSummary,
-    getAudioTranscription
+    getAudioTranscription,
+    getCallScoring
 } = require('../controllers/callRecordingController');
 
 // Configure multer for file uploads
@@ -76,6 +77,15 @@ router.post('/:recordingId/analyze/transcription', async (req, res) => {
     return res.status(400).json({ error: 'Call Recording ID is required' });
   }
   await getAudioTranscription(req, res);
+});
+
+// Generate scoring for a call recording
+router.post('/:recordingId/analyze/scoring', async (req, res) => {
+  const { recordingId } = req.params;
+  if (!recordingId) {
+    return res.status(400).json({ error: 'Call Recording ID is required' });
+  }
+  await getCallScoring(req, res);
 });
 
 module.exports = router; 

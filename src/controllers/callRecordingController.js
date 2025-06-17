@@ -4,7 +4,7 @@ const fs = require('fs').promises;
 const path = require('path');
 const { uploadToCloudinary, deleteFromCloudinary } = require('../services/cloudinaryService');
 const { logger } = require('../utils/logger');
-const { getAudioSummaryService, getAudioTranscriptionService } = require('../services/callAnalysisService');
+const { getAudioSummaryService, getAudioTranscriptionService, getAudioTranscriptionWhisperService, getCallScoringService } = require('../services/callAnalysisService');
 
 // Upload a new call recording
 const uploadCallRecording = async (req, res) => {
@@ -147,18 +147,15 @@ const deleteCallRecording = async (req, res) => {
 const getAudioSummary = async (req, res) => {
     try {
         const { recordingId } = req.params;
-        
         // Find the recording
         const recording = await CallRecording.findById(recordingId);
         if (!recording) {
             return res.status(404).json({ error: 'Call recording not found' });
         }
-
         // Check if recording has a file URL
         if (!recording.recordingUrl) {
             return res.status(400).json({ error: 'No audio file found for this recording' });
         }
-
         // Check if analysis is already completed
         if (recording.analysis?.status === 'completed' && recording.analysis?.summary?.keyIdeas?.length > 0) {
             return res.json({
@@ -166,19 +163,23 @@ const getAudioSummary = async (req, res) => {
                 summary: recording.analysis.summary
             });
         }
-
-        // Update analysis status to processing
-        recording.analysis = {
-            status: 'processing',
-            summary: recording.analysis?.summary || { keyIdeas: [], lastUpdated: null },
-            error: null
-        };
-        await recording.save();
-
+        // Set summary to processing using $set
+        await CallRecording.updateOne(
+            { _id: recordingId },
+            {
+                $set: {
+                    'analysis.summary': {
+                        keyIdeas: recording.analysis?.summary?.keyIdeas || [],
+                        lastUpdated: null
+                    },
+                    'analysis.status': 'processing',
+                    'analysis.error': null
+                }
+            }
+        );
         try {
             // Get summary from service
             const summary = await getAudioSummaryService(recording.recordingUrl);
-            
             // Transform the summary to match our schema
             const keyIdeas = summary['key-ideas'].map(idea => {
                 const [title, description] = Object.entries(idea)[0];
@@ -187,42 +188,48 @@ const getAudioSummary = async (req, res) => {
                     description
                 };
             });
-
-            // Update recording with summary
-            recording.analysis = {
-                status: 'completed',
-                summary: {
-                    keyIdeas,
-                    lastUpdated: new Date()
-                },
-                error: null
-            };
-            await recording.save();
-
+            // Set summary to completed using $set
+            await CallRecording.updateOne(
+                { _id: recordingId },
+                {
+                    $set: {
+                        'analysis.summary': {
+                            keyIdeas,
+                            lastUpdated: new Date()
+                        },
+                        'analysis.status': 'completed',
+                        'analysis.error': null
+                    }
+                }
+            );
+            // Reload the document to get the latest summary
+            const updatedRecording = await CallRecording.findById(recordingId);
             return res.json({
                 message: 'Audio summary generated successfully',
-                summary: recording.analysis.summary
+                summary: updatedRecording.analysis.summary
             });
         } catch (error) {
-            // Update status on error
-            recording.analysis = {
-                status: 'failed',
-                summary: recording.analysis?.summary || { keyIdeas: [], lastUpdated: null },
-                error: error.message
-            };
-            await recording.save();
-            
-            logger.error('Error generating audio summary:', error);
-            return res.status(500).json({ 
+            // Set summary to failed using $set
+            await CallRecording.updateOne(
+                { _id: recordingId },
+                {
+                    $set: {
+                        'analysis.summary': recording.analysis?.summary || { keyIdeas: [], lastUpdated: null },
+                        'analysis.status': 'failed',
+                        'analysis.error': error.message
+                    }
+                }
+            );
+            return res.status(500).json({
                 error: 'Failed to generate audio summary',
-                details: error.message 
+                details: error.message
             });
         }
     } catch (error) {
         logger.error('Error in getAudioSummary controller:', error);
-        return res.status(500).json({ 
+        return res.status(500).json({
             error: 'Internal server error',
-            details: error.message 
+            details: error.message
         });
     }
 };
@@ -247,21 +254,23 @@ const getAudioTranscription = async (req, res) => {
                 transcription: recording.analysis.transcription
             });
         }
-        // Update analysis status to processing
-        recording.analysis = {
-            ...recording.analysis,
-            transcription: {
-                status: 'processing',
-                segments: recording.analysis?.transcription?.segments || [],
-                lastUpdated: null,
-                error: null
+        // Set transcription to processing using $set
+        await CallRecording.updateOne(
+            { _id: recordingId },
+            {
+                $set: {
+                    'analysis.transcription': {
+                        status: 'processing',
+                        segments: recording.analysis?.transcription?.segments || [],
+                        lastUpdated: null,
+                        error: null
+                    }
+                }
             }
-        };
-        await recording.save();
+        );
         try {
             // Get transcription from service
             let transcription = await getAudioTranscriptionService(recording.recordingUrl);
-
             // Ensure all segments have mm:ss.SSS format for start/end
             if (transcription && Array.isArray(transcription.segments)) {
                 transcription.segments = transcription.segments.map(segment => ({
@@ -270,31 +279,36 @@ const getAudioTranscription = async (req, res) => {
                     end: formatToMMSSSSS(segment.end)
                 }));
             }
-
-            // Update recording with transcription
-            recording.analysis = {
-                ...recording.analysis,
-                transcription: transcription
-            };
-            await recording.save();
-
-            // Return both message and transcription data
+            // Set transcription to completed using $set
+            await CallRecording.updateOne(
+                { _id: recordingId },
+                {
+                    $set: {
+                        'analysis.transcription': transcription
+                    }
+                }
+            );
+            // Reload the document to get the latest transcription
+            const updatedRecording = await CallRecording.findById(recordingId);
             return res.json({
                 message: 'Audio transcription generated successfully',
-                transcription: transcription
+                transcription: updatedRecording.analysis.transcription
             });
         } catch (error) {
-            // Update status on error
-            recording.analysis = {
-                ...recording.analysis,
-                transcription: {
-                    status: 'failed',
-                    segments: recording.analysis?.transcription?.segments || [],
-                    lastUpdated: null,
-                    error: error.message
+            // Set transcription to failed using $set
+            await CallRecording.updateOne(
+                { _id: recordingId },
+                {
+                    $set: {
+                        'analysis.transcription': {
+                            status: 'failed',
+                            segments: recording.analysis?.transcription?.segments || [],
+                            lastUpdated: null,
+                            error: error.message
+                        }
+                    }
                 }
-            };
-            await recording.save();
+            );
             return res.status(500).json({
                 error: 'Failed to generate audio transcription',
                 details: error.message
@@ -302,6 +316,92 @@ const getAudioTranscription = async (req, res) => {
         }
     } catch (error) {
         logger.error('Error in getAudioTranscription controller:', error);
+        return res.status(500).json({
+            error: 'Internal server error',
+            details: error.message
+        });
+    }
+};
+
+// Get call scoring for a call recording
+const getCallScoring = async (req, res) => {
+    try {
+        const { recordingId } = req.params;
+        // Find the recording
+        const recording = await CallRecording.findById(recordingId);
+        if (!recording) {
+            return res.status(404).json({ error: 'Call recording not found' });
+        }
+        // Check if recording has a file URL
+        if (!recording.recordingUrl) {
+            return res.status(400).json({ error: 'No audio file found for this recording' });
+        }
+        // Check if scoring is already completed
+        if (recording.analysis?.scoring && recording.analysis?.scoring.status === 'completed') {
+            return res.json({
+                message: 'Call scoring retrieved from cache',
+                scoring: recording.analysis.scoring
+            });
+        }
+        // Set scoring to processing using $set
+        await CallRecording.updateOne(
+            { _id: recordingId },
+            {
+                $set: {
+                    'analysis.scoring': {
+                        status: 'processing',
+                        result: null,
+                        lastUpdated: null,
+                        error: null
+                    }
+                }
+            }
+        );
+        try {
+            // Get scoring from service
+            let scoring = await getCallScoringService(recording.recordingUrl);
+            // Set scoring to completed using $set
+            await CallRecording.updateOne(
+                { _id: recordingId },
+                {
+                    $set: {
+                        'analysis.scoring': {
+                            status: 'completed',
+                            result: scoring,
+                            lastUpdated: new Date(),
+                            error: null
+                        }
+                    }
+                }
+            );
+            // Reload the document to get the latest scoring
+            const updatedRecording = await CallRecording.findById(recordingId);
+            return res.json({
+                message: 'Call scoring generated successfully',
+                scoring: updatedRecording.analysis.scoring
+            });
+        } catch (error) {
+            // Set scoring to failed using $set
+            await CallRecording.updateOne(
+                { _id: recordingId },
+                {
+                    $set: {
+                        'analysis.scoring': {
+                            status: 'failed',
+                            result: null,
+                            lastUpdated: null,
+                            error: error.message
+                        }
+                    }
+                }
+            );
+            return res.status(500).json({
+                error: 'Failed to generate call scoring',
+                details: error.message
+            });
+        }
+    } catch (error) {
+        logger.error('Error in getCallScoring controller:', error);
         return res.status(500).json({
             error: 'Internal server error',
             details: error.message
@@ -343,5 +443,6 @@ module.exports = {
   getCallRecordings,
   deleteCallRecording,
   getAudioSummary,
-  getAudioTranscription
+  getAudioTranscription,
+  getCallScoring
 }; 

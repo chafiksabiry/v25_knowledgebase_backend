@@ -1499,3 +1499,108 @@
   "_message": "CallRecording validation failed",
   "stack": "ValidationError: CallRecording validation failed: analysis.summary: Cast to Object failed for value \"undefined\" (type undefined) at path \"analysis.summary\"\n    at Document.invalidate (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\document.js:3219:32)\n    at model.$set (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\document.js:1188:14)\n    at model.$set (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\document.js:1214:14)\n    at model.set [as analysis] (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\helpers\\document\\compile.js:189:13)\n    at getAudioSummary (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\callRecordingController.js:171:28)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\routes\\callRecordingRoutes.js:68:3"
 }
+2025-06-17 14:48:45 [ERROR]: Error in getCallScoring controller: CallRecording validation failed: analysis.transcription: Cast to Object failed for value "undefined" (type undefined) at path "analysis.transcription" {
+  "service": "kb-analysis-backend",
+  "errors": {
+    "analysis.transcription": {
+      "stringValue": "\"undefined\"",
+      "valueType": "undefined",
+      "kind": "Object",
+      "path": "analysis.transcription",
+      "name": "CastError",
+      "message": "Cast to Object failed for value \"undefined\" (type undefined) at path \"analysis.transcription\""
+    }
+  },
+  "_message": "CallRecording validation failed",
+  "stack": "ValidationError: CallRecording validation failed: analysis.transcription: Cast to Object failed for value \"undefined\" (type undefined) at path \"analysis.transcription\"\n    at Document.invalidate (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\document.js:3219:32)\n    at model.$set (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\document.js:1188:14)\n    at model.$set (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\document.js:1214:14)\n    at model.set [as analysis] (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\helpers\\document\\compile.js:189:13)\n    at getCallScoring (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\callRecordingController.js:333:28)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\routes\\callRecordingRoutes.js:88:3"
+}
+2025-06-17 14:52:32 [ERROR]: Error in getCallScoring controller: CallRecording validation failed: analysis.transcription: Cast to Object failed for value "undefined" (type undefined) at path "analysis.transcription" {
+  "service": "kb-analysis-backend",
+  "errors": {
+    "analysis.transcription": {
+      "stringValue": "\"undefined\"",
+      "valueType": "undefined",
+      "kind": "Object",
+      "path": "analysis.transcription",
+      "name": "CastError",
+      "message": "Cast to Object failed for value \"undefined\" (type undefined) at path \"analysis.transcription\""
+    }
+  },
+  "_message": "CallRecording validation failed",
+  "stack": "ValidationError: CallRecording validation failed: analysis.transcription: Cast to Object failed for value \"undefined\" (type undefined) at path \"analysis.transcription\"\n    at Document.invalidate (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\document.js:3219:32)\n    at model.$set (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\document.js:1188:14)\n    at model.$set (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\document.js:1214:14)\n    at model.set [as analysis] (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\helpers\\document\\compile.js:189:13)\n    at getCallScoring (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\callRecordingController.js:333:28)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\routes\\callRecordingRoutes.js:88:3"
+}
+2025-06-17 14:55:10 [ERROR]: Error in getCallScoring controller: CallRecording validation failed: analysis.transcription: Cast to Object failed for value "undefined" (type undefined) at path "analysis.transcription" {
+  "service": "kb-analysis-backend",
+  "errors": {
+    "analysis.transcription": {
+      "stringValue": "\"undefined\"",
+      "valueType": "undefined",
+      "kind": "Object",
+      "path": "analysis.transcription",
+      "name": "CastError",
+      "message": "Cast to Object failed for value \"undefined\" (type undefined) at path \"analysis.transcription\""
+    }
+  },
+  "_message": "CallRecording validation failed",
+  "stack": "ValidationError: CallRecording validation failed: analysis.transcription: Cast to Object failed for value \"undefined\" (type undefined) at path \"analysis.transcription\"\n    at Document.invalidate (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\document.js:3219:32)\n    at model.$set (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\document.js:1188:14)\n    at model.$set (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\document.js:1214:14)\n    at model.set [as analysis] (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\helpers\\document\\compile.js:189:13)\n    at getCallScoring (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\callRecordingController.js:333:28)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\routes\\callRecordingRoutes.js:88:3"
+}
+2025-06-17 14:57:21 [ERROR]: Error in getCallScoring controller: CallRecording validation failed: analysis.transcription: Cast to Object failed for value "undefined" (type undefined) at path "analysis.transcription" {
+  "service": "kb-analysis-backend",
+  "errors": {
+    "analysis.transcription": {
+      "stringValue": "\"undefined\"",
+      "valueType": "undefined",
+      "kind": "Object",
+      "path": "analysis.transcription",
+      "name": "CastError",
+      "message": "Cast to Object failed for value \"undefined\" (type undefined) at path \"analysis.transcription\""
+    }
+  },
+  "_message": "CallRecording validation failed",
+  "stack": "ValidationError: CallRecording validation failed: analysis.transcription: Cast to Object failed for value \"undefined\" (type undefined) at path \"analysis.transcription\"\n    at Document.invalidate (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\document.js:3219:32)\n    at model.$set (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\document.js:1188:14)\n    at model.$set (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\document.js:1214:14)\n    at model.set [as analysis] (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\helpers\\document\\compile.js:189:13)\n    at getCallScoring (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\callRecordingController.js:334:28)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\routes\\callRecordingRoutes.js:88:3"
+}
+2025-06-17 15:12:41 [ERROR]: Error in getCallScoring controller: CallRecording validation failed: analysis.transcription: Cast to Object failed for value "undefined" (type undefined) at path "analysis.transcription" {
+  "service": "kb-analysis-backend",
+  "errors": {
+    "analysis.transcription": {
+      "stringValue": "\"undefined\"",
+      "valueType": "undefined",
+      "kind": "Object",
+      "path": "analysis.transcription",
+      "name": "CastError",
+      "message": "Cast to Object failed for value \"undefined\" (type undefined) at path \"analysis.transcription\""
+    }
+  },
+  "_message": "CallRecording validation failed",
+  "stack": "ValidationError: CallRecording validation failed: analysis.transcription: Cast to Object failed for value \"undefined\" (type undefined) at path \"analysis.transcription\"\n    at Document.invalidate (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\document.js:3219:32)\n    at model.$set (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\document.js:1188:14)\n    at model.$set (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\document.js:1214:14)\n    at model.set [as analysis] (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\helpers\\document\\compile.js:189:13)\n    at getCallScoring (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\callRecordingController.js:333:28)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\routes\\callRecordingRoutes.js:88:3"
+}
+2025-06-17 15:16:10 [ERROR]: Error in getCallScoring controller: CallRecording validation failed: analysis.transcription: Cast to Object failed for value "undefined" (type undefined) at path "analysis.transcription" {
+  "service": "kb-analysis-backend",
+  "errors": {
+    "analysis.transcription": {
+      "stringValue": "\"undefined\"",
+      "valueType": "undefined",
+      "kind": "Object",
+      "path": "analysis.transcription",
+      "name": "CastError",
+      "message": "Cast to Object failed for value \"undefined\" (type undefined) at path \"analysis.transcription\""
+    }
+  },
+  "_message": "CallRecording validation failed",
+  "stack": "ValidationError: CallRecording validation failed: analysis.transcription: Cast to Object failed for value \"undefined\" (type undefined) at path \"analysis.transcription\"\n    at Document.invalidate (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\document.js:3219:32)\n    at model.$set (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\document.js:1188:14)\n    at model.$set (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\document.js:1214:14)\n    at model.set [as analysis] (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\helpers\\document\\compile.js:189:13)\n    at getCallScoring (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\callRecordingController.js:345:28)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\routes\\callRecordingRoutes.js:88:3"
+}
+2025-06-17 15:21:30 [ERROR]: Error in getAudioTranscription controller: CallRecording validation failed: analysis.scoring: Cast to Object failed for value "undefined" (type undefined) at path "analysis.scoring" {
+  "service": "kb-analysis-backend",
+  "errors": {
+    "analysis.scoring": {
+      "stringValue": "\"undefined\"",
+      "valueType": "undefined",
+      "kind": "Object",
+      "path": "analysis.scoring",
+      "name": "CastError",
+      "message": "Cast to Object failed for value \"undefined\" (type undefined) at path \"analysis.scoring\""
+    }
+  },
+  "_message": "CallRecording validation failed",
+  "stack": "ValidationError: CallRecording validation failed: analysis.scoring: Cast to Object failed for value \"undefined\" (type undefined) at path \"analysis.scoring\"\n    at Document.invalidate (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\document.js:3219:32)\n    at model.$set (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\document.js:1188:14)\n    at model.$set (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\document.js:1214:14)\n    at model.set [as analysis] (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\helpers\\document\\compile.js:189:13)\n    at getAudioTranscription (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\callRecordingController.js:251:28)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\routes\\callRecordingRoutes.js:79:3"
+}
