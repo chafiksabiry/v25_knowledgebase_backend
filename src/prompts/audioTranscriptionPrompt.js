@@ -1,22 +1,33 @@
-// audioTranscriptionPrompt.js
-
 function generateAudioTranscriptionPrompt() {
-  return `Generate an accurate transcription of the audio content. For each speech segment, include:
+  return `You are given an audio recording. Your task is to generate a highly accurate **timestamped transcription** of the speech only. Follow these strict instructions:
 
-- The **start** and **end** times in the format **mm:ss.SSS** (e.g., "00:00.000", "03:14.123").
-- The **speaker label**, if distinguishable (e.g., "Speaker 1", "Speaker 2").
-- The **spoken text**.
+1. **Split the audio into fine-grained segments**, each covering a **natural sentence or short phrase** (preferably 2–6 seconds).
+2. For each segment, include:
+   - "start": the exact moment the speaker begins talking (format: mm:ss.SSS).
+   - "end": the exact moment the speaker stops talking (format: mm:ss.SSS).
+   - "speaker": the speaker identity if possible (e.g., "Speaker 1", "Speaker 2").
+   - "text": the exact spoken words in that time range.
 
-⚠️ IMPORTANT:
-- All timestamps **must** be within the actual duration of the audio file.
-- Ignore non-speech background sounds (music, noise, etc.).
-- Do **not** include empty or silent segments.
-- Do **not** generate or hallucinate speech that is not actually present.
-- Ensure timestamp formatting is precise to the **millisecond**.
+⚠️ CRITICAL ACCURACY REQUIREMENTS:
+- Timestamps must **precisely match the actual audio timing**, **within ±300 milliseconds** of the real speech start and end.
+- Never allow timestamps to drift more than 0.3 seconds from the true speech timing.
+- Do not round or estimate durations — compute based on audio cues.
+- Do not merge multiple distinct sentences into a single long segment.
+- Do not guess or invent speech. Only transcribe what is clearly heard.
+- Background noise, silence, music, or breathing must be excluded.
+- No hallucinated or implied words — only actual audible speech.
+- Segments must not overlap or leave large gaps.
 
-Return the result as a **JSON array**. Each item must be in the format:
-{ "start": "00:00.000", "end": "00:10.500", "speaker": "Speaker 1", "text": "..." }`;
+✅ Output format: a valid JSON array of the form:
+[
+  {
+    "start": "00:00.000",
+    "end": "00:04.321",
+    "speaker": "Speaker 1",
+    "text": "Bonjour, comment puis-je vous aider ?"
+  },
+  ...
+]`;
 }
 
-
-module.exports = { generateAudioTranscriptionPrompt }; 
+module.exports = { generateAudioTranscriptionPrompt };

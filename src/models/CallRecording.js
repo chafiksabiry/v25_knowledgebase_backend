@@ -38,6 +38,23 @@ const callRecordingSchema = new mongoose.Schema({
         lastUpdated: null
       }
     },
+    transcription: {
+      status: {
+        type: String,
+        enum: ['pending', 'processing', 'completed', 'failed'],
+        default: 'pending'
+      },
+      segments: [
+        {
+          start: { type: String, required: true }, // mm:ss.SSS
+          end: { type: String, required: true },   // mm:ss.SSS
+          speaker: { type: String },
+          text: { type: String, required: true }
+        }
+      ],
+      lastUpdated: { type: Date },
+      error: { type: String, default: null }
+    },
     error: String
   },
   sentiment: {

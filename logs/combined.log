@@ -55326,3 +55326,138 @@ All tests completed successfully! ✨ {
 2025-06-17 11:11:38 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
   "service": "kb-analysis-backend"
 }
+2025-06-17 11:11:52 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-06-17 11:11:52 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-2.0-flash-lite"
+}
+2025-06-17 11:11:52 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-06-17 11:11:52 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-06-17 11:11:52 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-06-17 11:11:52 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-06-17 11:11:52 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-06-17 11:11:52 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-06-17 11:20:55 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-06-17 11:20:55 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-2.0-flash-lite"
+}
+2025-06-17 11:20:55 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-06-17 11:20:55 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-06-17 11:20:55 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-06-17 11:20:55 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-06-17 11:20:55 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-06-17 11:20:55 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-06-17 11:23:36 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-06-17 11:23:36 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-2.0-flash-lite"
+}
+2025-06-17 11:23:36 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-06-17 11:23:36 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-06-17 11:23:36 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-06-17 11:23:36 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-06-17 11:23:36 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-06-17 11:23:36 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-06-17 11:23:55 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-06-17 11:23:55 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-2.0-flash-lite"
+}
+2025-06-17 11:23:55 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-06-17 11:23:55 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-06-17 11:23:55 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-06-17 11:23:55 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-06-17 11:23:55 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-06-17 11:23:55 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
+2025-06-17 11:26:22 [INFO]: Connected to MongoDB {
+  "service": "kb-analysis-backend"
+}
+2025-06-17 11:26:23 [INFO]: Initializing Vertex AI with config: {
+  "service": "kb-analysis-backend",
+  "project": "harx-technologies-inc",
+  "location": "us-central1",
+  "model": "gemini-2.0-flash-lite"
+}
+2025-06-17 11:26:23 [INFO]: Vertex AI Service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-06-17 11:26:23 [INFO]: Vertex AI service initialized successfully {
+  "service": "kb-analysis-backend"
+}
+2025-06-17 11:26:23 [INFO]: Server running on port 3001 {
+  "service": "kb-analysis-backend"
+}
+2025-06-17 11:26:23 [INFO]: Health check: http://localhost:3001/health {
+  "service": "kb-analysis-backend"
+}
+2025-06-17 11:26:23 [INFO]: Documents API: http://localhost:3001/api/documents {
+  "service": "kb-analysis-backend"
+}
+2025-06-17 11:26:23 [INFO]: Fine-tuning API: http://localhost:3001/api/fine-tuning/jobs {
+  "service": "kb-analysis-backend"
+}
