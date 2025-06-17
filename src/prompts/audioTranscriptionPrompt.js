@@ -1,33 +1,39 @@
 function generateAudioTranscriptionPrompt() {
-  return `You are given an audio recording. Your task is to generate a highly accurate **timestamped transcription** of the speech only. Follow these strict instructions:
+  return `You are given an audio file. Your task is to transcribe it into a structured JSON format with accurate timestamps. Follow these exact rules:
 
-1. **Split the audio into fine-grained segments**, each covering a **natural sentence or short phrase** (preferably 2–6 seconds).
-2. For each segment, include:
-   - "start": the exact moment the speaker begins talking (format: mm:ss.SSS).
-   - "end": the exact moment the speaker stops talking (format: mm:ss.SSS).
-   - "speaker": the speaker identity if possible (e.g., "Speaker 1", "Speaker 2").
-   - "text": the exact spoken words in that time range.
+1. Each speech segment must:
+  - Be 1–5 seconds long (never more than 6 seconds).
+  - Include start and end timestamps in the exact format mm:ss.SSS.
+  - Represent only one continuous piece of speech from a speaker.
+  - Start when the speaker begins talking, end when they stop.
 
-⚠️ CRITICAL ACCURACY REQUIREMENTS:
-- Timestamps must **precisely match the actual audio timing**, **within ±300 milliseconds** of the real speech start and end.
-- Never allow timestamps to drift more than 0.3 seconds from the true speech timing.
-- Do not round or estimate durations — compute based on audio cues.
-- Do not merge multiple distinct sentences into a single long segment.
-- Do not guess or invent speech. Only transcribe what is clearly heard.
-- Background noise, silence, music, or breathing must be excluded.
-- No hallucinated or implied words — only actual audible speech.
-- Segments must not overlap or leave large gaps.
+2. Timestamps must be synchronized with real speech:
+  - Start time: when the actual speech begins (not before).
+  - End time: when the actual speech stops (not after).
+  - Do not merge multiple sentences unless they occur in the same breath without silence.
 
-✅ Output format: a valid JSON array of the form:
+3. Output format:
 [
   {
     "start": "00:00.000",
-    "end": "00:04.321",
+    "end": "00:02.480",
     "speaker": "Speaker 1",
-    "text": "Bonjour, comment puis-je vous aider ?"
+    "text": "Hello, thank you for calling."
   },
-  ...
-]`;
+  {
+    "start": "00:02.500",
+    "end": "00:05.430",
+    "speaker": "Speaker 2",
+    "text": "Hi, I'm calling about my recent order."
+  }
+]
+
+4. Do NOT guess content. Do NOT infer text not clearly audible.
+5. Do NOT round timestamps. Use millisecond-precision alignment.
+6. Do NOT include silence or background noise.
+
+This transcription will be used for subtitle generation and voice analysis. Accuracy of timing is critical.`;
 }
+
 
 module.exports = { generateAudioTranscriptionPrompt };
