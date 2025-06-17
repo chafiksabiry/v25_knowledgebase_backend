@@ -1469,3 +1469,33 @@
     "message": "Document validation failed: analysis.mainPoints: Cast to string failed for value \"[\n  \"Definition of a 'Réclamation' (complaint) according to ACPR guidelines.\",\n  \"COVERITY's responsibility for handling complaints within its delegated authority.\",\n  'Three-level escalation process based on sensitivity and repetition of complaints.',\n  'Various channels for receiving complaints (postal mail, email, and phone).',\n  'Differentiated handling of complaints based on level (Level 1: Non-sensitive; Level 2: Sensitive or repeated; Level 3: Mediation).',\n  'Obligations regarding the processing time of complaints.',\n  'Reporting requirements to the ACPR (French Prudential Supervision and Resolution Authority), CODIR (Management Committee), and network of brokers.',\n  'Importance of staff training.',\n  'The document also includes the Code of Conduct between the Courtier Grossistes and Courtier Directs that focuses on the obligations of information and advice for clients.',\n  'The document presents the use of electronic signature with details on the legal aspects and the process to follow to use it.',\n  'The document details the rules of the protection of data.',\n  'The document also includes the terms of use of the Coverity Brand.'\n]\" (type Array) at path \"analysis.mainPoints\", analysis.keyTerms: Cast to string failed for value \"[\n  'Réclamation (Complaint)',\n  'ACPR (Autorité de Contrôle Prudentiel et de Résolution)',\n  'Courtier (Broker)',\n  'Courtier Grossiste (Wholesale Broker)',\n  'Courtier Direct (Direct Broker)',\n  'Reporting',\n  'CODIR (Comité de Direction - Management Committee)',\n  'LCB-FT (Lutte contre le blanchiment des capitaux, le financement du terrorisme)',\n  'TRACFIN',\n  'eIDAS (electronic IDentification, Authentication and trust Services)',\n  'Signature électronique (Electronic Signature)',\n  'PPE (Personnes Politiquement Exposées)'\n]\" (type Array) at path \"analysis.keyTerms\", analysis.recommendations: Cast to string failed for value \"[\n  'Follow the defined procedures for receiving and handling complaints.',\n  'Adhere to the escalation process based on the nature and sensitivity of the complaint.',\n  'Ensure timely responses to clients, within the defined deadlines.',\n  'Maintain accurate records of all complaints and their handling.',\n  'Participate in training to understand and fulfill the obligations related to complaint management.',\n  'Follow the established guidelines to use the electronic signature.',\n  'Respect the rules on the protection of data.',\n  'Respect the terms of use of the Coverity Brand.'\n]\" (type Array) at path \"analysis.recommendations\""
   }
 }
+2025-06-16 16:00:04 [ERROR]: Error in getAudioSummary controller: CallRecording validation failed: analysis.summary: Cast to Object failed for value "undefined" (type undefined) at path "analysis.summary" {
+  "service": "kb-analysis-backend",
+  "errors": {
+    "analysis.summary": {
+      "stringValue": "\"undefined\"",
+      "valueType": "undefined",
+      "kind": "Object",
+      "path": "analysis.summary",
+      "name": "CastError",
+      "message": "Cast to Object failed for value \"undefined\" (type undefined) at path \"analysis.summary\""
+    }
+  },
+  "_message": "CallRecording validation failed",
+  "stack": "ValidationError: CallRecording validation failed: analysis.summary: Cast to Object failed for value \"undefined\" (type undefined) at path \"analysis.summary\"\n    at Document.invalidate (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\document.js:3219:32)\n    at model.$set (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\document.js:1188:14)\n    at model.$set (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\document.js:1214:14)\n    at model.set [as analysis] (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\helpers\\document\\compile.js:189:13)\n    at getAudioSummary (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\callRecordingController.js:171:28)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\routes\\callRecordingRoutes.js:68:3"
+}
+2025-06-16 16:00:46 [ERROR]: Error in getAudioSummary controller: CallRecording validation failed: analysis.summary: Cast to Object failed for value "undefined" (type undefined) at path "analysis.summary" {
+  "service": "kb-analysis-backend",
+  "errors": {
+    "analysis.summary": {
+      "stringValue": "\"undefined\"",
+      "valueType": "undefined",
+      "kind": "Object",
+      "path": "analysis.summary",
+      "name": "CastError",
+      "message": "Cast to Object failed for value \"undefined\" (type undefined) at path \"analysis.summary\""
+    }
+  },
+  "_message": "CallRecording validation failed",
+  "stack": "ValidationError: CallRecording validation failed: analysis.summary: Cast to Object failed for value \"undefined\" (type undefined) at path \"analysis.summary\"\n    at Document.invalidate (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\document.js:3219:32)\n    at model.$set (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\document.js:1188:14)\n    at model.$set (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\document.js:1214:14)\n    at model.set [as analysis] (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\helpers\\document\\compile.js:189:13)\n    at getAudioSummary (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\callRecordingController.js:171:28)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\routes\\callRecordingRoutes.js:68:3"
+}

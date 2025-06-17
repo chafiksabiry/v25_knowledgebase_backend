@@ -4,7 +4,7 @@ const fs = require('fs').promises;
 const path = require('path');
 const { uploadToCloudinary, deleteFromCloudinary } = require('../services/cloudinaryService');
 const { logger } = require('../utils/logger');
-const { getAudioSummaryService } = require('../services/callAnalysisService');
+const { getAudioSummaryService, getAudioTranscriptionService } = require('../services/callAnalysisService');
 
 // Upload a new call recording
 const uploadCallRecording = async (req, res) => {
@@ -227,9 +227,121 @@ const getAudioSummary = async (req, res) => {
     }
 };
 
+// Get audio transcription for a call recording
+const getAudioTranscription = async (req, res) => {
+    try {
+        const { recordingId } = req.params;
+        // Find the recording
+        const recording = await CallRecording.findById(recordingId);
+        if (!recording) {
+            return res.status(404).json({ error: 'Call recording not found' });
+        }
+        // Check if recording has a file URL
+        if (!recording.recordingUrl) {
+            return res.status(400).json({ error: 'No audio file found for this recording' });
+        }
+        // Check if transcription is already completed
+        if (recording.analysis?.transcription?.status === 'completed' && Array.isArray(recording.analysis.transcription.segments) && recording.analysis.transcription.segments.length > 0) {
+            return res.json({
+                message: 'Audio transcription retrieved from cache',
+                transcription: recording.analysis.transcription
+            });
+        }
+        // Update analysis status to processing
+        recording.analysis = {
+            ...recording.analysis,
+            transcription: {
+                status: 'processing',
+                segments: recording.analysis?.transcription?.segments || [],
+                lastUpdated: null,
+                error: null
+            }
+        };
+        await recording.save();
+        try {
+            // Get transcription from service
+            let transcription = await getAudioTranscriptionService(recording.recordingUrl);
+
+            // Ensure all segments have mm:ss.SSS format for start/end
+            if (transcription && Array.isArray(transcription.segments)) {
+                transcription.segments = transcription.segments.map(segment => ({
+                    ...segment,
+                    start: formatToMMSSSSS(segment.start),
+                    end: formatToMMSSSSS(segment.end)
+                }));
+            }
+
+            // Update recording with transcription
+            recording.analysis = {
+                ...recording.analysis,
+                transcription: transcription
+            };
+            await recording.save();
+
+            // Return both message and transcription data
+            return res.json({
+                message: 'Audio transcription generated successfully',
+                transcription: transcription
+            });
+        } catch (error) {
+            // Update status on error
+            recording.analysis = {
+                ...recording.analysis,
+                transcription: {
+                    status: 'failed',
+                    segments: recording.analysis?.transcription?.segments || [],
+                    lastUpdated: null,
+                    error: error.message
+                }
+            };
+            await recording.save();
+            return res.status(500).json({
+                error: 'Failed to generate audio transcription',
+                details: error.message
+            });
+        }
+    } catch (error) {
+        logger.error('Error in getAudioTranscription controller:', error);
+        return res.status(500).json({
+            error: 'Internal server error',
+            details: error.message
+        });
+    }
+};
+
+// Helper to format time to mm:ss.SSS
+function formatToMMSSSSS(time) {
+    if (typeof time === 'string' && /^\d{2}:\d{2}\.\d{3}$/.test(time)) {
+        return time; // already in correct format
+    }
+    // Try to parse as seconds or mm:ss
+    let totalMs = 0;
+    if (typeof time === 'number') {
+        totalMs = Math.round(time * 1000);
+    } else if (typeof time === 'string') {
+        // mm:ss or mm:ss.SSS
+        const match = time.match(/^(\d{2}):(\d{2})(\.(\d{1,3}))?$/);
+        if (match) {
+            const min = parseInt(match[1], 10);
+            const sec = parseInt(match[2], 10);
+            const ms = match[4] ? match[4].padEnd(3, '0') : '000';
+            return `${match[1]}:${match[2]}.${ms}`;
+        } else if (/^\d+(\.\d+)?$/.test(time)) {
+            // seconds as string
+            totalMs = Math.round(parseFloat(time) * 1000);
+        }
+    }
+    // Convert ms to mm:ss.SSS
+    const min = String(Math.floor(totalMs / 60000)).padStart(2, '0');
+    const sec = String(Math.floor((totalMs % 60000) / 1000)).padStart(2, '0');
+    const ms = String(totalMs % 1000).padStart(3, '0');
+    return `${min}:${sec}.${ms}`;
+}
+
 module.exports = {
   uploadCallRecording,
   getCallRecordings,
   deleteCallRecording,
-  getAudioSummary
+  getAudioSummary,
+  getAudioTranscription
 }; 

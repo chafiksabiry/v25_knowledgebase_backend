@@ -8,6 +8,7 @@ const { VertexAI } = require('@google-cloud/vertexai');
 //const { generateCallPostActionsPrompt } = require('../prompts/call-action-plan');
 const { generateAudioSummaryPrompt } = require('../prompts/audioSummaryPrompt');
 const { parseCleanJson } = require('../parsers/parse-call-scoring-result');
+const { generateAudioTranscriptionPrompt } = require('../prompts/audioTranscriptionPrompt');
 
 // Retreive OAUTH2.0 credentials and Google Cloud variables form .env
 const clientId = process.env.QAUTH2_CLIENT_ID;
@@ -156,32 +157,63 @@ exports.getAudioSummaryService = async (file_uri) => {
     }
 };
 
-// Get the transcription of an audio 
-/* exports.getAudioTranscription = async (file_uri) => {
+// Get the transcription of an audio with timeline
+exports.getAudioTranscriptionService = async (file_uri) => {
     try {
+        // Upload to GCS first
+        const gcsUri = await uploadToGCS(file_uri);
+        console.log('File uploaded to GCS:', gcsUri);
+
         const request = {
             contents: [{
                 role: 'user', parts: [
                     {
                         "file_data": {
-                            "mime_type": "audio/mpeg", // we can change the mime_type after
-                            "file_uri": file_uri
+                            "mime_type": "audio/wav",
+                            "file_uri": gcsUri
                         }
                     },
                     {
-                        "text": "Generate a transcription of the audio, only extract speech and ignore background audio."
+                        "text": generateAudioTranscriptionPrompt()
                     }
                 ]
             }],
         };
-        const result = await generativeVisionModel.generateContent(request);
-        const aggregatedResponse = result.response;
-        return { transcription: aggregatedResponse.candidates[0].content.parts[0].text };
+        const streamingResp = await generativeVisionModel.generateContentStream(request);
+        let fullResponse = '';
+        for await (const item of streamingResp.stream) {
+            console.log('stream chunk: ', JSON.stringify(item));
+            if (item.candidates && item.candidates[0].content.parts[0].text) {
+                fullResponse += item.candidates[0].content.parts[0].text;
+            }
+        }
+        console.log('Full transcription response:', fullResponse);
+        
+        // Parse the response and ensure it's in the correct format
+        const parsedResponse = parseCleanJson(fullResponse);
+        
+        // If the response is an array, wrap it in the proper structure
+        if (Array.isArray(parsedResponse)) {
+            return {
+                status: 'completed',
+                segments: parsedResponse,
+                lastUpdated: new Date(),
+                error: null
+            };
+        }
+        
+        // If the response is already in the correct format, return it
+        if (parsedResponse && parsedResponse.status && parsedResponse.segments) {
+            return parsedResponse;
+        }
+        
+        // If we can't parse the response properly, return an error
+        throw new Error('Invalid transcription response format');
     } catch (error) {
-        console.error("Error analyzing the audio:", error);
-        throw new Error("Audio analyzis failed");
+        console.error("Error transcribing the audio:", error);
+        throw new Error("Audio transcription failed");
     }
-}; */
+};
 
 // Get the scoring of a call 
 /* exports.getCallScoring = async (file_uri) => {
