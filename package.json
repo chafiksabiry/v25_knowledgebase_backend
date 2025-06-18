@@ -12,6 +12,7 @@
     "test:prompts": "node src/tests/analysisPrompts.test.js"
   },
   "dependencies": {
+    "@google-cloud/storage": "^7.16.0",
     "@google-cloud/vertexai": "^0.5.0",
     "@langchain/community": "^0.3.46",
     "@langchain/openai": "^0.5.13",
