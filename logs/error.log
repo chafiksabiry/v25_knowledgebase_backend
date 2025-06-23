@@ -1608,3 +1608,7 @@
   "service": "kb-analysis-backend",
   "stack": "TypeError: Cannot read properties of undefined (reading '0')\n    at queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\ragController.js:126:36)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)"
 }
+2025-06-23 15:03:20 [ERROR]: Error querying knowledge base: Cannot read properties of undefined (reading '0') {
+  "service": "kb-analysis-backend",
+  "stack": "TypeError: Cannot read properties of undefined (reading '0')\n    at queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\ragController.js:126:36)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)"
+}
