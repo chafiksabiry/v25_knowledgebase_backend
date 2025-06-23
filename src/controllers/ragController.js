@@ -110,23 +110,37 @@ const queryKnowledgeBase = async (req, res) => {
 
     // Initialize Vertex AI if not already initialized
     if (!vertexAIService.vertexAI) {
-      vertexAIService.initialize();
+      await vertexAIService.initialize();
     }
+
+    // **NOUVEAU : Récupérer le statut du corpus**
+    const corpusStatus = await vertexAIService.checkCorpusStatus(companyId);
 
     // Query the knowledge base
     const response = await vertexAIService.queryKnowledgeBase(companyId, query);
 
+    // **MODIFIÉ : Inclure le statut détaillé du corpus dans les métadonnées**
     res.status(200).json({
-      response: response.candidates[0].content,
-      metadata: {
-        citations: response.candidates[0].citationMetadata,
-        safetyRatings: response.candidates[0].safetyRatings
+      success: true,
+      data: {
+        answer: response.candidates[0].content.parts[0].text,
+        metadata: {
+          corpusStatus: corpusStatus,
+          model: process.env.VERTEX_AI_MODEL,
+          processedAt: new Date().toISOString(),
+          citations: response.candidates[0].citationMetadata,
+          safetyRatings: response.candidates[0].safetyRatings
+        }
       }
     });
 
   } catch (error) {
     logger.error('Error querying knowledge base:', error);
-    res.status(500).json({ error: 'Failed to query knowledge base' });
+    res.status(500).json({ 
+      success: false,
+      error: 'Failed to query knowledge base',
+      details: error.message
+    });
   }
 };
 

@@ -444,37 +444,24 @@ async function askQuestion(req, res) {
 
     logger.info(`Processing question for company ${companyId}:`, { query });
 
-    // Get current documents from DB
-    const documents = await Document.find({ companyId });
-
-    if (!documents || documents.length === 0) {
-      return res.status(400).json({
-        success: false,
-        error: {
-          message: 'No documents found for this company',
-          code: 'NO_DOCUMENTS'
-        }
-      });
-    }
-
     // Initialize Vertex AI if not already initialized
     if (!vertexAIService.vertexAI) {
       logger.info('Initializing Vertex AI service...');
-      vertexAIService.initialize();
+      await vertexAIService.initialize();
     }
 
-    // Check if RAG corpus exists and is up to date
+    // **MODIFIÉ : Récupère le statut complet et détaillé du corpus**
     const corpusStatus = await vertexAIService.checkCorpusStatus(companyId);
-    const needsUpdate = !corpusStatus.exists || corpusStatus.documentCount !== documents.length;
 
-    if (needsUpdate) {
-      logger.info(`Updating RAG corpus for company ${companyId}...`);
-      // Create/update the corpus with current documents
-      await vertexAIService.createRagCorpus(companyId);
-      await vertexAIService.importDocumentsToCorpus(companyId, documents);
-      logger.info(`RAG corpus updated successfully for company ${companyId}`);
-    } else {
-      logger.info(`Using existing RAG corpus for company ${companyId}`);
+    // Si le corpus est vide, on peut s'arrêter ici.
+    if (!corpusStatus.exists) {
+      return res.status(400).json({
+        success: false,
+        error: {
+          message: 'No documents or call recordings found in the knowledge base for this company.',
+          code: 'CORPUS_EMPTY'
+        }
+      });
     }
 
     // Create a context-aware prompt
@@ -508,10 +495,8 @@ async function askQuestion(req, res) {
         metadata: {
           processedAt: new Date().toISOString(),
           model: process.env.VERTEX_AI_MODEL,
-          corpusStatus: {
-            wasUpdated: needsUpdate,
-            documentCount: documents.length
-          }
+          // **MODIFIÉ : Renvoie l'objet de statut complet**
+          corpusStatus: corpusStatus
         }
       }
     });
