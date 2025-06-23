@@ -131,6 +131,146 @@ const queryKnowledgeBase = async (req, res) => {
 };
 
 /**
+ * **NOUVEAU : Obtenir le statut du corpus RAG**
+ * @param {Object} req - Express request object with companyId in params
+ * @param {Object} res - Express response object
+ */
+const getCorpusStatus = async (req, res) => {
+  try {
+    const { companyId } = req.params;
+
+    if (!companyId) {
+      return res.status(400).json({ error: 'Company ID is required' });
+    }
+
+    if (!vertexAIService.vertexAI) {
+      vertexAIService.initialize();
+    }
+
+    const status = await vertexAIService.checkCorpusStatus(companyId);
+
+    res.status(200).json({ companyId, status });
+
+  } catch (error) {
+    logger.error('Error getting corpus status:', error);
+    res.status(500).json({ error: 'Failed to get corpus status' });
+  }
+};
+
+/**
+ * **NOUVEAU : Obtenir la liste des documents du corpus**
+ * @param {Object} req - Express request object with companyId in params
+ * @param {Object} res - Express response object
+ */
+const getCorpusDocuments = async (req, res) => {
+  try {
+    const { companyId } = req.params;
+
+    if (!companyId) {
+      return res.status(400).json({ error: 'Company ID is required' });
+    }
+
+    if (!vertexAIService.vertexAI) {
+      vertexAIService.initialize();
+    }
+
+    const documents = await vertexAIService.getCorpusDocuments(companyId);
+
+    res.status(200).json({ companyId, documents, count: documents.length });
+
+  } catch (error) {
+    logger.error('Error getting corpus documents:', error);
+    res.status(500).json({ error: 'Failed to get corpus documents' });
+  }
+};
+
+/**
+ * **NOUVEAU : Obtenir le contenu d'un document spécifique**
+ * @param {Object} req - Express request object with companyId and documentId in params
+ * @param {Object} res - Express response object
+ */
+const getDocumentContent = async (req, res) => {
+  try {
+    const { companyId, documentId } = req.params;
+
+    if (!companyId || !documentId) {
+      return res.status(400).json({ error: 'Company ID and Document ID are required' });
+    }
+
+    if (!vertexAIService.vertexAI) {
+      vertexAIService.initialize();
+    }
+
+    const document = await vertexAIService.getDocumentContent(companyId, documentId);
+
+    res.status(200).json({ companyId, document });
+
+  } catch (error) {
+    logger.error('Error getting document content:', error);
+    res.status(500).json({ error: 'Failed to get document content' });
+  }
+};
+
+/**
+ * **NOUVEAU : Obtenir les statistiques du corpus**
+ * @param {Object} req - Express request object with companyId in params
+ * @param {Object} res - Express response object
+ */
+const getCorpusStats = async (req, res) => {
+  try {
+    const { companyId } = req.params;
+
+    if (!companyId) {
+      return res.status(400).json({ error: 'Company ID is required' });
+    }
+
+    if (!vertexAIService.vertexAI) {
+      vertexAIService.initialize();
+    }
+
+    const stats = await vertexAIService.getCorpusStats(companyId);
+
+    res.status(200).json({ companyId, stats });
+
+  } catch (error) {
+    logger.error('Error getting corpus stats:', error);
+    res.status(500).json({ error: 'Failed to get corpus stats' });
+  }
+};
+
+/**
+ * **NOUVEAU : Rechercher dans le corpus**
+ * @param {Object} req - Express request object with companyId in params and searchTerm in query
+ * @param {Object} res - Express response object
+ */
+const searchInCorpus = async (req, res) => {
+  try {
+    const { companyId } = req.params;
+    const { searchTerm } = req.query;
+
+    if (!companyId) {
+      return res.status(400).json({ error: 'Company ID is required' });
+    }
+
+    if (!searchTerm) {
+      return res.status(400).json({ error: 'Search term is required' });
+    }
+
+    if (!vertexAIService.vertexAI) {
+      vertexAIService.initialize();
+    }
+
+    const results = await vertexAIService.searchInCorpus(companyId, searchTerm);
+
+    res.status(200).json({ companyId, searchTerm, results, count: results.length });
+
+  } catch (error) {
+    logger.error('Error searching in corpus:', error);
+    res.status(500).json({ error: 'Failed to search in corpus' });
+  }
+};
+
+/**
  * Analyze a document using RAG
  * @param {Object} req - Express request object with documentId in params
  * @param {Object} res - Express response object
@@ -264,5 +404,10 @@ module.exports = {
   initializeCompanyCorpus,
   syncDocumentsToCorpus,
   queryKnowledgeBase,
+  getCorpusStatus,
+  getCorpusDocuments,
+  getDocumentContent,
+  getCorpusStats,
+  searchInCorpus,
   analyzeDocument
 }; 

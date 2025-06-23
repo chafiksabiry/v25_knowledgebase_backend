@@ -5,6 +5,7 @@ const path = require('path');
 const { uploadToCloudinary, deleteFromCloudinary } = require('../services/cloudinaryService');
 const { logger } = require('../utils/logger');
 const { getAudioSummaryService, getAudioTranscriptionService, getAudioTranscriptionWhisperService, getCallScoringService } = require('../services/callAnalysisService');
+const { vertexAIService } = require('../config/vertexAIConfig');
 
 // Upload a new call recording
 const uploadCallRecording = async (req, res) => {
@@ -24,6 +25,19 @@ const uploadCallRecording = async (req, res) => {
     // Upload to Cloudinary
     const filePath = req.file.path;
     const { url: recordingUrl, public_id: cloudinaryPublicId } = await uploadToCloudinary(filePath, 'call-recordings');
+
+    // **MODIFIÉ : Générer la transcription et la préparer pour la sauvegarde**
+    let transcriptionText = '';
+    let transcriptionSegments = [];
+    try {
+      const transcription = await getAudioTranscriptionService(recordingUrl);
+      if (transcription && transcription.segments) {
+        transcriptionSegments = transcription.segments;
+        transcriptionText = transcriptionSegments.map(segment => segment.text).join(' ');
+      }
+    } catch (transcriptionError) {
+      logger.warn('Failed to generate transcription during upload:', transcriptionError);
+    }
 
     // Create call recording record
     const callRecording = new CallRecording({
@@ -50,6 +64,15 @@ const uploadCallRecording = async (req, res) => {
         audioInstance: null,
         showPlayer: false,
         showTranscript: false
+      },
+      // **NOUVEAU : Ajouter la transcription au document**
+      analysis: {
+        transcription: {
+          segments: transcriptionSegments,
+          fullTranscript: transcriptionText,
+          status: transcriptionText ? 'completed' : 'pending',
+          lastUpdated: transcriptionText ? new Date() : null
+        }
       }
     });
 
