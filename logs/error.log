@@ -1612,3 +1612,15 @@
   "service": "kb-analysis-backend",
   "stack": "TypeError: Cannot read properties of undefined (reading '0')\n    at queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\ragController.js:126:36)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)"
 }
+2025-06-23 17:06:22 [ERROR]: Error analyzing document: {
+  "service": "kb-analysis-backend",
+  "error": "vertexAIService.importDocumentsToCorpus is not a function",
+  "stack": "TypeError: vertexAIService.importDocumentsToCorpus is not a function\n    at analyzeDocument (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\ragController.js:320:27)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+  "details": {}
+}
+2025-06-23 17:06:34 [ERROR]: Error analyzing document: {
+  "service": "kb-analysis-backend",
+  "error": "vertexAIService.importDocumentsToCorpus is not a function",
+  "stack": "TypeError: vertexAIService.importDocumentsToCorpus is not a function\n    at analyzeDocument (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\ragController.js:320:27)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+  "details": {}
+}

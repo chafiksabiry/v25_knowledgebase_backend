@@ -9,6 +9,8 @@ const { vertexAIService } = require('../config/vertexAIConfig');
 
 // Upload a new call recording
 const uploadCallRecording = async (req, res) => {
+  const filePath = req.file?.path;
+
   try {
     if (!req.file) {
       return res.status(400).json({ error: 'No file uploaded' });
@@ -23,21 +25,7 @@ const uploadCallRecording = async (req, res) => {
     }
 
     // Upload to Cloudinary
-    const filePath = req.file.path;
     const { url: recordingUrl, public_id: cloudinaryPublicId } = await uploadToCloudinary(filePath, 'call-recordings');
-
-    // **MODIFIÉ : Générer la transcription et la préparer pour la sauvegarde**
-    let transcriptionText = '';
-    let transcriptionSegments = [];
-    try {
-      const transcription = await getAudioTranscriptionService(recordingUrl);
-      if (transcription && transcription.segments) {
-        transcriptionSegments = transcription.segments;
-        transcriptionText = transcriptionSegments.map(segment => segment.text).join(' ');
-      }
-    } catch (transcriptionError) {
-      logger.warn('Failed to generate transcription during upload:', transcriptionError);
-    }
 
     // Create call recording record
     const callRecording = new CallRecording({
@@ -65,21 +53,17 @@ const uploadCallRecording = async (req, res) => {
         showPlayer: false,
         showTranscript: false
       },
-      // **NOUVEAU : Ajouter la transcription au document**
       analysis: {
         transcription: {
-          segments: transcriptionSegments,
-          fullTranscript: transcriptionText,
-          status: transcriptionText ? 'completed' : 'pending',
-          lastUpdated: transcriptionText ? new Date() : null
+          segments: [],
+          fullTranscript: '',
+          status: 'pending',
+          lastUpdated: null
         }
       }
     });
 
     await callRecording.save();
-
-    // Delete local file after upload
-    await fs.unlink(filePath);
 
     res.status(201).json({
       message: 'Call recording uploaded successfully',
@@ -99,15 +83,16 @@ const uploadCallRecording = async (req, res) => {
     });
   } catch (error) {
     logger.error('Error uploading call recording:', error);
-    // Clean up local file if it exists
-    if (req.file && req.file.path) {
+    res.status(500).json({ error: 'Failed to upload call recording' });
+  } finally {
+    // **MODIFIÉ : Assurer la suppression du fichier local dans tous les cas**
+    if (filePath) {
       try {
-        await fs.unlink(req.file.path);
+        await fs.unlink(filePath);
       } catch (unlinkError) {
-        logger.error('Error deleting local file:', unlinkError);
+        logger.error('Error deleting local file after upload attempt:', unlinkError);
       }
     }
-    res.status(500).json({ error: 'Failed to upload call recording' });
   }
 };
 

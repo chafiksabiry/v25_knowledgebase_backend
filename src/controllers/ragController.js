@@ -308,18 +308,6 @@ const analyzeDocument = async (req, res) => {
       await vertexAIService.initialize();
     }
 
-    // Ensure the company's corpus is initialized
-    try {
-      await vertexAIService.createRagCorpus(document.companyId);
-    } catch (error) {
-      logger.info('Corpus might already exist, continuing...');
-    }
-
-    // Sync the document to the corpus
-    logger.info('Syncing document to corpus...');
-    await vertexAIService.importDocumentsToCorpus(document.companyId, [document]);
-    logger.info('Document synced successfully');
-
     // Generate analysis prompt
     const analysisPrompt = generateDocumentAnalysisPrompt(document.content);
 
