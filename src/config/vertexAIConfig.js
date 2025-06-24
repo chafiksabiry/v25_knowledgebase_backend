@@ -5,6 +5,8 @@ const path = require('path');
 const axios = require('axios');
 const fs = require('fs').promises;
 const { extractTextFromFile } = require('../services/documentProcessingService');
+const Document = require('../models/Document');
+const CallRecording = require('../models/CallRecording');
 
 dotenv.config();
 
@@ -15,7 +17,7 @@ const credentialsPath = path.resolve(process.env.GOOGLE_APPLICATION_CREDENTIALS)
 const VERTEX_CONFIG = {
   project: process.env.GOOGLE_CLOUD_PROJECT,
   location: process.env.VERTEX_AI_LOCATION || 'us-central1',
-  modelName: process.env.VERTEX_AI_MODEL || 'gemini-2.0-flash-lite',
+  modelName: process.env.VERTEX_AI_MODEL || 'gemini-1.5-flash-001',
   credentials: credentialsPath
 };
 
@@ -31,7 +33,6 @@ class VertexAIService {
   constructor() {
     this.vertexAI = null;
     this.generativeModel = null;
-    this.documentStore = new Map(); // In-memory store for document content
   }
 
   initialize() {
@@ -107,85 +108,36 @@ class VertexAIService {
     }
   }
 
-  async createRagCorpus(companyId) {
-    try {
-      if (!this.vertexAI) {
-        throw new Error('Vertex AI not initialized');
-      }
+  /**
+   * **NOUVEAU : Helper pour récupérer tout le contenu textuel d'une entreprise**
+   * @param {string} companyId - L'ID de l'entreprise
+   * @returns {Array} - Un tableau de documents et transcriptions
+   */
+  async _getCorpusContent(companyId) {
+    // Récupérer les documents
+    const documents = await Document.find({ companyId });
+    const documentContents = documents.map(doc => ({
+      id: doc._id.toString(),
+      title: doc.name,
+      content: doc.content,
+      url: doc.fileUrl,
+      type: 'document'
+    }));
 
-      const corpusId = `company-${companyId}`;
-      logger.info('Creating RAG corpus:', corpusId);
+    // Récupérer les enregistrements d'appels transcrits
+    const callRecordings = await CallRecording.find({ 
+      companyId, 
+      'analysis.transcription.fullTranscript': { $exists: true, $ne: '' }
+    });
+    const callContents = callRecordings.map(call => ({
+      id: call._id.toString(),
+      title: `Call with ${call.contactId} on ${call.date.toISOString().split('T')[0]}`,
+      content: call.analysis.transcription.fullTranscript,
+      url: call.recordingUrl,
+      type: 'call_recording'
+    }));
 
-      // Initialize an empty corpus for the company
-      this.documentStore.set(corpusId, []);
-
-      const parent = `projects/${VERTEX_CONFIG.project}/locations/${VERTEX_CONFIG.location}`;
-      
-      logger.info(`Created RAG corpus for company ${companyId}`);
-      return {
-        name: `${parent}/corpuses/${corpusId}`,
-        displayName: `Knowledge Base for Company ${companyId}`,
-        status: 'CREATED'
-      };
-    } catch (error) {
-      logger.error(`Failed to create RAG corpus for company ${companyId}:`, {
-        error: error.message,
-        stack: error.stack
-      });
-      throw error;
-    }
-  }
-
-  async importDocumentsToCorpus(companyId, documents) {
-    try {
-      if (!this.vertexAI) {
-        throw new Error('Vertex AI not initialized');
-      }
-
-      logger.info(`Importing ${documents.length} documents for company ${companyId}`);
-      const corpusId = `company-${companyId}`;
-      const processedDocs = [];
-
-      for (const doc of documents) {
-        try {
-          // Fetch and store document content
-          const content = await this.fetchDocumentContent(doc.fileUrl);
-          if (content) {
-            // Store the document content in memory
-            const docData = {
-              id: doc._id,
-              url: doc.fileUrl,
-              content: content,
-              title: doc.title
-            };
-            
-            const corpus = this.documentStore.get(corpusId) || [];
-            corpus.push(docData);
-            this.documentStore.set(corpusId, corpus);
-
-            processedDocs.push({
-              id: doc._id,
-              url: doc.fileUrl,
-              status: 'PROCESSED'
-            });
-          }
-        } catch (error) {
-          logger.error(`Failed to process document ${doc._id}:`, error);
-        }
-      }
-
-      logger.info(`Processed ${processedDocs.length} documents for company ${companyId}`);
-      return {
-        processedDocuments: processedDocs,
-        status: 'SUCCESS'
-      };
-    } catch (error) {
-      logger.error(`Failed to import documents for company ${companyId}:`, {
-        error: error.message,
-        stack: error.stack
-      });
-      throw error;
-    }
+    return [...documentContents, ...callContents];
   }
 
   async queryKnowledgeBase(companyId, query) {
@@ -194,11 +146,18 @@ class VertexAIService {
         throw new Error('Vertex AI not initialized');
       }
 
-      const corpusId = `company-${companyId}`;
-      const corpus = this.documentStore.get(corpusId) || [];
+      // **MODIFIÉ : Récupère le contenu directement depuis la base de données**
+      const corpus = await this._getCorpusContent(companyId);
 
       if (corpus.length === 0) {
-        throw new Error('No documents found in the knowledge base');
+        // Renvoie une réponse claire si la base de connaissances est vide
+        return {
+          response: {
+            candidates: [{
+              content: { parts: [{ text: "The knowledge base for this company is empty. Please upload some documents or call recordings first." }] }
+            }]
+          }
+        };
       }
 
       logger.info(`Querying knowledge base for company ${companyId}:`, { query });
@@ -235,19 +194,157 @@ Please provide a comprehensive answer based on the information in these document
 
   async checkCorpusStatus(companyId) {
     try {
-      if (!this.vertexAI) {
-        throw new Error('Vertex AI not initialized');
-      }
-
-      const corpusId = `company-${companyId}`;
-      const corpus = this.documentStore.get(corpusId);
-
+      // **MODIFIÉ : Vérifie directement dans la base de données**
+      const documentCount = await Document.countDocuments({ companyId });
+      const callCount = await CallRecording.countDocuments({ companyId, 'analysis.transcription.fullTranscript': { $exists: true, $ne: '' } });
+      
       return {
-        exists: !!corpus,
-        documentCount: corpus ? corpus.length : 0
+        exists: (documentCount + callCount) > 0,
+        documentCount: documentCount,
+        callRecordingCount: callCount,
+        totalCount: documentCount + callCount
       };
     } catch (error) {
       logger.error(`Failed to check corpus status for company ${companyId}:`, error);
+      throw error;
+    }
+  }
+
+  // **NOUVEAU : Obtenir la liste détaillée des documents du corpus**
+  async getCorpusDocuments(companyId) {
+    try {
+      // **MODIFIÉ : Récupère le contenu directement depuis la base de données**
+      const corpus = await this._getCorpusContent(companyId);
+
+      return corpus.map(doc => ({
+        id: doc.id,
+        title: doc.title,
+        url: doc.url,
+        type: doc.type,
+        contentPreview: doc.content.substring(0, 200) + (doc.content.length > 200 ? '...' : ''),
+        contentLength: doc.content.length,
+        wordCount: doc.content.split(/\s+/).length
+      }));
+    } catch (error) {
+      logger.error(`Failed to get corpus documents for company ${companyId}:`, error);
+      throw error;
+    }
+  }
+
+  // **NOUVEAU : Obtenir le contenu complet d'un document spécifique**
+  async getDocumentContent(companyId, documentId) {
+    try {
+      // **MODIFIÉ : Récupère le document directement depuis la base de données**
+      let doc = await Document.findOne({ _id: documentId, companyId });
+      let call;
+      if (!doc) {
+        call = await CallRecording.findOne({ _id: documentId, companyId });
+      }
+
+      if (!doc && !call) {
+        throw new Error('Document not found in corpus');
+      }
+      
+      const item = doc || call;
+      const isCall = !!call;
+
+      return {
+        id: item._id.toString(),
+        title: isCall ? `Call with ${item.contactId}` : item.name,
+        url: isCall ? item.recordingUrl : item.fileUrl,
+        content: isCall ? item.analysis.transcription.fullTranscript : item.content,
+        contentLength: (isCall ? item.analysis.transcription.fullTranscript : item.content).length,
+        wordCount: (isCall ? item.analysis.transcription.fullTranscript : item.content).split(/\s+/).length
+      };
+    } catch (error) {
+      logger.error(`Failed to get document content for company ${companyId}, document ${documentId}:`, error);
+      throw error;
+    }
+  }
+
+  // **NOUVEAU : Obtenir les statistiques du corpus**
+  async getCorpusStats(companyId) {
+    try {
+      // **MODIFIÉ : Calcule les statistiques depuis la base de données**
+      const corpus = await this._getCorpusContent(companyId);
+
+      const stats = {
+        totalDocuments: corpus.length,
+        totalWords: 0,
+        totalCharacters: 0,
+        averageWordsPerDocument: 0,
+        averageCharactersPerDocument: 0,
+        documentTypes: {},
+        largestDocument: null,
+        smallestDocument: null
+      };
+
+      if (corpus.length > 0) {
+        corpus.forEach(doc => {
+          const wordCount = doc.content.split(/\s+/).length;
+          const charCount = doc.content.length;
+          
+          stats.totalWords += wordCount;
+          stats.totalCharacters += charCount;
+
+          const fileExtension = doc.url.split('.').pop()?.toLowerCase() || 'unknown';
+          stats.documentTypes[fileExtension] = (stats.documentTypes[fileExtension] || 0) + 1;
+
+          if (!stats.largestDocument || wordCount > stats.largestDocument.wordCount) {
+            stats.largestDocument = { id: doc.id, title: doc.title, wordCount, charCount };
+          }
+
+          if (!stats.smallestDocument || wordCount < stats.smallestDocument.wordCount) {
+            stats.smallestDocument = { id: doc.id, title: doc.title, wordCount, charCount };
+          }
+        });
+
+        stats.averageWordsPerDocument = Math.round(stats.totalWords / corpus.length);
+        stats.averageCharactersPerDocument = Math.round(stats.totalCharacters / corpus.length);
+      }
+
+      return stats;
+    } catch (error) {
+      logger.error(`Failed to get corpus stats for company ${companyId}:`, error);
+      throw error;
+    }
+  }
+
+  // **NOUVEAU : Rechercher dans le corpus**
+  async searchInCorpus(companyId, searchTerm) {
+    try {
+      // **MODIFIÉ : Recherche directement dans le contenu de la base de données**
+      const corpus = await this._getCorpusContent(companyId);
+
+      const results = corpus
+        .map(doc => {
+          const content = doc.content.toLowerCase();
+          const searchLower = searchTerm.toLowerCase();
+          const matches = (content.match(new RegExp(searchLower, 'g')) || []).length;
+          
+          if (matches > 0) {
+            const index = content.indexOf(searchLower);
+            const start = Math.max(0, index - 100);
+            const end = Math.min(content.length, index + searchTerm.length + 100);
+            const snippet = '...' + content.substring(start, end).replace(new RegExp(searchLower, 'gi'), `**${searchTerm}**`) + '...';
+            
+            return {
+              id: doc.id,
+              title: doc.title,
+              url: doc.url,
+              matches,
+              snippet,
+              relevance: matches * 10 
+            };
+          }
+          return null;
+        })
+        .filter(result => result !== null)
+        .sort((a, b) => b.relevance - a.relevance);
+
+      return results;
+    } catch (error) {
+      logger.error(`Failed to search in corpus for company ${companyId}:`, error);
       throw error;
     }
   }

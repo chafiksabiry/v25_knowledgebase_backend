@@ -1604,3 +1604,23 @@
   "_message": "CallRecording validation failed",
   "stack": "ValidationError: CallRecording validation failed: analysis.scoring: Cast to Object failed for value \"undefined\" (type undefined) at path \"analysis.scoring\"\n    at Document.invalidate (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\document.js:3219:32)\n    at model.$set (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\document.js:1188:14)\n    at model.$set (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\document.js:1214:14)\n    at model.set [as analysis] (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\node_modules\\mongoose\\lib\\helpers\\document\\compile.js:189:13)\n    at getAudioTranscription (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\callRecordingController.js:251:28)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\routes\\callRecordingRoutes.js:79:3"
 }
+2025-06-23 15:02:10 [ERROR]: Error querying knowledge base: Cannot read properties of undefined (reading '0') {
+  "service": "kb-analysis-backend",
+  "stack": "TypeError: Cannot read properties of undefined (reading '0')\n    at queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\ragController.js:126:36)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)"
+}
+2025-06-23 15:03:20 [ERROR]: Error querying knowledge base: Cannot read properties of undefined (reading '0') {
+  "service": "kb-analysis-backend",
+  "stack": "TypeError: Cannot read properties of undefined (reading '0')\n    at queryKnowledgeBase (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\ragController.js:126:36)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)"
+}
+2025-06-23 17:06:22 [ERROR]: Error analyzing document: {
+  "service": "kb-analysis-backend",
+  "error": "vertexAIService.importDocumentsToCorpus is not a function",
+  "stack": "TypeError: vertexAIService.importDocumentsToCorpus is not a function\n    at analyzeDocument (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\ragController.js:320:27)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+  "details": {}
+}
+2025-06-23 17:06:34 [ERROR]: Error analyzing document: {
+  "service": "kb-analysis-backend",
+  "error": "vertexAIService.importDocumentsToCorpus is not a function",
+  "stack": "TypeError: vertexAIService.importDocumentsToCorpus is not a function\n    at analyzeDocument (C:\\Users\\hp\\Documents\\harx-bolt\\ai-knowledge\\backend\\src\\controllers\\ragController.js:320:27)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+  "details": {}
+}
