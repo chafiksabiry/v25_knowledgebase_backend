@@ -403,21 +403,23 @@ Your task is to provide comprehensive, analytical, and actionable insights based
 
 1. ANALYZE the information thoroughly
 2. SYNTHESIZE related information from different parts of the documents
-3. STRUCTURE your response in a clear, user-friendly format
-4. HIGHLIGHT key points, numbers, and comparisons using markdown formatting
+3. STRUCTURE your response in a clear, user-friendly format using HTML
+4. HIGHLIGHT key points, numbers, and comparisons using HTML formatting
 5. PROVIDE practical insights and recommendations when relevant
-6. If comparing options or levels, CREATE tables or structured comparisons
+6. If comparing options or levels, CREATE HTML tables or structured comparisons
 7. When numbers or specific data are available, INCLUDE them in your analysis
 
 Question: ${query}
 
 When answering:
 - Start with a clear, direct answer to the question
-- Use bullet points, tables, or sections to organize information
-- Bold important terms and numbers for emphasis
+- Use HTML bullet points (<ul>, <li>), tables (<table>, <tr>, <td>), or sections (<div>, <h3>, <h4>) to organize information
+- Use <strong> tags for important terms and numbers for emphasis
+- Use <em> tags for emphasis on key insights
 - If the documents don't explicitly state something but it can be reasonably inferred from the provided information, you may include such insights while clearly indicating they are derived from the context
 - If information is missing or unclear, specify what additional details would be helpful
-- Use markdown formatting to make your response more readable
+- Use proper HTML formatting to make your response more readable and structured
+- Wrap your entire response in a <div> container
 
 Context will be provided below. Please analyze it thoroughly and provide a comprehensive response that helps the user make informed decisions.`;
 }
@@ -444,37 +446,24 @@ async function askQuestion(req, res) {
 
     logger.info(`Processing question for company ${companyId}:`, { query });
 
-    // Get current documents from DB
-    const documents = await Document.find({ companyId });
-
-    if (!documents || documents.length === 0) {
-      return res.status(400).json({
-        success: false,
-        error: {
-          message: 'No documents found for this company',
-          code: 'NO_DOCUMENTS'
-        }
-      });
-    }
-
     // Initialize Vertex AI if not already initialized
     if (!vertexAIService.vertexAI) {
       logger.info('Initializing Vertex AI service...');
-      vertexAIService.initialize();
+      await vertexAIService.initialize();
     }
 
-    // Check if RAG corpus exists and is up to date
+    // **MODIFIÉ : Récupère le statut complet et détaillé du corpus**
     const corpusStatus = await vertexAIService.checkCorpusStatus(companyId);
-    const needsUpdate = !corpusStatus.exists || corpusStatus.documentCount !== documents.length;
 
-    if (needsUpdate) {
-      logger.info(`Updating RAG corpus for company ${companyId}...`);
-      // Create/update the corpus with current documents
-      await vertexAIService.createRagCorpus(companyId);
-      await vertexAIService.importDocumentsToCorpus(companyId, documents);
-      logger.info(`RAG corpus updated successfully for company ${companyId}`);
-    } else {
-      logger.info(`Using existing RAG corpus for company ${companyId}`);
+    // Si le corpus est vide, on peut s'arrêter ici.
+    if (!corpusStatus.exists) {
+      return res.status(400).json({
+        success: false,
+        error: {
+          message: 'No documents or call recordings found in the knowledge base for this company.',
+          code: 'CORPUS_EMPTY'
+        }
+      });
     }
 
     // Create a context-aware prompt
@@ -501,17 +490,18 @@ async function askQuestion(req, res) {
       throw new Error('Unexpected response structure from Vertex AI');
     }
 
+    // **FINAL FIX: Clean up response to remove markdown code blocks (handles both backticks and single quotes)**
+    const cleanedAnswer = answer.replace(/^(?:```|''')(?:html)?\s*|\s*(?:```|''')$/g, '').trim();
+
     return res.json({
       success: true,
       data: {
-        answer,
+        answer: cleanedAnswer,
         metadata: {
           processedAt: new Date().toISOString(),
           model: process.env.VERTEX_AI_MODEL,
-          corpusStatus: {
-            wasUpdated: needsUpdate,
-            documentCount: documents.length
-          }
+          // **MODIFIÉ : Renvoie l'objet de statut complet**
+          corpusStatus: corpusStatus
         }
       }
     });
