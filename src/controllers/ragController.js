@@ -422,17 +422,27 @@ const generateScript = async (req, res) => {
     if (!corpusStatus.exists) {
       return res.status(400).json({ error: 'No documents or call recordings found in the knowledge base for this company.' });
     }
-    // Construire le prompt contextuel pour la génération de script
-    let scriptPrompt = `Tu es un expert en rédaction de scripts téléphoniques pour le domaine de l'entreprise. Utilise toute la documentation et les exemples d'appels fournis par la société pour générer un script d'appel structuré pour le projet/domaine suivant : ${projectId || 'Générique'}.
+    // Extraire les paramètres avancés
+    const { domaine, objectif, typeClient, contexte, langueTon } = req.body;
+    // Construire dynamiquement le prompt contextuel pour la génération de script
+    let scriptPrompt = `Tu es un expert en rédaction de scripts téléphoniques adaptés au contexte métier et humain.
 
-Structure le script en étapes :
-1. Accroche
-2. Découverte du besoin
-3. Argumentaire
-4. Réponses aux objections
-5. Conclusion
+Génère un script d'appel structuré sous forme de dialogue (tableau JSON d'objets avec 'actor', 'replica', 'phase'), en tenant compte des paramètres suivants :
+- Domaine : ${domaine || 'non précisé'}
+- Objectif de l'appel : ${objectif || 'non précisé'}
+- Type de client (profil DISC) : ${typeClient || 'non précisé'}
+  (D : Direct et axé sur les résultats, I : Enthousiaste et relationnel, S : Rassurant et stable, C : Structuré et analytique)
+- Contexte spécifique (historique, émotion, objections, etc.) : ${contexte || 'non précisé'}
+- Langue & ton souhaité : ${langueTon || 'formel'}
 
-Adapte le ton et le contenu au contexte métier. Si le type de script est précisé (${scriptType || 'non précisé'}), adapte le format en conséquence.`;
+C'est à toi de définir les phases de l'appel (exemples : ouverture, découverte, argumentaire, gestion des objections, closing, post-appel, etc.) selon les bonnes pratiques du domaine, le type de client et le contexte. Certaines phases peuvent être omises ou adaptées selon le contexte.
+
+Pour chaque réplique, indique :
+- 'actor' : 'agent' ou 'lead'
+- 'replica' : la phrase à dire
+- 'phase' : la phase de l'appel (définie par toi)
+
+Retourne uniquement le tableau JSON, sans aucun texte ou explication autour. Adapte le ton, la structure et le contenu à tous les paramètres ci-dessus.`;
     // Utiliser la logique RAG pour enrichir le prompt avec le contexte documentaire
     const response = await vertexAIService.queryKnowledgeBase(companyId, scriptPrompt);
     // Extraire la réponse générée
@@ -451,6 +461,10 @@ Adapte le ton et le contenu au contexte métier. Si le type de script est préci
       scriptContent = response;
     } else {
       throw new Error('Unexpected response structure from Vertex AI');
+    }
+    // Nettoyer le JSON généré pour enlever les blocs de code markdown
+    if (typeof scriptContent === 'string') {
+      scriptContent = scriptContent.replace(/^```(?:json)?\s*|\s*```$/g, '').trim();
     }
     res.status(200).json({
       success: true,
