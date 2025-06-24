@@ -109,35 +109,58 @@ class VertexAIService {
   }
 
   /**
-   * **NOUVEAU : Helper pour récupérer tout le contenu textuel d'une entreprise**
+   * **AMÉLIORÉ : Helper pour récupérer tout le contenu textuel d'une entreprise**
    * @param {string} companyId - L'ID de l'entreprise
    * @returns {Array} - Un tableau de documents et transcriptions
    */
   async _getCorpusContent(companyId) {
-    // Récupérer les documents
-    const documents = await Document.find({ companyId });
-    const documentContents = documents.map(doc => ({
-      id: doc._id.toString(),
-      title: doc.name,
-      content: doc.content,
-      url: doc.fileUrl,
-      type: 'document'
-    }));
+    try {
+      // Récupérer les documents
+      const documents = await Document.find({ companyId });
+      logger.info(`Found ${documents.length} documents for company ${companyId}`);
+      
+      const documentContents = documents.map(doc => ({
+        id: doc._id.toString(),
+        title: doc.name,
+        content: doc.content,
+        url: doc.fileUrl,
+        type: 'document'
+      }));
 
-    // Récupérer les enregistrements d'appels transcrits
-    const callRecordings = await CallRecording.find({ 
-      companyId, 
-      'analysis.transcription.fullTranscript': { $exists: true, $ne: '' }
-    });
-    const callContents = callRecordings.map(call => ({
-      id: call._id.toString(),
-      title: `Call with ${call.contactId} on ${call.date.toISOString().split('T')[0]}`,
-      content: call.analysis.transcription.fullTranscript,
-      url: call.recordingUrl,
-      type: 'call_recording'
-    }));
+      // **CORRIGÉ : Récupérer TOUS les enregistrements d'appels (pas seulement ceux avec transcription)**
+      const allCallRecordings = await CallRecording.find({ companyId });
+      logger.info(`Found ${allCallRecordings.length} total call recordings for company ${companyId}`);
+      
+      const callContents = allCallRecordings.map(call => {
+        // Utiliser la transcription si disponible, sinon créer un contenu descriptif
+        let content;
+        if (call.analysis?.transcription?.fullTranscript && 
+            call.analysis.transcription.fullTranscript.trim() !== '') {
+          content = call.analysis.transcription.fullTranscript;
+        } else {
+          // Créer un contenu descriptif pour les enregistrements sans transcription
+          content = `Call recording with contact ${call.contactId} on ${call.date.toISOString().split('T')[0]}. Duration: ${call.duration} seconds. ${call.summary ? `Summary: ${call.summary}` : ''} ${call.tags && call.tags.length > 0 ? `Tags: ${call.tags.join(', ')}` : ''}`;
+        }
+        
+        return {
+          id: call._id.toString(),
+          title: `Call with ${call.contactId} on ${call.date.toISOString().split('T')[0]}`,
+          content: content,
+          url: call.recordingUrl,
+          type: 'call_recording',
+          hasTranscript: !!(call.analysis?.transcription?.fullTranscript && 
+                           call.analysis.transcription.fullTranscript.trim() !== '')
+        };
+      });
 
-    return [...documentContents, ...callContents];
+      const totalContent = [...documentContents, ...callContents];
+      logger.info(`Total corpus content for company ${companyId}: ${totalContent.length} items (${documentContents.length} documents + ${callContents.length} call recordings)`);
+      
+      return totalContent;
+    } catch (error) {
+      logger.error(`Error in _getCorpusContent for company ${companyId}:`, error);
+      throw error;
+    }
   }
 
   async queryKnowledgeBase(companyId, query) {
@@ -194,15 +217,22 @@ Please provide a comprehensive answer based on the information in these document
 
   async checkCorpusStatus(companyId) {
     try {
-      // **MODIFIÉ : Vérifie directement dans la base de données**
       const documentCount = await Document.countDocuments({ companyId });
-      const callCount = await CallRecording.countDocuments({ companyId, 'analysis.transcription.fullTranscript': { $exists: true, $ne: '' } });
+      logger.info(`Found ${documentCount} documents for company ${companyId}`);
+      
+      const allCallCount = await CallRecording.countDocuments({ companyId });
+      logger.info(`Found ${allCallCount} total call recordings for company ${companyId}`);
+      
+      // **CORRIGÉ : Considérer tous les enregistrements comme faisant partie du corpus**
+      const totalCount = documentCount + allCallCount;
+      logger.info(`Total corpus count for company ${companyId}: ${totalCount} (${documentCount} documents + ${allCallCount} call recordings)`);
       
       return {
-        exists: (documentCount + callCount) > 0,
+        exists: totalCount > 0,
         documentCount: documentCount,
-        callRecordingCount: callCount,
-        totalCount: documentCount + callCount
+        callRecordingCount: allCallCount, // Tous les enregistrements
+        totalCallRecordings: allCallCount,
+        totalCount: totalCount
       };
     } catch (error) {
       logger.error(`Failed to check corpus status for company ${companyId}:`, error);
