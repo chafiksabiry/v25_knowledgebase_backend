@@ -5,9 +5,12 @@ const path = require('path');
 const { uploadToCloudinary, deleteFromCloudinary } = require('../services/cloudinaryService');
 const { logger } = require('../utils/logger');
 const { getAudioSummaryService, getAudioTranscriptionService, getAudioTranscriptionWhisperService, getCallScoringService } = require('../services/callAnalysisService');
+const { vertexAIService } = require('../config/vertexAIConfig');
 
 // Upload a new call recording
 const uploadCallRecording = async (req, res) => {
+  const filePath = req.file?.path;
+
   try {
     if (!req.file) {
       return res.status(400).json({ error: 'No file uploaded' });
@@ -22,7 +25,6 @@ const uploadCallRecording = async (req, res) => {
     }
 
     // Upload to Cloudinary
-    const filePath = req.file.path;
     const { url: recordingUrl, public_id: cloudinaryPublicId } = await uploadToCloudinary(filePath, 'call-recordings');
 
     // Create call recording record
@@ -50,13 +52,18 @@ const uploadCallRecording = async (req, res) => {
         audioInstance: null,
         showPlayer: false,
         showTranscript: false
+      },
+      analysis: {
+        transcription: {
+          segments: [],
+          fullTranscript: '',
+          status: 'pending',
+          lastUpdated: null
+        }
       }
     });
 
     await callRecording.save();
-
-    // Delete local file after upload
-    await fs.unlink(filePath);
 
     res.status(201).json({
       message: 'Call recording uploaded successfully',
@@ -76,15 +83,16 @@ const uploadCallRecording = async (req, res) => {
     });
   } catch (error) {
     logger.error('Error uploading call recording:', error);
-    // Clean up local file if it exists
-    if (req.file && req.file.path) {
+    res.status(500).json({ error: 'Failed to upload call recording' });
+  } finally {
+    // **MODIFIÉ : Assurer la suppression du fichier local dans tous les cas**
+    if (filePath) {
       try {
-        await fs.unlink(req.file.path);
+        await fs.unlink(filePath);
       } catch (unlinkError) {
-        logger.error('Error deleting local file:', unlinkError);
+        logger.error('Error deleting local file after upload attempt:', unlinkError);
       }
     }
-    res.status(500).json({ error: 'Failed to upload call recording' });
   }
 };
 

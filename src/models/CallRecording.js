@@ -52,6 +52,7 @@ const callRecordingSchema = new mongoose.Schema({
           text: { type: String, required: true }
         }
       ],
+      fullTranscript: { type: String, default: '' },
       lastUpdated: { type: Date },
       error: { type: String, default: null }
     },

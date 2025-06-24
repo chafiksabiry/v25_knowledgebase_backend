@@ -110,23 +110,177 @@ const queryKnowledgeBase = async (req, res) => {
 
     // Initialize Vertex AI if not already initialized
     if (!vertexAIService.vertexAI) {
-      vertexAIService.initialize();
+      await vertexAIService.initialize();
     }
+
+    // **NOUVEAU : Récupérer le statut du corpus**
+    const corpusStatus = await vertexAIService.checkCorpusStatus(companyId);
 
     // Query the knowledge base
     const response = await vertexAIService.queryKnowledgeBase(companyId, query);
 
+    // **MODIFIÉ : Inclure le statut détaillé du corpus dans les métadonnées**
     res.status(200).json({
-      response: response.candidates[0].content,
-      metadata: {
-        citations: response.candidates[0].citationMetadata,
-        safetyRatings: response.candidates[0].safetyRatings
+      success: true,
+      data: {
+        answer: response.candidates[0].content.parts[0].text,
+        metadata: {
+          corpusStatus: corpusStatus,
+          model: process.env.VERTEX_AI_MODEL,
+          processedAt: new Date().toISOString(),
+          citations: response.candidates[0].citationMetadata,
+          safetyRatings: response.candidates[0].safetyRatings
+        }
       }
     });
 
   } catch (error) {
     logger.error('Error querying knowledge base:', error);
-    res.status(500).json({ error: 'Failed to query knowledge base' });
+    res.status(500).json({ 
+      success: false,
+      error: 'Failed to query knowledge base',
+      details: error.message
+    });
+  }
+};
+
+/**
+ * **NOUVEAU : Obtenir le statut du corpus RAG**
+ * @param {Object} req - Express request object with companyId in params
+ * @param {Object} res - Express response object
+ */
+const getCorpusStatus = async (req, res) => {
+  try {
+    const { companyId } = req.params;
+
+    if (!companyId) {
+      return res.status(400).json({ error: 'Company ID is required' });
+    }
+
+    if (!vertexAIService.vertexAI) {
+      vertexAIService.initialize();
+    }
+
+    const status = await vertexAIService.checkCorpusStatus(companyId);
+
+    res.status(200).json({ companyId, status });
+
+  } catch (error) {
+    logger.error('Error getting corpus status:', error);
+    res.status(500).json({ error: 'Failed to get corpus status' });
+  }
+};
+
+/**
+ * **NOUVEAU : Obtenir la liste des documents du corpus**
+ * @param {Object} req - Express request object with companyId in params
+ * @param {Object} res - Express response object
+ */
+const getCorpusDocuments = async (req, res) => {
+  try {
+    const { companyId } = req.params;
+
+    if (!companyId) {
+      return res.status(400).json({ error: 'Company ID is required' });
+    }
+
+    if (!vertexAIService.vertexAI) {
+      vertexAIService.initialize();
+    }
+
+    const documents = await vertexAIService.getCorpusDocuments(companyId);
+
+    res.status(200).json({ companyId, documents, count: documents.length });
+
+  } catch (error) {
+    logger.error('Error getting corpus documents:', error);
+    res.status(500).json({ error: 'Failed to get corpus documents' });
+  }
+};
+
+/**
+ * **NOUVEAU : Obtenir le contenu d'un document spécifique**
+ * @param {Object} req - Express request object with companyId and documentId in params
+ * @param {Object} res - Express response object
+ */
+const getDocumentContent = async (req, res) => {
+  try {
+    const { companyId, documentId } = req.params;
+
+    if (!companyId || !documentId) {
+      return res.status(400).json({ error: 'Company ID and Document ID are required' });
+    }
+
+    if (!vertexAIService.vertexAI) {
+      vertexAIService.initialize();
+    }
+
+    const document = await vertexAIService.getDocumentContent(companyId, documentId);
+
+    res.status(200).json({ companyId, document });
+
+  } catch (error) {
+    logger.error('Error getting document content:', error);
+    res.status(500).json({ error: 'Failed to get document content' });
+  }
+};
+
+/**
+ * **NOUVEAU : Obtenir les statistiques du corpus**
+ * @param {Object} req - Express request object with companyId in params
+ * @param {Object} res - Express response object
+ */
+const getCorpusStats = async (req, res) => {
+  try {
+    const { companyId } = req.params;
+
+    if (!companyId) {
+      return res.status(400).json({ error: 'Company ID is required' });
+    }
+
+    if (!vertexAIService.vertexAI) {
+      vertexAIService.initialize();
+    }
+
+    const stats = await vertexAIService.getCorpusStats(companyId);
+
+    res.status(200).json({ companyId, stats });
+
+  } catch (error) {
+    logger.error('Error getting corpus stats:', error);
+    res.status(500).json({ error: 'Failed to get corpus stats' });
+  }
+};
+
+/**
+ * **NOUVEAU : Rechercher dans le corpus**
+ * @param {Object} req - Express request object with companyId in params and searchTerm in query
+ * @param {Object} res - Express response object
+ */
+const searchInCorpus = async (req, res) => {
+  try {
+    const { companyId } = req.params;
+    const { searchTerm } = req.query;
+
+    if (!companyId) {
+      return res.status(400).json({ error: 'Company ID is required' });
+    }
+
+    if (!searchTerm) {
+      return res.status(400).json({ error: 'Search term is required' });
+    }
+
+    if (!vertexAIService.vertexAI) {
+      vertexAIService.initialize();
+    }
+
+    const results = await vertexAIService.searchInCorpus(companyId, searchTerm);
+
+    res.status(200).json({ companyId, searchTerm, results, count: results.length });
+
+  } catch (error) {
+    logger.error('Error searching in corpus:', error);
+    res.status(500).json({ error: 'Failed to search in corpus' });
   }
 };
 
@@ -153,18 +307,6 @@ const analyzeDocument = async (req, res) => {
     if (!vertexAIService.vertexAI) {
       await vertexAIService.initialize();
     }
-
-    // Ensure the company's corpus is initialized
-    try {
-      await vertexAIService.createRagCorpus(document.companyId);
-    } catch (error) {
-      logger.info('Corpus might already exist, continuing...');
-    }
-
-    // Sync the document to the corpus
-    logger.info('Syncing document to corpus...');
-    await vertexAIService.importDocumentsToCorpus(document.companyId, [document]);
-    logger.info('Document synced successfully');
 
     // Generate analysis prompt
     const analysisPrompt = generateDocumentAnalysisPrompt(document.content);
@@ -260,9 +402,96 @@ const analyzeDocument = async (req, res) => {
   }
 };
 
+/**
+ * Generate a call script using the company RAG corpus
+ * @param {Object} req - Express request object with companyId, projectId, scriptType in body
+ * @param {Object} res - Express response object
+ */
+const generateScript = async (req, res) => {
+  try {
+    const { companyId, projectId, scriptType } = req.body;
+    if (!companyId) {
+      return res.status(400).json({ error: 'Company ID is required' });
+    }
+    // Initialize Vertex AI if not already initialized
+    if (!vertexAIService.vertexAI) {
+      await vertexAIService.initialize();
+    }
+    // Vérifier le statut du corpus
+    const corpusStatus = await vertexAIService.checkCorpusStatus(companyId);
+    if (!corpusStatus.exists) {
+      return res.status(400).json({ error: 'No documents or call recordings found in the knowledge base for this company.' });
+    }
+    // Extraire les paramètres avancés
+    const { domaine, objectif, typeClient, contexte, langueTon } = req.body;
+    // Construire dynamiquement le prompt contextuel pour la génération de script
+    let scriptPrompt = `Tu es un expert en rédaction de scripts téléphoniques adaptés au contexte métier et humain.
+
+Génère un script d'appel structuré sous forme de dialogue (tableau JSON d'objets avec 'actor', 'replica', 'phase'), en tenant compte des paramètres suivants :
+- Domaine : ${domaine || 'non précisé'}
+- Objectif de l'appel : ${objectif || 'non précisé'}
+- Type de client (profil DISC) : ${typeClient || 'non précisé'}
+  (D : Direct et axé sur les résultats, I : Enthousiaste et relationnel, S : Rassurant et stable, C : Structuré et analytique)
+- Contexte spécifique (historique, émotion, objections, etc.) : ${contexte || 'non précisé'}
+- Langue & ton souhaité : ${langueTon || 'formel'}
+
+C'est à toi de définir les phases de l'appel (exemples : ouverture, découverte, argumentaire, gestion des objections, closing, post-appel, etc.) selon les bonnes pratiques du domaine, le type de client et le contexte. Certaines phases peuvent être omises ou adaptées selon le contexte.
+
+Pour chaque réplique, indique :
+- 'actor' : 'agent' ou 'lead'
+- 'replica' : la phrase à dire
+- 'phase' : la phase de l'appel (définie par toi)
+
+Retourne uniquement le tableau JSON, sans aucun texte ou explication autour. Adapte le ton, la structure et le contenu à tous les paramètres ci-dessus.`;
+    // Utiliser la logique RAG pour enrichir le prompt avec le contexte documentaire
+    const response = await vertexAIService.queryKnowledgeBase(companyId, scriptPrompt);
+    // Extraire la réponse générée
+    let scriptContent;
+    if (response.candidates && response.candidates[0]) {
+      if (response.candidates[0].content && response.candidates[0].content.parts) {
+        scriptContent = response.candidates[0].content.parts[0].text;
+      } else if (response.candidates[0].text) {
+        scriptContent = response.candidates[0].text;
+      } else {
+        scriptContent = response.candidates[0];
+      }
+    } else if (response.text) {
+      scriptContent = response.text;
+    } else if (typeof response === 'string') {
+      scriptContent = response;
+    } else {
+      throw new Error('Unexpected response structure from Vertex AI');
+    }
+    // Nettoyer le JSON généré pour enlever les blocs de code markdown
+    if (typeof scriptContent === 'string') {
+      scriptContent = scriptContent.replace(/^```(?:json)?\s*|\s*```$/g, '').trim();
+    }
+    res.status(200).json({
+      success: true,
+      data: {
+        script: scriptContent,
+        metadata: {
+          processedAt: new Date().toISOString(),
+          model: process.env.VERTEX_AI_MODEL,
+          corpusStatus: corpusStatus
+        }
+      }
+    });
+  } catch (error) {
+    logger.error('Error generating script:', error);
+    res.status(500).json({ error: 'Failed to generate script', details: error.message });
+  }
+};
+
 module.exports = {
   initializeCompanyCorpus,
   syncDocumentsToCorpus,
   queryKnowledgeBase,
-  analyzeDocument
+  getCorpusStatus,
+  getCorpusDocuments,
+  getDocumentContent,
+  getCorpusStats,
+  searchInCorpus,
+  analyzeDocument,
+  generateScript
 }; 

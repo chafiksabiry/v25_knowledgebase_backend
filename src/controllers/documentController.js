@@ -7,6 +7,7 @@ const { chunkDocument } = require('../utils/textProcessing');
 const Company = require('../models/Company');
 const { uploadToCloudinary, deleteFromCloudinary } = require('../services/cloudinaryService');
 const documentService = require('../services/documentService');
+const { vertexAIService } = require('../config/vertexAIConfig');
 
 // Upload a new document
 const uploadDocument = async (req, res) => {
