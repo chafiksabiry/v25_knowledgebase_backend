@@ -402,6 +402,73 @@ const analyzeDocument = async (req, res) => {
   }
 };
 
+/**
+ * Generate a call script using the company RAG corpus
+ * @param {Object} req - Express request object with companyId, projectId, scriptType in body
+ * @param {Object} res - Express response object
+ */
+const generateScript = async (req, res) => {
+  try {
+    const { companyId, projectId, scriptType } = req.body;
+    if (!companyId) {
+      return res.status(400).json({ error: 'Company ID is required' });
+    }
+    // Initialize Vertex AI if not already initialized
+    if (!vertexAIService.vertexAI) {
+      await vertexAIService.initialize();
+    }
+    // Vérifier le statut du corpus
+    const corpusStatus = await vertexAIService.checkCorpusStatus(companyId);
+    if (!corpusStatus.exists) {
+      return res.status(400).json({ error: 'No documents or call recordings found in the knowledge base for this company.' });
+    }
+    // Construire le prompt contextuel pour la génération de script
+    let scriptPrompt = `Tu es un expert en rédaction de scripts téléphoniques pour le domaine de l'entreprise. Utilise toute la documentation et les exemples d'appels fournis par la société pour générer un script d'appel structuré pour le projet/domaine suivant : ${projectId || 'Générique'}.
+
+Structure le script en étapes :
+1. Accroche
+2. Découverte du besoin
+3. Argumentaire
+4. Réponses aux objections
+5. Conclusion
+
+Adapte le ton et le contenu au contexte métier. Si le type de script est précisé (${scriptType || 'non précisé'}), adapte le format en conséquence.`;
+    // Utiliser la logique RAG pour enrichir le prompt avec le contexte documentaire
+    const response = await vertexAIService.queryKnowledgeBase(companyId, scriptPrompt);
+    // Extraire la réponse générée
+    let scriptContent;
+    if (response.candidates && response.candidates[0]) {
+      if (response.candidates[0].content && response.candidates[0].content.parts) {
+        scriptContent = response.candidates[0].content.parts[0].text;
+      } else if (response.candidates[0].text) {
+        scriptContent = response.candidates[0].text;
+      } else {
+        scriptContent = response.candidates[0];
+      }
+    } else if (response.text) {
+      scriptContent = response.text;
+    } else if (typeof response === 'string') {
+      scriptContent = response;
+    } else {
+      throw new Error('Unexpected response structure from Vertex AI');
+    }
+    res.status(200).json({
+      success: true,
+      data: {
+        script: scriptContent,
+        metadata: {
+          processedAt: new Date().toISOString(),
+          model: process.env.VERTEX_AI_MODEL,
+          corpusStatus: corpusStatus
+        }
+      }
+    });
+  } catch (error) {
+    logger.error('Error generating script:', error);
+    res.status(500).json({ error: 'Failed to generate script', details: error.message });
+  }
+};
+
 module.exports = {
   initializeCompanyCorpus,
   syncDocumentsToCorpus,
@@ -411,5 +478,6 @@ module.exports = {
   getDocumentContent,
   getCorpusStats,
   searchInCorpus,
-  analyzeDocument
+  analyzeDocument,
+  generateScript
 }; 
