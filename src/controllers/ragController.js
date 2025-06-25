@@ -423,11 +423,28 @@ const generateScript = async (req, res) => {
       return res.status(400).json({ error: 'No documents or call recordings found in the knowledge base for this company.' });
     }
     // Extraire les paramètres avancés
-    const { domaine, objectif, typeClient, contexte, langueTon } = req.body;
+    const { domaine, objectif, typeClient, contexte, langueTon, gigId, gigTitle, gigDescription, gigCategory } = req.body;
+    
     // Construire dynamiquement le prompt contextuel pour la génération de script
     let scriptPrompt = `Tu es un expert en rédaction de scripts téléphoniques adaptés au contexte métier et humain.
 
-Génère un script d'appel structuré sous forme de dialogue (tableau JSON d'objets avec 'actor', 'replica', 'phase'), en tenant compte des paramètres suivants :
+Génère un script d'appel structuré sous forme de dialogue (tableau JSON d'objets avec 'actor', 'replica', 'phase'), en tenant compte des paramètres suivants :`;
+
+    // Ajouter les informations du gig si disponibles
+    if (gigId && gigTitle) {
+      scriptPrompt += `
+
+INFORMATIONS DU GIG SÉLECTIONNÉ :
+- Titre du gig : ${gigTitle}
+- Description : ${gigDescription || 'Non disponible'}
+- Catégorie : ${gigCategory || 'Non disponible'}
+
+Utilise ces informations pour adapter le script au contexte spécifique de ce gig.`;
+    }
+
+    scriptPrompt += `
+
+PARAMÈTRES DE L'APPEL :
 - Domaine : ${domaine || 'non précisé'}
 - Objectif de l'appel : ${objectif || 'non précisé'}
 - Type de client (profil DISC) : ${typeClient || 'non précisé'}
@@ -443,6 +460,7 @@ Pour chaque réplique, indique :
 - 'phase' : la phase de l'appel (définie par toi)
 
 Retourne uniquement le tableau JSON, sans aucun texte ou explication autour. Adapte le ton, la structure et le contenu à tous les paramètres ci-dessus.`;
+
     // Utiliser la logique RAG pour enrichir le prompt avec le contexte documentaire
     const response = await vertexAIService.queryKnowledgeBase(companyId, scriptPrompt);
     // Extraire la réponse générée
@@ -473,7 +491,12 @@ Retourne uniquement le tableau JSON, sans aucun texte ou explication autour. Ada
         metadata: {
           processedAt: new Date().toISOString(),
           model: process.env.VERTEX_AI_MODEL,
-          corpusStatus: corpusStatus
+          corpusStatus: corpusStatus,
+          gigInfo: gigId ? {
+            gigId,
+            gigTitle,
+            gigCategory
+          } : null
         }
       }
     });
