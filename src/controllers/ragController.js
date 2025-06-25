@@ -2,6 +2,7 @@ const { vertexAIService } = require('../config/vertexAIConfig');
 const Document = require('../models/Document');
 const { logger } = require('../utils/logger');
 const { generateDocumentAnalysisPrompt } = require('../prompts/documentAnalysisPrompt');
+const Script = require('../models/Script');
 
 /**
  * Initialize a RAG corpus for a company
@@ -404,14 +405,20 @@ const analyzeDocument = async (req, res) => {
 
 /**
  * Generate a call script using the company RAG corpus
- * @param {Object} req - Express request object with companyId, projectId, scriptType in body
+ * @param {Object} req - Express request object with companyId, gig, typeClient, language, details in body
  * @param {Object} res - Express response object
  */
 const generateScript = async (req, res) => {
   try {
-    const { companyId, projectId, scriptType } = req.body;
+    const { companyId, gig, typeClient, langueTon, contexte } = req.body;
     if (!companyId) {
       return res.status(400).json({ error: 'Company ID is required' });
+    }
+    if (!gig || !gig._id) {
+      return res.status(400).json({ error: 'A gig selection is required to generate a script.' });
+    }
+    if (!typeClient || !langueTon) {
+      return res.status(400).json({ error: 'Type de client and langue/ton are required.' });
     }
     // Initialize Vertex AI if not already initialized
     if (!vertexAIService.vertexAI) {
@@ -422,44 +429,8 @@ const generateScript = async (req, res) => {
     if (!corpusStatus.exists) {
       return res.status(400).json({ error: 'No documents or call recordings found in the knowledge base for this company.' });
     }
-    // Extraire les paramètres avancés
-    const { domaine, objectif, typeClient, contexte, langueTon, gigId, gigTitle, gigDescription, gigCategory } = req.body;
-    
     // Construire dynamiquement le prompt contextuel pour la génération de script
-    let scriptPrompt = `Tu es un expert en rédaction de scripts téléphoniques adaptés au contexte métier et humain.
-
-Génère un script d'appel structuré sous forme de dialogue (tableau JSON d'objets avec 'actor', 'replica', 'phase'), en tenant compte des paramètres suivants :`;
-
-    // Ajouter les informations du gig si disponibles
-    if (gigId && gigTitle) {
-      scriptPrompt += `
-
-INFORMATIONS DU GIG SÉLECTIONNÉ :
-- Titre du gig : ${gigTitle}
-- Description : ${gigDescription || 'Non disponible'}
-- Catégorie : ${gigCategory || 'Non disponible'}
-
-Utilise ces informations pour adapter le script au contexte spécifique de ce gig.`;
-    }
-
-    scriptPrompt += `
-
-PARAMÈTRES DE L'APPEL :
-- Domaine : ${domaine || 'non précisé'}
-- Objectif de l'appel : ${objectif || 'non précisé'}
-- Type de client (profil DISC) : ${typeClient || 'non précisé'}
-  (D : Direct et axé sur les résultats, I : Enthousiaste et relationnel, S : Rassurant et stable, C : Structuré et analytique)
-- Contexte spécifique (historique, émotion, objections, etc.) : ${contexte || 'non précisé'}
-- Langue & ton souhaité : ${langueTon || 'formel'}
-
-C'est à toi de définir les phases de l'appel (exemples : ouverture, découverte, argumentaire, gestion des objections, closing, post-appel, etc.) selon les bonnes pratiques du domaine, le type de client et le contexte. Certaines phases peuvent être omises ou adaptées selon le contexte.
-
-Pour chaque réplique, indique :
-- 'actor' : 'agent' ou 'lead'
-- 'replica' : la phrase à dire
-- 'phase' : la phase de l'appel (définie par toi)
-
-Retourne uniquement le tableau JSON, sans aucun texte ou explication autour. Adapte le ton, la structure et le contenu à tous les paramètres ci-dessus.`;
+    let scriptPrompt = `Tu es un expert en rédaction de scripts téléphoniques adaptés au contexte métier et humain.\n\nVoici les informations du gig pour lequel tu dois générer un script :\n${JSON.stringify(gig, null, 2)}\n\nPARAMÈTRES DE L'APPEL :\n- Type de client (profil DISC) : ${typeClient}\n- Langue & ton souhaité : ${langueTon}\n- Contexte spécifique : ${contexte || 'non précisé'}\n\nGénère un script d'appel structuré sous forme de dialogue (tableau JSON d'objets avec 'actor', 'replica', 'phase').\nPour chaque réplique, indique :\n- 'actor' : 'agent' ou 'lead'\n- 'replica' : la phrase à dire\n- 'phase' : la phase de l'appel (définie par toi)\nRetourne uniquement le tableau JSON, sans aucun texte ou explication autour. Adapte le ton, la structure et le contenu à tous les paramètres ci-dessus.`;
 
     // Utiliser la logique RAG pour enrichir le prompt avec le contexte documentaire
     const response = await vertexAIService.queryKnowledgeBase(companyId, scriptPrompt);
@@ -484,6 +455,22 @@ Retourne uniquement le tableau JSON, sans aucun texte ou explication autour. Ada
     if (typeof scriptContent === 'string') {
       scriptContent = scriptContent.replace(/^```(?:json)?\s*|\s*```$/g, '').trim();
     }
+    // Parse the script content as JSON array
+    let scriptArray = [];
+    try {
+      scriptArray = JSON.parse(scriptContent);
+    } catch (e) {
+      return res.status(500).json({ error: 'Failed to parse generated script as JSON.' });
+    }
+    // Save the script in the database
+    const scriptDoc = await Script.create({
+      gigId: gig._id,
+      gig,
+      targetClient: typeClient,
+      language: langueTon,
+      details: contexte,
+      script: scriptArray
+    });
     res.status(200).json({
       success: true,
       data: {
@@ -492,11 +479,12 @@ Retourne uniquement le tableau JSON, sans aucun texte ou explication autour. Ada
           processedAt: new Date().toISOString(),
           model: process.env.VERTEX_AI_MODEL,
           corpusStatus: corpusStatus,
-          gigInfo: gigId ? {
-            gigId,
-            gigTitle,
-            gigCategory
-          } : null
+          gigInfo: {
+            gigId: gig._id,
+            gigTitle: gig.title,
+            gigCategory: gig.category
+          },
+          scriptId: scriptDoc._id
         }
       }
     });
