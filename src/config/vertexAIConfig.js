@@ -127,29 +127,31 @@ class VertexAIService {
         type: 'document'
       }));
 
-      // Récupérer les enregistrements d'appels transcrits
+      // **CORRIGÉ : Récupérer TOUS les enregistrements d'appels (pas seulement ceux avec transcription)**
       const allCallRecordings = await CallRecording.find({ companyId });
       logger.info(`Found ${allCallRecordings.length} total call recordings for company ${companyId}`);
       
-      // Vérifier les enregistrements avec transcriptions
-      const callRecordingsWithTranscript = allCallRecordings.filter(call => {
-        const hasTranscript = call.analysis?.transcription?.fullTranscript && 
-                             call.analysis.transcription.fullTranscript.trim() !== '';
-        if (!hasTranscript) {
-          logger.debug(`Call recording ${call._id} has no transcript or empty transcript`);
+      const callContents = allCallRecordings.map(call => {
+        // Utiliser la transcription si disponible, sinon créer un contenu descriptif
+        let content;
+        if (call.analysis?.transcription?.fullTranscript && 
+            call.analysis.transcription.fullTranscript.trim() !== '') {
+          content = call.analysis.transcription.fullTranscript;
+        } else {
+          // Créer un contenu descriptif pour les enregistrements sans transcription
+          content = `Call recording with contact ${call.contactId} on ${call.date.toISOString().split('T')[0]}. Duration: ${call.duration} seconds. ${call.summary ? `Summary: ${call.summary}` : ''} ${call.tags && call.tags.length > 0 ? `Tags: ${call.tags.join(', ')}` : ''}`;
         }
-        return hasTranscript;
+        
+        return {
+          id: call._id.toString(),
+          title: `Call with ${call.contactId} on ${call.date.toISOString().split('T')[0]}`,
+          content: content,
+          url: call.recordingUrl,
+          type: 'call_recording',
+          hasTranscript: !!(call.analysis?.transcription?.fullTranscript && 
+                           call.analysis.transcription.fullTranscript.trim() !== '')
+        };
       });
-      
-      logger.info(`Found ${callRecordingsWithTranscript.length} call recordings with transcripts for company ${companyId}`);
-      
-      const callContents = callRecordingsWithTranscript.map(call => ({
-        id: call._id.toString(),
-        title: `Call with ${call.contactId} on ${call.date.toISOString().split('T')[0]}`,
-        content: call.analysis.transcription.fullTranscript,
-        url: call.recordingUrl,
-        type: 'call_recording'
-      }));
 
       const totalContent = [...documentContents, ...callContents];
       logger.info(`Total corpus content for company ${companyId}: ${totalContent.length} items (${documentContents.length} documents + ${callContents.length} call recordings)`);
@@ -215,27 +217,21 @@ Please provide a comprehensive answer based on the information in these document
 
   async checkCorpusStatus(companyId) {
     try {
-      // **AMÉLIORÉ : Vérifie directement dans la base de données avec logs détaillés**
       const documentCount = await Document.countDocuments({ companyId });
       logger.info(`Found ${documentCount} documents for company ${companyId}`);
       
       const allCallCount = await CallRecording.countDocuments({ companyId });
       logger.info(`Found ${allCallCount} total call recordings for company ${companyId}`);
       
-      const callCount = await CallRecording.countDocuments({ 
-        companyId, 
-        'analysis.transcription.fullTranscript': { $exists: true, $ne: '' } 
-      });
-      logger.info(`Found ${callCount} call recordings with transcripts for company ${companyId}`);
-      
-      const totalCount = documentCount + callCount;
-      logger.info(`Total corpus count for company ${companyId}: ${totalCount} (${documentCount} documents + ${callCount} call recordings)`);
+      // **CORRIGÉ : Considérer tous les enregistrements comme faisant partie du corpus**
+      const totalCount = documentCount + allCallCount;
+      logger.info(`Total corpus count for company ${companyId}: ${totalCount} (${documentCount} documents + ${allCallCount} call recordings)`);
       
       return {
         exists: totalCount > 0,
         documentCount: documentCount,
-        callRecordingCount: callCount,
-        totalCallRecordings: allCallCount, // Nombre total d'enregistrements (avec ou sans transcription)
+        callRecordingCount: allCallCount, // Tous les enregistrements
+        totalCallRecordings: allCallCount,
         totalCount: totalCount
       };
     } catch (error) {
