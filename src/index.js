@@ -12,6 +12,7 @@ const analysisRoutes = require('./routes/analysisRoutes');
 const companyRoutes = require('./routes/companyRoutes');
 const callRecordingRoutes = require('./routes/callRecordingRoutes');
 const ragRoutes = require('./routes/ragRoutes');
+const scriptRoutes = require('./routes/scriptRoutes');
 
 // Load environment variables
 dotenv.config();
@@ -40,6 +41,7 @@ app.use('/api/analysis', analysisRoutes);
 app.use('/api/companies', companyRoutes);
 app.use('/api/call-recordings', callRecordingRoutes);
 app.use('/api/rag', ragRoutes);
+app.use('/api/scripts', scriptRoutes);
 
 // Health check endpoint
 app.get('/health', (req, res) => {
