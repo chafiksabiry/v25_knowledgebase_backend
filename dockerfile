@@ -27,6 +27,7 @@ ENV GOOGLE_CLOUD_PROJECT=harx-technologies-inc
 ENV GOOGLE_APPLICATION_CREDENTIALS=./config/vertex-ai-key.json
 ENV VERTEX_AI_LOCATION=us-central1
 ENV VERTEX_AI_MODEL=gemini-2.0-flash-lite
+ENV GIGS_API_URL=https://preprod-api-gigsmanual.harx.ai/api
 
 # Test Configuration
 ENV API_URL=https://preprod-api-knowledge-base.harx.ai
