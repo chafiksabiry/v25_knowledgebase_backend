@@ -50,7 +50,42 @@ const getScriptsForCompany = async (req, res) => {
   }
 };
 
+/**
+ * Delete a script by its ID
+ * @param {Object} req - Express request object with scriptId in params
+ * @param {Object} res - Express response object
+ */
+const deleteScript = async (req, res) => {
+  try {
+    const { scriptId } = req.params;
+    if (!scriptId) {
+      return res.status(400).json({ error: 'scriptId is required' });
+    }
+
+    const script = await Script.findById(scriptId);
+    if (!script) {
+      return res.status(404).json({ error: 'Script not found' });
+    }
+
+    await Script.findByIdAndDelete(scriptId);
+    logger.info(`Script deleted successfully: ${scriptId}`);
+    
+    res.status(200).json({ 
+      success: true, 
+      message: 'Script deleted successfully',
+      data: { deletedScriptId: scriptId }
+    });
+  } catch (error) {
+    logger.error('Error deleting script:', error);
+    res.status(500).json({ 
+      error: 'Failed to delete script', 
+      details: error.message 
+    });
+  }
+};
+
 module.exports = {
   getScriptsForGig,
-  getScriptsForCompany
+  getScriptsForCompany,
+  deleteScript
 }; 
