@@ -494,6 +494,98 @@ const generateScript = async (req, res) => {
   }
 };
 
+/**
+ * Translate document analysis to English
+ * @param {Object} req - Express request object with analysis and targetLanguage in body
+ * @param {Object} res - Express response object
+ */
+const translateAnalysis = async (req, res) => {
+  try {
+    const { analysis, targetLanguage } = req.body;
+
+    if (!analysis || !targetLanguage) {
+      return res.status(400).json({ error: 'Analysis object and target language are required' });
+    }
+
+    logger.info('Translating document analysis to:', targetLanguage);
+
+    // Initialize Vertex AI if not already initialized
+    if (!vertexAIService.vertexAI) {
+      await vertexAIService.initialize();
+    }
+
+    // Create translation prompt
+    const translationPrompt = `You are a professional translator. Translate the following document analysis to ${targetLanguage} while maintaining the exact same JSON structure and format.
+
+IMPORTANT: 
+- Keep the exact same JSON structure
+- Translate all text content to ${targetLanguage}
+- Maintain the same level of detail and professionalism
+- Ensure technical terms are appropriately translated
+- Keep the same array lengths for mainPoints, keyTerms, and recommendations
+
+Original analysis to translate:
+${JSON.stringify(analysis, null, 2)}
+
+Return only the translated JSON object with the same structure:`;
+
+    // Generate translation using the initialized generative model
+    const result = await vertexAIService.generativeModel.generateContent(translationPrompt);
+    const response = result.response;
+    
+    logger.info('Raw translation response:', JSON.stringify(response, null, 2));
+    
+    // Extract content using the same pattern as document analysis
+    let content;
+    if (!response || !response.candidates || !response.candidates[0]) {
+      throw new Error('Invalid response structure from Vertex AI');
+    }
+
+    if (response.candidates[0].content && response.candidates[0].content.parts) {
+      content = response.candidates[0].content.parts[0].text;
+    } else if (response.candidates[0].text) {
+      content = response.candidates[0].text;
+    } else if (typeof response.candidates[0] === 'string') {
+      content = response.candidates[0];
+    } else {
+      throw new Error('Unable to extract content from response');
+    }
+
+    logger.info('Extracted content:', content);
+
+    // Parse the JSON response
+    let translatedAnalysis;
+    try {
+      // First, try to parse directly
+      translatedAnalysis = JSON.parse(content);
+    } catch (jsonError) {
+      // If that fails, try to extract JSON with regex
+      const jsonMatch = content.match(/\{[\s\S]*\}/);
+      if (jsonMatch) {
+        translatedAnalysis = JSON.parse(jsonMatch[0]);
+      } else {
+        throw new Error('No valid JSON found in response');
+      }
+    }
+
+    logger.info('Successfully translated analysis');
+
+    res.status(200).json({
+      success: true,
+      translatedAnalysis,
+      originalLanguage: 'auto-detected',
+      targetLanguage
+    });
+
+  } catch (error) {
+    logger.error('Error translating analysis:', error);
+    res.status(500).json({ 
+      error: 'Failed to translate analysis', 
+      details: error.message 
+    });
+  }
+};
+
 module.exports = {
   initializeCompanyCorpus,
   syncDocumentsToCorpus,
@@ -504,5 +596,6 @@ module.exports = {
   getCorpusStats,
   searchInCorpus,
   analyzeDocument,
-  generateScript
+  generateScript,
+  translateAnalysis
 }; 
