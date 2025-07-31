@@ -429,8 +429,52 @@ const generateScript = async (req, res) => {
     if (!corpusStatus.exists) {
       return res.status(400).json({ error: 'No documents or call recordings found in the knowledge base for this company.' });
     }
-    // Construire dynamiquement le prompt contextuel pour la génération de script
-    let scriptPrompt = `Tu es un expert en rédaction de scripts téléphoniques adaptés au contexte métier et humain.\n\nVoici les informations du gig pour lequel tu dois générer un script :\n${JSON.stringify(gig, null, 2)}\n\nPARAMÈTRES DE L'APPEL :\n- Type de client (profil DISC) : ${typeClient}\n- Langue & ton souhaité : ${langueTon}\n- Contexte spécifique : ${contexte || 'non précisé'}\n\nGénère un script d'appel structuré sous forme de dialogue (tableau JSON d'objets avec 'actor', 'replica', 'phase').\nPour chaque réplique, indique :\n- 'actor' : 'agent' ou 'lead'\n- 'replica' : la phrase à dire\n- 'phase' : la phase de l'appel (définie par toi)\nRetourne uniquement le tableau JSON, sans aucun texte ou explication autour. Adapte le ton, la structure et le contenu à tous les paramètres ci-dessus.`;
+    // Construire dynamiquement le prompt contextuel pour la génération de script avec méthodologie REPS
+    let scriptPrompt = `Tu es un expert en rédaction de scripts téléphoniques suivant la méthodologie REPS (REPS Call Phases).
+
+Voici les informations du gig pour lequel tu dois générer un script :
+${JSON.stringify(gig, null, 2)}
+
+PARAMÈTRES DE L'APPEL :
+- Type de client (profil DISC) : ${typeClient}
+- Langue & ton souhaité : ${langueTon}
+- Contexte spécifique : ${contexte || 'non précisé'}
+
+⚠️  RÈGLE ABSOLUE : Tu DOIS inclure les 8 phases REPS dans l'ordre exact. AUCUNE phase ne peut être omise !
+
+PHASES OBLIGATOIRES REPS (TOUTES les 8 phases sont REQUISES) :
+1. "Context & Preparation" - OBLIGATOIRE : Préparation et mise en contexte avant l'appel
+2. "SBAM & Opening" - OBLIGATOIRE : Salutation, Bonjour, Accroche, Motif
+3. "Legal & Compliance" - OBLIGATOIRE : Aspects légaux et conformité
+4. "Need Discovery" - OBLIGATOIRE : Découverte des besoins
+5. "Value Proposition" - OBLIGATOIRE : Proposition de valeur
+6. "Documents/Quote" - OBLIGATOIRE : Documentation et devis
+7. "Objection Handling" - OBLIGATOIRE : Traitement des objections
+8. "Confirmation & Closing" - OBLIGATOIRE : Confirmation et clôture
+
+INSTRUCTIONS CRITIQUES :
+🔴 COMMENCE IMPÉRATIVEMENT par la phase "Context & Preparation" - elle ne doit JAMAIS être omise
+🔴 INCLUS toutes les 8 phases dans l'ordre exact - pas 7, pas 6, mais bien LES 8 PHASES
+🔴 Chaque phase doit contenir au moins 1-2 répliques d'échange agent/lead
+
+Structure de chaque objet JSON :
+- 'actor' : 'agent' ou 'lead'  
+- 'replica' : la phrase à dire (adaptée au profil DISC et au ton souhaité)
+- 'phase' : utilise EXACTEMENT les noms de phases listés ci-dessus (copie-colle les noms exacts)
+
+VÉRIFICATION FINALE : Assure-toi que ton script contient bien :
+✅ Phase 1: "Context & Preparation" 
+✅ Phase 2: "SBAM & Opening"
+✅ Phase 3: "Legal & Compliance"
+✅ Phase 4: "Need Discovery"
+✅ Phase 5: "Value Proposition"
+✅ Phase 6: "Documents/Quote"
+✅ Phase 7: "Objection Handling"
+✅ Phase 8: "Confirmation & Closing"
+
+Adapte le contenu des répliques au type de client DISC spécifié, utilise le ton demandé, et intègre les informations du gig.
+
+Retourne uniquement le tableau JSON, sans aucun texte ou explication autour.`;
 
     // Utiliser la logique RAG pour enrichir le prompt avec le contexte documentaire
     const response = await vertexAIService.queryKnowledgeBase(companyId, scriptPrompt);
