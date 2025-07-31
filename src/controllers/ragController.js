@@ -410,91 +410,266 @@ const analyzeDocument = async (req, res) => {
  */
 const generateScript = async (req, res) => {
   try {
+    console.log('\n========================================');
+    console.log('🔍  VÉRIFICATION DU CORPUS AVANT GÉNÉRATION');
+    console.log('========================================\n');
+    
     const { companyId, gig, typeClient, langueTon, contexte } = req.body;
+
+    // Log request parameters
+    console.log('📋 PARAMÈTRES DE LA REQUÊTE:');
+    console.log('---------------------------');
+    console.log(`Company ID: ${companyId}`);
+    console.log(`Gig: ${gig?.title || 'N/A'}`);
+    console.log(`Type Client: ${typeClient}`);
+    console.log(`Langue/Ton: ${langueTon}`);
+    console.log(`Contexte: ${contexte || 'Non spécifié'}`);
+    console.log();
+
+    // Validation checks
     if (!companyId) {
+      console.log('❌ ERREUR: Company ID manquant\n');
       return res.status(400).json({ error: 'Company ID is required' });
     }
     if (!gig || !gig._id) {
+      console.log('❌ ERREUR: Information du Gig manquante\n');
       return res.status(400).json({ error: 'A gig selection is required to generate a script.' });
     }
     if (!typeClient || !langueTon) {
+      console.log('❌ ERREUR: Paramètres requis manquants\n');
       return res.status(400).json({ error: 'Type de client and langue/ton are required.' });
     }
-    // Initialize Vertex AI if not already initialized
-    if (!vertexAIService.vertexAI) {
-      await vertexAIService.initialize();
-    }
-    // Vérifier le statut du corpus
-    const corpusStatus = await vertexAIService.checkCorpusStatus(companyId);
-    if (!corpusStatus.exists) {
-      return res.status(400).json({ error: 'No documents or call recordings found in the knowledge base for this company.' });
-    }
-    // Construire dynamiquement le prompt contextuel pour la génération de script avec méthodologie REPS
-    let scriptPrompt = `Tu es un expert en rédaction de scripts téléphoniques suivant la méthodologie REPS (REPS Call Phases).
 
-Voici les informations du gig pour lequel tu dois générer un script :
+    // Initialize Vertex AI if needed
+    if (!vertexAIService.vertexAI) {
+      console.log('🔄 Initialisation de Vertex AI...');
+      await vertexAIService.initialize();
+      console.log('✅ Vertex AI initialisé\n');
+    }
+
+    // Vérifier les documents en base de données
+    const documents = await Document.find({ companyId });
+    const recentDocs = documents.filter(doc => 
+      new Date(doc.createdAt) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+    );
+
+    console.log('📊 ÉTAT DE LA BASE DE DONNÉES:');
+    console.log('----------------------------');
+    console.log(`Total documents: ${documents.length}`);
+    console.log(`Documents récents (7 jours): ${recentDocs.length}`);
+    console.log('Types de documents:');
+    const docTypes = documents.reduce((acc, doc) => {
+      acc[doc.type] = (acc[doc.type] || 0) + 1;
+      return acc;
+    }, {});
+    Object.entries(docTypes).forEach(([type, count]) => {
+      console.log(`  - ${type}: ${count}`);
+    });
+    console.log();
+
+    // Vérifier le contenu du corpus
+    const corpusContent = await vertexAIService._getCorpusContent(companyId);
+    const callRecordings = corpusContent.filter(item => 
+      item.title.toLowerCase().includes('call') || 
+      item.title.toLowerCase().includes('recording')
+    );
+    const otherDocuments = corpusContent.filter(item => 
+      !item.title.toLowerCase().includes('call') && 
+      !item.title.toLowerCase().includes('recording')
+    );
+
+    console.log('📝 ÉTAT DU CORPUS:');
+    console.log('----------------');
+    console.log(`Total éléments: ${corpusContent.length}`);
+    console.log(`Enregistrements d'appels: ${callRecordings.length}`);
+    console.log(`Autres documents: ${otherDocuments.length}`);
+    console.log();
+
+    if (callRecordings.length > 0) {
+      console.log('🎯 DÉTAIL DES ENREGISTREMENTS D\'APPELS:');
+      console.log('------------------------------------');
+      callRecordings.forEach(recording => {
+        const modifiedDate = new Date(recording.lastModifiedTime);
+        const isRecent = modifiedDate > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+        console.log(`  - ${recording.title}`);
+        console.log(`    Dernière modification: ${modifiedDate.toLocaleDateString()}`);
+        console.log(`    Statut: ${isRecent ? '🟢 Récent' : '🟡 Plus ancien'}`);
+      });
+      console.log();
+    } else {
+      console.log('⚠️  ATTENTION: Aucun enregistrement d\'appel trouvé!\n');
+    }
+
+    // Vérifier le statut global
+    const corpusStatus = await vertexAIService.checkCorpusStatus(companyId);
+    
+    console.log('📈 RÉSUMÉ FINAL:');
+    console.log('--------------');
+    console.log(`État du corpus: ${corpusStatus.exists ? '✅ Existe' : '❌ N\'existe pas'}`);
+    console.log(`Documents dans le corpus: ${corpusStatus.documentCount}`);
+    console.log(`Enregistrements d'appels: ${corpusStatus.callRecordingCount}`);
+    console.log(`Total éléments: ${corpusStatus.totalCount}`);
+    console.log('\n========================================\n');
+
+    // Vérifications critiques
+    if (!corpusStatus.exists) {
+      console.log('❌ ERREUR: Corpus non trouvé\n');
+      return res.status(400).json({ 
+        error: 'No documents or call recordings found in the knowledge base for this company.' 
+      });
+    }
+
+    if (corpusStatus.callRecordingCount === 0) {
+      console.log('❌ ERREUR: Aucun enregistrement d\'appel\n');
+      return res.status(400).json({ 
+        error: 'No call recordings found in the knowledge base. At least one call recording is required for script generation.' 
+      });
+    }
+
+    // Construire le prompt pour la génération
+    console.log('🔄 PRÉPARATION DU PROMPT...\n');
+    
+    let scriptPrompt = `You are an expert in creating sales call scripts following the REPS methodology. You have access to a knowledge base containing ${corpusStatus.documentCount} documents and ${corpusStatus.callRecordingCount} call recordings for this company.
+
+CRITICAL INSTRUCTION FOR CORPUS ANALYSIS:
+1. First, analyze all call recordings in the knowledge base
+2. Identify the most successful and representative call that follows best practices
+3. Use this exemplary call as a primary model for script structure and flow
+4. Complement this with insights from other calls and documentation
+5. Ensure compliance with company policies found in documentation
+
+GIG INFORMATION (Use this to customize the script):
 ${JSON.stringify(gig, null, 2)}
 
-PARAMÈTRES DE L'APPEL :
-- Type de client (profil DISC) : ${typeClient}
-- Langue & ton souhaité : ${langueTon}
-- Contexte spécifique : ${contexte || 'non précisé'}
+CALL PARAMETERS:
+- Client DISC Profile: ${typeClient}
+- Language & Tone: ${langueTon}
+- Specific Context: ${contexte || 'not specified'}
 
-⚠️  RÈGLE ABSOLUE : Tu DOIS inclure les 8 phases REPS dans l'ordre exact. AUCUNE phase ne peut être omise !
+⚠️  ABSOLUTE RULE: You MUST include all 8 REPS phases in exact order. NO phase can be omitted!
 
-PHASES OBLIGATOIRES REPS (TOUTES les 8 phases sont REQUISES) :
-1. "Context & Preparation" - OBLIGATOIRE : Préparation et mise en contexte avant l'appel
-2. "SBAM & Opening" - OBLIGATOIRE : Salutation, Bonjour, Accroche, Motif
-3. "Legal & Compliance" - OBLIGATOIRE : Aspects légaux et conformité
-4. "Need Discovery" - OBLIGATOIRE : Découverte des besoins
-5. "Value Proposition" - OBLIGATOIRE : Proposition de valeur
-6. "Documents/Quote" - OBLIGATOIRE : Documentation et devis
-7. "Objection Handling" - OBLIGATOIRE : Traitement des objections
-8. "Confirmation & Closing" - OBLIGATOIRE : Confirmation et clôture
+MANDATORY REPS PHASES (ALL 8 phases are REQUIRED):
+1. "Context & Preparation" - MANDATORY: Preparation and context setting
+2. "SBAM & Opening" - MANDATORY: Salutation, Greeting, Hook, Purpose
+3. "Legal & Compliance" - MANDATORY: Legal aspects and compliance
+4. "Need Discovery" - MANDATORY: Needs discovery and qualification
+5. "Value Proposition" - MANDATORY: Value proposition presentation
+6. "Documents/Quote" - MANDATORY: Documentation and quotation
+7. "Objection Handling" - MANDATORY: Objection handling and resolution
+8. "Confirmation & Closing" - MANDATORY: Confirmation and closing
 
-INSTRUCTIONS CRITIQUES :
-🔴 COMMENCE IMPÉRATIVEMENT par la phase "Context & Preparation" - elle ne doit JAMAIS être omise
-🔴 INCLUS toutes les 8 phases dans l'ordre exact - pas 7, pas 6, mais bien LES 8 PHASES
-🔴 Chaque phase doit contenir au moins 1-2 répliques d'échange agent/lead
+CRITICAL INSTRUCTIONS FOR SCRIPT GENERATION:
+🔴 ANALYZE THE CORPUS:
+   - Study successful call recordings for natural dialogue patterns
+   - Extract common phrases and effective transitions
+   - Identify typical objections and successful responses
+   - Note compliance requirements from documentation
 
-Structure de chaque objet JSON :
-- 'actor' : 'agent' ou 'lead'  
-- 'replica' : la phrase à dire (adaptée au profil DISC et au ton souhaité)
-- 'phase' : utilise EXACTEMENT les noms de phases listés ci-dessus (copie-colle les noms exacts)
+🔴 PHASE REQUIREMENTS:
+   - START with "Context & Preparation" - NEVER skip this phase
+   - INCLUDE all 8 phases in exact order
+   - Each phase must have 1-2 exchanges between agent/lead
+   - Base dialogue flow on the most successful call recording
+   - Adapt language and style to match company's tone from documentation
 
-VÉRIFICATION FINALE : Assure-toi que ton script contient bien :
-✅ Phase 1: "Context & Preparation" 
-✅ Phase 2: "SBAM & Opening"
-✅ Phase 3: "Legal & Compliance"
-✅ Phase 4: "Need Discovery"
-✅ Phase 5: "Value Proposition"
-✅ Phase 6: "Documents/Quote"
-✅ Phase 7: "Objection Handling"
-✅ Phase 8: "Confirmation & Closing"
+🔴 DIALOGUE REQUIREMENTS:
+   - Keep dialogue natural and conversational
+   - DO NOT mention phase names in the dialogue
+   - Focus on the actual conversation content
+   - Use natural transitions between phases
+   - Adapt tone to match DISC profile
 
-Adapte le contenu des répliques au type de client DISC spécifié, utilise le ton demandé, et intègre les informations du gig.
+JSON Object Structure:
+{
+  "actor": "agent" or "lead",
+  "replica": "Natural dialogue without mentioning phase names",
+  "phase": "EXACT phase name from the list above"
+}
 
-Retourne uniquement le tableau JSON, sans aucun texte ou explication autour.`;
+Example of GOOD dialogue structure:
+[
+  {
+    "actor": "agent",
+    "replica": "Bonjour, je suis Marc de Harx. J'ai bien reçu votre demande concernant nos services.",
+    "phase": "SBAM & Opening"
+  },
+  {
+    "actor": "lead",
+    "replica": "Oui, bonjour Marc.",
+    "phase": "SBAM & Opening"
+  }
+]
+
+Example of BAD dialogue structure (DO NOT DO THIS):
+[
+  {
+    "actor": "agent",
+    "replica": "Pour la phase SBAM, je vais commencer par dire: Bonjour, je suis Marc.",  // ❌ DON'T mention phase names
+    "phase": "SBAM & Opening"
+  }
+]
+
+FINAL VERIFICATION - Ensure script includes:
+✅ All 8 phases in order
+✅ Natural dialogue without phase names in text
+✅ Proper transitions between phases
+✅ Consistent tone matching DISC profile
+✅ Relevant content from call recordings
+
+Return only the JSON array, without any text or explanation around it.`;
 
     // Utiliser la logique RAG pour enrichir le prompt avec le contexte documentaire
+    console.log('🔄 CONSULTATION DU CORPUS POUR LA GÉNÉRATION DE SCRIPT...\n');
     const response = await vertexAIService.queryKnowledgeBase(companyId, scriptPrompt);
+    
+    // Log response metadata
+    console.log('📄 MÉTADONNÉES DE LA RÉPONSE DE Vertex AI:');
+    console.log('----------------------------------------');
+    console.log(`Candidats présents: ${!!response.candidates ? 'Oui' : 'Non'}`);
+    console.log(`Nombre de candidats: ${response.candidates?.length || 0}`);
+    console.log(`Citations présentes: ${!!response.candidates?.[0]?.citationMetadata?.citations ? 'Oui' : 'Non'}`);
+    console.log(`Nombre de citations: ${response.candidates?.[0]?.citationMetadata?.citations?.length || 0}`);
+    console.log();
+
+    // Log citations if available
+    if (response.candidates?.[0]?.citationMetadata?.citations) {
+      console.log('Sources utilisées pour la génération de script:');
+      response.candidates[0].citationMetadata.citations.forEach(citation => {
+        console.log(`  - ${citation.title}`);
+      });
+      console.log();
+    }
+
     // Extraire la réponse générée
     let scriptContent;
     if (response.candidates && response.candidates[0]) {
       if (response.candidates[0].content && response.candidates[0].content.parts) {
         scriptContent = response.candidates[0].content.parts[0].text;
+        console.log('Contenu du script extrait de content.parts');
       } else if (response.candidates[0].text) {
         scriptContent = response.candidates[0].text;
+        console.log('Contenu du script extrait de text');
       } else {
         scriptContent = response.candidates[0];
+        console.log('Contenu du script extrait de candidate');
       }
     } else if (response.text) {
       scriptContent = response.text;
+      console.log('Contenu du script extrait de response.text');
     } else if (typeof response === 'string') {
       scriptContent = response;
+      console.log('Contenu du script extrait de string response');
     } else {
+      console.log('Structure de réponse inattendue:', response);
       throw new Error('Unexpected response structure from Vertex AI');
     }
+
+    // Log script content length
+    console.log('Statistiques du contenu du script généré:');
+    console.log('----------------------------------------');
+    console.log(`Longueur du contenu: ${scriptContent.length}`);
+    console.log(`Type de contenu: ${typeof scriptContent}`);
+    console.log();
     // Nettoyer le JSON généré pour enlever les blocs de code markdown
     if (typeof scriptContent === 'string') {
       scriptContent = scriptContent.replace(/^```(?:json)?\s*|\s*```$/g, '').trim();
@@ -502,11 +677,36 @@ Retourne uniquement le tableau JSON, sans aucun texte ou explication autour.`;
     // Parse the script content as JSON array
     let scriptArray = [];
     try {
+      console.log('Tentative de parsing du contenu du script en JSON...');
       scriptArray = JSON.parse(scriptContent);
+      console.log('Contenu du script parsé avec succès:', {
+        arrayLength: scriptArray.length,
+        phases: scriptArray.map(item => item.phase).filter((v, i, a) => a.indexOf(v) === i)
+      });
     } catch (e) {
+      console.log('Échec du parsing du contenu du script:', {
+        error: e.message,
+        previewContent: scriptContent.substring(0, 200) + '...'
+      });
       return res.status(500).json({ error: 'Failed to parse generated script as JSON.' });
     }
+
+    // Validate script structure
+    console.log('Validation de la structure du script...');
+    const phases = scriptArray.map(item => item.phase);
+    const uniquePhases = [...new Set(phases)];
+    console.log('Analyse des phases du script:');
+    console.log('------------------------------');
+    console.log(`Nombre total d'étapes: ${scriptArray.length}`);
+    console.log(`Phases uniques: ${uniquePhases.length}`);
+    console.log('Distribution des phases:');
+    phases.reduce((acc, phase) => {
+      acc[phase] = (acc[phase] || 0) + 1;
+      return acc;
+    }, {});
+
     // Save the script in the database
+    console.log('Sauvegarde du script dans la base de données...');
     const scriptDoc = await Script.create({
       gigId: gig._id,
       gig,
@@ -515,7 +715,13 @@ Retourne uniquement le tableau JSON, sans aucun texte ou explication autour.`;
       details: contexte,
       script: scriptArray
     });
-    res.status(200).json({
+    console.log('Script sauvegardé avec succès:', {
+      scriptId: scriptDoc._id,
+      stepsCount: scriptArray.length
+    });
+
+    // Prepare final response
+    const finalResponse = {
       success: true,
       data: {
         script: scriptContent,
@@ -528,11 +734,37 @@ Retourne uniquement le tableau JSON, sans aucun texte ou explication autour.`;
             gigTitle: gig.title,
             gigCategory: gig.category
           },
-          scriptId: scriptDoc._id
+          scriptId: scriptDoc._id,
+          analysisStats: {
+            totalSteps: scriptArray.length,
+            uniquePhases: uniquePhases.length,
+            phasesDistribution: phases.reduce((acc, phase) => {
+              acc[phase] = (acc[phase] || 0) + 1;
+              return acc;
+            }, {}),
+            citationsUsed: response.candidates?.[0]?.citationMetadata?.citations?.length || 0
+          }
         }
       }
-    });
+    };
+
+    console.log('\n✅ GÉNÉRATION TERMINÉE\n');
+    console.log('Sources utilisées:');
+    if (response.candidates?.[0]?.citationMetadata?.citations) {
+      response.candidates[0].citationMetadata.citations.forEach(citation => {
+        console.log(`  - ${citation.title}`);
+      });
+    }
+    console.log('\n========================================\n');
+
+    logger.info('Script generation completed successfully');
+    res.status(200).json(finalResponse);
   } catch (error) {
+    console.log('\n❌ ERREUR LORS DE LA GÉNÉRATION:');
+    console.log('-----------------------------');
+    console.log(error.message);
+    console.log('\n========================================\n');
+    
     logger.error('Error generating script:', error);
     res.status(500).json({ error: 'Failed to generate script', details: error.message });
   }
