@@ -410,47 +410,219 @@ const analyzeDocument = async (req, res) => {
  */
 const generateScript = async (req, res) => {
   try {
+    console.log('\n========================================');
+    console.log('🔍  VÉRIFICATION DU CORPUS AVANT GÉNÉRATION');
+    console.log('========================================\n');
+    
     const { companyId, gig, typeClient, langueTon, contexte } = req.body;
+
+    // Log request parameters
+    console.log('📋 PARAMÈTRES DE LA REQUÊTE:');
+    console.log('---------------------------');
+    console.log(`Company ID: ${companyId}`);
+    console.log(`Gig: ${gig?.title || 'N/A'}`);
+    console.log(`Type Client: ${typeClient}`);
+    console.log(`Langue/Ton: ${langueTon}`);
+    console.log(`Contexte: ${contexte || 'Non spécifié'}`);
+    console.log();
+
+    // Validation checks
     if (!companyId) {
+      console.log('❌ ERREUR: Company ID manquant\n');
       return res.status(400).json({ error: 'Company ID is required' });
     }
     if (!gig || !gig._id) {
+      console.log('❌ ERREUR: Information du Gig manquante\n');
       return res.status(400).json({ error: 'A gig selection is required to generate a script.' });
     }
     if (!typeClient || !langueTon) {
+      console.log('❌ ERREUR: Paramètres requis manquants\n');
       return res.status(400).json({ error: 'Type de client and langue/ton are required.' });
     }
-    // Initialize Vertex AI if not already initialized
+
+    // Initialize Vertex AI if needed
     if (!vertexAIService.vertexAI) {
+      console.log('🔄 Initialisation de Vertex AI...');
       await vertexAIService.initialize();
+      console.log('✅ Vertex AI initialisé\n');
     }
-    // Vérifier le statut du corpus
+
+    // Vérifier les documents en base de données
+    const documents = await Document.find({ companyId });
+    const recentDocs = documents.filter(doc => 
+      new Date(doc.createdAt) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+    );
+
+    console.log('📊 ÉTAT DE LA BASE DE DONNÉES:');
+    console.log('----------------------------');
+    console.log(`Total documents: ${documents.length}`);
+    console.log(`Documents récents (7 jours): ${recentDocs.length}`);
+    console.log('Types de documents:');
+    const docTypes = documents.reduce((acc, doc) => {
+      acc[doc.type] = (acc[doc.type] || 0) + 1;
+      return acc;
+    }, {});
+    Object.entries(docTypes).forEach(([type, count]) => {
+      console.log(`  - ${type}: ${count}`);
+    });
+    console.log();
+
+    // Vérifier le contenu du corpus
+    const corpusContent = await vertexAIService._getCorpusContent(companyId);
+    const callRecordings = corpusContent.filter(item => 
+      item.title.toLowerCase().includes('call') || 
+      item.title.toLowerCase().includes('recording')
+    );
+    const otherDocuments = corpusContent.filter(item => 
+      !item.title.toLowerCase().includes('call') && 
+      !item.title.toLowerCase().includes('recording')
+    );
+
+    console.log('📝 ÉTAT DU CORPUS:');
+    console.log('----------------');
+    console.log(`Total éléments: ${corpusContent.length}`);
+    console.log(`Enregistrements d'appels: ${callRecordings.length}`);
+    console.log(`Autres documents: ${otherDocuments.length}`);
+    console.log();
+
+    if (callRecordings.length > 0) {
+      console.log('🎯 DÉTAIL DES ENREGISTREMENTS D\'APPELS:');
+      console.log('------------------------------------');
+      callRecordings.forEach(recording => {
+        const modifiedDate = new Date(recording.lastModifiedTime);
+        const isRecent = modifiedDate > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+        console.log(`  - ${recording.title}`);
+        console.log(`    Dernière modification: ${modifiedDate.toLocaleDateString()}`);
+        console.log(`    Statut: ${isRecent ? '🟢 Récent' : '🟡 Plus ancien'}`);
+      });
+      console.log();
+    } else {
+      console.log('⚠️  ATTENTION: Aucun enregistrement d\'appel trouvé!\n');
+    }
+
+    // Vérifier le statut global
     const corpusStatus = await vertexAIService.checkCorpusStatus(companyId);
+    
+    console.log('📈 RÉSUMÉ FINAL:');
+    console.log('--------------');
+    console.log(`État du corpus: ${corpusStatus.exists ? '✅ Existe' : '❌ N\'existe pas'}`);
+    console.log(`Documents dans le corpus: ${corpusStatus.documentCount}`);
+    console.log(`Enregistrements d'appels: ${corpusStatus.callRecordingCount}`);
+    console.log(`Total éléments: ${corpusStatus.totalCount}`);
+    console.log('\n========================================\n');
+
+    // Vérifications critiques
     if (!corpusStatus.exists) {
-      return res.status(400).json({ error: 'No documents or call recordings found in the knowledge base for this company.' });
+      console.log('❌ ERREUR: Corpus non trouvé\n');
+      return res.status(400).json({ 
+        error: 'No documents or call recordings found in the knowledge base for this company.' 
+      });
     }
-    // Construire dynamiquement le prompt contextuel pour la génération de script
-    let scriptPrompt = `Tu es un expert en rédaction de scripts téléphoniques adaptés au contexte métier et humain.\n\nVoici les informations du gig pour lequel tu dois générer un script :\n${JSON.stringify(gig, null, 2)}\n\nPARAMÈTRES DE L'APPEL :\n- Type de client (profil DISC) : ${typeClient}\n- Langue & ton souhaité : ${langueTon}\n- Contexte spécifique : ${contexte || 'non précisé'}\n\nGénère un script d'appel structuré sous forme de dialogue (tableau JSON d'objets avec 'actor', 'replica', 'phase').\nPour chaque réplique, indique :\n- 'actor' : 'agent' ou 'lead'\n- 'replica' : la phrase à dire\n- 'phase' : la phase de l'appel (définie par toi)\nRetourne uniquement le tableau JSON, sans aucun texte ou explication autour. Adapte le ton, la structure et le contenu à tous les paramètres ci-dessus.`;
+
+    if (corpusStatus.callRecordingCount === 0) {
+      console.log('❌ ERREUR: Aucun enregistrement d\'appel\n');
+      return res.status(400).json({ 
+        error: 'No call recordings found in the knowledge base. At least one call recording is required for script generation.' 
+      });
+    }
+
+    // Construire le prompt pour la génération
+    console.log('🔄 PRÉPARATION DU PROMPT...\n');
+    
+    const prompt = `You are generating a structured sales call script.
+
+CRITICAL REQUIREMENTS:
+1. The script MUST include ALL of the following 8 phases in this EXACT order:
+   - Phase 1: "Context & Preparation"
+   - Phase 2: "SBAM & Opening"
+   - Phase 3: "Legal & Compliance"
+   - Phase 4: "Need Discovery"
+   - Phase 5: "Value Proposition"
+   - Phase 6: "Documents/Quote"
+   - Phase 7: "Objection Handling"
+   - Phase 8: "Confirmation & Closing"
+
+2. Each phase MUST have at least one dialogue exchange.
+3. DO NOT skip or combine any phases.
+4. DO NOT add any additional phases.
+5. DO NOT mention the phase name in the dialogue text.
+
+DIALOGUE STRUCTURE:
+- Each step must be a JSON object with:
+  - phase: one of the 8 exact phase names listed above
+  - actor: either "agent" or "lead"
+  - replica: the dialogue text
+
+Client Profile:
+- Type: ${typeClient} (DISC Profile)
+- Language/Tone: ${langueTon}
+${contexte ? `- Additional Context: ${contexte}` : ''}
+
+Gig Details:
+${JSON.stringify(gig, null, 2)}
+
+Return ONLY a JSON array of dialogue steps following this exact format:
+[
+  {
+    "phase": "Context & Preparation",
+    "actor": "agent",
+    "replica": "..."
+  },
+  ...
+]`;
 
     // Utiliser la logique RAG pour enrichir le prompt avec le contexte documentaire
-    const response = await vertexAIService.queryKnowledgeBase(companyId, scriptPrompt);
+    console.log('🔄 CONSULTATION DU CORPUS POUR LA GÉNÉRATION DE SCRIPT...\n');
+    const response = await vertexAIService.queryKnowledgeBase(companyId, prompt);
+    
+    // Log response metadata
+    console.log('📄 MÉTADONNÉES DE LA RÉPONSE DE Vertex AI:');
+    console.log('----------------------------------------');
+    console.log(`Candidats présents: ${!!response.candidates ? 'Oui' : 'Non'}`);
+    console.log(`Nombre de candidats: ${response.candidates?.length || 0}`);
+    console.log(`Citations présentes: ${!!response.candidates?.[0]?.citationMetadata?.citations ? 'Oui' : 'Non'}`);
+    console.log(`Nombre de citations: ${response.candidates?.[0]?.citationMetadata?.citations?.length || 0}`);
+    console.log();
+
+    // Log citations if available
+    if (response.candidates?.[0]?.citationMetadata?.citations) {
+      console.log('Sources utilisées pour la génération de script:');
+      response.candidates[0].citationMetadata.citations.forEach(citation => {
+        console.log(`  - ${citation.title}`);
+      });
+      console.log();
+    }
+
     // Extraire la réponse générée
     let scriptContent;
     if (response.candidates && response.candidates[0]) {
       if (response.candidates[0].content && response.candidates[0].content.parts) {
         scriptContent = response.candidates[0].content.parts[0].text;
+        console.log('Contenu du script extrait de content.parts');
       } else if (response.candidates[0].text) {
         scriptContent = response.candidates[0].text;
+        console.log('Contenu du script extrait de text');
       } else {
         scriptContent = response.candidates[0];
+        console.log('Contenu du script extrait de candidate');
       }
     } else if (response.text) {
       scriptContent = response.text;
+      console.log('Contenu du script extrait de response.text');
     } else if (typeof response === 'string') {
       scriptContent = response;
+      console.log('Contenu du script extrait de string response');
     } else {
+      console.log('Structure de réponse inattendue:', response);
       throw new Error('Unexpected response structure from Vertex AI');
     }
+
+    // Log script content length
+    console.log('Statistiques du contenu du script généré:');
+    console.log('----------------------------------------');
+    console.log(`Longueur du contenu: ${scriptContent.length}`);
+    console.log(`Type de contenu: ${typeof scriptContent}`);
+    console.log();
     // Nettoyer le JSON généré pour enlever les blocs de code markdown
     if (typeof scriptContent === 'string') {
       scriptContent = scriptContent.replace(/^```(?:json)?\s*|\s*```$/g, '').trim();
@@ -458,11 +630,36 @@ const generateScript = async (req, res) => {
     // Parse the script content as JSON array
     let scriptArray = [];
     try {
+      console.log('Tentative de parsing du contenu du script en JSON...');
       scriptArray = JSON.parse(scriptContent);
+      console.log('Contenu du script parsé avec succès:', {
+        arrayLength: scriptArray.length,
+        phases: scriptArray.map(item => item.phase).filter((v, i, a) => a.indexOf(v) === i)
+      });
     } catch (e) {
+      console.log('Échec du parsing du contenu du script:', {
+        error: e.message,
+        previewContent: scriptContent.substring(0, 200) + '...'
+      });
       return res.status(500).json({ error: 'Failed to parse generated script as JSON.' });
     }
+
+    // Validate script structure
+    console.log('Validation de la structure du script...');
+    const phases = scriptArray.map(item => item.phase);
+    const uniquePhases = [...new Set(phases)];
+    console.log('Analyse des phases du script:');
+    console.log('------------------------------');
+    console.log(`Nombre total d'étapes: ${scriptArray.length}`);
+    console.log(`Phases uniques: ${uniquePhases.length}`);
+    console.log('Distribution des phases:');
+    phases.reduce((acc, phase) => {
+      acc[phase] = (acc[phase] || 0) + 1;
+      return acc;
+    }, {});
+
     // Save the script in the database
+    console.log('Sauvegarde du script dans la base de données...');
     const scriptDoc = await Script.create({
       gigId: gig._id,
       gig,
@@ -471,7 +668,13 @@ const generateScript = async (req, res) => {
       details: contexte,
       script: scriptArray
     });
-    res.status(200).json({
+    console.log('Script sauvegardé avec succès:', {
+      scriptId: scriptDoc._id,
+      stepsCount: scriptArray.length
+    });
+
+    // Prepare final response
+    const finalResponse = {
       success: true,
       data: {
         script: scriptContent,
@@ -484,11 +687,37 @@ const generateScript = async (req, res) => {
             gigTitle: gig.title,
             gigCategory: gig.category
           },
-          scriptId: scriptDoc._id
+          scriptId: scriptDoc._id,
+          analysisStats: {
+            totalSteps: scriptArray.length,
+            uniquePhases: uniquePhases.length,
+            phasesDistribution: phases.reduce((acc, phase) => {
+              acc[phase] = (acc[phase] || 0) + 1;
+              return acc;
+            }, {}),
+            citationsUsed: response.candidates?.[0]?.citationMetadata?.citations?.length || 0
+          }
         }
       }
-    });
+    };
+
+    console.log('\n✅ GÉNÉRATION TERMINÉE\n');
+    console.log('Sources utilisées:');
+    if (response.candidates?.[0]?.citationMetadata?.citations) {
+      response.candidates[0].citationMetadata.citations.forEach(citation => {
+        console.log(`  - ${citation.title}`);
+      });
+    }
+    console.log('\n========================================\n');
+
+    logger.info('Script generation completed successfully');
+    res.status(200).json(finalResponse);
   } catch (error) {
+    console.log('\n❌ ERREUR LORS DE LA GÉNÉRATION:');
+    console.log('-----------------------------');
+    console.log(error.message);
+    console.log('\n========================================\n');
+    
     logger.error('Error generating script:', error);
     res.status(500).json({ error: 'Failed to generate script', details: error.message });
   }
