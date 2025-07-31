@@ -529,98 +529,51 @@ const generateScript = async (req, res) => {
     // Construire le prompt pour la génération
     console.log('🔄 PRÉPARATION DU PROMPT...\n');
     
-    let scriptPrompt = `You are an expert in creating sales call scripts following the REPS methodology. You have access to a knowledge base containing ${corpusStatus.documentCount} documents and ${corpusStatus.callRecordingCount} call recordings for this company.
+    const prompt = `You are generating a structured sales call script.
 
-CRITICAL INSTRUCTION FOR CORPUS ANALYSIS:
-1. First, analyze all call recordings in the knowledge base
-2. Identify the most successful and representative call that follows best practices
-3. Use this exemplary call as a primary model for script structure and flow
-4. Complement this with insights from other calls and documentation
-5. Ensure compliance with company policies found in documentation
+CRITICAL REQUIREMENTS:
+1. The script MUST include ALL of the following 8 phases in this EXACT order:
+   - Phase 1: "Context & Preparation"
+   - Phase 2: "SBAM & Opening"
+   - Phase 3: "Legal & Compliance"
+   - Phase 4: "Need Discovery"
+   - Phase 5: "Value Proposition"
+   - Phase 6: "Documents/Quote"
+   - Phase 7: "Objection Handling"
+   - Phase 8: "Confirmation & Closing"
 
-GIG INFORMATION (Use this to customize the script):
+2. Each phase MUST have at least one dialogue exchange.
+3. DO NOT skip or combine any phases.
+4. DO NOT add any additional phases.
+5. DO NOT mention the phase name in the dialogue text.
+
+DIALOGUE STRUCTURE:
+- Each step must be a JSON object with:
+  - phase: one of the 8 exact phase names listed above
+  - actor: either "agent" or "lead"
+  - replica: the dialogue text
+
+Client Profile:
+- Type: ${typeClient} (DISC Profile)
+- Language/Tone: ${langueTon}
+${contexte ? `- Additional Context: ${contexte}` : ''}
+
+Gig Details:
 ${JSON.stringify(gig, null, 2)}
 
-CALL PARAMETERS:
-- Client DISC Profile: ${typeClient}
-- Language & Tone: ${langueTon}
-- Specific Context: ${contexte || 'not specified'}
-
-⚠️  ABSOLUTE RULE: You MUST include all 8 REPS phases in exact order. NO phase can be omitted!
-
-MANDATORY REPS PHASES (ALL 8 phases are REQUIRED):
-1. "Context & Preparation" - MANDATORY: Preparation and context setting
-2. "SBAM & Opening" - MANDATORY: Salutation, Greeting, Hook, Purpose
-3. "Legal & Compliance" - MANDATORY: Legal aspects and compliance
-4. "Need Discovery" - MANDATORY: Needs discovery and qualification
-5. "Value Proposition" - MANDATORY: Value proposition presentation
-6. "Documents/Quote" - MANDATORY: Documentation and quotation
-7. "Objection Handling" - MANDATORY: Objection handling and resolution
-8. "Confirmation & Closing" - MANDATORY: Confirmation and closing
-
-CRITICAL INSTRUCTIONS FOR SCRIPT GENERATION:
-🔴 ANALYZE THE CORPUS:
-   - Study successful call recordings for natural dialogue patterns
-   - Extract common phrases and effective transitions
-   - Identify typical objections and successful responses
-   - Note compliance requirements from documentation
-
-🔴 PHASE REQUIREMENTS:
-   - START with "Context & Preparation" - NEVER skip this phase
-   - INCLUDE all 8 phases in exact order
-   - Each phase must have 1-2 exchanges between agent/lead
-   - Base dialogue flow on the most successful call recording
-   - Adapt language and style to match company's tone from documentation
-
-🔴 DIALOGUE REQUIREMENTS:
-   - Keep dialogue natural and conversational
-   - DO NOT mention phase names in the dialogue
-   - Focus on the actual conversation content
-   - Use natural transitions between phases
-   - Adapt tone to match DISC profile
-
-JSON Object Structure:
-{
-  "actor": "agent" or "lead",
-  "replica": "Natural dialogue without mentioning phase names",
-  "phase": "EXACT phase name from the list above"
-}
-
-Example of GOOD dialogue structure:
+Return ONLY a JSON array of dialogue steps following this exact format:
 [
   {
+    "phase": "Context & Preparation",
     "actor": "agent",
-    "replica": "Bonjour, je suis Marc de Harx. J'ai bien reçu votre demande concernant nos services.",
-    "phase": "SBAM & Opening"
+    "replica": "..."
   },
-  {
-    "actor": "lead",
-    "replica": "Oui, bonjour Marc.",
-    "phase": "SBAM & Opening"
-  }
-]
-
-Example of BAD dialogue structure (DO NOT DO THIS):
-[
-  {
-    "actor": "agent",
-    "replica": "Pour la phase SBAM, je vais commencer par dire: Bonjour, je suis Marc.",  // ❌ DON'T mention phase names
-    "phase": "SBAM & Opening"
-  }
-]
-
-FINAL VERIFICATION - Ensure script includes:
-✅ All 8 phases in order
-✅ Natural dialogue without phase names in text
-✅ Proper transitions between phases
-✅ Consistent tone matching DISC profile
-✅ Relevant content from call recordings
-
-Return only the JSON array, without any text or explanation around it.`;
+  ...
+]`;
 
     // Utiliser la logique RAG pour enrichir le prompt avec le contexte documentaire
     console.log('🔄 CONSULTATION DU CORPUS POUR LA GÉNÉRATION DE SCRIPT...\n');
-    const response = await vertexAIService.queryKnowledgeBase(companyId, scriptPrompt);
+    const response = await vertexAIService.queryKnowledgeBase(companyId, prompt);
     
     // Log response metadata
     console.log('📄 MÉTADONNÉES DE LA RÉPONSE DE Vertex AI:');

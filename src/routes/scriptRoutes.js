@@ -21,6 +21,12 @@ router.post('/:scriptId/refine', scriptController.refineScriptPart);
 // Modifier directement le contenu d'un script
 router.put('/:scriptId/content', scriptController.updateScriptContent);
 
+// Ajouter une nouvelle réplique à une phase spécifique
+router.post('/:scriptId/replicas', scriptController.addReplica);
+
+// Supprimer une réplique spécifique
+router.delete('/:scriptId/replicas/:replicaIndex', scriptController.deleteReplica);
+
 // Supprimer un script par son ID
 router.delete('/:scriptId', scriptController.deleteScript);
 
