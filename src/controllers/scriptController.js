@@ -362,88 +362,129 @@ const refineScriptPart = async (req, res) => {
     const { scriptId } = req.params;
     const { stepIndex, refinementPrompt } = req.body;
     const companyId = req.headers['x-company-id'];
-    
-    if (!scriptId || typeof stepIndex !== 'number' || !refinementPrompt) {
-      return res.status(400).json({ error: 'scriptId, stepIndex, and refinementPrompt are required' });
-    }
 
     if (!companyId) {
-      return res.status(400).json({ error: 'Company ID not found in request headers' });
+      return res.status(400).json({
+        success: false,
+        error: 'Company ID is required',
+        details: 'Missing X-Company-ID header'
+      });
     }
 
-    const script = await Script.findById(scriptId).lean();
+    // Get the original script without using lean()
+    const script = await Script.findById(scriptId);
     if (!script) {
-      return res.status(404).json({ error: 'Script not found' });
+      return res.status(404).json({
+        success: false,
+        error: 'Script not found'
+      });
     }
 
-    // Fetch gig info from GIGS API
-    const gigsApiUrl = process.env.GIGS_API_URL;
-    const gigResponse = await axios.get(`${gigsApiUrl}/gigs/${script.gigId}`);
-    const gig = gigResponse.data.data;
-
-    if (stepIndex < 0 || stepIndex >= script.script.length) {
-      return res.status(400).json({ error: 'Invalid step index' });
+    // Get the step to refine
+    const stepToRefine = script.script[stepIndex];
+    if (!stepToRefine) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid step index',
+        details: `Step index ${stepIndex} not found in script`
+      });
     }
 
-    // Initialize Vertex AI if needed
-    if (!vertexAIService.vertexAI) {
-      await vertexAIService.initialize();
-    }
+    // Prepare context for the AI
+    const context = {
+      phase: stepToRefine.phase,
+      actor: stepToRefine.actor,
+      currentReplica: stepToRefine.replica,
+      refinementPrompt
+    };
 
-    // Get the current step and context
-    const currentStep = script.script[stepIndex];
-    const previousStep = stepIndex > 0 ? script.script[stepIndex - 1] : null;
-    const nextStep = stepIndex < script.script.length - 1 ? script.script[stepIndex + 1] : null;
-
-    // Generate refined content
-    const response = await vertexAIService.queryKnowledgeBase(
+    // Call Vertex AI to refine the step
+    const vertexResponse = await vertexAIService.queryKnowledgeBase(
       companyId,
-      `You are refining a specific part of a sales call script.
+      `You are refining a sales call script replica.
 
-      Current context:
-      ${previousStep ? `Previous line (${previousStep.actor}): ${previousStep.replica}` : 'This is the start of the conversation'}
-      Current line (${currentStep.actor}): ${currentStep.replica}
-      ${nextStep ? `Next line (${nextStep.actor}): ${nextStep.replica}` : 'This is the end of the conversation'}
-      
-      Phase: ${currentStep.phase}
-      Refinement request: ${refinementPrompt}
-      
-      Generate a new version of ONLY the current line that:
-      1. Maintains the same phase
-      2. Keeps the same actor
-      3. Addresses the refinement request
-      4. Fits naturally with the previous and next lines
-      
-      Return only the new replica text.`
+Current Phase: ${context.phase}
+Current Actor: ${context.actor}
+Current Replica: "${context.currentReplica}"
+
+Refinement Request: ${context.refinementPrompt}
+
+CRITICAL INSTRUCTIONS:
+1. Return ONLY the new replica text
+2. DO NOT include any explanations, reasoning, or additional content
+3. DO NOT use markdown, quotes, or special formatting
+4. DO NOT include phrases like "Here's the refined text" or "The new replica is"
+5. DO NOT include the phase name or actor in the response
+
+Example Good Response:
+Bonjour, je suis [Agent Name] d'APRIL Santé. Pourrais-je parler à [Lead Name], s'il vous plaît ?
+
+Example Bad Response:
+Here's the refined replica text:
+"Bonjour, je suis [Agent Name] d'APRIL Santé. Pourrais-je parler à [Lead Name], s'il vous plaît ?"
+Reasoning: This maintains the professional tone...
+
+YOUR RESPONSE SHOULD BE THE NEW REPLICA TEXT ONLY.`
     );
 
-    // Update the script with the refined content
-    const refinedText = response.candidates[0].content.parts[0].text.trim();
+    // Extract the refined text from the response
+    let refinedText;
+    if (vertexResponse.candidates && vertexResponse.candidates[0]) {
+      if (vertexResponse.candidates[0].content && vertexResponse.candidates[0].content.parts) {
+        refinedText = vertexResponse.candidates[0].content.parts[0].text;
+      } else if (vertexResponse.candidates[0].text) {
+        refinedText = vertexResponse.candidates[0].text;
+      } else {
+        refinedText = vertexResponse.candidates[0];
+      }
+    } else if (vertexResponse.text) {
+      refinedText = vertexResponse.text;
+    } else if (typeof vertexResponse === 'string') {
+      refinedText = vertexResponse;
+    } else {
+      throw new Error('Unexpected response structure from Vertex AI');
+    }
+
+    // Clean up the refined text
+    refinedText = refinedText
+      .replace(/^["']|["']$/g, '') // Remove surrounding quotes if present
+      .replace(/^```[\s\S]*?```$/g, '') // Remove code blocks if present
+      .trim();
+
+    // Update the specific step in the script
     script.script[stepIndex].replica = refinedText;
+
+    // Save the updated script
     await script.save();
 
-    // Update the script and get the new version
-    const updatedScript = await Script.findByIdAndUpdate(
-      scriptId,
-      { 'script': script.script },
-      { new: true }
-    ).lean();
+    // Now get the full script with gig info for the response
+    const updatedScript = await Script.findById(scriptId);
+    
+    // Fetch gig info
+    const gigsApiUrl = process.env.GIGS_API_URL;
+    const gigResponse = await axios.get(`${gigsApiUrl}/gigs/${updatedScript.gigId}`);
+    const gig = gigResponse.data.data;
 
-    // Add gig info to the response
-    const scriptWithGig = { ...updatedScript, gig };
+    // Prepare the response
+    const scriptWithGig = updatedScript.toObject();
+    scriptWithGig.gig = gig;
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       message: 'Script part refined successfully',
       data: {
-        updatedStep: scriptWithGig.script[stepIndex],
+        refinedStep: {
+          index: stepIndex,
+          content: refinedText
+        },
         fullScript: scriptWithGig
       }
     });
 
   } catch (error) {
-    logger.error('Error refining script part:', error);
-    res.status(500).json({
+    console.error('Error refining script part:', error);
+    return res.status(500).json({
+      success: false,
       error: 'Failed to refine script part',
       details: error.message
     });
