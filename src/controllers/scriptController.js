@@ -550,6 +550,208 @@ const updateScriptContent = async (req, res) => {
   }
 };
 
+/**
+ * Ajouter une nouvelle réplique à une phase spécifique
+ */
+const addReplica = async (req, res) => {
+  try {
+    const { scriptId } = req.params;
+    const { phase, actor, insertIndex } = req.body;
+
+    // Validation des données requises
+    if (!phase || !actor || insertIndex === undefined) {
+      return res.status(400).json({
+        success: false,
+        error: 'Missing required fields',
+        details: 'phase, actor, and insertIndex are required'
+      });
+    }
+
+    // Vérifier que la phase est valide
+    const validPhases = [
+      'Context & Preparation',
+      'SBAM & Opening',
+      'Legal & Compliance',
+      'Need Discovery',
+      'Value Proposition',
+      'Documents/Quote',
+      'Objection Handling',
+      'Confirmation & Closing'
+    ];
+
+    if (!validPhases.includes(phase)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid phase',
+        details: `Phase must be one of: ${validPhases.join(', ')}`
+      });
+    }
+
+    // Vérifier que l'acteur est valide
+    if (!['agent', 'lead'].includes(actor)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid actor',
+        details: 'Actor must be either "agent" or "lead"'
+      });
+    }
+
+    // Récupérer le script sans utiliser lean() pour avoir accès aux méthodes Mongoose
+    const script = await Script.findById(scriptId);
+    if (!script) {
+      return res.status(404).json({
+        success: false,
+        error: 'Script not found'
+      });
+    }
+
+    // Créer la nouvelle réplique avec un texte temporaire
+    const newReplica = {
+      phase,
+      actor,
+      replica: '[New Response]' // Texte temporaire pour satisfaire la validation
+    };
+
+    // Vérifier que l'index est valide
+    if (insertIndex < 0 || insertIndex > script.script.length) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid insert index',
+        details: 'Index out of bounds'
+      });
+    }
+
+    // Insérer la réplique à l'index spécifié
+    script.script.splice(insertIndex, 0, newReplica);
+
+    // Sauvegarder les modifications
+    await script.save();
+
+    // Récupérer le script mis à jour avec les informations du gig
+    const updatedScript = await Script.findById(scriptId);
+    
+    // Récupérer les informations du gig
+    const gigsApiUrl = process.env.GIGS_API_URL;
+    const gigResponse = await axios.get(`${gigsApiUrl}/gigs/${updatedScript.gigId}`);
+    const gig = gigResponse.data.data;
+
+    // Préparer la réponse
+    const scriptWithGig = updatedScript.toObject();
+    scriptWithGig.gig = gig;
+
+    return res.status(200).json({
+      success: true,
+      message: 'Replica added successfully',
+      data: {
+        insertedIndex: insertIndex,
+        fullScript: scriptWithGig
+      }
+    });
+
+  } catch (error) {
+    console.error('Error adding replica:', error);
+    return res.status(500).json({
+      success: false,
+      error: 'Failed to add replica',
+      details: error.message
+    });
+  }
+};
+
+/**
+ * Supprimer une réplique spécifique
+ */
+const deleteReplica = async (req, res) => {
+  try {
+    const { scriptId, replicaIndex } = req.params;
+
+    // Validation de l'index
+    const index = parseInt(replicaIndex);
+    if (isNaN(index)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid replica index',
+        details: 'Index must be a valid number'
+      });
+    }
+
+    // Récupérer le script
+    const script = await Script.findById(scriptId);
+    if (!script) {
+      return res.status(404).json({
+        success: false,
+        error: 'Script not found'
+      });
+    }
+
+    // Vérifier que l'index est valide
+    if (index < 0 || index >= script.script.length) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid replica index',
+        details: 'Index out of bounds'
+      });
+    }
+
+    // Supprimer la réplique
+    script.script.splice(index, 1);
+
+    // Vérifier qu'il reste au moins une réplique dans chaque phase
+    const phases = new Set(script.script.map(s => s.phase));
+    const validPhases = new Set([
+      'Context & Preparation',
+      'SBAM & Opening',
+      'Legal & Compliance',
+      'Need Discovery',
+      'Value Proposition',
+      'Documents/Quote',
+      'Objection Handling',
+      'Confirmation & Closing'
+    ]);
+
+    // S'assurer que toutes les phases requises sont présentes
+    if ([...validPhases].some(phase => !phases.has(phase))) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid operation',
+        details: 'Cannot delete the last replica of a required phase'
+      });
+    }
+
+    // Sauvegarder les modifications
+    await script.save();
+
+    // Récupérer le script mis à jour avec les informations du gig
+    const updatedScript = await Script.findById(scriptId);
+    
+    // Récupérer les informations du gig
+    const gigsApiUrl = process.env.GIGS_API_URL;
+    const gigResponse = await axios.get(`${gigsApiUrl}/gigs/${updatedScript.gigId}`);
+    const gig = gigResponse.data.data;
+
+    // Préparer la réponse
+    const scriptWithGig = updatedScript.toObject();
+    scriptWithGig.gig = gig;
+
+    return res.status(200).json({
+      success: true,
+      message: 'Replica deleted successfully',
+      data: {
+        deletedIndex: index,
+        fullScript: scriptWithGig
+      }
+    });
+
+  } catch (error) {
+    console.error('Error deleting replica:', error);
+    return res.status(500).json({
+      success: false,
+      error: 'Failed to delete replica',
+      details: error.message
+    });
+  }
+};
+
 module.exports = {
   getScriptsForGig,
   getScriptsForCompany,
@@ -557,5 +759,7 @@ module.exports = {
   deleteScript,
   regenerateScript,
   refineScriptPart,
-  updateScriptContent
+  updateScriptContent,
+  addReplica,
+  deleteReplica
 }; 
