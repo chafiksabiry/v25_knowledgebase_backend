@@ -12,6 +12,7 @@ const ScriptSchema = new mongoose.Schema({
   language: { type: String, required: true },
   details: { type: String }, // context
   script: [ScriptPhaseSchema],
+  isActive: { type: Boolean, default: true }, // New field for script activation status
   createdAt: { type: Date, default: Date.now }
 });
 

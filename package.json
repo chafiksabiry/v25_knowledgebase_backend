@@ -9,7 +9,8 @@
     "test": "jest",
     "test:rag": "node src/tests/ragTest.js",
     "test:vertex": "node src/tests/vertexAITest.js",
-    "test:prompts": "node src/tests/analysisPrompts.test.js"
+    "test:prompts": "node src/tests/analysisPrompts.test.js",
+    "migrate:scripts-status": "node migrate-scripts-status.js"
   },
   "dependencies": {
     "@google-cloud/storage": "^7.16.0",

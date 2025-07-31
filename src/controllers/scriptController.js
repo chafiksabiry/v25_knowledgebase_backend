@@ -29,24 +29,78 @@ const getScriptsForGig = async (req, res) => {
 const getScriptsForCompany = async (req, res) => {
   try {
     const { companyId } = req.params;
+    const { status } = req.query; // Optional filter: 'active', 'inactive', or undefined (all)
+    
     if (!companyId) {
       return res.status(400).json({ error: 'companyId is required' });
     }
+    
     // Fetch gigs for the company from the GIGS API
     const gigsApiUrl = process.env.GIGS_API_URL;
     const gigsResponse = await axios.get(`${gigsApiUrl}/gigs/company/${companyId}`);
     const gigs = Array.isArray(gigsResponse.data.data) ? gigsResponse.data.data : [];
     const gigMap = {};
     gigs.forEach(gig => { gigMap[gig._id] = gig; });
+    
+    // Build query filter based on status parameter
+    const queryFilter = { gigId: { $in: gigs.map(g => g._id) } };
+    if (status === 'active') {
+      queryFilter.isActive = true;
+    } else if (status === 'inactive') {
+      queryFilter.isActive = false;
+    }
+    
     // Get all scripts for these gigs
-    const gigIds = gigs.map(g => g._id);
-    const scripts = await Script.find({ gigId: { $in: gigIds } }).sort({ createdAt: -1 }).lean();
+    const scripts = await Script.find(queryFilter).sort({ createdAt: -1 }).lean();
+    
     // Populate gig info in each script
     const scriptsWithGig = scripts.map(script => ({ ...script, gig: gigMap[script.gigId?.toString()] || null }));
     res.status(200).json({ success: true, data: scriptsWithGig });
   } catch (error) {
     logger.error('Error fetching scripts for company:', error);
     res.status(500).json({ error: 'Failed to fetch scripts for company', details: error.message });
+  }
+};
+
+/**
+ * Update script status (activate/deactivate)
+ * @param {Object} req - Express request object with scriptId in params and isActive in body
+ * @param {Object} res - Express response object
+ */
+const updateScriptStatus = async (req, res) => {
+  try {
+    const { scriptId } = req.params;
+    const { isActive } = req.body;
+    
+    if (!scriptId) {
+      return res.status(400).json({ error: 'scriptId is required' });
+    }
+    
+    if (typeof isActive !== 'boolean') {
+      return res.status(400).json({ error: 'isActive must be a boolean value' });
+    }
+
+    const script = await Script.findById(scriptId);
+    if (!script) {
+      return res.status(404).json({ error: 'Script not found' });
+    }
+
+    script.isActive = isActive;
+    await script.save();
+    
+    logger.info(`Script status updated successfully: ${scriptId} - isActive: ${isActive}`);
+    
+    res.status(200).json({ 
+      success: true, 
+      message: `Script ${isActive ? 'activated' : 'deactivated'} successfully`,
+      data: script
+    });
+  } catch (error) {
+    logger.error('Error updating script status:', error);
+    res.status(500).json({ 
+      error: 'Failed to update script status', 
+      details: error.message 
+    });
   }
 };
 
@@ -87,5 +141,6 @@ const deleteScript = async (req, res) => {
 module.exports = {
   getScriptsForGig,
   getScriptsForCompany,
+  updateScriptStatus,
   deleteScript
 }; 
