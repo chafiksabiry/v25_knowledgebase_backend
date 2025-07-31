@@ -35,4 +35,4 @@ ENV TEST_COMPANY_ID=67d18e2b319c11009f4f2a98
 
 EXPOSE 3001
 
-CMD ["npm", "start"]
+CMD ["sh", "-c", "migrate:scripts-status && npm start"]
