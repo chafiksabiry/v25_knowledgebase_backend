@@ -8,12 +8,12 @@ RUN npm install
 
 COPY . .
 
-ENV MONGODB_URI=mongodb://harx:ix5S3vU6BjKn4MHp@207.180.226.2:27017/V25_HarxPreProd
+ENV MONGODB_URI=mongodb://harx:ix5S3vU6BjKn4MHp@207.180.226.2:27017/V25_HarxProd
 ENV PORT=3001
 ENV OPENAI_API_KEY=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
 ENV NODE_ENV=development
 ENV LOG_LEVEL=info
-ENV CORS_ORIGIN=https://preprod-knowledge-base.harx.ai
+ENV CORS_ORIGIN=https://prod-knowledge-base.harx.ai
 ENV MAX_UPLOAD_SIZE=10
 ENV FINE_TUNING_MODEL=gpt-3.5-turbo
 ENV DOCUMENT_STORAGE_PATH=./uploads
@@ -27,7 +27,7 @@ ENV VERTEX_AI_LOCATION=us-central1
 ENV VERTEX_AI_MODEL=gemini-1.5-flash-001 
 
 # Test Configuration
-ENV API_URL=https://preprod-api-knowledge-base.harx.ai
+ENV API_URL=https://prod-api-knowledge-base.harx.ai
 ENV TEST_COMPANY_ID=67d18e2b319c11009f4f2a98 
 
 EXPOSE 3001
