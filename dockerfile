@@ -27,7 +27,7 @@ ENV VERTEX_AI_LOCATION=us-central1
 ENV VERTEX_AI_MODEL=gemini-2.0-flash-lite
 
 # Test Configuration
-ENV API_URL=https://api-knowledge-base.harx.ai
+ENV API_URL=https://v25knowledgebasebackend-production.up.railway.app
 ENV TEST_COMPANY_ID=67d18e2b319c11009f4f2a98 
 
 CMD ["npm", "start"]
