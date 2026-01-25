@@ -203,7 +203,8 @@ exports.getAudioSummaryService = async (file_uri) => {
                 ]
             }],
         };
-        const streamingResp = await generativeVisionModel.generateContentStream(request);
+        const model = await getGenerativeVisionModel();
+        const streamingResp = await model.generateContentStream(request);
         let fullResponse = '';
         for await (const item of streamingResp.stream) {
             console.log('stream chunk: ', JSON.stringify(item));
@@ -242,7 +243,8 @@ exports.getAudioTranscriptionService = async (file_uri) => {
                 ]
             }],
         };
-        const streamingResp = await generativeVisionModel.generateContentStream(request);
+        const model = await getGenerativeVisionModel();
+        const streamingResp = await model.generateContentStream(request);
         let fullResponse = '';
         for await (const item of streamingResp.stream) {
             console.log('stream chunk: ', JSON.stringify(item));
@@ -300,7 +302,8 @@ exports.getCallScoringService = async (file_uri) => {
                 ]
             }],
         };
-        const streamingResp = await generativeVisionModel.generateContentStream(request);
+        const model = await getGenerativeVisionModel();
+        const streamingResp = await model.generateContentStream(request);
         let fullResponse = '';
         for await (const item of streamingResp.stream) {
             console.log('stream chunk: ', JSON.stringify(item));
