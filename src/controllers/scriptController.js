@@ -31,18 +31,18 @@ const getScriptsForCompany = async (req, res) => {
   try {
     const { companyId } = req.params;
     const { status } = req.query; // Optional filter: 'active', 'inactive', or undefined (all)
-
+    
     if (!companyId) {
       return res.status(400).json({ error: 'companyId is required' });
     }
-
+    
     // Fetch gigs for the company from the GIGS API
-    const gigsApiUrl = process.env.GIGS_API_URL || 'https://v25gigsmanualcreationbackend-production.up.railway.app/api';
+    const gigsApiUrl = process.env.GIGS_API_URL;
     const gigsResponse = await axios.get(`${gigsApiUrl}/gigs/company/${companyId}`);
     const gigs = Array.isArray(gigsResponse.data.data) ? gigsResponse.data.data : [];
     const gigMap = {};
     gigs.forEach(gig => { gigMap[gig._id] = gig; });
-
+    
     // Build query filter based on status parameter
     const queryFilter = { gigId: { $in: gigs.map(g => g._id) } };
     if (status === 'active') {
@@ -50,10 +50,10 @@ const getScriptsForCompany = async (req, res) => {
     } else if (status === 'inactive') {
       queryFilter.isActive = false;
     }
-
+    
     // Get all scripts for these gigs
     const scripts = await Script.find(queryFilter).sort({ createdAt: -1 }).lean();
-
+    
     // Populate gig info in each script
     const scriptsWithGig = scripts.map(script => ({ ...script, gig: gigMap[script.gigId?.toString()] || null }));
     res.status(200).json({ success: true, data: scriptsWithGig });
@@ -72,11 +72,11 @@ const updateScriptStatus = async (req, res) => {
   try {
     const { scriptId } = req.params;
     const { isActive } = req.body;
-
+    
     if (!scriptId) {
       return res.status(400).json({ error: 'scriptId is required' });
     }
-
+    
     if (typeof isActive !== 'boolean') {
       return res.status(400).json({ error: 'isActive must be a boolean value' });
     }
@@ -88,19 +88,19 @@ const updateScriptStatus = async (req, res) => {
 
     script.isActive = isActive;
     await script.save();
-
+    
     logger.info(`Script status updated successfully: ${scriptId} - isActive: ${isActive}`);
-
-    res.status(200).json({
-      success: true,
+    
+    res.status(200).json({ 
+      success: true, 
       message: `Script ${isActive ? 'activated' : 'deactivated'} successfully`,
       data: script
     });
   } catch (error) {
     logger.error('Error updating script status:', error);
-    res.status(500).json({
-      error: 'Failed to update script status',
-      details: error.message
+    res.status(500).json({ 
+      error: 'Failed to update script status', 
+      details: error.message 
     });
   }
 };
@@ -124,17 +124,17 @@ const deleteScript = async (req, res) => {
 
     await Script.findByIdAndDelete(scriptId);
     logger.info(`Script deleted successfully: ${scriptId}`);
-
-    res.status(200).json({
-      success: true,
+    
+    res.status(200).json({ 
+      success: true, 
       message: 'Script deleted successfully',
       data: { deletedScriptId: scriptId }
     });
   } catch (error) {
     logger.error('Error deleting script:', error);
-    res.status(500).json({
-      error: 'Failed to delete script',
-      details: error.message
+    res.status(500).json({ 
+      error: 'Failed to delete script', 
+      details: error.message 
     });
   }
 };
@@ -148,7 +148,7 @@ const regenerateScript = async (req, res) => {
   try {
     const { scriptId } = req.params;
     const companyId = req.headers['x-company-id'];
-
+    
     if (!scriptId) {
       return res.status(400).json({ error: 'scriptId is required' });
     }
@@ -164,7 +164,7 @@ const regenerateScript = async (req, res) => {
     }
 
     // Fetch gig info from GIGS API
-    const gigsApiUrl = process.env.GIGS_API_URL || 'https://v25gigsmanualcreationbackend-production.up.railway.app/api';
+    const gigsApiUrl = process.env.GIGS_API_URL;
     const gigResponse = await axios.get(`${gigsApiUrl}/gigs/${originalScript.gigId}`);
     const gig = gigResponse.data.data;
 
@@ -175,7 +175,7 @@ const regenerateScript = async (req, res) => {
 
     // Get corpus status
     const corpusStatus = await vertexAIService.checkCorpusStatus(companyId);
-
+    
     // Generate new script content
     const response = await vertexAIService.queryKnowledgeBase(
       companyId,
@@ -241,10 +241,10 @@ const regenerateScript = async (req, res) => {
     if (typeof scriptContent === 'string') {
       // Remove any markdown code block syntax
       scriptContent = scriptContent.replace(/^```(?:json)?\s*|\s*```$/g, '').trim();
-
+      
       // Remove any potential comments
       scriptContent = scriptContent.replace(/\/\*[\s\S]*?\*\/|\/\/.*/g, '');
-
+      
       // Ensure we have valid JSON array brackets
       if (!scriptContent.startsWith('[')) {
         const arrayStart = scriptContent.indexOf('[');
@@ -459,9 +459,9 @@ YOUR RESPONSE SHOULD BE THE NEW REPLICA TEXT ONLY.`
 
     // Now get the full script with gig info for the response
     const updatedScript = await Script.findById(scriptId);
-
+    
     // Fetch gig info
-    const gigsApiUrl = process.env.GIGS_API_URL || 'https://v25gigsmanualcreationbackend-production.up.railway.app/api';
+    const gigsApiUrl = process.env.GIGS_API_URL;
     const gigResponse = await axios.get(`${gigsApiUrl}/gigs/${updatedScript.gigId}`);
     const gig = gigResponse.data.data;
 
@@ -500,7 +500,7 @@ const updateScriptContent = async (req, res) => {
   try {
     const { scriptId } = req.params;
     const { stepIndex, newContent } = req.body;
-
+    
     if (!scriptId || typeof stepIndex !== 'number' || !newContent || !newContent.replica) {
       return res.status(400).json({ error: 'scriptId, stepIndex, and newContent.replica are required' });
     }
@@ -511,7 +511,7 @@ const updateScriptContent = async (req, res) => {
     }
 
     // Fetch gig info from GIGS API
-    const gigsApiUrl = process.env.GIGS_API_URL || 'https://v25gigsmanualcreationbackend-production.up.railway.app/api';
+    const gigsApiUrl = process.env.GIGS_API_URL;
     const gigResponse = await axios.get(`${gigsApiUrl}/gigs/${script.gigId}`);
     const gig = gigResponse.data.data;
 
@@ -629,9 +629,9 @@ const addReplica = async (req, res) => {
 
     // Récupérer le script mis à jour avec les informations du gig
     const updatedScript = await Script.findById(scriptId);
-
+    
     // Récupérer les informations du gig
-    const gigsApiUrl = process.env.GIGS_API_URL || 'https://v25gigsmanualcreationbackend-production.up.railway.app/api';
+    const gigsApiUrl = process.env.GIGS_API_URL;
     const gigResponse = await axios.get(`${gigsApiUrl}/gigs/${updatedScript.gigId}`);
     const gig = gigResponse.data.data;
 
@@ -723,9 +723,9 @@ const deleteReplica = async (req, res) => {
 
     // Récupérer le script mis à jour avec les informations du gig
     const updatedScript = await Script.findById(scriptId);
-
+    
     // Récupérer les informations du gig
-    const gigsApiUrl = process.env.GIGS_API_URL || 'https://v25gigsmanualcreationbackend-production.up.railway.app/api';
+    const gigsApiUrl = process.env.GIGS_API_URL;
     const gigResponse = await axios.get(`${gigsApiUrl}/gigs/${updatedScript.gigId}`);
     const gig = gigResponse.data.data;
 

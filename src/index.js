@@ -25,7 +25,7 @@ const PORT = process.env.PORT || 3001;
 
 // Middleware
 app.use(cors({
-  origin: process.env.CORS_ORIGIN,
+  origin: [process.env.FRONTEND_URL, process.env.QIANKUN_FRONT_URL],
   credentials: true
 }));
 app.use(express.json({ limit: '50mb' }));

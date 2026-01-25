@@ -528,7 +528,7 @@ const analyzeCompanyDocuments = async (req, res) => {
     // Check for ongoing analysis for this company
     const ongoingAnalysis = await Analysis.findOne({
       companyId,
-      status: 'in_progress'
+      status: 'in-progress'
     });
 
     if (ongoingAnalysis) {
@@ -558,7 +558,7 @@ const analyzeCompanyDocuments = async (req, res) => {
     // Create new analysis record
     const analysis = new Analysis({
       companyId,
-      status: 'in_progress',
+      status: 'in-progress',
       type: 'rag',
       documentCount: documents.length,
       documentIds: documents.map(doc => doc._id),

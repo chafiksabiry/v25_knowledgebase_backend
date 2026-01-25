@@ -15,7 +15,7 @@ const clientId = process.env.QAUTH2_CLIENT_ID;
 const clientSecret = process.env.QAUTH2_CLIENT_SECRET;
 const scope = process.env.QAUTH2_SCOPE;
 const redirectUrl = process.env.REDIRECTION_URL;
-const project = (process.env.GOOGLE_CLOUD_PROJECT || 'harx-technologies-inc').replace(/"/g, '');
+const project = process.env.GOOGLE_CLOUD_PROJECT || 'harx-technologies-inc';
 const location = 'us-central1';
 
 // Construct the absolute path to the service account JSON file
@@ -85,7 +85,7 @@ async function uploadToGCS(audioUrl) {
 
         // Generate unique filename
         const fileName = `audio-${Date.now()}.wav`;
-
+        
         // Upload to GCS using the new method
         const uploadResult = await exports.audioUpload2(response.data, fileName);
         console.log('Upload result:', uploadResult);
@@ -104,9 +104,9 @@ const auth = new GoogleAuth({
 });
 
 // Create an instance of VertexAI class with explicit project configuration
-const vertex_ai = new VertexAI({
-    project: project,
-    location: location,
+const vertex_ai = new VertexAI({ 
+    project: project, 
+    location: location, 
     googleAuthOptions: {
         keyFilename: keyPath,
         scopes: ['https://www.googleapis.com/auth/cloud-platform']
@@ -115,7 +115,7 @@ const vertex_ai = new VertexAI({
 
 // Create an instance of GenerativeModel class
 const generativeVisionModel = vertex_ai.getGenerativeModel({
-    model: 'gemini-1.5-flash-001',
+    model: 'gemini-1.5-flash-002',
 });
 
 // Get the summary of an audio 
@@ -188,10 +188,10 @@ exports.getAudioTranscriptionService = async (file_uri) => {
             }
         }
         console.log('Full transcription response:', fullResponse);
-
+        
         // Parse the response and ensure it's in the correct format
         const parsedResponse = parseCleanJson(fullResponse);
-
+        
         // If the response is an array, wrap it in the proper structure
         if (Array.isArray(parsedResponse)) {
             return {
@@ -201,12 +201,12 @@ exports.getAudioTranscriptionService = async (file_uri) => {
                 error: null
             };
         }
-
+        
         // If the response is already in the correct format, return it
         if (parsedResponse && parsedResponse.status && parsedResponse.segments) {
             return parsedResponse;
         }
-
+        
         // If we can't parse the response properly, return an error
         throw new Error('Invalid transcription response format');
     } catch (error) {
