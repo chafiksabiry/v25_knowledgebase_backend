@@ -17,52 +17,72 @@ const scope = process.env.QAUTH2_SCOPE;
 const redirectUrl = process.env.REDIRECTION_URL;
 const project = process.env.GOOGLE_CLOUD_PROJECT || 'harx-technologies-inc';
 const location = 'us-central1';
+const fs = require('fs');
+const fsPromises = require('fs').promises;
 
 // Configure credentials - prioritize environment variables for production
-let vertexCredentials;
-let storageCredentials;
+let vertexCredentialsPath;
+let storageCredentialsPath;
 
-if (process.env.VERTEX_AI_CREDENTIALS) {
-    // Production: Use JSON string from environment variable
-    try {
-        vertexCredentials = JSON.parse(process.env.VERTEX_AI_CREDENTIALS);
-        console.log('Using Vertex AI credentials from environment variable');
-    } catch (error) {
-        console.error('Failed to parse VERTEX_AI_CREDENTIALS:', error);
-        throw new Error('Invalid VERTEX_AI_CREDENTIALS format. Must be valid JSON.');
+async function setupCredentials() {
+    if (process.env.VERTEX_AI_CREDENTIALS) {
+        // Production: Write JSON credentials to temporary file
+        try {
+            const credentials = JSON.parse(process.env.VERTEX_AI_CREDENTIALS);
+            const tempDir = path.join(__dirname, '../../temp');
+            await fsPromises.mkdir(tempDir, { recursive: true });
+            vertexCredentialsPath = path.join(tempDir, 'vertex-credentials.json');
+            await fsPromises.writeFile(vertexCredentialsPath, JSON.stringify(credentials, null, 2));
+            console.log('Using Vertex AI credentials from environment variable (written to temp file)');
+        } catch (error) {
+            console.error('Failed to setup VERTEX_AI_CREDENTIALS:', error);
+            throw new Error('Invalid VERTEX_AI_CREDENTIALS format. Must be valid JSON.');
+        }
+    } else {
+        // Local development: Use file path
+        vertexCredentialsPath = path.join(__dirname, "../../config/vertex-ai-key.json");
+        if (!fs.existsSync(vertexCredentialsPath)) {
+            console.warn('Warning: Service account file not found at:', vertexCredentialsPath);
+            console.warn('Make sure to place your service account JSON file at this location');
+        }
     }
-} else {
-    // Local development: Use file path
-    const keyPath = path.join(__dirname, "../../config/vertex-ai-key.json");
-    const fs = require('fs');
-    if (!fs.existsSync(keyPath)) {
-        console.warn('Warning: Service account file not found at:', keyPath);
-        console.warn('Make sure to place your service account JSON file at this location');
+
+    if (process.env.CLOUD_STORAGE_CREDENTIALS) {
+        // Production: Write JSON credentials to temporary file
+        try {
+            const credentials = JSON.parse(process.env.CLOUD_STORAGE_CREDENTIALS);
+            const tempDir = path.join(__dirname, '../../temp');
+            await fsPromises.mkdir(tempDir, { recursive: true });
+            storageCredentialsPath = path.join(tempDir, 'storage-credentials.json');
+            await fsPromises.writeFile(storageCredentialsPath, JSON.stringify(credentials, null, 2));
+            console.log('Using Cloud Storage credentials from environment variable (written to temp file)');
+        } catch (error) {
+            console.error('Failed to setup CLOUD_STORAGE_CREDENTIALS:', error);
+            throw new Error('Invalid CLOUD_STORAGE_CREDENTIALS format. Must be valid JSON.');
+        }
+    } else {
+        // Local development: Use file path
+        storageCredentialsPath = path.join(__dirname, "../../config/cloud-storage-service-account.json");
     }
-    vertexCredentials = keyPath;
 }
 
-if (process.env.CLOUD_STORAGE_CREDENTIALS) {
-    // Production: Use JSON string from environment variable
-    try {
-        storageCredentials = JSON.parse(process.env.CLOUD_STORAGE_CREDENTIALS);
-        console.log('Using Cloud Storage credentials from environment variable');
-    } catch (error) {
-        console.error('Failed to parse CLOUD_STORAGE_CREDENTIALS:', error);
-        throw new Error('Invalid CLOUD_STORAGE_CREDENTIALS format. Must be valid JSON.');
+// Initialize credentials
+let credentialsInitialized = false;
+async function ensureCredentialsInitialized() {
+    if (!credentialsInitialized) {
+        await setupCredentials();
+        credentialsInitialized = true;
     }
-} else {
-    // Local development: Use file path
-    storageCredentials = path.join(__dirname, "../../config/cloud-storage-service-account.json");
 }
 
 // Function to upload audio to Google Cloud Storage
 exports.audioUpload2 = async (fileBuffer, destinationName) => {
-    const storageConfig = typeof storageCredentials === 'string'
-        ? { projectId: project, keyFilename: storageCredentials }
-        : { projectId: project, credentials: storageCredentials };
+    await ensureCredentialsInitialized();
 
-    const storage = new Storage(storageConfig);
+    const storage = new Storage({
+        projectId: project,
+        keyFilename: storageCredentialsPath
+    });
     const bucketName = "harx-audios-test";
 
     try {
@@ -126,37 +146,40 @@ async function uploadToGCS(audioUrl) {
 }
 
 // Authenticate to Google cloud using the vertex service account
-const authConfig = typeof vertexCredentials === 'string'
-    ? { keyFilename: vertexCredentials, scopes: ['https://www.googleapis.com/auth/cloud-platform'] }
-    : { credentials: vertexCredentials, scopes: ['https://www.googleapis.com/auth/cloud-platform'] };
-
-const auth = new GoogleAuth(authConfig);
+const getAuth = async () => {
+    await ensureCredentialsInitialized();
+    return new GoogleAuth({
+        keyFilename: vertexCredentialsPath,
+        scopes: ['https://www.googleapis.com/auth/cloud-platform']
+    });
+};
 
 // Create an instance of VertexAI class with explicit project configuration
-const vertexConfig = typeof vertexCredentials === 'string'
-    ? {
+const getVertexAI = async () => {
+    await ensureCredentialsInitialized();
+    return new VertexAI({
         project: project,
         location: location,
         googleAuthOptions: {
-            keyFilename: vertexCredentials,
+            keyFilename: vertexCredentialsPath,
             scopes: ['https://www.googleapis.com/auth/cloud-platform']
         }
-    }
-    : {
-        project: project,
-        location: location,
-        googleAuthOptions: {
-            credentials: vertexCredentials,
-            scopes: ['https://www.googleapis.com/auth/cloud-platform']
-        }
-    };
-
-const vertex_ai = new VertexAI(vertexConfig);
+    });
+};
 
 // Create an instance of GenerativeModel class
-const generativeVisionModel = vertex_ai.getGenerativeModel({
-    model: 'gemini-1.5-flash-002',
-});
+// This will be initialized lazily or when first needed
+let generativeVisionModel;
+
+async function getGenerativeVisionModel() {
+    if (!generativeVisionModel) {
+        const vertex_ai = await getVertexAI();
+        generativeVisionModel = vertex_ai.getGenerativeModel({
+            model: 'gemini-1.5-flash-002',
+        });
+    }
+    return generativeVisionModel;
+}
 
 // Get the summary of an audio 
 exports.getAudioSummaryService = async (file_uri) => {
