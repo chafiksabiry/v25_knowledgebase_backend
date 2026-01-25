@@ -11,23 +11,29 @@ const CallRecording = require('../models/CallRecording');
 dotenv.config();
 
 // Configure credentials - prioritize environment variable for production
-let credentials;
-if (process.env.VERTEX_AI_CREDENTIALS) {
-  // Production: Use JSON string from environment variable
-  try {
-    credentials = JSON.parse(process.env.VERTEX_AI_CREDENTIALS);
-    logger.info('Using Vertex AI credentials from environment variable');
-  } catch (error) {
-    logger.error('Failed to parse VERTEX_AI_CREDENTIALS:', error);
-    throw new Error('Invalid VERTEX_AI_CREDENTIALS format. Must be valid JSON.');
+let credentialsPath;
+
+async function setupCredentials() {
+  if (process.env.VERTEX_AI_CREDENTIALS) {
+    // Production: Write JSON credentials to a temporary file
+    try {
+      const credentials = JSON.parse(process.env.VERTEX_AI_CREDENTIALS);
+      const tempDir = path.join(__dirname, '../../temp');
+      await fs.mkdir(tempDir, { recursive: true });
+      credentialsPath = path.join(tempDir, 'vertex-credentials.json');
+      await fs.writeFile(credentialsPath, JSON.stringify(credentials, null, 2));
+      logger.info('Using Vertex AI credentials from environment variable (written to temp file)');
+    } catch (error) {
+      logger.error('Failed to setup VERTEX_AI_CREDENTIALS:', error);
+      throw new Error('Invalid VERTEX_AI_CREDENTIALS format. Must be valid JSON.');
+    }
+  } else if (process.env.GOOGLE_APPLICATION_CREDENTIALS) {
+    // Local development: Use file path
+    credentialsPath = path.resolve(process.env.GOOGLE_APPLICATION_CREDENTIALS);
+    logger.info('Using Vertex AI credentials from file:', credentialsPath);
+  } else {
+    logger.warn('No Vertex AI credentials configured. Set VERTEX_AI_CREDENTIALS (JSON) or GOOGLE_APPLICATION_CREDENTIALS (file path)');
   }
-} else if (process.env.GOOGLE_APPLICATION_CREDENTIALS) {
-  // Local development: Use file path
-  const credentialsPath = path.resolve(process.env.GOOGLE_APPLICATION_CREDENTIALS);
-  logger.info('Using Vertex AI credentials from file:', credentialsPath);
-  credentials = credentialsPath;
-} else {
-  logger.warn('No Vertex AI credentials configured. Set VERTEX_AI_CREDENTIALS (JSON) or GOOGLE_APPLICATION_CREDENTIALS (file path)');
 }
 
 // Vertex AI Configuration
@@ -35,7 +41,7 @@ const VERTEX_CONFIG = {
   project: process.env.GOOGLE_CLOUD_PROJECT,
   location: process.env.VERTEX_AI_LOCATION || 'us-central1',
   modelName: process.env.VERTEX_AI_MODEL || 'gemini-1.5-flash-001',
-  credentials: credentials
+  getCredentialsPath: () => credentialsPath
 };
 
 // RAG Configuration
@@ -52,8 +58,11 @@ class VertexAIService {
     this.generativeModel = null;
   }
 
-  initialize() {
+  async initialize() {
     try {
+      // Setup credentials first
+      await setupCredentials();
+
       if (!VERTEX_CONFIG.project) {
         throw new Error('GOOGLE_CLOUD_PROJECT environment variable is not set');
       }
@@ -64,11 +73,13 @@ class VertexAIService {
         model: VERTEX_CONFIG.modelName
       });
 
-      // Initialize Vertex AI
+      // Initialize Vertex AI with file path
       this.vertexAI = new VertexAI({
         project: VERTEX_CONFIG.project,
         location: VERTEX_CONFIG.location,
-        credentials: VERTEX_CONFIG.credentials
+        googleAuthOptions: {
+          keyFilename: VERTEX_CONFIG.getCredentialsPath()
+        }
       });
 
       // Initialize the generative model

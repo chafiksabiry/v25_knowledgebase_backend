@@ -7,16 +7,25 @@ const { Storage } = require('@google-cloud/storage');
 const axios = require('axios');
 const path = require('path');
 
-// Initialiser Vertex AI
-vertexAIService.initialize();
+// Initialiser Vertex AI (sera fait de manière asynchrone au premier appel)
+let initialized = false;
+
+async function ensureInitialized() {
+    if (!initialized) {
+        await vertexAIService.initialize();
+        initialized = true;
+    }
+}
 
 // Initialiser Google Cloud Storage
-const storage = new Storage({
-    projectId: VERTEX_CONFIG.project,
-    keyFilename: VERTEX_CONFIG.credentials
-});
+const getStorage = () => {
+    return new Storage({
+        projectId: VERTEX_CONFIG.project,
+        keyFilename: VERTEX_CONFIG.getCredentialsPath()
+    });
+};
 
-const bucket = storage.bucket(process.env.GOOGLE_CLOUD_STORAGE_BUCKET);
+const getBucket = () => getStorage().bucket(process.env.GOOGLE_CLOUD_STORAGE_BUCKET);
 
 // Fonction pour télécharger et stocker l'audio dans GCS
 async function uploadToGCS(audioUrl) {
@@ -30,6 +39,7 @@ async function uploadToGCS(audioUrl) {
 
         // Générer un nom de fichier unique
         const fileName = `audio-${Date.now()}.wav`;
+        const bucket = getBucket();
         const file = bucket.file(fileName);
 
         // Upload vers GCS
@@ -50,9 +60,12 @@ async function uploadToGCS(audioUrl) {
 // Fonction pour obtenir le résumé audio
 const getAudioSummary = async (recording) => {
     try {
+        // Ensure Vertex AI is initialized
+        await ensureInitialized();
+
         // Upload vers GCS
         const gcsUri = await uploadToGCS(recording.recordingUrl);
-        
+
         const request = {
             contents: [{
                 role: 'user', parts: [
@@ -86,9 +99,12 @@ const getAudioSummary = async (recording) => {
 // Fonction pour obtenir le scoring de l'appel
 const getCallScoring = async (recording) => {
     try {
+        // Ensure Vertex AI is initialized
+        await ensureInitialized();
+
         // Upload vers GCS
         const gcsUri = await uploadToGCS(recording.recordingUrl);
-        
+
         const request = {
             contents: [{
                 role: 'user', parts: [
