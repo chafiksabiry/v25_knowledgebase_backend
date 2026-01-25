@@ -25,7 +25,11 @@ const PORT = process.env.PORT || 3001;
 
 // Middleware
 app.use(cors({
-  origin: [process.env.FRONTEND_URL, process.env.QIANKUN_FRONT_URL],
+  origin: [
+    process.env.FRONTEND_URL,
+    process.env.QIANKUN_FRONT_URL,
+    'https://harx25pageslinks.netlify.app', // Netlify orchestrator frontend
+  ],
   credentials: true
 }));
 app.use(express.json({ limit: '50mb' }));
@@ -52,7 +56,7 @@ app.get('/health', (req, res) => {
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/kb-analysis')
   .then(async () => {
     logger.info('Connected to MongoDB');
-    
+
     // Initialize Vertex AI
     try {
       await vertexAIService.initialize();
@@ -61,7 +65,7 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/kb-analys
       logger.error('Failed to initialize Vertex AI:', error);
       // Continue server startup even if Vertex AI fails
     }
-    
+
     // Start the server
     server.listen(PORT, () => {
       logger.info(`Server running on port ${PORT}`);
