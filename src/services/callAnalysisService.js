@@ -18,23 +18,51 @@ const redirectUrl = process.env.REDIRECTION_URL;
 const project = process.env.GOOGLE_CLOUD_PROJECT || 'harx-technologies-inc';
 const location = 'us-central1';
 
-// Construct the absolute path to the service account JSON file
-const keyPath = path.join(__dirname, "../../config/vertex-ai-key.json");
-const storageServicekeyPath = path.join(__dirname, "../../config/cloud-storage-service-account.json");
+// Configure credentials - prioritize environment variables for production
+let vertexCredentials;
+let storageCredentials;
 
-// Vérifier si le fichier de service account existe
-const fs = require('fs');
-if (!fs.existsSync(keyPath)) {
-    console.warn('Warning: Service account file not found at:', keyPath);
-    console.warn('Make sure to place your service account JSON file at this location');
+if (process.env.VERTEX_AI_CREDENTIALS) {
+    // Production: Use JSON string from environment variable
+    try {
+        vertexCredentials = JSON.parse(process.env.VERTEX_AI_CREDENTIALS);
+        console.log('Using Vertex AI credentials from environment variable');
+    } catch (error) {
+        console.error('Failed to parse VERTEX_AI_CREDENTIALS:', error);
+        throw new Error('Invalid VERTEX_AI_CREDENTIALS format. Must be valid JSON.');
+    }
+} else {
+    // Local development: Use file path
+    const keyPath = path.join(__dirname, "../../config/vertex-ai-key.json");
+    const fs = require('fs');
+    if (!fs.existsSync(keyPath)) {
+        console.warn('Warning: Service account file not found at:', keyPath);
+        console.warn('Make sure to place your service account JSON file at this location');
+    }
+    vertexCredentials = keyPath;
+}
+
+if (process.env.CLOUD_STORAGE_CREDENTIALS) {
+    // Production: Use JSON string from environment variable
+    try {
+        storageCredentials = JSON.parse(process.env.CLOUD_STORAGE_CREDENTIALS);
+        console.log('Using Cloud Storage credentials from environment variable');
+    } catch (error) {
+        console.error('Failed to parse CLOUD_STORAGE_CREDENTIALS:', error);
+        throw new Error('Invalid CLOUD_STORAGE_CREDENTIALS format. Must be valid JSON.');
+    }
+} else {
+    // Local development: Use file path
+    storageCredentials = path.join(__dirname, "../../config/cloud-storage-service-account.json");
 }
 
 // Function to upload audio to Google Cloud Storage
 exports.audioUpload2 = async (fileBuffer, destinationName) => {
-    const storage = new Storage({
-        projectId: project,
-        keyFilename: storageServicekeyPath,
-    });
+    const storageConfig = typeof storageCredentials === 'string'
+        ? { projectId: project, keyFilename: storageCredentials }
+        : { projectId: project, credentials: storageCredentials };
+
+    const storage = new Storage(storageConfig);
     const bucketName = "harx-audios-test";
 
     try {
@@ -85,7 +113,7 @@ async function uploadToGCS(audioUrl) {
 
         // Generate unique filename
         const fileName = `audio-${Date.now()}.wav`;
-        
+
         // Upload to GCS using the new method
         const uploadResult = await exports.audioUpload2(response.data, fileName);
         console.log('Upload result:', uploadResult);
@@ -98,20 +126,32 @@ async function uploadToGCS(audioUrl) {
 }
 
 // Authenticate to Google cloud using the vertex service account
-const auth = new GoogleAuth({
-    keyFilename: keyPath,
-    scopes: ['https://www.googleapis.com/auth/cloud-platform']
-});
+const authConfig = typeof vertexCredentials === 'string'
+    ? { keyFilename: vertexCredentials, scopes: ['https://www.googleapis.com/auth/cloud-platform'] }
+    : { credentials: vertexCredentials, scopes: ['https://www.googleapis.com/auth/cloud-platform'] };
+
+const auth = new GoogleAuth(authConfig);
 
 // Create an instance of VertexAI class with explicit project configuration
-const vertex_ai = new VertexAI({ 
-    project: project, 
-    location: location, 
-    googleAuthOptions: {
-        keyFilename: keyPath,
-        scopes: ['https://www.googleapis.com/auth/cloud-platform']
+const vertexConfig = typeof vertexCredentials === 'string'
+    ? {
+        project: project,
+        location: location,
+        googleAuthOptions: {
+            keyFilename: vertexCredentials,
+            scopes: ['https://www.googleapis.com/auth/cloud-platform']
+        }
     }
-});
+    : {
+        project: project,
+        location: location,
+        googleAuthOptions: {
+            credentials: vertexCredentials,
+            scopes: ['https://www.googleapis.com/auth/cloud-platform']
+        }
+    };
+
+const vertex_ai = new VertexAI(vertexConfig);
 
 // Create an instance of GenerativeModel class
 const generativeVisionModel = vertex_ai.getGenerativeModel({
@@ -188,10 +228,10 @@ exports.getAudioTranscriptionService = async (file_uri) => {
             }
         }
         console.log('Full transcription response:', fullResponse);
-        
+
         // Parse the response and ensure it's in the correct format
         const parsedResponse = parseCleanJson(fullResponse);
-        
+
         // If the response is an array, wrap it in the proper structure
         if (Array.isArray(parsedResponse)) {
             return {
@@ -201,12 +241,12 @@ exports.getAudioTranscriptionService = async (file_uri) => {
                 error: null
             };
         }
-        
+
         // If the response is already in the correct format, return it
         if (parsedResponse && parsedResponse.status && parsedResponse.segments) {
             return parsedResponse;
         }
-        
+
         // If we can't parse the response properly, return an error
         throw new Error('Invalid transcription response format');
     } catch (error) {

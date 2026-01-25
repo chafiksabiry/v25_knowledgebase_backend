@@ -10,15 +10,32 @@ const CallRecording = require('../models/CallRecording');
 
 dotenv.config();
 
-// Ensure credentials path is absolute
-const credentialsPath = path.resolve(process.env.GOOGLE_APPLICATION_CREDENTIALS);
+// Configure credentials - prioritize environment variable for production
+let credentials;
+if (process.env.VERTEX_AI_CREDENTIALS) {
+  // Production: Use JSON string from environment variable
+  try {
+    credentials = JSON.parse(process.env.VERTEX_AI_CREDENTIALS);
+    logger.info('Using Vertex AI credentials from environment variable');
+  } catch (error) {
+    logger.error('Failed to parse VERTEX_AI_CREDENTIALS:', error);
+    throw new Error('Invalid VERTEX_AI_CREDENTIALS format. Must be valid JSON.');
+  }
+} else if (process.env.GOOGLE_APPLICATION_CREDENTIALS) {
+  // Local development: Use file path
+  const credentialsPath = path.resolve(process.env.GOOGLE_APPLICATION_CREDENTIALS);
+  logger.info('Using Vertex AI credentials from file:', credentialsPath);
+  credentials = credentialsPath;
+} else {
+  logger.warn('No Vertex AI credentials configured. Set VERTEX_AI_CREDENTIALS (JSON) or GOOGLE_APPLICATION_CREDENTIALS (file path)');
+}
 
 // Vertex AI Configuration
 const VERTEX_CONFIG = {
   project: process.env.GOOGLE_CLOUD_PROJECT,
   location: process.env.VERTEX_AI_LOCATION || 'us-central1',
   modelName: process.env.VERTEX_AI_MODEL || 'gemini-1.5-flash-001',
-  credentials: credentialsPath
+  credentials: credentials
 };
 
 // RAG Configuration
