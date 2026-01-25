@@ -86,7 +86,7 @@ class VertexAIService {
 
       // Determine file type from URL or Content-Type header
       const fileType = response.headers['content-type'] || 'application/pdf';
-      
+
       // Create a temporary file
       const tempFile = path.join(tempDir, `temp-${Date.now()}.pdf`);
       await fs.writeFile(tempFile, response.data);
@@ -118,7 +118,7 @@ class VertexAIService {
       // Récupérer les documents
       const documents = await Document.find({ companyId });
       logger.info(`Found ${documents.length} documents for company ${companyId}`);
-      
+
       const documentContents = documents.map(doc => ({
         id: doc._id.toString(),
         title: doc.name,
@@ -130,32 +130,32 @@ class VertexAIService {
       // **CORRIGÉ : Récupérer TOUS les enregistrements d'appels (pas seulement ceux avec transcription)**
       const allCallRecordings = await CallRecording.find({ companyId });
       logger.info(`Found ${allCallRecordings.length} total call recordings for company ${companyId}`);
-      
+
       const callContents = allCallRecordings.map(call => {
         // Utiliser la transcription si disponible, sinon créer un contenu descriptif
         let content;
-        if (call.analysis?.transcription?.fullTranscript && 
-            call.analysis.transcription.fullTranscript.trim() !== '') {
+        if (call.analysis?.transcription?.fullTranscript &&
+          call.analysis.transcription.fullTranscript.trim() !== '') {
           content = call.analysis.transcription.fullTranscript;
         } else {
           // Créer un contenu descriptif pour les enregistrements sans transcription
           content = `Call recording with contact ${call.contactId} on ${call.date.toISOString().split('T')[0]}. Duration: ${call.duration} seconds. ${call.summary ? `Summary: ${call.summary}` : ''} ${call.tags && call.tags.length > 0 ? `Tags: ${call.tags.join(', ')}` : ''}`;
         }
-        
+
         return {
           id: call._id.toString(),
           title: `Call with ${call.contactId} on ${call.date.toISOString().split('T')[0]}`,
           content: content,
           url: call.recordingUrl,
           type: 'call_recording',
-          hasTranscript: !!(call.analysis?.transcription?.fullTranscript && 
-                           call.analysis.transcription.fullTranscript.trim() !== '')
+          hasTranscript: !!(call.analysis?.transcription?.fullTranscript &&
+            call.analysis.transcription.fullTranscript.trim() !== '')
         };
       });
 
       const totalContent = [...documentContents, ...callContents];
       logger.info(`Total corpus content for company ${companyId}: ${totalContent.length} items (${documentContents.length} documents + ${callContents.length} call recordings)`);
-      
+
       return totalContent;
     } catch (error) {
       logger.error(`Error in _getCorpusContent for company ${companyId}:`, error);
@@ -219,14 +219,14 @@ Please provide a comprehensive answer based on the information in these document
     try {
       const documentCount = await Document.countDocuments({ companyId });
       logger.info(`Found ${documentCount} documents for company ${companyId}`);
-      
+
       const allCallCount = await CallRecording.countDocuments({ companyId });
       logger.info(`Found ${allCallCount} total call recordings for company ${companyId}`);
-      
+
       // **CORRIGÉ : Considérer tous les enregistrements comme faisant partie du corpus**
       const totalCount = documentCount + allCallCount;
       logger.info(`Total corpus count for company ${companyId}: ${totalCount} (${documentCount} documents + ${allCallCount} call recordings)`);
-      
+
       return {
         exists: totalCount > 0,
         documentCount: documentCount,
@@ -274,7 +274,7 @@ Please provide a comprehensive answer based on the information in these document
       if (!doc && !call) {
         throw new Error('Document not found in corpus');
       }
-      
+
       const item = doc || call;
       const isCall = !!call;
 
@@ -313,7 +313,7 @@ Please provide a comprehensive answer based on the information in these document
         corpus.forEach(doc => {
           const wordCount = doc.content.split(/\s+/).length;
           const charCount = doc.content.length;
-          
+
           stats.totalWords += wordCount;
           stats.totalCharacters += charCount;
 
@@ -351,20 +351,20 @@ Please provide a comprehensive answer based on the information in these document
           const content = doc.content.toLowerCase();
           const searchLower = searchTerm.toLowerCase();
           const matches = (content.match(new RegExp(searchLower, 'g')) || []).length;
-          
+
           if (matches > 0) {
             const index = content.indexOf(searchLower);
             const start = Math.max(0, index - 100);
             const end = Math.min(content.length, index + searchTerm.length + 100);
             const snippet = '...' + content.substring(start, end).replace(new RegExp(searchLower, 'gi'), `**${searchTerm}**`) + '...';
-            
+
             return {
               id: doc.id,
               title: doc.title,
               url: doc.url,
               matches,
               snippet,
-              relevance: matches * 10 
+              relevance: matches * 10
             };
           }
           return null;
