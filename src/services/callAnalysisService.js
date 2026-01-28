@@ -125,11 +125,17 @@ exports.audioUpload2 = async (fileBuffer, destinationName) => {
 async function uploadToGCS(audioUrl) {
     try {
         // Download audio file
+        console.log('Downloading audio from URL:', audioUrl);
         const response = await axios({
             method: 'get',
             url: audioUrl,
-            responseType: 'arraybuffer'
+            responseType: 'arraybuffer',
+            onDownloadProgress: (progressEvent) => {
+                const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+                console.log(`CallService Download progress: ${percentCompleted}%`);
+            }
         });
+        console.log('Finished downloading audio. Size:', response.data.length);
 
         // Generate unique filename
         const fileName = `audio-${Date.now()}.wav`;
@@ -175,7 +181,7 @@ async function getGenerativeVisionModel() {
     if (!generativeVisionModel) {
         const vertex_ai = await getVertexAI();
         generativeVisionModel = vertex_ai.getGenerativeModel({
-            model: 'gemini-1.5-flash-002',
+            model: 'gemini-2.0-flash',
         });
     }
     return generativeVisionModel;

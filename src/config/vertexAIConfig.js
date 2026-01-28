@@ -37,12 +37,17 @@ async function setupCredentials() {
 }
 
 // Vertex AI Configuration
+const projectID = process.env.GOOGLE_CLOUD_PROJECT || 'harx-technologies-inc';
+
+const modelName = process.env.VERTEX_AI_MODEL || 'gemini-2.0-flash';
+
 const VERTEX_CONFIG = {
-  project: process.env.GOOGLE_CLOUD_PROJECT,
+  project: projectID,
   location: process.env.VERTEX_AI_LOCATION || 'us-central1',
-  modelName: process.env.VERTEX_AI_MODEL || 'gemini-1.5-flash-001',
+  modelName: modelName,
   getCredentialsPath: () => credentialsPath
 };
+
 
 // RAG Configuration
 const RAG_CONFIG = {
@@ -83,7 +88,7 @@ class VertexAIService {
       });
 
       // Initialize the generative model
-      this.generativeModel = this.vertexAI.preview.getGenerativeModel({
+      this.generativeModel = this.vertexAI.getGenerativeModel({
         model: VERTEX_CONFIG.modelName
       });
 

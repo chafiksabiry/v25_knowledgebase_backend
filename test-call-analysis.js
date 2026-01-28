@@ -5,12 +5,12 @@ const TEST_AUDIO_URL = 'https://res.cloudinary.com/dyqg8x26j/video/upload/v17500
 async function testAudioAnalysis() {
     try {
         console.log('Starting audio analysis test...');
-        
+
         // Test audio summary
         console.log('\n1. Testing audio summary...');
-        const summary = await callAnalysisService.getAudioSummary(TEST_AUDIO_URL);
+        const summary = await callAnalysisService.getAudioSummaryService(TEST_AUDIO_URL);
         console.log('Audio Summary Result:', JSON.stringify(summary, null, 2));
-        
+
         /* // Test audio transcription
         console.log('\n2. Testing audio transcription...');
         const transcription = await callAnalysisService.getAudioTranscription(TEST_AUDIO_URL);
