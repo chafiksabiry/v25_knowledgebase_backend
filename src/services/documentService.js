@@ -1,6 +1,6 @@
 const { ChatOpenAI } = require('@langchain/openai');
 const { RecursiveCharacterTextSplitter } = require('langchain/text_splitter');
-const { HNSWLib } = require('@langchain/community/vectorstores/hnswlib');
+const { MemoryVectorStore } = require('langchain/vectorstores/memory');
 const { OpenAIEmbeddings } = require('@langchain/openai');
 const { HumanMessage, SystemMessage } = require('@langchain/core/messages');
 const Document = require('../models/Document');
@@ -35,7 +35,7 @@ exports.analyzeDocument = async (documentId) => {
 
     // Create vector store
     const embeddings = new OpenAIEmbeddings();
-    const vectorStore = await HNSWLib.fromTexts(
+    const vectorStore = await MemoryVectorStore.fromTexts(
       chunks,
       chunks.map((_, i) => ({ id: i })),
       embeddings
