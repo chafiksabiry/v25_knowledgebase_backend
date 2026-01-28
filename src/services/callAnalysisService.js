@@ -181,7 +181,7 @@ async function getGenerativeVisionModel() {
     if (!generativeVisionModel) {
         const vertex_ai = await getVertexAI();
         generativeVisionModel = vertex_ai.getGenerativeModel({
-            model: 'gemini-2.0-flash',
+            model: process.env.VERTEX_AI_MODEL || 'gemini-1.5-flash',
         });
     }
     return generativeVisionModel;
