@@ -1,5 +1,5 @@
 const { ChatOpenAI } = require('@langchain/openai');
-const { RecursiveCharacterTextSplitter } = require('langchain/text_splitter');
+const { RecursiveCharacterTextSplitter } = require('@langchain/textsplitters');
 const { MemoryVectorStore } = require('langchain/vectorstores/memory');
 const { OpenAIEmbeddings } = require('@langchain/openai');
 const { HumanMessage, SystemMessage } = require('@langchain/core/messages');
@@ -17,7 +17,7 @@ exports.analyzeDocument = async (documentId) => {
       const lastAnalysis = new Date(document.analysis.analyzedAt);
       const now = new Date();
       const hoursSinceLastAnalysis = (now - lastAnalysis) / (1000 * 60 * 60);
-      
+
       if (hoursSinceLastAnalysis < 24) {
         return document.analysis;
       }
@@ -54,12 +54,12 @@ exports.analyzeDocument = async (documentId) => {
     };
 
     // Create two models: one for quick analysis and one for detailed analysis
-    const quickModel = new ChatOpenAI({ 
+    const quickModel = new ChatOpenAI({
       temperature: 0.7,
       modelName: "gpt-3.5-turbo" // Plus rapide pour les analyses simples
     });
 
-    const detailedModel = new ChatOpenAI({ 
+    const detailedModel = new ChatOpenAI({
       temperature: 0.7,
       modelName: "gpt-4" // Plus précis pour les analyses complexes
     });
@@ -84,12 +84,12 @@ exports.analyzeDocument = async (documentId) => {
       const analysisTasks = Object.entries(prompts).map(async ([key, prompt]) => {
         const relevantDocs = await vectorStore.similaritySearch(prompt, 3);
         const context = relevantDocs.map(doc => doc.pageContent).join('\n');
-        
+
         const messages = [
           new SystemMessage("You are a helpful AI assistant that analyzes documents."),
           new HumanMessage(`${prompt}\n\nContext:\n${context}`)
         ];
-        
+
         const response = await model.invoke(messages);
         return [key, response.content.trim()];
       });
