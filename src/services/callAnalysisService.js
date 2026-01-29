@@ -248,6 +248,10 @@ exports.getAudioTranscriptionService = async (file_uri) => {
                     }
                 ]
             }],
+            generationConfig: {
+                responseMimeType: 'application/json',
+                maxOutputTokens: 8192
+            }
         };
         const model = await getGenerativeVisionModel();
         const streamingResp = await model.generateContentStream(request);
