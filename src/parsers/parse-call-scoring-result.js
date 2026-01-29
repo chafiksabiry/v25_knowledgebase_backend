@@ -1,14 +1,47 @@
 function parseCleanJson(responseText) {
     try {
-        // Remove markdown formatting (```json and ```\n at the end)
-        const cleanJson = responseText.replace(/```json\n|```|\n/g, ''); // Remove backticks and newlines
+        if (!responseText) return null;
 
-        // Parse JSON string into an object
-        const parsedData = JSON.parse(cleanJson);
+        // Find the start of the JSON structure
+        const firstOpenBracket = responseText.indexOf('[');
+        const firstOpenBrace = responseText.indexOf('{');
+        let startIndex = -1;
 
-        return parsedData;
+        if (firstOpenBracket !== -1 && firstOpenBrace !== -1) {
+            startIndex = Math.min(firstOpenBracket, firstOpenBrace);
+        } else if (firstOpenBracket !== -1) {
+            startIndex = firstOpenBracket;
+        } else if (firstOpenBrace !== -1) {
+            startIndex = firstOpenBrace;
+        }
+
+        // Find the end of the JSON structure
+        const lastCloseBracket = responseText.lastIndexOf(']');
+        const lastCloseBrace = responseText.lastIndexOf('}');
+        let endIndex = -1;
+
+        if (lastCloseBracket !== -1 && lastCloseBrace !== -1) {
+            endIndex = Math.max(lastCloseBracket, lastCloseBrace);
+        } else if (lastCloseBracket !== -1) {
+            endIndex = lastCloseBracket;
+        } else if (lastCloseBrace !== -1) {
+            endIndex = lastCloseBrace;
+        }
+
+        if (startIndex === -1 || endIndex === -1 || startIndex > endIndex) {
+            console.error("Could not find valid JSON boundaries in response");
+            // Fallback to original cleanup if structure search fails (though likely won't help if boundaries missing)
+            const cleanJson = responseText.replace(/```json\n|```|\n/g, '');
+            return JSON.parse(cleanJson);
+        }
+
+        const jsonSubstring = responseText.substring(startIndex, endIndex + 1);
+        return JSON.parse(jsonSubstring);
+
     } catch (error) {
         console.error("Error parsing JSON:", error);
+        console.error("Response snippet start:", responseText ? responseText.substring(0, 100) : 'empty');
+        console.error("Response snippet end:", responseText ? responseText.substring(responseText.length - 100) : 'empty');
         return null;
     }
 }
