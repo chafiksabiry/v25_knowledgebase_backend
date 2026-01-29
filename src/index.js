@@ -73,6 +73,9 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/kb-analys
       logger.info(`Documents API: http://localhost:${PORT}/api/documents`);
       logger.info(`Fine-tuning API: http://localhost:${PORT}/api/fine-tuning/jobs`);
     });
+    
+    // Increase timeout to 10 minutes for long uploads/analysis
+    server.setTimeout(600000);
   })
   .catch((error) => {
     logger.error('MongoDB connection error:', error);
