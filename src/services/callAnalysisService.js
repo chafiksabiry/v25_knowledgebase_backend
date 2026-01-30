@@ -121,32 +121,62 @@ exports.audioUpload2 = async (fileBuffer, destinationName) => {
     }
 };
 
-// Function to download and upload to GCS
+// Function to download and upload to GCS using streams
 async function uploadToGCS(audioUrl) {
     try {
-        // Download audio file
-        console.log('Downloading audio from URL:', audioUrl);
+        await ensureCredentialsInitialized();
+        console.log('Starting stream download/upload to GCS for:', audioUrl);
+
+        const storage = new Storage({
+            projectId: project,
+            keyFilename: storageCredentialsPath
+        });
+        const bucketName = "harx-audios-test"; // Using the same bucket as audiuUpload2
+
+        const fileName = `audio-${Date.now()}.wav`;
+        const bucket = storage.bucket(bucketName);
+        const file = bucket.file(fileName);
+
+        // Get the read stream from Axios
         const response = await axios({
             method: 'get',
             url: audioUrl,
-            responseType: 'arraybuffer',
-            onDownloadProgress: (progressEvent) => {
-                const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-                console.log(`CallService Download progress: ${percentCompleted}%`);
-            }
+            responseType: 'stream'
         });
-        console.log('Finished downloading audio. Size:', response.data.length);
 
-        // Generate unique filename
-        const fileName = `audio-${Date.now()}.wav`;
+        // Create the write stream to GCS
+        const writeStream = file.createWriteStream({
+            resumable: false,
+            metadata: {
+                contentType: "audio/wav",
+            },
+        });
 
-        // Upload to GCS using the new method
-        const uploadResult = await exports.audioUpload2(response.data, fileName);
-        console.log('Upload result:', uploadResult);
+        return new Promise((resolve, reject) => {
+            response.data.pipe(writeStream)
+                .on('error', (error) => {
+                    console.error('Error piping data to GCS:', error);
+                    reject(error);
+                })
+                .on('finish', () => {
+                    // The 'finish' event on the pipe might not mean the write stream is done? 
+                    // Usually pipe emits finish when source is done.
+                    // But we should listen to writeStream 'finish'
+                });
 
-        return uploadResult.fileUri;
+            writeStream.on('error', (error) => {
+                console.error(`Failed to upload to ${bucketName}:`, error.message);
+                reject(new Error('File upload failed during stream.'));
+            });
+
+            writeStream.on('finish', () => {
+                const gcsUri = `gs://${bucketName}/${fileName}`;
+                console.log(`${fileName} uploaded to ${bucketName} (streamed)`);
+                resolve(gcsUri);
+            });
+        });
     } catch (error) {
-        console.error('Error uploading to GCS:', error);
+        console.error('Error in uploadToGCS:', error);
         throw error;
     }
 }
