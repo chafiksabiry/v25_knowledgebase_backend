@@ -243,12 +243,12 @@ exports.getAudioSummaryService = async (file_uri) => {
         const streamingResp = await model.generateContentStream(request);
         let fullResponse = '';
         for await (const item of streamingResp.stream) {
-            console.log('stream chunk: ', JSON.stringify(item));
+            // // console.log('stream chunk: ', JSON.stringify(item));
             if (item.candidates && item.candidates[0].content.parts[0].text) {
                 fullResponse += item.candidates[0].content.parts[0].text;
             }
         }
-        console.log('Full response:', fullResponse);
+        console.log(`Full summary response length: ${fullResponse.length}`);
         return parseCleanJson(fullResponse);
 
     } catch (error) {
@@ -287,12 +287,12 @@ exports.getAudioTranscriptionService = async (file_uri) => {
         const streamingResp = await model.generateContentStream(request);
         let fullResponse = '';
         for await (const item of streamingResp.stream) {
-            console.log('stream chunk: ', JSON.stringify(item));
+            // // console.log('stream chunk: ', JSON.stringify(item));
             if (item.candidates && item.candidates[0].content.parts[0].text) {
                 fullResponse += item.candidates[0].content.parts[0].text;
             }
         }
-        console.log('Full transcription response:', fullResponse);
+        console.log(`Full transcription response length: ${fullResponse.length}`);
 
         // Parse the response and ensure it's in the correct format
         const parsedResponse = parseCleanJson(fullResponse);
@@ -346,7 +346,7 @@ exports.getCallScoringService = async (file_uri) => {
         const streamingResp = await model.generateContentStream(request);
         let fullResponse = '';
         for await (const item of streamingResp.stream) {
-            console.log('stream chunk: ', JSON.stringify(item));
+            // // console.log('stream chunk: ', JSON.stringify(item));
             if (item.candidates && item.candidates[0].content.parts[0].text) {
                 fullResponse += item.candidates[0].content.parts[0].text;
             }

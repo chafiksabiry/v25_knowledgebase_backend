@@ -36,7 +36,21 @@ function parseCleanJson(responseText) {
         }
 
         const jsonSubstring = responseText.substring(startIndex, endIndex + 1);
-        return JSON.parse(jsonSubstring);
+
+        try {
+            return JSON.parse(jsonSubstring);
+        } catch (initialError) {
+            // Attempt to repair truncated array if it starts with '[' but doesn't end with ']'
+            if (jsonSubstring.trim().startsWith('[') && !jsonSubstring.trim().endsWith(']')) {
+                try {
+                    console.warn("Attempting to repair truncated JSON response...");
+                    return JSON.parse(jsonSubstring + ']');
+                } catch (repairError) {
+                    console.error("Failed to repair truncated JSON:", repairError);
+                }
+            }
+            throw initialError;
+        }
 
     } catch (error) {
         console.error("Error parsing JSON:", error);
