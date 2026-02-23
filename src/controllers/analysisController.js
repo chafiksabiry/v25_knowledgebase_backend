@@ -455,15 +455,9 @@ async function askQuestion(req, res) {
     // **MODIFIÉ : Récupère le statut complet et détaillé du corpus**
     const corpusStatus = await vertexAIService.checkCorpusStatus(companyId);
 
-    // Si le corpus est vide, on peut s'arrêter ici.
+    // **MODIFIÉ : On ne bloque plus si le corpus est vide**
     if (!corpusStatus.exists) {
-      return res.status(400).json({
-        success: false,
-        error: {
-          message: 'No documents or call recordings found in the knowledge base for this company.',
-          code: 'CORPUS_EMPTY'
-        }
-      });
+      logger.info(`Corpus for company ${companyId} is empty. Proceeding with general AI model.`);
     }
 
     // Create a context-aware prompt

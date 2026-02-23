@@ -18,7 +18,7 @@ const initializeCompanyCorpus = async (req, res) => {
     }
 
     logger.info(`Initializing Vertex AI for company ${companyId}`);
-    
+
     // Initialize Vertex AI if not already initialized
     if (!vertexAIService.vertexAI) {
       await vertexAIService.initialize();
@@ -52,8 +52,8 @@ const initializeCompanyCorpus = async (req, res) => {
       stack: error.stack,
       details: error.response?.data || error
     });
-    
-    res.status(500).json({ 
+
+    res.status(500).json({
       error: 'Failed to initialize RAG corpus',
       details: error.message,
       stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
@@ -137,7 +137,7 @@ const queryKnowledgeBase = async (req, res) => {
 
   } catch (error) {
     logger.error('Error querying knowledge base:', error);
-    res.status(500).json({ 
+    res.status(500).json({
       success: false,
       error: 'Failed to query knowledge base',
       details: error.message
@@ -322,7 +322,7 @@ const analyzeDocument = async (req, res) => {
     let analysisResults;
     try {
       logger.info('Raw response from Vertex AI:', JSON.stringify(response, null, 2));
-      
+
       // Vérifier la structure de la réponse
       if (!response || !response.candidates || !response.candidates[0]) {
         throw new Error('Invalid response structure from Vertex AI');
@@ -357,7 +357,7 @@ const analyzeDocument = async (req, res) => {
       // Valider la structure des résultats
       const requiredFields = ['summary', 'domain', 'theme', 'mainPoints', 'technicalLevel', 'targetAudience', 'keyTerms', 'recommendations'];
       const missingFields = requiredFields.filter(field => !analysisResults[field]);
-      
+
       if (missingFields.length > 0) {
         logger.warn('Missing fields in analysis results:', missingFields);
         // Remplir les champs manquants avec des valeurs par défaut
@@ -394,8 +394,8 @@ const analyzeDocument = async (req, res) => {
       stack: error.stack,
       details: error.response?.data || error
     });
-    
-    res.status(500).json({ 
+
+    res.status(500).json({
       error: 'Failed to analyze document',
       details: error.message,
       stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
@@ -413,7 +413,7 @@ const generateScript = async (req, res) => {
     console.log('\n========================================');
     console.log('🔍  VÉRIFICATION DU CORPUS AVANT GÉNÉRATION');
     console.log('========================================\n');
-    
+
     const { companyId, gig, typeClient, langueTon, contexte } = req.body;
 
     // Log request parameters
@@ -449,7 +449,7 @@ const generateScript = async (req, res) => {
 
     // Vérifier les documents en base de données
     const documents = await Document.find({ companyId });
-    const recentDocs = documents.filter(doc => 
+    const recentDocs = documents.filter(doc =>
       new Date(doc.createdAt) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
     );
 
@@ -469,12 +469,12 @@ const generateScript = async (req, res) => {
 
     // Vérifier le contenu du corpus
     const corpusContent = await vertexAIService._getCorpusContent(companyId);
-    const callRecordings = corpusContent.filter(item => 
-      item.title.toLowerCase().includes('call') || 
+    const callRecordings = corpusContent.filter(item =>
+      item.title.toLowerCase().includes('call') ||
       item.title.toLowerCase().includes('recording')
     );
-    const otherDocuments = corpusContent.filter(item => 
-      !item.title.toLowerCase().includes('call') && 
+    const otherDocuments = corpusContent.filter(item =>
+      !item.title.toLowerCase().includes('call') &&
       !item.title.toLowerCase().includes('recording')
     );
 
@@ -502,7 +502,7 @@ const generateScript = async (req, res) => {
 
     // Vérifier le statut global
     const corpusStatus = await vertexAIService.checkCorpusStatus(companyId);
-    
+
     console.log('📈 RÉSUMÉ FINAL:');
     console.log('--------------');
     console.log(`État du corpus: ${corpusStatus.exists ? '✅ Existe' : '❌ N\'existe pas'}`);
@@ -512,23 +512,19 @@ const generateScript = async (req, res) => {
     console.log('\n========================================\n');
 
     // Vérifications critiques
+    // MODIFIÉ : On ne bloque plus si le corpus n'existe pas ou s'il n'y a pas d'enregistrements.
+    // On loggera simplement l'information.
     if (!corpusStatus.exists) {
-      console.log('❌ ERREUR: Corpus non trouvé\n');
-      return res.status(400).json({ 
-        error: 'No documents or call recordings found in the knowledge base for this company.' 
-      });
+      console.log('⚠️  INFO: Corpus non trouvé ou vide. La génération se fera sur la base des connaissances générales.\n');
     }
 
     if (corpusStatus.callRecordingCount === 0) {
-      console.log('❌ ERREUR: Aucun enregistrement d\'appel\n');
-      return res.status(400).json({ 
-        error: 'No call recordings found in the knowledge base. At least one call recording is required for script generation.' 
-      });
+      console.log('⚠️  INFO: Aucun enregistrement d\'appel trouvé. La génération se fera sans exemples d\'appels passés.\n');
     }
 
     // Construire le prompt pour la génération
     console.log('🔄 PRÉPARATION DU PROMPT...\n');
-    
+
     const prompt = `You are generating a structured sales call script.
 
 CRITICAL REQUIREMENTS:
@@ -574,7 +570,7 @@ Return ONLY a JSON array of dialogue steps following this exact format:
     // Utiliser la logique RAG pour enrichir le prompt avec le contexte documentaire
     console.log('🔄 CONSULTATION DU CORPUS POUR LA GÉNÉRATION DE SCRIPT...\n');
     const response = await vertexAIService.queryKnowledgeBase(companyId, prompt);
-    
+
     // Log response metadata
     console.log('📄 MÉTADONNÉES DE LA RÉPONSE DE Vertex AI:');
     console.log('----------------------------------------');
@@ -717,7 +713,7 @@ Return ONLY a JSON array of dialogue steps following this exact format:
     console.log('-----------------------------');
     console.log(error.message);
     console.log('\n========================================\n');
-    
+
     logger.error('Error generating script:', error);
     res.status(500).json({ error: 'Failed to generate script', details: error.message });
   }
@@ -761,9 +757,9 @@ Return only the translated JSON object with the same structure:`;
     // Generate translation using the initialized generative model
     const result = await vertexAIService.generativeModel.generateContent(translationPrompt);
     const response = result.response;
-    
+
     logger.info('Raw translation response:', JSON.stringify(response, null, 2));
-    
+
     // Extract content using the same pattern as document analysis
     let content;
     if (!response || !response.candidates || !response.candidates[0]) {
@@ -808,9 +804,9 @@ Return only the translated JSON object with the same structure:`;
 
   } catch (error) {
     logger.error('Error translating analysis:', error);
-    res.status(500).json({ 
-      error: 'Failed to translate analysis', 
-      details: error.message 
+    res.status(500).json({
+      error: 'Failed to translate analysis',
+      details: error.message
     });
   }
 };

@@ -206,27 +206,29 @@ class VertexAIService {
       const corpus = await this._getCorpusContent(companyId);
 
       if (corpus.length === 0) {
-        // Renvoie une réponse claire si la base de connaissances est vide
-        return {
-          response: {
-            candidates: [{
-              content: { parts: [{ text: "The knowledge base for this company is empty. Please upload some documents or call recordings first." }] }
-            }]
-          }
-        };
+        logger.info(`Knowledge base for company ${companyId} is empty. Proceeding with general AI model generation.`);
+
+        // On permet à la génération de continuer même si le corpus est vide.
+        // On injecte un petit avertissement dans le prompt interne ou on laisse simplement tel quel.
       }
 
       logger.info(`Querying knowledge base for company ${companyId}:`, { query });
 
-      // Create a context from the stored documents
-      const context = corpus.map(doc => `Document: ${doc.title}\nContent: ${doc.content}\n---\n`).join('\n');
+      // Create a context from the stored documents or an empty string if none
+      const context = corpus.length > 0
+        ? corpus.map(doc => `Document: ${doc.title}\nContent: ${doc.content}\n---\n`).join('\n')
+        : "No specific documents found in knowledge base.";
 
-      const prompt = `Using the following documents as context, please answer this question: "${query}"
+      const prompt = corpus.length > 0
+        ? `Using the following documents as context, please answer this question: "${query}"
 
 Context:
 ${context}
 
-Please provide a comprehensive answer based on the information in these documents.`;
+Please provide a comprehensive answer based on the information in these documents.`
+        : `Please answer this question based on your general knowledge: "${query}"
+
+(Note: No specific documents were found in the company knowledge base to provide additional context.)`;
 
       const result = await this.generativeModel.generateContent({
         contents: [{ role: 'user', parts: [{ text: prompt }] }],
