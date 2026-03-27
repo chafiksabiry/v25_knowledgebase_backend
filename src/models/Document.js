@@ -18,6 +18,11 @@ const DocumentSchema = new Schema(
       ref: 'Company',
       required: true
     },
+    gigId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Gig',
+      required: false
+    },
     isProcessed: { type: Boolean, default: false },
     processingStatus: { 
       type: String, 

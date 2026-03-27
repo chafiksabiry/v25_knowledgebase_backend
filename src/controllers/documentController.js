@@ -16,7 +16,7 @@ const uploadDocument = async (req, res) => {
       return res.status(400).json({ error: 'No file uploaded' });
     }
 
-    const { name, description, tags, uploadedBy, userId } = req.body;
+    const { name, description, tags, uploadedBy, userId, gigId } = req.body;
 
     // Check if companyId is provided
     if (!userId) {
@@ -58,6 +58,7 @@ const uploadDocument = async (req, res) => {
       tags: tags ? tags.split(',').map(tag => tag.trim()) : [],
       uploadedBy,
       companyId,
+      gigId: gigId || null,
       chunks: chunks.map((chunk, index) => ({
         content: chunk,
         index
@@ -119,8 +120,14 @@ const getAllDocuments = async (req, res) => {
     }
 
     const companyId = company._id;
+    const { gigId } = req.query;
 
-    const documents = await Document.find({ companyId }).select('-content -chunks');
+    const query = { companyId };
+    if (gigId && gigId !== 'all') {
+      query.gigId = gigId;
+    }
+
+    const documents = await Document.find(query).select('-content -chunks');
     res.status(200).json({ documents });
   } catch (error) {
     logger.error('Error fetching documents:', error);

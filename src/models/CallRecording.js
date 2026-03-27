@@ -108,6 +108,11 @@ const callRecordingSchema = new mongoose.Schema({
     ref: 'Company',
     required: true
   },
+  gigId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Gig',
+    required: false
+  },
   processingOptions: {
     transcription: {
       type: Boolean,

@@ -16,7 +16,7 @@ const uploadCallRecording = async (req, res) => {
       return res.status(400).json({ error: 'No file uploaded' });
     }
 
-    const { contactId, date, duration, summary, sentiment, tags, aiInsights, repId, userId } = req.body;
+    const { contactId, date, duration, summary, sentiment, tags, aiInsights, repId, userId, gigId } = req.body;
 
     // Validate companyId
     const company = await Company.findOne({ userId });
@@ -40,6 +40,7 @@ const uploadCallRecording = async (req, res) => {
       aiInsights: aiInsights ? aiInsights.split(',').map(insight => insight.trim()) : [],
       repId,
       companyId: company._id,
+      gigId: gigId || null,
       processingOptions: {
         transcription: true,
         sentiment: true,
@@ -104,7 +105,14 @@ const getCallRecordings = async (req, res) => {
     }
 
     const company = await Company.findOne({ userId });
-    const callRecordings = await CallRecording.find({ companyId: company._id });
+    const { gigId } = req.query;
+    
+    const query = { companyId: company._id };
+    if (gigId && gigId !== 'all') {
+      query.gigId = gigId;
+    }
+
+    const callRecordings = await CallRecording.find(query);
     
     // Map the records to include id instead of _id
     const formattedRecordings = callRecordings.map(recording => ({
