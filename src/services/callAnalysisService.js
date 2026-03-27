@@ -122,10 +122,10 @@ exports.audioUpload2 = async (fileBuffer, destinationName) => {
 };
 
 // Function to download and upload to GCS using streams
-async function uploadToGCS(audioUrl) {
+async function uploadToGCS(audioUrl, mimeType = 'audio/wav') {
     try {
         await ensureCredentialsInitialized();
-        console.log('Starting stream download/upload to GCS for:', audioUrl);
+        console.log('Starting stream download/upload to GCS for:', audioUrl, 'with type:', mimeType);
 
         const storage = new Storage({
             projectId: project,
@@ -133,7 +133,8 @@ async function uploadToGCS(audioUrl) {
         });
         const bucketName = "harx-audios-test"; // Using the same bucket as audiuUpload2
 
-        const fileName = `audio-${Date.now()}.wav`;
+        const extension = mimeType.split('/')[1] || 'wav';
+        const fileName = `media-${Date.now()}.${extension}`;
         const bucket = storage.bucket(bucketName);
         const file = bucket.file(fileName);
 
@@ -148,7 +149,7 @@ async function uploadToGCS(audioUrl) {
         const writeStream = file.createWriteStream({
             resumable: false,
             metadata: {
-                contentType: "audio/wav",
+                contentType: mimeType,
             },
         });
 
@@ -217,11 +218,11 @@ async function getGenerativeVisionModel() {
     return generativeVisionModel;
 }
 
-// Get the summary of an audio 
-exports.getAudioSummaryService = async (file_uri) => {
+// Get the summary of a media (audio or video)
+exports.getAudioSummaryService = async (file_uri, mimeType = 'audio/wav') => {
     try {
         // Upload to GCS first
-        const gcsUri = await uploadToGCS(file_uri);
+        const gcsUri = await uploadToGCS(file_uri, mimeType);
         console.log('File uploaded to GCS:', gcsUri);
 
         const request = {
@@ -229,7 +230,7 @@ exports.getAudioSummaryService = async (file_uri) => {
                 role: 'user', parts: [
                     {
                         "file_data": {
-                            "mime_type": "audio/wav",
+                            "mime_type": mimeType,
                             "file_uri": gcsUri
                         }
                     },
@@ -252,16 +253,16 @@ exports.getAudioSummaryService = async (file_uri) => {
         return parseCleanJson(fullResponse);
 
     } catch (error) {
-        console.error("Error analyzing the audio:", error);
-        throw new Error("Audio analysis failed");
+        console.error("Error analyzing the media:", error);
+        throw new Error("Media analysis failed");
     }
 };
 
-// Get the transcription of an audio with timeline
-exports.getAudioTranscriptionService = async (file_uri) => {
+// Get the transcription of a media (audio or video) with timeline
+exports.getAudioTranscriptionService = async (file_uri, mimeType = 'audio/wav') => {
     try {
         // Upload to GCS first
-        const gcsUri = await uploadToGCS(file_uri);
+        const gcsUri = await uploadToGCS(file_uri, mimeType);
         console.log('File uploaded to GCS:', gcsUri);
 
         const request = {
@@ -269,7 +270,7 @@ exports.getAudioTranscriptionService = async (file_uri) => {
                 role: 'user', parts: [
                     {
                         "file_data": {
-                            "mime_type": "audio/wav",
+                            "mime_type": mimeType,
                             "file_uri": gcsUri
                         }
                     },
@@ -315,16 +316,16 @@ exports.getAudioTranscriptionService = async (file_uri) => {
         // If we can't parse the response properly, return an error
         throw new Error('Invalid transcription response format');
     } catch (error) {
-        console.error("Error transcribing the audio:", error);
-        throw new Error("Audio transcription failed");
+        console.error("Error transcribing the media:", error);
+        throw new Error("Media transcription failed");
     }
 };
 
-// Get the scoring of a call 
-exports.getCallScoringService = async (file_uri) => {
+// Get the scoring of a call (audio or video)
+exports.getCallScoringService = async (file_uri, mimeType = 'audio/wav') => {
     try {
         // Upload to GCS first
-        const gcsUri = await uploadToGCS(file_uri);
+        const gcsUri = await uploadToGCS(file_uri, mimeType);
         console.log('File uploaded to GCS:', gcsUri);
 
         const request = {
@@ -332,7 +333,7 @@ exports.getCallScoringService = async (file_uri) => {
                 role: 'user', parts: [
                     {
                         "file_data": {
-                            "mime_type": "audio/wav",
+                            "mime_type": mimeType,
                             "file_uri": gcsUri
                         }
                     },
@@ -354,8 +355,8 @@ exports.getCallScoringService = async (file_uri) => {
         console.log('Full scoring response:', fullResponse);
         return parseCleanJson(fullResponse);
     } catch (error) {
-        console.error("Error scoring the call:", error);
-        throw new Error("Call scoring failed");
+        console.error("Error scoring the media:", error);
+        throw new Error("Media scoring failed");
     }
 };
 

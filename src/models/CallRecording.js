@@ -24,6 +24,9 @@ const callRecordingSchema = new mongoose.Schema({
   transcriptUrl: {
     type: String
   },
+  fileType: {
+    type: String
+  },
 
   analysis: {
     status: {

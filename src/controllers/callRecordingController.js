@@ -61,7 +61,8 @@ const uploadCallRecording = async (req, res) => {
           status: 'pending',
           lastUpdated: null
         }
-      }
+      },
+      fileType: req.file.mimetype
     });
 
     await callRecording.save();
@@ -126,7 +127,8 @@ const getCallRecordings = async (req, res) => {
       tags: recording.tags,
       aiInsights: recording.aiInsights,
       repId: recording.repId,
-      companyId: recording.companyId
+      companyId: recording.companyId,
+      fileType: recording.fileType
     }));
 
     res.status(200).json({ callRecordings: formattedRecordings });
@@ -194,8 +196,12 @@ const getAudioSummary = async (req, res) => {
             }
         );
         try {
+            // Determine mimetype (guess from URL if not in record)
+            const mimeType = recording.fileType || 
+                           (recording.recordingUrl?.match(/\.(mp4|webm|mov|avi)$/i) ? 'video/mp4' : 'audio/wav');
+            
             // Get summary from service
-            const summary = await getAudioSummaryService(recording.recordingUrl);
+            const summary = await getAudioSummaryService(recording.recordingUrl, mimeType);
             // Transform the summary to match our schema
             const keyIdeas = summary['key-ideas'].map(idea => {
                 const [title, description] = Object.entries(idea)[0];
@@ -285,8 +291,12 @@ const getAudioTranscription = async (req, res) => {
             }
         );
         try {
+            // Determine mimetype (guess from URL if not in record)
+            const mimeType = recording.fileType || 
+                           (recording.recordingUrl?.match(/\.(mp4|webm|mov|avi)$/i) ? 'video/mp4' : 'audio/wav');
+            
             // Get transcription from service
-            let transcription = await getAudioTranscriptionService(recording.recordingUrl);
+            let transcription = await getAudioTranscriptionService(recording.recordingUrl, mimeType);
             // Ensure all segments have mm:ss.SSS format for start/end
             if (transcription && Array.isArray(transcription.segments)) {
                 transcription.segments = transcription.segments.map(segment => ({
@@ -374,8 +384,12 @@ const getCallScoring = async (req, res) => {
             }
         );
         try {
+            // Determine mimetype (guess from URL if not in record)
+            const mimeType = recording.fileType || 
+                           (recording.recordingUrl?.match(/\.(mp4|webm|mov|avi)$/i) ? 'video/mp4' : 'audio/wav');
+            
             // Get scoring from service
-            let scoring = await getCallScoringService(recording.recordingUrl);
+            let scoring = await getCallScoringService(recording.recordingUrl, mimeType);
             // Set scoring to completed using $set
             await CallRecording.updateOne(
                 { _id: recordingId },
