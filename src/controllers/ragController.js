@@ -310,12 +310,15 @@ const analyzeDocument = async (req, res) => {
     }
 
     // Generate analysis prompt
-    const analysisPrompt = generateDocumentAnalysisPrompt(document.content);
+    const isVideo = document.fileType && document.fileType.startsWith('video/');
+    const analysisPrompt = generateDocumentAnalysisPrompt(isVideo ? "This is a video file. Please analyze its context and provide a summary based on your knowledge if available, or a general assessment if it's new." : document.content);
 
     // Perform analysis using RAG with a single call
+    // For videos, we might want to pass different parameters to vertexAIService later
     const response = await vertexAIService.queryKnowledgeBase(
       document.companyId,
-      analysisPrompt
+      analysisPrompt,
+      isVideo ? { fileUrl: document.fileUrl, fileType: document.fileType } : null
     );
 
     // Parse the response to get the analysis results

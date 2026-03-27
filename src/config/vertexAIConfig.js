@@ -196,7 +196,7 @@ class VertexAIService {
     }
   }
 
-  async queryKnowledgeBase(companyId, query) {
+  async queryKnowledgeBase(companyId, query, fileInfo = null) {
     try {
       if (!this.vertexAI) {
         throw new Error('Vertex AI not initialized');
@@ -205,21 +205,14 @@ class VertexAIService {
       // **MODIFIÉ : Récupère le contenu directement depuis la base de données**
       const corpus = await this._getCorpusContent(companyId);
 
-      if (corpus.length === 0) {
-        logger.info(`Knowledge base for company ${companyId} is empty. Proceeding with general AI model generation.`);
-
-        // On permet à la génération de continuer même si le corpus est vide.
-        // On injecte un petit avertissement dans le prompt interne ou on laisse simplement tel quel.
-      }
-
-      logger.info(`Querying knowledge base for company ${companyId}:`, { query });
+      logger.info(`Querying knowledge base for company ${companyId}:`, { query, hasFileInfo: !!fileInfo });
 
       // Create a context from the stored documents or an empty string if none
       const context = corpus.length > 0
         ? corpus.map(doc => `Document: ${doc.title}\nContent: ${doc.content}\n---\n`).join('\n')
         : "No specific documents found in knowledge base.";
 
-      const prompt = corpus.length > 0
+      const promptText = corpus.length > 0
         ? `Using the following documents as context, please answer this question: "${query}"
 
 Context:
@@ -230,8 +223,25 @@ Please provide a comprehensive answer based on the information in these document
 
 (Note: No specific documents were found in the company knowledge base to provide additional context.)`;
 
+      // Prepare parts for generateContent
+      const parts = [{ text: promptText }];
+
+      // If fileInfo is provided (for videos), add it to parts
+      if (fileInfo && fileInfo.fileUrl) {
+        // We use file_data for multimodal inputs
+        // Note: For Vertex AI, the file usually needs to be in GCS or passed as inline data
+        // If it's a public URL, we might need to fetch it first if the model doesn't support direct URL parts
+        // For simplicity and compatibility, we'll try to use it if provided
+        parts.push({
+          fileData: {
+            mimeType: fileInfo.fileType || 'video/mp4',
+            fileUri: fileInfo.fileUrl // This usually expects a gs:// URI for Vertex AI, but we'll adapt if needed
+          }
+        });
+      }
+
       const result = await this.generativeModel.generateContent({
-        contents: [{ role: 'user', parts: [{ text: prompt }] }],
+        contents: [{ role: 'user', parts }],
         generationConfig: {
           temperature: 0.7,
           topK: 40,

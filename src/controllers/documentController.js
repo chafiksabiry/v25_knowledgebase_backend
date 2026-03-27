@@ -39,13 +39,18 @@ const uploadDocument = async (req, res) => {
 
     // Extract text from the file
     const fileType = req.file.mimetype;
-    const extractedText = await extractTextFromFile(filePath, fileType);
+    const extractedText = await extractTextFromFile(filePath, fileType) || '';
 
-    // Chunk the document
-    const chunks = chunkDocument(extractedText);
+    // Chunk the document (only if we have text)
+    const chunks = extractedText ? chunkDocument(extractedText) : [];
 
-    // Calculate document metrics
-    const metrics = calculateDocumentMetrics(extractedText);
+    // Calculate document metrics (only if we have text)
+    const metrics = extractedText ? calculateDocumentMetrics(extractedText) : {
+      wordCount: 0,
+      characterCount: 0,
+      sentenceCount: 0,
+      paragraphCount: 0
+    };
 
     // Create document record
     const document = new Document({
