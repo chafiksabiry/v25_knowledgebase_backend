@@ -417,7 +417,7 @@ const generateScript = async (req, res) => {
     console.log('🔍  VÉRIFICATION DU CORPUS AVANT GÉNÉRATION');
     console.log('========================================\n');
 
-    const { companyId, gig, typeClient, langueTon, contexte, currentScript, chatHistory } = req.body;
+    const { companyId, gig, typeClient, langueTon, contexte, currentScript, currentPlaybook, chatHistory } = req.body;
 
     // Log request parameters
     console.log('📋 PARAMÈTRES DE LA REQUÊTE:');
@@ -428,6 +428,7 @@ const generateScript = async (req, res) => {
     console.log(`Langue/Ton: ${langueTon}`);
     console.log(`Contexte: ${contexte || 'Non spécifié'}`);
     console.log(`Current Script Provided: ${currentScript ? 'Oui' : 'Non'}`);
+    console.log(`Current Playbook Provided: ${currentPlaybook && typeof currentPlaybook === 'object' ? 'Oui' : 'Non'}`);
     console.log(`Chat History Provided: ${Array.isArray(chatHistory) && chatHistory.length > 0 ? 'Oui' : 'Non'}`);
     console.log();
 
@@ -477,6 +478,7 @@ Context:
 - Language/Tone requested: ${langueTon}
 ${contexte ? `- User instruction: ${contexte}` : ''}
 ${currentScript ? `- Current script to use as baseline:\n${String(currentScript).trim()}` : ''}
+${currentPlaybook ? `- Current branching playbook (JSON):\n${JSON.stringify(currentPlaybook)}` : ''}
 ${normalizedChatHistory ? `- Chat history to consider:\n${normalizedChatHistory}` : ''}
 
 Mandatory writing rules:
@@ -492,7 +494,8 @@ Mandatory writing rules:
 6) Keep lines concise and actionable.
 7) Include likely lead reactions (interest, hesitation, objection, availability).
 8) End with a clear professional close and next step.
-9) If a current script or chat update is provided, regenerate the FULL script by integrating those updates coherently.
+9) If a current script/playbook or chat update is provided, regenerate the FULL script by integrating those updates coherently.
+10) Preserve scenario continuity with previously generated options when possible.
 
 Output format example:
 Agent: Bonjour, je vous appelle concernant le poste de ...
