@@ -691,6 +691,36 @@ Rules:
       }
       branchingTurns = fallbackTurns;
     }
+
+    // Build deterministic ids and explicit links between turns
+    // so frontend can follow scenario branches reliably.
+    const normalizeLine = (text) =>
+      String(text || '')
+        .toLowerCase()
+        .replace(/\s+/g, ' ')
+        .trim();
+    const byAgentLine = new Map();
+    branchingTurns.forEach((turn, idx) => {
+      const key = normalizeLine(turn?.agentLine);
+      if (key && !byAgentLine.has(key)) byAgentLine.set(key, idx);
+    });
+    const linkedTurns = branchingTurns.map((turn, idx) => {
+      const turnId = `turn_${idx + 1}`;
+      const options = Array.isArray(turn?.leadOptions) ? turn.leadOptions : [];
+      const linkedOptions = options.map((opt) => {
+        const nextIdx = byAgentLine.get(normalizeLine(opt?.agentReply));
+        return {
+          leadReply: String(opt?.leadReply || '').trim(),
+          agentReply: String(opt?.agentReply || '').trim(),
+          nextTurnId: typeof nextIdx === 'number' ? `turn_${nextIdx + 1}` : null,
+        };
+      });
+      return {
+        id: turnId,
+        agentLine: String(turn?.agentLine || '').trim(),
+        leadOptions: linkedOptions,
+      };
+    });
     // Backward-compatible parsing:
     // - If model still returns JSON array, keep it.
     // - If model returns plain text (expected mode), convert to one script step to avoid 500.
@@ -767,7 +797,7 @@ Rules:
         playbook: {
           dialogue: dialogueRows,
           leadGuidance,
-          turns: branchingTurns,
+          turns: linkedTurns,
         },
         metadata: {
           processedAt: new Date().toISOString(),
