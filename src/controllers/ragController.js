@@ -482,6 +482,7 @@ ${currentPlaybook ? `- Current branching playbook (JSON):\n${JSON.stringify(curr
 ${normalizedChatHistory ? `- Chat history to consider:\n${normalizedChatHistory}` : ''}
 
 Mandatory writing rules:
+0) HIGHEST PRIORITY: follow the latest user instruction exactly when it is compatible with recruitment context.
 1) Output ONLY dialogue lines.
 2) Each line MUST start with one of these prefixes exactly:
    - Agent:
@@ -586,6 +587,22 @@ Return only the script lines with Agent:/Lead: prefixes.`;
           .trim(),
       };
     }).filter((row) => row.text);
+
+    // User-instruction guardrail:
+    // if user explicitly asks to start with "bonjour", enforce it on first agent line.
+    const contextText = String(contexte || '').toLowerCase();
+    const asksBonjourFirstLine =
+      (contextText.includes('premier message') || contextText.includes('first message') || contextText.includes('opening')) &&
+      contextText.includes('bonjour');
+    if (asksBonjourFirstLine) {
+      const firstAgentIdx = dialogueRows.findIndex((row) => row.role === 'agent');
+      if (firstAgentIdx >= 0) {
+        const firstText = String(dialogueRows[firstAgentIdx].text || '').trim();
+        if (!/^bonjour\b/i.test(firstText)) {
+          dialogueRows[firstAgentIdx].text = `Bonjour, ${firstText.charAt(0).toLowerCase()}${firstText.slice(1)}`.trim();
+        }
+      }
+    }
     const leadGuidance = [];
     for (let i = 0; i < dialogueRows.length; i += 1) {
       const row = dialogueRows[i];
