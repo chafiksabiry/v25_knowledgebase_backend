@@ -473,6 +473,7 @@ Mandatory writing rules:
 4) Keep a professional, polite, confident tone (HR/recruitment quality).
 5) Avoid placeholders like [Your Name], [Company], [Candidate Name].
    Use neutral realistic wording when details are missing.
+   NEVER use bracket placeholders like [ ... ] in any output line.
 6) Keep lines concise and actionable.
 7) Include likely lead reactions (interest, hesitation, objection, availability).
 8) End with a clear professional close and next step.
@@ -554,11 +555,18 @@ Return only the script lines with Agent:/Lead: prefixes.`;
         const actor = String(m[1] || '').toLowerCase();
         return {
           role: actor === 'agent' ? 'agent' : 'lead',
-          text: String(m[2] || '').trim(),
+          text: String(m[2] || '')
+            .replace(/\[[^\]]+\]/g, '')
+            .trim(),
         };
       }
-      return { role: 'agent', text: normalized };
-    });
+      return {
+        role: 'agent',
+        text: String(normalized || '')
+          .replace(/\[[^\]]+\]/g, '')
+          .trim(),
+      };
+    }).filter((row) => row.text);
     const leadGuidance = [];
     for (let i = 0; i < dialogueRows.length; i += 1) {
       const row = dialogueRows[i];
@@ -721,41 +729,19 @@ Rules:
         leadOptions: linkedOptions,
       };
     });
-    // Backward-compatible parsing:
-    // - If model still returns JSON array, keep it.
-    // - If model returns plain text (expected mode), convert to one script step to avoid 500.
-    let scriptArray = [];
-    try {
-      console.log('Tentative de parsing du contenu du script en JSON...');
-      let parsed = null;
-      try {
-        parsed = JSON.parse(scriptContent);
-      } catch {
-        const jsonArrayMatch = String(scriptContent).match(/\[[\s\S]*\]/);
-        if (jsonArrayMatch) {
-          parsed = JSON.parse(jsonArrayMatch[0]);
-        }
-      }
+    // Persist structured dialogue (no prefix in text).
+    let scriptArray = dialogueRows.map((row) => ({
+      phase: 'Dialogue',
+      actor: row.role === 'lead' ? 'lead' : 'agent',
+      replica: String(row.text || '').trim(),
+    })).filter((row) => row.replica);
 
-      if (Array.isArray(parsed)) {
-        scriptArray = parsed;
-        console.log('Contenu du script parsé en tableau JSON:', {
-          arrayLength: scriptArray.length,
-          phases: scriptArray.map(item => item.phase).filter((v, i, a) => a.indexOf(v) === i)
-        });
-      } else {
-        throw new Error('Non-JSON response');
-      }
-    } catch (e) {
-      console.log('Réponse non JSON détectée, fallback texte activé:', {
-        error: e.message,
-        previewContent: String(scriptContent).substring(0, 200) + '...'
-      });
+    if (scriptArray.length === 0) {
       scriptArray = [
         {
-          phase: 'Script',
+          phase: 'Dialogue',
           actor: 'agent',
-          replica: String(scriptContent || '').trim() || 'Script indisponible.'
+          replica: 'Script indisponible.'
         }
       ];
     }
@@ -782,7 +768,12 @@ Rules:
       targetClient: typeClient,
       language: langueTon,
       details: contexte,
-      script: scriptArray
+      script: scriptArray,
+      playbook: {
+        dialogue: dialogueRows,
+        leadGuidance,
+        turns: linkedTurns
+      }
     });
     console.log('Script sauvegardé avec succès:', {
       scriptId: scriptDoc._id,
@@ -793,7 +784,7 @@ Rules:
     const finalResponse = {
       success: true,
       data: {
-        script: scriptContent,
+        script: dialogueRows.map((row) => row.text).join('\n'),
         playbook: {
           dialogue: dialogueRows,
           leadGuidance,
