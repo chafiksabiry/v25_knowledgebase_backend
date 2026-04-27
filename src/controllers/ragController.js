@@ -430,10 +430,6 @@ const generateScript = async (req, res) => {
     console.log();
 
     // Validation checks
-    if (!companyId) {
-      console.log('❌ ERREUR: Company ID manquant\n');
-      return res.status(400).json({ error: 'Company ID is required' });
-    }
     if (!gig || !gig._id) {
       console.log('❌ ERREUR: Information du Gig manquante\n');
       return res.status(400).json({ error: 'A gig selection is required to generate a script.' });
@@ -450,80 +446,8 @@ const generateScript = async (req, res) => {
       console.log('✅ Vertex AI initialisé\n');
     }
 
-    // Vérifier les documents en base de données
-    const documents = await Document.find({ companyId });
-    const recentDocs = documents.filter(doc =>
-      new Date(doc.createdAt) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
-    );
-
-    console.log('📊 ÉTAT DE LA BASE DE DONNÉES:');
-    console.log('----------------------------');
-    console.log(`Total documents: ${documents.length}`);
-    console.log(`Documents récents (7 jours): ${recentDocs.length}`);
-    console.log('Types de documents:');
-    const docTypes = documents.reduce((acc, doc) => {
-      acc[doc.type] = (acc[doc.type] || 0) + 1;
-      return acc;
-    }, {});
-    Object.entries(docTypes).forEach(([type, count]) => {
-      console.log(`  - ${type}: ${count}`);
-    });
-    console.log();
-
-    // Vérifier le contenu du corpus
-    const corpusContent = await vertexAIService._getCorpusContent(companyId);
-    const callRecordings = corpusContent.filter(item =>
-      item.title.toLowerCase().includes('call') ||
-      item.title.toLowerCase().includes('recording')
-    );
-    const otherDocuments = corpusContent.filter(item =>
-      !item.title.toLowerCase().includes('call') &&
-      !item.title.toLowerCase().includes('recording')
-    );
-
-    console.log('📝 ÉTAT DU CORPUS:');
-    console.log('----------------');
-    console.log(`Total éléments: ${corpusContent.length}`);
-    console.log(`Enregistrements d'appels: ${callRecordings.length}`);
-    console.log(`Autres documents: ${otherDocuments.length}`);
-    console.log();
-
-    if (callRecordings.length > 0) {
-      console.log('🎯 DÉTAIL DES ENREGISTREMENTS D\'APPELS:');
-      console.log('------------------------------------');
-      callRecordings.forEach(recording => {
-        const modifiedDate = new Date(recording.lastModifiedTime);
-        const isRecent = modifiedDate > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
-        console.log(`  - ${recording.title}`);
-        console.log(`    Dernière modification: ${modifiedDate.toLocaleDateString()}`);
-        console.log(`    Statut: ${isRecent ? '🟢 Récent' : '🟡 Plus ancien'}`);
-      });
-      console.log();
-    } else {
-      console.log('⚠️  ATTENTION: Aucun enregistrement d\'appel trouvé!\n');
-    }
-
-    // Vérifier le statut global
-    const corpusStatus = await vertexAIService.checkCorpusStatus(companyId);
-
-    console.log('📈 RÉSUMÉ FINAL:');
-    console.log('--------------');
-    console.log(`État du corpus: ${corpusStatus.exists ? '✅ Existe' : '❌ N\'existe pas'}`);
-    console.log(`Documents dans le corpus: ${corpusStatus.documentCount}`);
-    console.log(`Enregistrements d'appels: ${corpusStatus.callRecordingCount}`);
-    console.log(`Total éléments: ${corpusStatus.totalCount}`);
+    console.log('Mode generation: GIG ONLY (sans consultation KB)');
     console.log('\n========================================\n');
-
-    // Vérifications critiques
-    // MODIFIÉ : On ne bloque plus si le corpus n'existe pas ou s'il n'y a pas d'enregistrements.
-    // On loggera simplement l'information.
-    if (!corpusStatus.exists) {
-      console.log('⚠️  INFO: Corpus non trouvé ou vide. La génération se fera sur la base des connaissances générales.\n');
-    }
-
-    if (corpusStatus.callRecordingCount === 0) {
-      console.log('⚠️  INFO: Aucun enregistrement d\'appel trouvé. La génération se fera sans exemples d\'appels passés.\n');
-    }
 
     // Construire le prompt pour la génération
     console.log('🔄 PRÉPARATION DU PROMPT...\n');
@@ -546,9 +470,9 @@ Output rules:
 - Favor short alternating lines (Agent / Candidate).
 - If context is missing, infer reasonably and still provide a usable script.`;
 
-    // Utiliser la logique RAG pour enrichir le prompt avec le contexte documentaire
-    console.log('🔄 CONSULTATION DU CORPUS POUR LA GÉNÉRATION DE SCRIPT...\n');
-    const response = await vertexAIService.queryKnowledgeBase(companyId, prompt);
+    // Génération directe sur base du gig uniquement (pas de KB/RAG).
+    const result = await vertexAIService.generativeModel.generateContent(prompt);
+    const response = result.response;
 
     // Log response metadata
     console.log('📄 MÉTADONNÉES DE LA RÉPONSE DE Vertex AI:');
@@ -678,7 +602,7 @@ Output rules:
         metadata: {
           processedAt: new Date().toISOString(),
           model: process.env.VERTEX_AI_MODEL,
-          corpusStatus: corpusStatus,
+          sourceMode: 'gig_only',
           gigInfo: {
             gigId: gig._id,
             gigTitle: gig.title,
@@ -692,7 +616,7 @@ Output rules:
               acc[phase] = (acc[phase] || 0) + 1;
               return acc;
             }, {}),
-            citationsUsed: response.candidates?.[0]?.citationMetadata?.citations?.length || 0
+            citationsUsed: 0
           }
         }
       }
