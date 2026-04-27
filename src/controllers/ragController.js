@@ -541,6 +541,46 @@ Return only the script lines with Agent:/Lead: prefixes.`;
     if (typeof scriptContent === 'string') {
       scriptContent = scriptContent.replace(/^```(?:json)?\s*|\s*```$/g, '').trim();
     }
+
+    // Build an advanced guidance playbook from generated dialogue.
+    const rawLines = String(scriptContent || '')
+      .split(/\r?\n/)
+      .map((l) => l.trim())
+      .filter(Boolean);
+    const dialogueRows = rawLines.map((line) => {
+      const normalized = line.replace(/^\[[^\]]+\]\s*/, '').trim();
+      const m = normalized.match(/^(Agent|Lead|Candidate|Client)\s*:\s*(.+)$/i);
+      if (m) {
+        const actor = String(m[1] || '').toLowerCase();
+        return {
+          role: actor === 'agent' ? 'agent' : 'lead',
+          text: String(m[2] || '').trim(),
+        };
+      }
+      return { role: 'agent', text: normalized };
+    });
+    const leadGuidance = [];
+    for (let i = 0; i < dialogueRows.length; i += 1) {
+      const row = dialogueRows[i];
+      if (row.role !== 'lead') continue;
+      const suggestions = [];
+      for (let j = i + 1; j < dialogueRows.length; j += 1) {
+        const next = dialogueRows[j];
+        if (next.role === 'lead') break;
+        if (next.role === 'agent' && next.text) suggestions.push(next.text);
+        if (suggestions.length >= 3) break;
+      }
+      leadGuidance.push({
+        leadLine: row.text,
+        suggestedAgentReplies:
+          suggestions.length > 0
+            ? suggestions
+            : [
+                'Merci pour votre retour. Je vous explique rapidement les points cles du poste.',
+                'Tres bien, je vais vous poser 2 questions pour confirmer votre adequation.',
+              ],
+      });
+    }
     // Backward-compatible parsing:
     // - If model still returns JSON array, keep it.
     // - If model returns plain text (expected mode), convert to one script step to avoid 500.
@@ -614,6 +654,10 @@ Return only the script lines with Agent:/Lead: prefixes.`;
       success: true,
       data: {
         script: scriptContent,
+        playbook: {
+          dialogue: dialogueRows,
+          leadGuidance,
+        },
         metadata: {
           processedAt: new Date().toISOString(),
           model: process.env.VERTEX_AI_MODEL,
