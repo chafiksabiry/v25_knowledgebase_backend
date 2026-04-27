@@ -160,9 +160,6 @@ async function uploadToGCS(audioUrl, mimeType = 'audio/wav') {
                     reject(error);
                 })
                 .on('finish', () => {
-                    // The 'finish' event on the pipe might not mean the write stream is done? 
-                    // Usually pipe emits finish when source is done.
-                    // But we should listen to writeStream 'finish'
                 });
 
             writeStream.on('error', (error) => {
