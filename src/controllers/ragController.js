@@ -581,6 +581,116 @@ Return only the script lines with Agent:/Lead: prefixes.`;
               ],
       });
     }
+
+    // Build advanced branching turns:
+    // each agent line has 2-3 lead options, each option has the matching agent reply.
+    let branchingTurns = [];
+    try {
+      const branchingPrompt = `Convert this script into an interactive branching playbook.
+
+INPUT SCRIPT:
+${String(scriptContent || '')}
+
+Return STRICT JSON only in this exact shape:
+{
+  "turns": [
+    {
+      "agentLine": "Agent line",
+      "leadOptions": [
+        { "leadReply": "Possible lead reply 1", "agentReply": "Best agent reply to option 1" },
+        { "leadReply": "Possible lead reply 2", "agentReply": "Best agent reply to option 2" },
+        { "leadReply": "Possible lead reply 3", "agentReply": "Best agent reply to option 3" }
+      ]
+    }
+  ]
+}
+
+Rules:
+- 6 to 10 turns
+- 2 to 3 leadOptions per turn
+- Professional recruitment context
+- No placeholders like [Company] or [Name]
+- Keep replies concise and realistic
+- Output JSON only`;
+
+      const branchingResult = await vertexAIService.generativeModel.generateContent(branchingPrompt);
+      const branchingResponse = branchingResult.response;
+      let branchingText = '';
+      if (branchingResponse?.candidates?.[0]?.content?.parts?.[0]?.text) {
+        branchingText = String(branchingResponse.candidates[0].content.parts[0].text);
+      } else if (branchingResponse?.candidates?.[0]?.text) {
+        branchingText = String(branchingResponse.candidates[0].text);
+      } else if (typeof branchingResponse?.text === 'string') {
+        branchingText = String(branchingResponse.text);
+      }
+      branchingText = branchingText.replace(/^```(?:json)?\s*|\s*```$/g, '').trim();
+      const parsed = JSON.parse(branchingText);
+      const turns = Array.isArray(parsed?.turns) ? parsed.turns : [];
+      branchingTurns = turns
+        .map((t) => ({
+          agentLine: String(t?.agentLine || '').trim(),
+          leadOptions: Array.isArray(t?.leadOptions)
+            ? t.leadOptions
+                .map((o) => ({
+                  leadReply: String(o?.leadReply || '').trim(),
+                  agentReply: String(o?.agentReply || '').trim(),
+                }))
+                .filter((o) => o.leadReply && o.agentReply)
+                .slice(0, 3)
+            : [],
+        }))
+        .filter((t) => t.agentLine && t.leadOptions.length >= 2)
+        .slice(0, 10);
+    } catch (branchErr) {
+      console.log('Branching JSON generation failed, fallback heuristic used:', String(branchErr?.message || branchErr));
+    }
+
+    if (branchingTurns.length === 0) {
+      // Fallback heuristic from dialogue rows.
+      const fallbackTurns = [];
+      for (let i = 0; i < dialogueRows.length; i += 1) {
+        if (dialogueRows[i]?.role !== 'agent') continue;
+        const agentLine = String(dialogueRows[i]?.text || '').trim();
+        if (!agentLine) continue;
+        let leadReply = '';
+        let agentReply = '';
+        for (let j = i + 1; j < dialogueRows.length; j += 1) {
+          const row = dialogueRows[j];
+          if (!leadReply && row.role === 'lead') {
+            leadReply = String(row.text || '').trim();
+            continue;
+          }
+          if (leadReply && row.role === 'agent') {
+            agentReply = String(row.text || '').trim();
+            break;
+          }
+          if (leadReply && row.role === 'lead') break;
+        }
+        const defaultAgentReply =
+          agentReply || 'Merci pour votre retour. Je vous donne les informations essentielles en 30 secondes.';
+        const opts = [
+          {
+            leadReply: leadReply || 'Oui, je vous ecoute.',
+            agentReply: defaultAgentReply,
+          },
+          {
+            leadReply: 'C est interessant, pouvez-vous preciser le role ?',
+            agentReply:
+              'Bien sur. Le poste est centre sur les missions cles du gig, avec un cadre clair et une evolution possible.',
+          },
+          {
+            leadReply: 'Je ne suis pas disponible maintenant.',
+            agentReply: 'Je comprends. Quel serait le meilleur moment pour vous rappeler rapidement ?',
+          },
+        ];
+        fallbackTurns.push({
+          agentLine,
+          leadOptions: opts.slice(0, 3),
+        });
+        if (fallbackTurns.length >= 8) break;
+      }
+      branchingTurns = fallbackTurns;
+    }
     // Backward-compatible parsing:
     // - If model still returns JSON array, keep it.
     // - If model returns plain text (expected mode), convert to one script step to avoid 500.
@@ -657,6 +767,7 @@ Return only the script lines with Agent:/Lead: prefixes.`;
         playbook: {
           dialogue: dialogueRows,
           leadGuidance,
+          turns: branchingTurns,
         },
         metadata: {
           processedAt: new Date().toISOString(),
