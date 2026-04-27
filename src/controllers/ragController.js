@@ -950,6 +950,35 @@ const updateScriptStatus = async (req, res) => {
 };
 
 /**
+ * Delete script by id
+ * @param {Object} req
+ * @param {Object} res
+ */
+const deleteScript = async (req, res) => {
+  try {
+    const { scriptId } = req.params;
+    if (!scriptId) {
+      return res.status(400).json({ error: 'scriptId is required' });
+    }
+
+    const deleted = await Script.findByIdAndDelete(scriptId).lean();
+    if (!deleted) {
+      return res.status(404).json({ error: 'Script not found' });
+    }
+
+    return res.status(200).json({
+      success: true,
+      data: {
+        _id: deleted._id,
+      },
+    });
+  } catch (error) {
+    logger.error('Error deleting script:', error);
+    return res.status(500).json({ error: 'Failed to delete script', details: error.message });
+  }
+};
+
+/**
  * Translate document analysis to English
  * @param {Object} req - Express request object with analysis and targetLanguage in body
  * @param {Object} res - Express response object
@@ -1055,5 +1084,6 @@ module.exports = {
   createScript,
   listScripts,
   updateScriptStatus,
+  deleteScript,
   translateAnalysis
 }; 

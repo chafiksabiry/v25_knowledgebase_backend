@@ -47,6 +47,7 @@ router.post('/generate-script', require('../controllers/ragController').generate
 router.post('/scripts', require('../controllers/ragController').createScript);
 router.get('/scripts', require('../controllers/ragController').listScripts);
 router.put('/scripts/:scriptId/status', require('../controllers/ragController').updateScriptStatus);
+router.delete('/scripts/:scriptId', require('../controllers/ragController').deleteScript);
 
 // Translate document analysis to English
 router.post('/translate-analysis', translateAnalysis);
