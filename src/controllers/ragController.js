@@ -760,25 +760,8 @@ Rules:
       return acc;
     }, {});
 
-    // Save the script in the database
-    console.log('Sauvegarde du script dans la base de données...');
-    const scriptDoc = await Script.create({
-      gigId: gig._id,
-      gig,
-      targetClient: typeClient,
-      language: langueTon,
-      details: contexte,
-      script: scriptArray,
-      playbook: {
-        dialogue: dialogueRows,
-        leadGuidance,
-        turns: linkedTurns
-      }
-    });
-    console.log('Script sauvegardé avec succès:', {
-      scriptId: scriptDoc._id,
-      stepsCount: scriptArray.length
-    });
+    // Do NOT save here: persistence happens only on explicit validation action.
+    console.log('Aucune sauvegarde DB pendant generation (validation requise).');
 
     // Prepare final response
     const finalResponse = {
@@ -799,7 +782,7 @@ Rules:
             gigTitle: gig.title,
             gigCategory: gig.category
           },
-          scriptId: scriptDoc._id,
+          scriptId: null,
           analysisStats: {
             totalSteps: scriptArray.length,
             uniquePhases: uniquePhases.length,
@@ -854,7 +837,7 @@ const listScripts = async (req, res) => {
 
     const scripts = await Script.find(filter)
       .sort({ createdAt: -1 })
-      .select('_id gigId targetClient language details script isActive createdAt')
+      .select('_id gigId targetClient language details script playbook isActive createdAt')
       .lean();
 
     return res.status(200).json({
@@ -864,6 +847,57 @@ const listScripts = async (req, res) => {
   } catch (error) {
     logger.error('Error listing scripts:', error);
     return res.status(500).json({ error: 'Failed to list scripts', details: error.message });
+  }
+};
+
+/**
+ * Create script in database (called on explicit validate action)
+ * @param {Object} req
+ * @param {Object} res
+ */
+const createScript = async (req, res) => {
+  try {
+    const { gigId, targetClient, language, details, script, playbook, isActive } = req.body || {};
+    if (!gigId) return res.status(400).json({ error: 'gigId is required' });
+    if (!targetClient || !language) {
+      return res.status(400).json({ error: 'targetClient and language are required' });
+    }
+
+    const scriptArray = Array.isArray(script) ? script : [];
+    const safeScript = scriptArray
+      .map((row) => ({
+        phase: String(row?.phase || 'Dialogue').trim() || 'Dialogue',
+        actor: String(row?.actor || 'agent').toLowerCase() === 'lead' ? 'lead' : 'agent',
+        replica: String(row?.replica || '').trim(),
+      }))
+      .filter((row) => row.replica);
+
+    if (safeScript.length === 0) {
+      return res.status(400).json({ error: 'script array must contain at least one dialogue line' });
+    }
+
+    const created = await Script.create({
+      gigId,
+      targetClient,
+      language,
+      details: String(details || '').trim(),
+      script: safeScript,
+      playbook: playbook && typeof playbook === 'object' ? playbook : undefined,
+      isActive: typeof isActive === 'boolean' ? isActive : true,
+    });
+
+    return res.status(201).json({
+      success: true,
+      data: {
+        _id: created._id,
+        gigId: created.gigId,
+        isActive: created.isActive,
+        createdAt: created.createdAt,
+      },
+    });
+  } catch (error) {
+    logger.error('Error creating script:', error);
+    return res.status(500).json({ error: 'Failed to create script', details: error.message });
   }
 };
 
@@ -1008,6 +1042,7 @@ module.exports = {
   searchInCorpus,
   analyzeDocument,
   generateScript,
+  createScript,
   listScripts,
   updateScriptStatus,
   translateAnalysis
