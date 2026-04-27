@@ -452,23 +452,38 @@ const generateScript = async (req, res) => {
     // Construire le prompt pour la génération
     console.log('🔄 PRÉPARATION DU PROMPT...\n');
 
-    const prompt = `You are HARX KB Script Assistant.
+    const prompt = `You are HARX Professional Script Assistant.
 
-Generate a normal, ready-to-use call script in plain text (markdown allowed).
-Do NOT use DISC profiling.
-Do NOT force phases, JSON structure, or training-plan style output.
-Keep the script simple, concise, practical, and directly usable.
+Goal:
+Generate a professional recruitment call script based ONLY on the selected gig.
+No DISC, no training modules, no KB references, no JSON output.
 
-Inputs:
+Context:
 - Gig title: ${gig?.title || 'N/A'}
 - Gig description: ${gig?.description || 'N/A'}
-- Language/Tone: ${langueTon}
-${contexte ? `- User context: ${contexte}` : ''}
+- Language/Tone requested: ${langueTon}
+${contexte ? `- User instruction: ${contexte}` : ''}
 
-Output rules:
-- Return script lines only (no JSON, no XML, no code fences).
-- Favor short alternating lines (Agent / Candidate).
-- If context is missing, infer reasonably and still provide a usable script.`;
+Mandatory writing rules:
+1) Output ONLY dialogue lines.
+2) Each line MUST start with one of these prefixes exactly:
+   - Agent:
+   - Lead:
+3) Alternate naturally between Agent and Lead.
+4) Keep a professional, polite, confident tone (HR/recruitment quality).
+5) Avoid placeholders like [Your Name], [Company], [Candidate Name].
+   Use neutral realistic wording when details are missing.
+6) Keep lines concise and actionable.
+7) Include likely lead reactions (interest, hesitation, objection, availability).
+8) End with a clear professional close and next step.
+
+Output format example:
+Agent: Bonjour, je vous appelle concernant le poste de ...
+Lead: Bonjour, je vous écoute.
+Agent: ...
+Lead: ...
+
+Return only the script lines with Agent:/Lead: prefixes.`;
 
     // Génération directe sur base du gig uniquement (pas de KB/RAG).
     const result = await vertexAIService.generativeModel.generateContent(prompt);
