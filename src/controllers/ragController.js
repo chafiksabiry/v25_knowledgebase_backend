@@ -876,15 +876,25 @@ const createScript = async (req, res) => {
       return res.status(400).json({ error: 'script array must contain at least one dialogue line' });
     }
 
-    const created = await Script.create({
-      gigId,
-      targetClient,
-      language,
-      details: String(details || '').trim(),
-      script: safeScript,
-      playbook: playbook && typeof playbook === 'object' ? playbook : undefined,
-      isActive: typeof isActive === 'boolean' ? isActive : true,
-    });
+    // One script per gig: validate action updates existing or creates once.
+    const created = await Script.findOneAndUpdate(
+      { gigId },
+      {
+        gigId,
+        targetClient,
+        language,
+        details: String(details || '').trim(),
+        script: safeScript,
+        playbook: playbook && typeof playbook === 'object' ? playbook : undefined,
+        isActive: typeof isActive === 'boolean' ? isActive : true,
+      },
+      {
+        new: true,
+        upsert: true,
+        runValidators: true,
+        setDefaultsOnInsert: true,
+      }
+    );
 
     return res.status(201).json({
       success: true,
