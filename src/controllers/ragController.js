@@ -417,7 +417,7 @@ const generateScript = async (req, res) => {
     console.log('🔍  VÉRIFICATION DU CORPUS AVANT GÉNÉRATION');
     console.log('========================================\n');
 
-    const { companyId, gig, typeClient, langueTon, contexte } = req.body;
+    const { companyId, gig, typeClient, langueTon, contexte, currentScript, chatHistory } = req.body;
 
     // Log request parameters
     console.log('📋 PARAMÈTRES DE LA REQUÊTE:');
@@ -427,6 +427,8 @@ const generateScript = async (req, res) => {
     console.log(`Type Client: ${typeClient}`);
     console.log(`Langue/Ton: ${langueTon}`);
     console.log(`Contexte: ${contexte || 'Non spécifié'}`);
+    console.log(`Current Script Provided: ${currentScript ? 'Oui' : 'Non'}`);
+    console.log(`Chat History Provided: ${Array.isArray(chatHistory) && chatHistory.length > 0 ? 'Oui' : 'Non'}`);
     console.log();
 
     // Validation checks
@@ -452,6 +454,17 @@ const generateScript = async (req, res) => {
     // Construire le prompt pour la génération
     console.log('🔄 PRÉPARATION DU PROMPT...\n');
 
+    const normalizedChatHistory = Array.isArray(chatHistory)
+      ? chatHistory
+          .map((msg) => {
+            const role = String(msg?.role || '').toLowerCase() === 'assistant' ? 'assistant' : 'user';
+            const text = String(msg?.content || '').trim();
+            return text ? `${role.toUpperCase()}: ${text}` : '';
+          })
+          .filter(Boolean)
+          .join('\n')
+      : '';
+
     const prompt = `You are HARX Professional Script Assistant.
 
 Goal:
@@ -463,6 +476,8 @@ Context:
 - Gig description: ${gig?.description || 'N/A'}
 - Language/Tone requested: ${langueTon}
 ${contexte ? `- User instruction: ${contexte}` : ''}
+${currentScript ? `- Current script to use as baseline:\n${String(currentScript).trim()}` : ''}
+${normalizedChatHistory ? `- Chat history to consider:\n${normalizedChatHistory}` : ''}
 
 Mandatory writing rules:
 1) Output ONLY dialogue lines.
@@ -477,6 +492,7 @@ Mandatory writing rules:
 6) Keep lines concise and actionable.
 7) Include likely lead reactions (interest, hesitation, objection, availability).
 8) End with a clear professional close and next step.
+9) If a current script or chat update is provided, regenerate the FULL script by integrating those updates coherently.
 
 Output format example:
 Agent: Bonjour, je vous appelle concernant le poste de ...
@@ -619,6 +635,8 @@ Rules:
 - Professional recruitment context
 - No placeholders like [Company] or [Name]
 - Keep replies concise and realistic
+- Do NOT reuse the exact same agentReply for multiple leadOptions in the same turn.
+- Make each agentReply specifically adapt to its leadReply.
 - Output JSON only`;
 
       const branchingResult = await vertexAIService.generativeModel.generateContent(branchingPrompt);
@@ -699,6 +717,49 @@ Rules:
       }
       branchingTurns = fallbackTurns;
     }
+
+    // De-duplicate repeated agent replies inside each turn so lead choices
+    // visibly produce different outcomes on the frontend.
+    const normalizeBranchText = (text) =>
+      String(text || '')
+        .toLowerCase()
+        .replace(/\s+/g, ' ')
+        .trim();
+
+    branchingTurns = branchingTurns.map((turn) => {
+      const opts = Array.isArray(turn?.leadOptions) ? turn.leadOptions : [];
+      if (opts.length <= 1) return turn;
+      const countByReply = {};
+      opts.forEach((opt) => {
+        const key = normalizeBranchText(opt?.agentReply);
+        if (!key) return;
+        countByReply[key] = (countByReply[key] || 0) + 1;
+      });
+      const nextOpts = opts.map((opt) => {
+        const reply = String(opt?.agentReply || '').trim();
+        const lead = String(opt?.leadReply || '').trim();
+        const key = normalizeBranchText(reply);
+        if (!key || (countByReply[key] || 0) <= 1) return opt;
+        const lowerLead = lead.toLowerCase();
+        let adapted = reply;
+        if (/\b(non|pas|occupe|indisponible)\b/.test(lowerLead)) {
+          adapted =
+            'Je comprends. Merci pour votre retour. Si votre situation change, je reste disponible pour reprendre la discussion.';
+        } else if (/\b(plus|preciser|details?|expliquer)\b/.test(lowerLead)) {
+          adapted = `Bien sur. Je peux vous donner plus de details sur le poste ${String(gig?.title || '').trim()}.`;
+        } else if (/\b(interesse|interessant|oui)\b/.test(lowerLead)) {
+          adapted = 'Excellent. Je vous propose de passer a l etape suivante et valider vos disponibilites.';
+        }
+        return {
+          ...opt,
+          agentReply: adapted,
+        };
+      });
+      return {
+        ...turn,
+        leadOptions: nextOpts,
+      };
+    });
 
     // Build deterministic ids and explicit links between turns
     // so frontend can follow scenario branches reliably.
