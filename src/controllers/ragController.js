@@ -650,7 +650,7 @@ Return STRICT JSON only in this exact shape:
 }
 
 Rules:
-- 6 to 10 turns
+- Exactly 10 turns
 - 2 to 3 leadOptions per turn
 - Professional recruitment context
 - No placeholders like [Company] or [Name]
@@ -685,7 +685,7 @@ Rules:
                 .slice(0, 3)
             : [],
         }))
-        .filter((t) => t.agentLine && t.leadOptions.length >= 2)
+        .filter((t) => t.agentLine && t.leadOptions.length >= 1)
         .slice(0, 10);
     } catch (branchErr) {
       console.log('Branching JSON generation failed, fallback heuristic used:', String(branchErr?.message || branchErr));
@@ -733,10 +733,73 @@ Rules:
           agentLine,
           leadOptions: opts.slice(0, 3),
         });
-        if (fallbackTurns.length >= 8) break;
+        if (fallbackTurns.length >= 10) break;
       }
       branchingTurns = fallbackTurns;
     }
+
+    // Guarantee at least 10 turns for agent messages.
+    const sanitizeOptionPair = (option, gigTitle) => {
+      const leadReply = String(option?.leadReply || '').trim();
+      const agentReply = String(option?.agentReply || '').trim();
+      if (!leadReply || !agentReply) return null;
+      return { leadReply, agentReply };
+    };
+    const defaultTurnOptions = (gigTitle) => ([
+      {
+        leadReply: 'Oui, je suis interesse. Quelle est la suite ?',
+        agentReply: `Parfait. Je vous presente la prochaine etape pour le poste ${String(gigTitle || '').trim() || 'vise'}.`,
+      },
+      {
+        leadReply: 'J ai besoin de plus de details avant de confirmer.',
+        agentReply: 'Bien sur. Je peux preciser les missions, le rythme et les attentes en moins d une minute.',
+      },
+    ]);
+    const ensureTwoOptions = (options, gigTitle) => {
+      const valid = (Array.isArray(options) ? options : [])
+        .map((opt) => sanitizeOptionPair(opt, gigTitle))
+        .filter(Boolean);
+      const merged = [...valid];
+      const defaults = defaultTurnOptions(gigTitle);
+      let defaultIndex = 0;
+      while (merged.length < 2 && defaultIndex < defaults.length) {
+        merged.push(defaults[defaultIndex]);
+        defaultIndex += 1;
+      }
+      return merged.slice(0, 3);
+    };
+    const extractAgentLinesFromDialogue = (rows) =>
+      (Array.isArray(rows) ? rows : [])
+        .filter((row) => String(row?.role || '').toLowerCase() === 'agent')
+        .map((row) => String(row?.text || '').trim())
+        .filter(Boolean);
+    const agentLinesPool = extractAgentLinesFromDialogue(dialogueRows);
+    const baseTurns = branchingTurns.map((turn) => ({
+      agentLine: String(turn?.agentLine || '').trim(),
+      leadOptions: ensureTwoOptions(turn?.leadOptions, gig?.title),
+    })).filter((turn) => turn.agentLine);
+    const seenAgentLines = new Set(baseTurns.map((turn) => turn.agentLine.toLowerCase()));
+    let poolIndex = 0;
+    while (baseTurns.length < 10) {
+      let candidateLine = '';
+      while (poolIndex < agentLinesPool.length && !candidateLine) {
+        const candidate = agentLinesPool[poolIndex];
+        poolIndex += 1;
+        if (candidate && !seenAgentLines.has(candidate.toLowerCase())) {
+          candidateLine = candidate;
+        }
+      }
+      if (!candidateLine) {
+        const turnNumber = baseTurns.length + 1;
+        candidateLine = `Je continue avec l etape ${turnNumber} pour valider l adequation et confirmer la suite du processus.`;
+      }
+      seenAgentLines.add(candidateLine.toLowerCase());
+      baseTurns.push({
+        agentLine: candidateLine,
+        leadOptions: defaultTurnOptions(gig?.title),
+      });
+    }
+    branchingTurns = baseTurns.slice(0, 10);
 
     // De-duplicate repeated agent replies inside each turn so lead choices
     // visibly produce different outcomes on the frontend.
