@@ -528,47 +528,23 @@ const generateScript = async (req, res) => {
     // Construire le prompt pour la génération
     console.log('🔄 PRÉPARATION DU PROMPT...\n');
 
-    const prompt = `You are generating a structured sales call script.
+    const prompt = `You are HARX KB Script Assistant.
 
-CRITICAL REQUIREMENTS:
-1. The script MUST include ALL of the following 8 phases in this EXACT order:
-   - Phase 1: "Context & Preparation"
-   - Phase 2: "SBAM & Opening"
-   - Phase 3: "Legal & Compliance"
-   - Phase 4: "Need Discovery"
-   - Phase 5: "Value Proposition"
-   - Phase 6: "Documents/Quote"
-   - Phase 7: "Objection Handling"
-   - Phase 8: "Confirmation & Closing"
+Generate a normal, ready-to-use call script in plain text (markdown allowed).
+Do NOT use DISC profiling.
+Do NOT force phases, JSON structure, or training-plan style output.
+Keep the script simple, concise, practical, and directly usable.
 
-2. Each phase MUST have at least one dialogue exchange.
-3. DO NOT skip or combine any phases.
-4. DO NOT add any additional phases.
-5. DO NOT mention the phase name in the dialogue text.
-
-DIALOGUE STRUCTURE:
-- Each step must be a JSON object with:
-  - phase: one of the 8 exact phase names listed above
-  - actor: either "agent" or "lead"
-  - replica: the dialogue text
-
-Client Profile:
-- Type: ${typeClient} (DISC Profile)
+Inputs:
+- Gig title: ${gig?.title || 'N/A'}
+- Gig description: ${gig?.description || 'N/A'}
 - Language/Tone: ${langueTon}
-${contexte ? `- Additional Context: ${contexte}` : ''}
+${contexte ? `- User context: ${contexte}` : ''}
 
-Gig Details:
-${JSON.stringify(gig, null, 2)}
-
-Return ONLY a JSON array of dialogue steps following this exact format:
-[
-  {
-    "phase": "Context & Preparation",
-    "actor": "agent",
-    "replica": "..."
-  },
-  ...
-]`;
+Output rules:
+- Return script lines only (no JSON, no XML, no code fences).
+- Favor short alternating lines (Agent / Candidate).
+- If context is missing, infer reasonably and still provide a usable script.`;
 
     // Utiliser la logique RAG pour enrichir le prompt avec le contexte documentaire
     console.log('🔄 CONSULTATION DU CORPUS POUR LA GÉNÉRATION DE SCRIPT...\n');
@@ -626,21 +602,43 @@ Return ONLY a JSON array of dialogue steps following this exact format:
     if (typeof scriptContent === 'string') {
       scriptContent = scriptContent.replace(/^```(?:json)?\s*|\s*```$/g, '').trim();
     }
-    // Parse the script content as JSON array
+    // Backward-compatible parsing:
+    // - If model still returns JSON array, keep it.
+    // - If model returns plain text (expected mode), convert to one script step to avoid 500.
     let scriptArray = [];
     try {
       console.log('Tentative de parsing du contenu du script en JSON...');
-      scriptArray = JSON.parse(scriptContent);
-      console.log('Contenu du script parsé avec succès:', {
-        arrayLength: scriptArray.length,
-        phases: scriptArray.map(item => item.phase).filter((v, i, a) => a.indexOf(v) === i)
-      });
+      let parsed = null;
+      try {
+        parsed = JSON.parse(scriptContent);
+      } catch {
+        const jsonArrayMatch = String(scriptContent).match(/\[[\s\S]*\]/);
+        if (jsonArrayMatch) {
+          parsed = JSON.parse(jsonArrayMatch[0]);
+        }
+      }
+
+      if (Array.isArray(parsed)) {
+        scriptArray = parsed;
+        console.log('Contenu du script parsé en tableau JSON:', {
+          arrayLength: scriptArray.length,
+          phases: scriptArray.map(item => item.phase).filter((v, i, a) => a.indexOf(v) === i)
+        });
+      } else {
+        throw new Error('Non-JSON response');
+      }
     } catch (e) {
-      console.log('Échec du parsing du contenu du script:', {
+      console.log('Réponse non JSON détectée, fallback texte activé:', {
         error: e.message,
-        previewContent: scriptContent.substring(0, 200) + '...'
+        previewContent: String(scriptContent).substring(0, 200) + '...'
       });
-      return res.status(500).json({ error: 'Failed to parse generated script as JSON.' });
+      scriptArray = [
+        {
+          phase: 'Script',
+          actor: 'agent',
+          replica: String(scriptContent || '').trim() || 'Script indisponible.'
+        }
+      ];
     }
 
     // Validate script structure
