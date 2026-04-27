@@ -44,6 +44,8 @@ router.get('/corpus/:companyId/search', searchInCorpus);
 
 // Générer un script d'appel à partir du corpus RAG de la société
 router.post('/generate-script', require('../controllers/ragController').generateScript);
+router.get('/scripts', require('../controllers/ragController').listScripts);
+router.put('/scripts/:scriptId/status', require('../controllers/ragController').updateScriptStatus);
 
 // Translate document analysis to English
 router.post('/translate-analysis', translateAnalysis);

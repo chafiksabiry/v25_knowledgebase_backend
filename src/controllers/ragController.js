@@ -845,6 +845,76 @@ Rules:
 };
 
 /**
+ * List scripts filtered by gig
+ * @param {Object} req
+ * @param {Object} res
+ */
+const listScripts = async (req, res) => {
+  try {
+    const { gigId, isActive } = req.query;
+    if (!gigId) {
+      return res.status(400).json({ error: 'gigId query param is required' });
+    }
+
+    const filter = { gigId };
+    if (typeof isActive !== 'undefined') {
+      filter.isActive = String(isActive).toLowerCase() === 'true';
+    }
+
+    const scripts = await Script.find(filter)
+      .sort({ createdAt: -1 })
+      .select('_id gigId targetClient language details script isActive createdAt')
+      .lean();
+
+    return res.status(200).json({
+      success: true,
+      data: scripts,
+    });
+  } catch (error) {
+    logger.error('Error listing scripts:', error);
+    return res.status(500).json({ error: 'Failed to list scripts', details: error.message });
+  }
+};
+
+/**
+ * Update script status (activate/deactivate)
+ * @param {Object} req
+ * @param {Object} res
+ */
+const updateScriptStatus = async (req, res) => {
+  try {
+    const { scriptId } = req.params;
+    const { isActive } = req.body || {};
+    if (!scriptId) {
+      return res.status(400).json({ error: 'scriptId is required' });
+    }
+    if (typeof isActive !== 'boolean') {
+      return res.status(400).json({ error: 'isActive boolean is required' });
+    }
+
+    const updated = await Script.findByIdAndUpdate(
+      scriptId,
+      { isActive },
+      { new: true, runValidators: true }
+    )
+      .select('_id gigId isActive createdAt')
+      .lean();
+
+    if (!updated) {
+      return res.status(404).json({ error: 'Script not found' });
+    }
+
+    return res.status(200).json({
+      success: true,
+      data: updated,
+    });
+  } catch (error) {
+    logger.error('Error updating script status:', error);
+    return res.status(500).json({ error: 'Failed to update script status', details: error.message });
+  }
+};
+
+/**
  * Translate document analysis to English
  * @param {Object} req - Express request object with analysis and targetLanguage in body
  * @param {Object} res - Express response object
@@ -947,5 +1017,7 @@ module.exports = {
   searchInCorpus,
   analyzeDocument,
   generateScript,
+  listScripts,
+  updateScriptStatus,
   translateAnalysis
 }; 
