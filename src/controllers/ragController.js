@@ -3,6 +3,48 @@ const Document = require('../models/Document');
 const { logger } = require('../utils/logger');
 const { generateDocumentAnalysisPrompt } = require('../prompts/documentAnalysisPrompt');
 const Script = require('../models/Script');
+const axios = require('axios');
+
+/**
+ * Helper function to call Anthropic Claude as a fallback
+ * @param {string} prompt - The prompt to send to Claude
+ * @returns {Promise<string>} - The generated script content
+ */
+const callAnthropicFallback = async (prompt) => {
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+  if (!apiKey) {
+    logger.warn('ANTHROPIC_API_KEY not found in environment, fallback skipped.');
+    throw new Error('Vertex AI quota exhausted (429) and no Anthropic key available.');
+  }
+
+  logger.info('🔄 Attempting fallback generation with Claude...');
+  try {
+    const response = await axios.post(
+      'https://api.anthropic.com/v1/messages',
+      {
+        model: 'claude-3-5-sonnet-20240620',
+        max_tokens: 4096,
+        messages: [{ role: 'user', content: prompt }],
+      },
+      {
+        headers: {
+          'x-api-key': apiKey,
+          'anthropic-version': '2023-06-01',
+          'content-type': 'application/json',
+        },
+      }
+    );
+
+    if (response.data && response.data.content && response.data.content[0]) {
+      logger.info('✅ Generation successful with Claude fallback');
+      return response.data.content[0].text;
+    }
+    throw new Error('Unexpected response format from Anthropic');
+  } catch (error) {
+    logger.error('❌ Anthropic fallback failed:', error.response?.data || error.message);
+    throw error;
+  }
+};
 
 /**
  * Initialize a RAG corpus for a company
@@ -496,32 +538,43 @@ ${JSON.stringify(gig, null, 2)}
 Return ONLY the script lines.`;
 
     // Génération directe sur base du gig uniquement (pas de KB/RAG).
-    const result = await vertexAIService.generativeModel.generateContent(prompt);
-    const response = result.response;
-
-    // Log response metadata
-    console.log('📄 MÉTADONNÉES DE LA RÉPONSE DE Vertex AI:');
-    console.log('----------------------------------------');
-    console.log(`Candidats présents: ${!!response.candidates ? 'Oui' : 'Non'}`);
-    console.log(`Nombre de candidats: ${response.candidates?.length || 0}`);
-    console.log();
-
-    // Extraire la réponse générée
     let scriptContent;
-    if (response.candidates && response.candidates[0]) {
-      if (response.candidates[0].content && response.candidates[0].content.parts) {
-        scriptContent = response.candidates[0].content.parts[0].text;
-      } else if (response.candidates[0].text) {
-        scriptContent = response.candidates[0].text;
+    try {
+      const result = await vertexAIService.generativeModel.generateContent(prompt);
+      const response = result.response;
+
+      // Log response metadata
+      console.log('📄 MÉTADONNÉES DE LA RÉPONSE DE Vertex AI:');
+      console.log('----------------------------------------');
+      console.log(`Candidats présents: ${!!response.candidates ? 'Oui' : 'Non'}`);
+      console.log(`Nombre de candidats: ${response.candidates?.length || 0}`);
+      console.log();
+
+      // Extraire la réponse générée
+      if (response.candidates && response.candidates[0]) {
+        if (response.candidates[0].content && response.candidates[0].content.parts) {
+          scriptContent = response.candidates[0].content.parts[0].text;
+        } else if (response.candidates[0].text) {
+          scriptContent = response.candidates[0].text;
+        } else {
+          scriptContent = response.candidates[0];
+        }
+      } else if (response.text) {
+        scriptContent = response.text;
+      } else if (typeof response === 'string') {
+        scriptContent = response;
       } else {
-        scriptContent = response.candidates[0];
+        throw new Error('Unexpected response structure from Vertex AI');
       }
-    } else if (response.text) {
-      scriptContent = response.text;
-    } else if (typeof response === 'string') {
-      scriptContent = response;
-    } else {
-      throw new Error('Unexpected response structure from Vertex AI');
+    } catch (error) {
+      const errorMsg = String(error.message || '');
+      if (errorMsg.includes('429') || error.status === 429) {
+        logger.warn('⚠️ Vertex AI 429 error detected. Triggering Claude fallback...');
+        scriptContent = await callAnthropicFallback(prompt);
+      } else {
+        logger.error('❌ Error during script generation (Vertex AI):', errorMsg);
+        throw error;
+      }
     }
 
     // Nettoyer le contenu
