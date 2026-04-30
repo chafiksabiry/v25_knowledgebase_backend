@@ -522,7 +522,14 @@ const generateScript = async (req, res) => {
           .join('\n')
       : '';
 
+    const isContinuation = contexte && (contexte.includes('Le lead a répondu') || contexte.includes('Continuez le scénario'));
+
     const prompt = `You are generating a structured sales call script for the company "${companyName}".
+
+${isContinuation 
+  ? 'IMPORTANT: This is a CONTINUATION of an existing conversation. Based on the Lead\'s last response in the history/context, generate the NEXT logical steps of the dialogue. Do not repeat the steps that already happened, but start from the current point in the 8-step flow.' 
+  : 'Generate a COMPLETE 8-step script from the beginning.'
+}
 
 CRITICAL REQUIREMENTS:
 1. CONTEXT: This is a TELE-SALES call (Télévente). The agent is a salesperson, NOT a recruiter. DO NOT mention job opportunities or interviews.
