@@ -3,6 +3,7 @@ const Document = require('../models/Document');
 const { logger } = require('../utils/logger');
 const { generateDocumentAnalysisPrompt } = require('../prompts/documentAnalysisPrompt');
 const Script = require('../models/Script');
+const Company = require('../models/Company');
 const axios = require('axios');
 
 /**
@@ -475,6 +476,18 @@ const generateScript = async (req, res) => {
     console.log(`Chat History Provided: ${Array.isArray(chatHistory) && chatHistory.length > 0 ? 'Oui' : 'Non'}`);
     console.log();
 
+    // Fetch company name to avoid hallucinations (like TechSolutions)
+    let companyName = "the company";
+    try {
+      const company = await Company.findById(companyId);
+      if (company && company.name) {
+        companyName = company.name;
+        console.log(`🏢 Company found: ${companyName}`);
+      }
+    } catch (err) {
+      logger.warn(`Could not fetch company name for ${companyId}, using generic term.`);
+    }
+
     // Validation checks
     if (!gig || !gig._id) {
       console.log('❌ ERREUR: Information du Gig manquante\n');
@@ -509,7 +522,7 @@ const generateScript = async (req, res) => {
           .join('\n')
       : '';
 
-    const prompt = `You are generating a structured sales call script.
+    const prompt = `You are generating a structured sales call script for the company "${companyName}".
 
 CRITICAL REQUIREMENTS:
 1. CONTEXT: This is a TELE-SALES call (Télévente). The agent is a salesperson, NOT a recruiter. DO NOT mention job opportunities or interviews.
