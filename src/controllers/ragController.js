@@ -511,8 +511,9 @@ const generateScript = async (req, res) => {
     const prompt = `You are generating a structured sales call script.
 
 CRITICAL REQUIREMENTS:
-1. The script MUST be written in the same language as the Gig Details provided below (e.g., if the gig is in French, generate in French).
-2. The script MUST include ALL of the following 8 steps in this EXACT order:
+1. CONTEXT: This is a TELE-SALES call (Télévente). The agent is a salesperson, NOT a recruiter. DO NOT mention job opportunities or interviews.
+2. The script MUST be written in the same language as the Gig Details provided below (e.g., if the gig is in French, generate in French).
+3. The script MUST include ALL of the following 8 steps in this EXACT order:
    - "Context & Preparation"
    - "SBAM & Opening"
    - "Legal & Compliance"
