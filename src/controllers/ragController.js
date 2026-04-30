@@ -571,12 +571,17 @@ Return ONLY the script lines.`;
         throw new Error('Unexpected response structure from Vertex AI');
       }
     } catch (error) {
-      const errorMsg = String(error.message || '');
-      if (errorMsg.includes('429') || error.status === 429) {
-        logger.warn('⚠️ Vertex AI 429 error detected. Triggering Claude fallback...');
+      const errorMsg = error.message || 'Unknown Vertex AI Error';
+      const isQuotaError = errorMsg.includes('429') || 
+                           errorMsg.toLowerCase().includes('quota') || 
+                           errorMsg.toLowerCase().includes('overloaded') ||
+                           error.status === 429;
+
+      if (isQuotaError) {
+        logger.warn(`⚠️ Vertex AI error (${errorMsg}). Triggering Claude fallback...`);
         scriptContent = await callAnthropicFallback(prompt);
       } else {
-        logger.error('❌ Error during script generation (Vertex AI):', errorMsg);
+        logger.error(`❌ Error during script generation (Vertex AI): ${errorMsg}`);
         throw error;
       }
     }
