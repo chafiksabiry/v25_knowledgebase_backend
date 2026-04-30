@@ -466,49 +466,42 @@ const generateScript = async (req, res) => {
           .join('\n')
       : '';
 
-    const prompt = `You are HARX Professional Script Assistant.
+    const prompt = `You are generating a structured sales call script.
 
-Goal:
-Generate a professional recruitment call script using the REPS methodology (Relational, Emotional, Project, Solution) based ONLY on the selected gig.
-No DISC, no training modules, no KB references, no JSON output.
+CRITICAL REQUIREMENTS:
+1. The script MUST include ALL of the following 8 phases in this EXACT order:
+   - "Context & Preparation"
+   - "SBAM & Opening"
+   - "Legal & Compliance"
+   - "Need Discovery"
+   - "Value Proposition"
+   - "Documents/Quote"
+   - "Objection Handling"
+   - "Confirmation & Closing"
+
+2. Each phase MUST have at least one dialogue exchange.
+
+DIALOGUE STRUCTURE:
+- Each step must be a JSON object with:
+  - phase: one of the 8 exact phase names listed above
+  - actor: either "agent" or "lead"
+  - replica: the dialogue text
 
 Context:
-- Gig title: ${gig?.title || 'N/A'}
-- Gig description: ${gig?.description || 'N/A'}
-- Language/Tone requested: ${langueTon}
-${contexte ? `- User instruction: ${contexte}` : ''}
-${currentScript ? `- Current script to use as baseline:\n${String(currentScript).trim()}` : ''}
-${currentPlaybook ? `- Current branching playbook (JSON):\n${JSON.stringify(currentPlaybook)}` : ''}
-${normalizedChatHistory ? `- Chat history to consider:\n${normalizedChatHistory}` : ''}
+${contexte ? `- Additional Instructions: ${contexte}` : ''}
+${normalizedChatHistory ? `- Chat history: ${normalizedChatHistory}` : ''}
 
-Mandatory writing rules:
-0) HIGHEST PRIORITY: follow the latest user instruction exactly when it is compatible with recruitment context.
-1) Output ONLY dialogue lines.
-2) Structure the script according to the REPS methodology:
-   - Relational (R): Connection and rapport.
-   - Emotional (E): Pain points and triggers.
-   - Project (P): Offer and value proposition.
-   - Solution (S): Call to action.
-3) Each line MUST start with a phase prefix followed by the role, exactly like this:
-   - [Relational] Agent: ...
-   - [Emotional] Lead: ...
-4) Alternate naturally between Agent and Lead.
-5) Keep a professional, polite, confident tone (HR/recruitment quality).
-6) Avoid placeholders like [Your Name], [Company], [Candidate Name].
-   Use neutral realistic wording when details are missing.
-   NEVER use bracket placeholders like [ ... ] for missing data.
-7) Keep lines concise and actionable.
-8) Include likely lead reactions (interest, hesitation, objection, availability).
-9) If a current script/playbook or chat update is provided, regenerate the FULL script by integrating those updates coherently.
-10) Preserve scenario continuity with previously generated options when possible.
+Gig Details:
+${JSON.stringify(gig, null, 2)}
 
-Output format example:
-[Relational] Agent: Bonjour, je vous appelle concernant le poste de ...
-[Relational] Lead: Bonjour, je vous écoute.
-[Emotional] Agent: ...
-[Project] Lead: ...
-
-Return only the script lines with [Phase] Role: prefixes.`;
+Return ONLY a JSON array of dialogue steps following this exact format:
+[
+  {
+    "phase": "Context & Preparation",
+    "actor": "agent",
+    "replica": "..."
+  }
+]`;
 
     // Génération directe sur base du gig uniquement (pas de KB/RAG).
     const result = await vertexAIService.generativeModel.generateContent(prompt);
@@ -519,78 +512,67 @@ Return only the script lines with [Phase] Role: prefixes.`;
     console.log('----------------------------------------');
     console.log(`Candidats présents: ${!!response.candidates ? 'Oui' : 'Non'}`);
     console.log(`Nombre de candidats: ${response.candidates?.length || 0}`);
-    console.log(`Citations présentes: ${!!response.candidates?.[0]?.citationMetadata?.citations ? 'Oui' : 'Non'}`);
-    console.log(`Nombre de citations: ${response.candidates?.[0]?.citationMetadata?.citations?.length || 0}`);
     console.log();
-
-    // Log citations if available
-    if (response.candidates?.[0]?.citationMetadata?.citations) {
-      console.log('Sources utilisées pour la génération de script:');
-      response.candidates[0].citationMetadata.citations.forEach(citation => {
-        console.log(`  - ${citation.title}`);
-      });
-      console.log();
-    }
 
     // Extraire la réponse générée
     let scriptContent;
     if (response.candidates && response.candidates[0]) {
       if (response.candidates[0].content && response.candidates[0].content.parts) {
         scriptContent = response.candidates[0].content.parts[0].text;
-        console.log('Contenu du script extrait de content.parts');
       } else if (response.candidates[0].text) {
         scriptContent = response.candidates[0].text;
-        console.log('Contenu du script extrait de text');
       } else {
         scriptContent = response.candidates[0];
-        console.log('Contenu du script extrait de candidate');
       }
     } else if (response.text) {
       scriptContent = response.text;
-      console.log('Contenu du script extrait de response.text');
     } else if (typeof response === 'string') {
       scriptContent = response;
-      console.log('Contenu du script extrait de string response');
     } else {
-      console.log('Structure de réponse inattendue:', response);
       throw new Error('Unexpected response structure from Vertex AI');
     }
 
-    // Log script content length
-    console.log('Statistiques du contenu du script généré:');
-    console.log('----------------------------------------');
-    console.log(`Longueur du contenu: ${scriptContent.length}`);
-    console.log(`Type de contenu: ${typeof scriptContent}`);
-    console.log();
     // Nettoyer le JSON généré pour enlever les blocs de code markdown
     if (typeof scriptContent === 'string') {
       scriptContent = scriptContent.replace(/^```(?:json)?\s*|\s*```$/g, '').trim();
     }
 
-    // Build an advanced guidance playbook from generated dialogue.
-    const rawLines = String(scriptContent || '')
-      .split(/\r?\n/)
-      .map((l) => l.trim())
-      .filter(Boolean);
-    const dialogueRows = rawLines.map((line) => {
-      const normalized = line.replace(/^\[[^\]]+\]\s*/, '').trim();
-      const m = normalized.match(/^(Agent|Lead|Candidate|Client)\s*:\s*(.+)$/i);
-      if (m) {
-        const actor = String(m[1] || '').toLowerCase();
-        return {
-          role: actor === 'agent' ? 'agent' : 'lead',
-          text: String(m[2] || '')
-            .replace(/\[[^\]]+\]/g, '')
-            .trim(),
-        };
+    // Parse the script content as JSON array
+    let dialogueRows = [];
+    try {
+      const scriptArray = JSON.parse(scriptContent);
+      if (Array.isArray(scriptArray)) {
+        dialogueRows = scriptArray.map(item => ({
+          role: item.actor === 'agent' ? 'agent' : 'lead',
+          text: item.replica,
+          phase: item.phase
+        }));
+        // Update scriptContent to text format for UI compatibility if needed
+        // but the UI parses it too. Let's keep it as string for the database/chat.
+        scriptContent = scriptArray.map(item => `[${item.phase}] ${item.actor.toUpperCase()}: ${item.replica}`).join('\n');
       }
-      return {
-        role: 'agent',
-        text: String(normalized || '')
-          .replace(/\[[^\]]+\]/g, '')
-          .trim(),
-      };
-    }).filter((row) => row.text);
+    } catch (e) {
+      console.log('JSON parse failed, falling back to line-by-line parsing');
+      const rawLines = String(scriptContent || '')
+        .split(/\r?\n/)
+        .map((l) => l.trim())
+        .filter(Boolean);
+      dialogueRows = rawLines.map((line) => {
+        const normalized = line.replace(/^\[[^\]]+\]\s*/, '').trim();
+        const m = normalized.match(/^(Agent|Lead|Candidate|Client)\s*:\s*(.+)$/i);
+        if (m) {
+          const actor = String(m[1] || '').toLowerCase();
+          return {
+            role: actor === 'agent' ? 'agent' : 'lead',
+            text: String(m[2] || '').replace(/\[[^\]]+\]/g, '').trim(),
+          };
+        }
+        return {
+          role: 'agent',
+          text: String(normalized || '').replace(/\[[^\]]+\]/g, '').trim(),
+        };
+      }).filter((row) => row.text);
+    }
 
     // User-instruction guardrail:
     // if user explicitly asks to start with "bonjour", enforce it on first agent line.
