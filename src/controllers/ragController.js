@@ -469,7 +469,7 @@ const generateScript = async (req, res) => {
     const prompt = `You are HARX Professional Script Assistant.
 
 Goal:
-Generate a professional recruitment call script based ONLY on the selected gig.
+Generate a professional recruitment call script using the REPS methodology (Relational, Emotional, Project, Solution) based ONLY on the selected gig.
 No DISC, no training modules, no KB references, no JSON output.
 
 Context:
@@ -484,27 +484,31 @@ ${normalizedChatHistory ? `- Chat history to consider:\n${normalizedChatHistory}
 Mandatory writing rules:
 0) HIGHEST PRIORITY: follow the latest user instruction exactly when it is compatible with recruitment context.
 1) Output ONLY dialogue lines.
-2) Each line MUST start with one of these prefixes exactly:
-   - Agent:
-   - Lead:
-3) Alternate naturally between Agent and Lead.
-4) Keep a professional, polite, confident tone (HR/recruitment quality).
-5) Avoid placeholders like [Your Name], [Company], [Candidate Name].
+2) Structure the script according to the REPS methodology:
+   - Relational (R): Connection and rapport.
+   - Emotional (E): Pain points and triggers.
+   - Project (P): Offer and value proposition.
+   - Solution (S): Call to action.
+3) Each line MUST start with a phase prefix followed by the role, exactly like this:
+   - [Relational] Agent: ...
+   - [Emotional] Lead: ...
+4) Alternate naturally between Agent and Lead.
+5) Keep a professional, polite, confident tone (HR/recruitment quality).
+6) Avoid placeholders like [Your Name], [Company], [Candidate Name].
    Use neutral realistic wording when details are missing.
-   NEVER use bracket placeholders like [ ... ] in any output line.
-6) Keep lines concise and actionable.
-7) Include likely lead reactions (interest, hesitation, objection, availability).
-8) End with a clear professional close and next step.
+   NEVER use bracket placeholders like [ ... ] for missing data.
+7) Keep lines concise and actionable.
+8) Include likely lead reactions (interest, hesitation, objection, availability).
 9) If a current script/playbook or chat update is provided, regenerate the FULL script by integrating those updates coherently.
 10) Preserve scenario continuity with previously generated options when possible.
 
 Output format example:
-Agent: Bonjour, je vous appelle concernant le poste de ...
-Lead: Bonjour, je vous écoute.
-Agent: ...
-Lead: ...
+[Relational] Agent: Bonjour, je vous appelle concernant le poste de ...
+[Relational] Lead: Bonjour, je vous écoute.
+[Emotional] Agent: ...
+[Project] Lead: ...
 
-Return only the script lines with Agent:/Lead: prefixes.`;
+Return only the script lines with [Phase] Role: prefixes.`;
 
     // Génération directe sur base du gig uniquement (pas de KB/RAG).
     const result = await vertexAIService.generativeModel.generateContent(prompt);
