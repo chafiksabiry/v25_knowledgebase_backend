@@ -22,7 +22,7 @@ const callAnthropicFallback = async (prompt) => {
     const response = await axios.post(
       'https://api.anthropic.com/v1/messages',
       {
-        model: 'claude-3-5-sonnet-20240620',
+        model: process.env.ANTHROPIC_MODEL || 'claude-3-5-sonnet-20241022',
         max_tokens: 4096,
         messages: [{ role: 'user', content: prompt }],
       },
@@ -41,8 +41,9 @@ const callAnthropicFallback = async (prompt) => {
     }
     throw new Error('Unexpected response format from Anthropic');
   } catch (error) {
-    logger.error('❌ Anthropic fallback failed:', error.response?.data || error.message);
-    throw error;
+    const errorDetail = error.response?.data ? JSON.stringify(error.response.data) : error.message;
+    logger.error(`❌ Anthropic fallback failed: ${errorDetail}`);
+    throw new Error(`Anthropic fallback failed: ${error.message}`);
   }
 };
 
