@@ -537,7 +537,11 @@ CRITICAL REQUIREMENTS:
    - "Objection Handling"
    - "Confirmation & Closing"
 
-2. Each step MUST have at least one dialogue exchange.
+4. STEP-SPECIFIC CONTENT RULES:
+   - "Legal & Compliance": The agent MUST explicitly state that "the call may be recorded for quality and training purposes" and identify the company "${companyName}". This is mandatory for legal compliance.
+   - "SBAM & Opening": Must include a polite greeting and check for the lead's availability.
+
+5. Each step MUST have at least one dialogue exchange.
 
 DIALOGUE STRUCTURE:
 1. Each line MUST start with the step name in brackets followed by the role, exactly like this:
