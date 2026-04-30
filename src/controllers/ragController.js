@@ -469,7 +469,7 @@ const generateScript = async (req, res) => {
     const prompt = `You are generating a structured sales call script.
 
 CRITICAL REQUIREMENTS:
-1. The script MUST include ALL of the following 8 phases in this EXACT order:
+1. The script MUST include ALL of the following 8 steps in this EXACT order:
    - "Context & Preparation"
    - "SBAM & Opening"
    - "Legal & Compliance"
@@ -479,13 +479,12 @@ CRITICAL REQUIREMENTS:
    - "Objection Handling"
    - "Confirmation & Closing"
 
-2. Each phase MUST have at least one dialogue exchange.
+2. Each step MUST have at least one dialogue exchange.
 
 DIALOGUE STRUCTURE:
-- Each step must be a JSON object with:
-  - phase: one of the 8 exact phase names listed above
-  - actor: either "agent" or "lead"
-  - replica: the dialogue text
+1. Each line MUST start with the step name in brackets followed by the role, exactly like this:
+   - [Step Name] Agent: ...
+   - [Step Name] Lead: ...
 
 Context:
 ${contexte ? `- Additional Instructions: ${contexte}` : ''}
@@ -494,14 +493,7 @@ ${normalizedChatHistory ? `- Chat history: ${normalizedChatHistory}` : ''}
 Gig Details:
 ${JSON.stringify(gig, null, 2)}
 
-Return ONLY a JSON array of dialogue steps following this exact format:
-[
-  {
-    "phase": "Context & Preparation",
-    "actor": "agent",
-    "replica": "..."
-  }
-]`;
+Return ONLY the script lines.`;
 
     // Génération directe sur base du gig uniquement (pas de KB/RAG).
     const result = await vertexAIService.generativeModel.generateContent(prompt);
@@ -532,47 +524,38 @@ Return ONLY a JSON array of dialogue steps following this exact format:
       throw new Error('Unexpected response structure from Vertex AI');
     }
 
-    // Nettoyer le JSON généré pour enlever les blocs de code markdown
+    // Nettoyer le contenu
     if (typeof scriptContent === 'string') {
       scriptContent = scriptContent.replace(/^```(?:json)?\s*|\s*```$/g, '').trim();
     }
 
-    // Parse the script content as JSON array
-    let dialogueRows = [];
-    try {
-      const scriptArray = JSON.parse(scriptContent);
-      if (Array.isArray(scriptArray)) {
-        dialogueRows = scriptArray.map(item => ({
-          role: item.actor === 'agent' ? 'agent' : 'lead',
-          text: item.replica,
-          phase: item.phase
-        }));
-        // Update scriptContent to text format for UI compatibility if needed
-        // but the UI parses it too. Let's keep it as string for the database/chat.
-        scriptContent = scriptArray.map(item => `[${item.phase}] ${item.actor.toUpperCase()}: ${item.replica}`).join('\n');
-      }
-    } catch (e) {
-      console.log('JSON parse failed, falling back to line-by-line parsing');
-      const rawLines = String(scriptContent || '')
-        .split(/\r?\n/)
-        .map((l) => l.trim())
-        .filter(Boolean);
-      dialogueRows = rawLines.map((line) => {
-        const normalized = line.replace(/^\[[^\]]+\]\s*/, '').trim();
-        const m = normalized.match(/^(Agent|Lead|Candidate|Client)\s*:\s*(.+)$/i);
-        if (m) {
-          const actor = String(m[1] || '').toLowerCase();
-          return {
-            role: actor === 'agent' ? 'agent' : 'lead',
-            text: String(m[2] || '').replace(/\[[^\]]+\]/g, '').trim(),
-          };
-        }
+    // Parse the script content line by line
+    const rawLines = String(scriptContent || '')
+      .split(/\r?\n/)
+      .map((l) => l.trim())
+      .filter(Boolean);
+
+    const dialogueRows = rawLines.map((line) => {
+      // Extract phase if present [Phase Name]
+      const phaseMatch = line.match(/^\[([^\]]+)\]/);
+      const phase = phaseMatch ? phaseMatch[1] : '';
+      
+      const normalized = line.replace(/^\[[^\]]+\]\s*/, '').trim();
+      const m = normalized.match(/^(Agent|Lead|Candidate|Client)\s*:\s*(.+)$/i);
+      if (m) {
+        const actor = String(m[1] || '').toLowerCase();
         return {
-          role: 'agent',
-          text: String(normalized || '').replace(/\[[^\]]+\]/g, '').trim(),
+          role: actor === 'agent' ? 'agent' : 'lead',
+          text: String(m[2] || '').trim(),
+          phase: phase
         };
-      }).filter((row) => row.text);
-    }
+      }
+      return {
+        role: 'agent',
+        text: String(normalized || '').trim(),
+        phase: phase
+      };
+    }).filter((row) => row.text);
 
     // User-instruction guardrail:
     // if user explicitly asks to start with "bonjour", enforce it on first agent line.
