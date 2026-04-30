@@ -550,6 +550,11 @@ CRITICAL REQUIREMENTS:
 
 5. Each step MUST have at least one dialogue exchange.
 
+6. PLACEHOLDERS: NEVER use fake names like "Alex", "Sarah", or "TechSolutions". ALWAYS use placeholders in brackets:
+   - For the prospect: "[Nom du prospect]"
+   - For the agent: "[Nom de l'agent]"
+   - For the company: "${companyName}"
+
 DIALOGUE STRUCTURE:
 1. Each line MUST start with the step name in brackets followed by the role, exactly like this:
    - [Step Name] Agent: ...
@@ -647,17 +652,20 @@ Return ONLY the script lines.`;
     }).filter((row) => row.text);
 
     // User-instruction guardrail:
-    // if user explicitly asks to start with "bonjour", enforce it on first agent line.
-    const contextText = String(contexte || '').toLowerCase();
-    const asksBonjourFirstLine =
-      (contextText.includes('premier message') || contextText.includes('first message') || contextText.includes('opening')) &&
-      contextText.includes('bonjour');
-    if (asksBonjourFirstLine) {
-      const firstAgentIdx = dialogueRows.findIndex((row) => row.role === 'agent');
-      if (firstAgentIdx >= 0) {
-        const firstText = String(dialogueRows[firstAgentIdx].text || '').trim();
-        if (!/^bonjour\b/i.test(firstText)) {
-          dialogueRows[firstAgentIdx].text = `Bonjour, ${firstText.charAt(0).toLowerCase()}${firstText.slice(1)}`.trim();
+    // ALWAYS enforce "Bonjour [Nom du prospect]" on the first agent line
+    const firstAgentIdx = dialogueRows.findIndex((row) => row.role === 'agent');
+    if (firstAgentIdx >= 0) {
+      let firstText = String(dialogueRows[firstAgentIdx].text || '').trim();
+      
+      // Remove any hallucinated names at the start
+      firstText = firstText.replace(/^(Bonjour|Salut|Allô)\s+[^,!.?]+[,!.?]?/i, '$1').trim();
+      
+      if (!firstText.toLowerCase().startsWith('bonjour [nom du prospect]')) {
+        // Enforce the standard opening
+        if (firstText.toLowerCase().startsWith('bonjour')) {
+          dialogueRows[firstAgentIdx].text = `Bonjour [Nom du prospect], ${firstText.slice(7).replace(/^[\s,]+/, '')}`;
+        } else {
+          dialogueRows[firstAgentIdx].text = `Bonjour [Nom du prospect], ${firstText}`;
         }
       }
     }
@@ -708,7 +716,7 @@ Return STRICT JSON only in this exact shape:
 }
 
 Rules:
-- Exactly 10 turns
+- ${isContinuation ? 'Exactly 3 new turns' : 'Exactly 10 turns'}
 - 2 to 3 leadOptions per turn
 - Professional recruitment context
 - No placeholders like [Company] or [Name]
