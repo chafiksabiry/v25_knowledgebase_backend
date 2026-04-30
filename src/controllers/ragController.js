@@ -573,9 +573,12 @@ Return ONLY the script lines.`;
     } catch (error) {
       const errorMsg = error.message || 'Unknown Vertex AI Error';
       const isQuotaError = errorMsg.includes('429') || 
+                           errorMsg.includes('404') ||
                            errorMsg.toLowerCase().includes('quota') || 
+                           errorMsg.toLowerCase().includes('not found') ||
                            errorMsg.toLowerCase().includes('overloaded') ||
-                           error.status === 429;
+                           error.status === 429 ||
+                           error.status === 404;
 
       if (isQuotaError) {
         logger.warn(`⚠️ Vertex AI error (${errorMsg}). Triggering Claude fallback...`);

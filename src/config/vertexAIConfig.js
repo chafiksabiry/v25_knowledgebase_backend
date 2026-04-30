@@ -39,7 +39,7 @@ async function setupCredentials() {
 // Vertex AI Configuration
 const projectID = process.env.GOOGLE_CLOUD_PROJECT || 'harx-technologies-inc';
 
-const modelName = process.env.VERTEX_AI_MODEL || 'gemini-1.5-flash';
+const modelName = process.env.VERTEX_AI_MODEL || 'gemini-2.5-flash-lite';
 
 const VERTEX_CONFIG = {
   project: projectID,
