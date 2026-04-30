@@ -539,9 +539,10 @@ Return ONLY the script lines.`;
 
     // Génération directe sur base du gig uniquement (pas de KB/RAG).
     let scriptContent;
+    let response;
     try {
       const result = await vertexAIService.generativeModel.generateContent(prompt);
-      const response = result.response;
+      response = result.response;
 
       // Log response metadata
       console.log('📄 MÉTADONNÉES DE LA RÉPONSE DE Vertex AI:');
@@ -964,7 +965,7 @@ Rules:
 
     console.log('\n✅ GÉNÉRATION TERMINÉE\n');
     console.log('Sources utilisées:');
-    if (response.candidates?.[0]?.citationMetadata?.citations) {
+    if (response && response.candidates?.[0]?.citationMetadata?.citations) {
       response.candidates[0].citationMetadata.citations.forEach(citation => {
         console.log(`  - ${citation.title}`);
       });
