@@ -93,7 +93,7 @@ const initializeCompanyCorpus = async (req, res) => {
     logger.error('Error initializing RAG corpus:', {
       error: error.message,
       stack: error.stack,
-      details: error.response?.data || error
+      details: error.response?.data || error.message
     });
 
     res.status(500).json({
@@ -435,10 +435,10 @@ const analyzeDocument = async (req, res) => {
     res.status(200).json(document.analysis);
 
   } catch (error) {
-    logger.error('Error analyzing document:', {
+    logger.error('Error checking corpus status:', {
       error: error.message,
       stack: error.stack,
-      details: error.response?.data || error
+      details: error.response?.data || error.message
     });
 
     res.status(500).json({
@@ -983,7 +983,7 @@ Rules:
     console.log(error.message);
     console.log('\n========================================\n');
 
-    logger.error('Error generating script:', error);
+    logger.error('Error generating script:', { message: error.message, stack: error.stack });
     res.status(500).json({ error: 'Failed to generate script', details: error.message });
   }
 };
@@ -1015,7 +1015,7 @@ const listScripts = async (req, res) => {
       data: scripts,
     });
   } catch (error) {
-    logger.error('Error listing scripts:', error);
+    logger.error('Error listing scripts:', { message: error.message, stack: error.stack });
     return res.status(500).json({ error: 'Failed to list scripts', details: error.message });
   }
 };
