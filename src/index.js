@@ -29,6 +29,8 @@ app.use(cors({
     process.env.FRONTEND_URL,
     process.env.QIANKUN_FRONT_URL,
     'https://harx25pageslinks.netlify.app', // Netlify orchestrator frontend
+    'http://localhost:5173',
+    'http://localhost:5174'
   ],
   credentials: true
 }));
@@ -73,7 +75,7 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/kb-analys
       logger.info(`Documents API: http://localhost:${PORT}/api/documents`);
       logger.info(`Fine-tuning API: http://localhost:${PORT}/api/fine-tuning/jobs`);
     });
-    
+
     // Increase timeout to 10 minutes for long uploads/analysis
     server.setTimeout(600000);
   })
