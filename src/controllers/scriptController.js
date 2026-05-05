@@ -206,15 +206,7 @@ const regenerateScript = async (req, res) => {
         "phase": "The exact phase name"
       }
 
-      MANDATORY REPS PHASES (ALL 8 phases are REQUIRED):
-      1. "Context & Preparation"
-      2. "SBAM & Opening"
-      3. "Legal & Compliance"
-      4. "Need Discovery"
-      5. "Value Proposition"
-      6. "Documents/Quote"
-      7. "Objection Handling"
-      8. "Confirmation & Closing"
+      If the original script followed a branching structure (JSON), maintain that exact structure.
 
       Return ONLY the JSON array, no additional text.`
     );
