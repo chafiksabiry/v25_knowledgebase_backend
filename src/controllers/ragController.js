@@ -524,50 +524,33 @@ const generateScript = async (req, res) => {
 
     const isContinuation = contexte && (contexte.includes('Le lead a répondu') || contexte.includes('Continuez le scénario'));
 
-    const prompt = `You are generating a structured sales call script for the company "${companyName}".
+    const prompt = `You are a professional sales script generator for the company "${companyName}".
+ 
+Mission Details:
+${JSON.stringify(gig, null, 2)}
 
-${isContinuation 
-  ? 'IMPORTANT: This is a CONTINUATION of an existing conversation. Based on the Lead\'s last response in the history/context, generate the NEXT logical steps of the dialogue. Do not repeat the steps that already happened, but start from the current point in the 8-step flow.' 
-  : 'Generate a COMPLETE 8-step script from the beginning.'
-}
+Instructions:
+${contexte ? contexte : 'Generate a complete, high-converting tele-sales script.'}
 
+${!contexte ? `
 CRITICAL REQUIREMENTS:
 1. CONTEXT: This is a TELE-SALES call (Télévente). The agent is a salesperson, NOT a recruiter. DO NOT mention job opportunities or interviews.
-2. The script MUST be written in the same language as the Gig Details provided below (e.g., if the gig is in French, generate in French).
-3. The script MUST include ALL of the following 8 steps in this EXACT order:
+2. The script MUST be written in the same language as the Gig Details provided above.
+3. Recommended structure (if not specified otherwise):
    - "Context & Preparation"
    - "SBAM & Opening"
-   - "Legal & Compliance"
+   - "Legal & Compliance" (Agent MUST state: "the call may be recorded for quality and training purposes")
    - "Need Discovery"
    - "Value Proposition"
    - "Documents/Quote"
    - "Objection Handling"
    - "Confirmation & Closing"
+4. PLACEHOLDERS: Use brackets: [Nom du prospect], [Nom de l'agent], "${companyName}".
+` : 'Follow the user instructions above strictly. If they ask for a specific format (like JSON), provide ONLY that format.'}
 
-4. STEP-SPECIFIC CONTENT RULES:
-   - "Legal & Compliance": The agent MUST explicitly state that "the call may be recorded for quality and training purposes" and identify the company "${companyName}". This is mandatory for legal compliance.
-   - "SBAM & Opening": Must include a polite greeting and check for the lead's availability.
+${normalizedChatHistory ? `Chat history:\n${normalizedChatHistory}` : ''}
 
-5. Each step MUST have at least one dialogue exchange.
-
-6. PLACEHOLDERS: NEVER use fake names like "Alex", "Sarah", or "TechSolutions". ALWAYS use placeholders in brackets:
-   - For the prospect: "[Nom du prospect]"
-   - For the agent: "[Nom de l'agent]"
-   - For the company: "${companyName}"
-
-DIALOGUE STRUCTURE:
-1. Each line MUST start with the step name in brackets followed by the role, exactly like this:
-   - [Step Name] Agent: ...
-   - [Step Name] Lead: ...
-
-Context:
-${contexte ? `- Additional Instructions: ${contexte}` : ''}
-${normalizedChatHistory ? `- Chat history: ${normalizedChatHistory}` : ''}
-
-Gig Details:
-${JSON.stringify(gig, null, 2)}
-
-Return ONLY the script lines.`;
+Return ONLY the generated content.`;
 
     // Génération directe sur base du gig uniquement (pas de KB/RAG).
     let scriptContent;
@@ -615,6 +598,31 @@ Return ONLY the script lines.`;
       } else {
         logger.error(`❌ Error during script generation (Vertex AI): ${errorMsg}`);
         throw error;
+      }
+    }
+
+    // Check if the response is JSON (for Cockpit or other structured formats)
+    const isJsonResponse = typeof scriptContent === 'string' && 
+                           (scriptContent.trim().startsWith('{') || scriptContent.trim().startsWith('['));
+
+    if (isJsonResponse) {
+      console.log('📦 JSON response detected. Skipping dialogue post-processing.');
+      try {
+        const parsed = JSON.parse(scriptContent);
+        return res.status(200).json({
+          success: true,
+          data: {
+            script: scriptContent,
+            ...parsed, // Include parsed fields like 'phases' for cockpit
+            metadata: {
+              processedAt: new Date().toISOString(),
+              model: process.env.VERTEX_AI_MODEL,
+              format: 'json'
+            }
+          }
+        });
+      } catch (e) {
+        console.warn('Failed to parse JSON response, falling back to dialogue processing');
       }
     }
 
