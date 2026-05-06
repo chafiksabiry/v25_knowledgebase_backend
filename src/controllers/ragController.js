@@ -613,7 +613,7 @@ Return ONLY the generated content.`;
           success: true,
           data: {
             script: scriptContent,
-            ...parsed, // Include parsed fields like 'phases' for cockpit
+            ...parsed, // Include parsed fields like 'stages' for cockpit
             metadata: {
               processedAt: new Date().toISOString(),
               model: process.env.VERTEX_AI_MODEL,
