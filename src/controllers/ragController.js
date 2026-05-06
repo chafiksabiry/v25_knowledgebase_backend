@@ -457,50 +457,17 @@ const analyzeDocument = async (req, res) => {
  */
 const generateScript = async (req, res) => {
   try {
-    console.log('\n========================================');
-    console.log('🔍  VÉRIFICATION DU CORPUS AVANT GÉNÉRATION');
-    console.log('========================================\n');
-
     const { companyId, gig, typeClient, langueTon, contexte, currentScript, currentPlaybook, chatHistory } = req.body;
-
-    // Log request parameters
-    console.log('📋 PARAMÈTRES DE LA REQUÊTE:');
-    console.log('---------------------------');
-    console.log(`Company ID: ${companyId}`);
-    console.log(`Gig: ${gig?.title || 'N/A'}`);
-    console.log(`Type Client: ${typeClient}`);
-    console.log(`Langue/Ton: ${langueTon}`);
-    console.log(`Contexte: ${contexte || 'Non spécifié'}`);
-    console.log(`Current Script Provided: ${currentScript ? 'Oui' : 'Non'}`);
-    console.log(`Current Playbook Provided: ${currentPlaybook && typeof currentPlaybook === 'object' ? 'Oui' : 'Non'}`);
-    console.log(`Chat History Provided: ${Array.isArray(chatHistory) && chatHistory.length > 0 ? 'Oui' : 'Non'}`);
-    console.log();
-
-    // Fetch company name to avoid hallucinations (like TechSolutions)
-    let companyName = "the company";
-    try {
-      const company = await Company.findById(companyId);
-      if (company && company.name) {
-        companyName = company.name;
-        console.log(`🏢 Company found: ${companyName}`);
-      }
-    } catch (err) {
-      logger.warn(`Could not fetch company name for ${companyId}, using generic term.`);
-    }
-
     // Validation checks
     if (!gig || !gig._id) {
-      console.log('❌ ERREUR: Information du Gig manquante\n');
       return res.status(400).json({ error: 'A gig selection is required to generate a script.' });
     }
     if (!typeClient || !langueTon) {
-      console.log('❌ ERREUR: Paramètres requis manquants\n');
       return res.status(400).json({ error: 'Type de client and langue/ton are required.' });
     }
 
     // Initialize Vertex AI if needed
     if (!vertexAIService.vertexAI) {
-      console.log('🔄 Initialisation de Vertex AI...');
       await vertexAIService.initialize();
       console.log('✅ Vertex AI initialisé\n');
     }
@@ -513,44 +480,67 @@ const generateScript = async (req, res) => {
 
     const normalizedChatHistory = Array.isArray(chatHistory)
       ? chatHistory
-          .map((msg) => {
-            const role = String(msg?.role || '').toLowerCase() === 'assistant' ? 'assistant' : 'user';
-            const text = String(msg?.content || '').trim();
-            return text ? `${role.toUpperCase()}: ${text}` : '';
-          })
-          .filter(Boolean)
-          .join('\n')
+        .map((msg) => {
+          const role = String(msg?.role || '').toLowerCase() === 'assistant' ? 'assistant' : 'user';
+          const text = String(msg?.content || '').trim();
+          return text ? `${role.toUpperCase()}: ${text}` : '';
+        })
+        .filter(Boolean)
+        .join('\n')
       : '';
 
-    const isContinuation = contexte && (contexte.includes('Le lead a répondu') || contexte.includes('Continuez le scénario'));
-
-    const prompt = `You are a professional sales script generator for the company "${companyName}".
+    const prompt = contexte ? `You are generating a structured sales call script".
  
 Mission Details:
 ${JSON.stringify(gig, null, 2)}
 
 Instructions:
-${contexte ? contexte : 'Generate a complete, high-converting tele-sales script.'}
-
-${!contexte ? `
-CRITICAL REQUIREMENTS:
-1. CONTEXT: This is a TELE-SALES call (Télévente). The agent is a salesperson, NOT a recruiter. DO NOT mention job opportunities or interviews.
-2. The script MUST be written in the same language as the Gig Details provided above.
-3. Recommended structure (if not specified otherwise):
-   - "Context & Preparation"
-   - "SBAM & Opening"
-   - "Legal & Compliance" (Agent MUST state: "the call may be recorded for quality and training purposes")
-   - "Need Discovery"
-   - "Value Proposition"
-   - "Documents/Quote"
-   - "Objection Handling"
-   - "Confirmation & Closing"
-4. PLACEHOLDERS: Use brackets: [Nom du prospect], [Nom de l'agent], "${companyName}".
-` : 'Follow the user instructions above strictly. If they ask for a specific format (like JSON), provide ONLY that format.'}
+${contexte}
 
 ${normalizedChatHistory ? `Chat history:\n${normalizedChatHistory}` : ''}
 
-Return ONLY the generated content.`;
+Return ONLY the generated content.` : `You are generating a structured sales call scrip".
+  
+  CRITICAL REQUIREMENTS:
+  1. The script MUST include ALL of the following 8 phases in this EXACT order:
+     - Phase 1: "Context & Preparation"
+     - Phase 2: "SBAM & Opening"
+     - Phase 3: "Legal & Compliance" (Agent MUST state: "the call may be recorded for quality and training purposes")
+     - Phase 4: "Need Discovery"
+     - Phase 5: "Value Proposition"
+     - Phase 6: "Documents/Quote"
+     - Phase 7: "Objection Handling"
+     - Phase 8: "Confirmation & Closing"
+  
+  2. Each phase MUST have at least one dialogue exchange.
+  3. DO NOT skip or combine any phases.
+  4. DO NOT add any additional phases.
+  5. DO NOT mention the phase name in the dialogue text.
+  
+  DIALOGUE STRUCTURE:
+  - Each step must be a JSON object with:
+    - phase: one of the 8 exact phase names listed above
+    - actor: either "agent" or "lead"
+    - replica: the dialogue text
+  
+  Client Profile:
+  - Type: ${typeClient}
+  - Language/Tone: ${langueTon}
+  
+  Gig Details:
+  ${JSON.stringify(gig, null, 2)}
+  
+  ${normalizedChatHistory ? `Chat history:\n${normalizedChatHistory}` : ''}
+
+  Return ONLY a JSON array of dialogue steps following this exact format:
+  [
+    {
+      "phase": "Context & Preparation",
+      "actor": "agent",
+      "replica": "..."
+    },
+    ...
+  ]`;
 
     // Génération directe sur base du gig uniquement (pas de KB/RAG).
     let scriptContent;
@@ -584,13 +574,13 @@ Return ONLY the generated content.`;
       }
     } catch (error) {
       const errorMsg = error.message || 'Unknown Vertex AI Error';
-      const isQuotaError = errorMsg.includes('429') || 
-                           errorMsg.includes('404') ||
-                           errorMsg.toLowerCase().includes('quota') || 
-                           errorMsg.toLowerCase().includes('not found') ||
-                           errorMsg.toLowerCase().includes('overloaded') ||
-                           error.status === 429 ||
-                           error.status === 404;
+      const isQuotaError = errorMsg.includes('429') ||
+        errorMsg.includes('404') ||
+        errorMsg.toLowerCase().includes('quota') ||
+        errorMsg.toLowerCase().includes('not found') ||
+        errorMsg.toLowerCase().includes('overloaded') ||
+        error.status === 429 ||
+        error.status === 404;
 
       if (isQuotaError) {
         logger.warn(`⚠️ Vertex AI error (${errorMsg}). Triggering Claude fallback...`);
@@ -602,8 +592,8 @@ Return ONLY the generated content.`;
     }
 
     // Check if the response is JSON (for Cockpit or other structured formats)
-    const isJsonResponse = typeof scriptContent === 'string' && 
-                           (scriptContent.trim().startsWith('{') || scriptContent.trim().startsWith('['));
+    const isJsonResponse = typeof scriptContent === 'string' &&
+      (scriptContent.trim().startsWith('{') || scriptContent.trim().startsWith('['));
 
     if (isJsonResponse) {
       console.log('📦 JSON response detected. Skipping dialogue post-processing.');
@@ -613,7 +603,7 @@ Return ONLY the generated content.`;
           success: true,
           data: {
             script: scriptContent,
-            ...parsed, // Include parsed fields like 'stages' for cockpit
+            ...(Array.isArray(parsed) ? { scriptArray: parsed } : parsed), // Include parsed fields like 'stages' for cockpit
             metadata: {
               processedAt: new Date().toISOString(),
               model: process.env.VERTEX_AI_MODEL,
@@ -641,7 +631,7 @@ Return ONLY the generated content.`;
       // Extract phase if present [Phase Name]
       const phaseMatch = line.match(/^\[([^\]]+)\]/);
       const phase = phaseMatch ? phaseMatch[1] : '';
-      
+
       const normalized = line.replace(/^\[[^\]]+\]\s*/, '').trim();
       const m = normalized.match(/^(Agent|Lead|Candidate|Client)\s*:\s*(.+)$/i);
       if (m) {
@@ -664,10 +654,10 @@ Return ONLY the generated content.`;
     const firstAgentIdx = dialogueRows.findIndex((row) => row.role === 'agent');
     if (firstAgentIdx >= 0) {
       let firstText = String(dialogueRows[firstAgentIdx].text || '').trim();
-      
+
       // Remove any hallucinated names at the start
       firstText = firstText.replace(/^(Bonjour|Salut|Allô)\s+[^,!.?]+[,!.?]?/i, '$1').trim();
-      
+
       if (!firstText.toLowerCase().startsWith('bonjour [nom du prospect]')) {
         // Enforce the standard opening
         if (firstText.toLowerCase().startsWith('bonjour')) {
@@ -694,9 +684,9 @@ Return ONLY the generated content.`;
           suggestions.length > 0
             ? suggestions
             : [
-                'Merci pour votre retour. Je vous explique rapidement les points cles du poste.',
-                'Tres bien, je vais vous poser 2 questions pour confirmer votre adequation.',
-              ],
+              'Merci pour votre retour. Je vous explique rapidement les points cles du poste.',
+              'Tres bien, je vais vous poser 2 questions pour confirmer votre adequation.',
+            ],
       });
     }
 
@@ -751,12 +741,12 @@ Rules:
           agentLine: String(t?.agentLine || '').trim(),
           leadOptions: Array.isArray(t?.leadOptions)
             ? t.leadOptions
-                .map((o) => ({
-                  leadReply: String(o?.leadReply || '').trim(),
-                  agentReply: String(o?.agentReply || '').trim(),
-                }))
-                .filter((o) => o.leadReply && o.agentReply)
-                .slice(0, 3)
+              .map((o) => ({
+                leadReply: String(o?.leadReply || '').trim(),
+                agentReply: String(o?.agentReply || '').trim(),
+              }))
+              .filter((o) => o.leadReply && o.agentReply)
+              .slice(0, 3)
             : [],
         }))
         .filter((t) => t.agentLine && t.leadOptions.length >= 1)

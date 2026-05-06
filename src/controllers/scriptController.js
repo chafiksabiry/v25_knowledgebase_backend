@@ -189,7 +189,7 @@ const regenerateScript = async (req, res) => {
       5. Ensure compliance with company policies found in documentation
 
       Original script parameters:
-      - Target Client (DISC Profile): ${originalScript.targetClient}
+      - Target Client Profile: ${originalScript.targetClient}
       - Language & Tone: ${originalScript.language}
       - Context: ${originalScript.details || 'not specified'}
 

@@ -30,7 +30,7 @@ const TurnSchema = new mongoose.Schema({
 
 const ScriptSchema = new mongoose.Schema({
   gigId: { type: mongoose.Schema.Types.ObjectId, ref: 'Gig', required: true },
-  targetClient: { type: String, required: true }, // DISC
+  targetClient: { type: String, required: true }, // Profile
   language: { type: String, required: true },
   details: { type: String }, // context
   script: [ScriptPhaseSchema],
