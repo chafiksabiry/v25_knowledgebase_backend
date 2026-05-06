@@ -489,18 +489,25 @@ const generateScript = async (req, res) => {
         .join('\n')
       : '';
 
-    const prompt = contexte ? `You are generating a structured sales call script".
+    const prompt = contexte ? `You are generating a structured sales call script based on the following Job/Mission details.
  
-Mission Details:
-${JSON.stringify(gig, null, 2)}
+JOB DETAILS (PRIMARY FOUNDATION):
+- TITRE DU JOB : ${gig.title || ''}
+- DESCRIPTION : ${gig.description || ''}
+- CATEGORIE/INDUSTRIE : ${gig.category || gig.industry || ''}
 
 Instructions:
 ${contexte}
 
 ${normalizedChatHistory ? `Chat history:\n${normalizedChatHistory}` : ''}
 
-Return ONLY the generated content.` : `You are generating a structured sales call scrip".
+Return ONLY the generated content.` : `You are generating a structured sales call script based on the following Job/Mission details.
   
+  JOB DETAILS (PRIMARY FOUNDATION):
+  - TITRE DU JOB : ${gig.title || ''}
+  - DESCRIPTION : ${gig.description || ''}
+  - CATEGORIE/INDUSTRIE : ${gig.category || gig.industry || ''}
+
   CRITICAL REQUIREMENTS:
   1. The script MUST include ALL of the following 8 phases in this EXACT order:
      - Phase 1: "Context & Preparation"
@@ -526,9 +533,6 @@ Return ONLY the generated content.` : `You are generating a structured sales cal
   Client Profile:
   - Type: ${typeClient}
   - Language/Tone: ${langueTon}
-  
-  Gig Details:
-  ${JSON.stringify(gig, null, 2)}
   
   ${normalizedChatHistory ? `Chat history:\n${normalizedChatHistory}` : ''}
 
