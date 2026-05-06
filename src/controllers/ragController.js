@@ -499,8 +499,10 @@ JOB DETAILS (PRIMARY FOUNDATION):
 Instructions:
 ${contexte}
 
-CRITICAL REQUIREMENT:
+CRITICAL REQUIREMENTS:
 - The total dialogue script MUST NOT exceed 8 replica lines in total (e.g. exactly 4 Agent turns and 4 Lead turns). Keep it extremely concise and focused, matching this strict 8-line limit.
+- Each speaker turn (Agent and Lead) MUST consist of exactly two lines (sentences) of dialogue.
+- REGLEMENTATION ET COMPLIANCE : The Agent MUST explicitly state in their opening/compliance turn that "cet appel est susceptible d'être enregistré à des fins de formation ou de contrôle de qualité" (the call may be recorded for quality and training purposes) and ensure full compliance with French telesales regulations and RGPD/GDPR guidelines.
 
 ${normalizedChatHistory ? `Chat history:\n${normalizedChatHistory}` : ''}
 
@@ -520,7 +522,7 @@ Return ONLY the generated dialogue script.` : `You are generating a linear sales
   CRITICAL REQUIREMENTS:
   1. The script MUST flow naturally and cover the following phases in a continuous linear dialogue:
      - Opening & SBAM
-     - Legal & Compliance (Agent MUST state: "the call may be recorded for quality and training purposes")
+     - Legal, Compliance & Réglementation (Agent MUST explicitly state: "cet appel est susceptible d'être enregistré à des fins de formation ou de contrôle de qualité", in strict compliance with French RGPD regulations and telesales guidelines. The script should mention or adhere to French commercial laws / Bloctel rights).
      - Need Discovery
      - Value Proposition
      - Document/Quote presentation
@@ -530,6 +532,7 @@ Return ONLY the generated dialogue script.` : `You are generating a linear sales
   2. The script must be a single linear conversation with exactly one response/replica for each agent and lead turn. No multiple branching options or alternatives.
   3. Keep sentences short, natural, and highly suited for spoken conversation. Do not use placeholders like [Company] or [Name]. Use [Nom du prospect] for the prospect's name.
   4. The total dialogue script MUST NOT exceed 8 replica lines in total (e.g. exactly 4 Agent turns and 4 Lead turns). Keep it extremely concise and focused, matching this strict 8-line limit.
+  5. Each speaker turn (Agent and Lead) MUST consist of exactly two dialogue lines/sentences. Keep each speech block short, composed of exactly 2 lines.
   
   Client Profile:
   - Type: ${typeClient}
