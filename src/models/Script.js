@@ -28,6 +28,20 @@ const TurnSchema = new mongoose.Schema({
   leadOptions: [TurnOptionSchema]
 }, { _id: false });
 
+// Support for Interactive Cockpit stages schema
+const StageResponseSchema = new mongoose.Schema({
+  text: { type: String, required: true },
+  nextStageId: { type: String, required: true }
+}, { _id: false });
+
+const StageSchema = new mongoose.Schema({
+  id: { type: String, required: true },
+  label: { type: String, required: true },
+  agent: { type: String, required: true },
+  responses: [StageResponseSchema],
+  compliance: { type: String }
+}, { _id: false });
+
 const ScriptSchema = new mongoose.Schema({
   gigId: { type: mongoose.Schema.Types.ObjectId, ref: 'Gig', required: true },
   targetClient: { type: String, required: true }, // Profile
@@ -37,7 +51,10 @@ const ScriptSchema = new mongoose.Schema({
   playbook: {
     dialogue: [DialogueRowSchema],
     leadGuidance: [LeadGuidanceSchema],
-    turns: [TurnSchema]
+    turns: [TurnSchema],
+    title: { type: String },
+    format: { type: String },
+    stages: [StageSchema]
   },
   isActive: { type: Boolean, default: true }, // New field for script activation status
   createdAt: { type: Date, default: Date.now }
