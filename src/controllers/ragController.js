@@ -499,6 +499,9 @@ JOB DETAILS (PRIMARY FOUNDATION):
 Instructions:
 ${contexte}
 
+CRITICAL REQUIREMENT:
+- The total dialogue script MUST NOT exceed 8 replica lines in total (e.g. exactly 4 Agent turns and 4 Lead turns). Keep it extremely concise and focused, matching this strict 8-line limit.
+
 ${normalizedChatHistory ? `Chat history:\n${normalizedChatHistory}` : ''}
 
 Format the output strictly as a linear dialogue of alternating lines.
@@ -526,6 +529,7 @@ Return ONLY the generated dialogue script.` : `You are generating a linear sales
   
   2. The script must be a single linear conversation with exactly one response/replica for each agent and lead turn. No multiple branching options or alternatives.
   3. Keep sentences short, natural, and highly suited for spoken conversation. Do not use placeholders like [Company] or [Name]. Use [Nom du prospect] for the prospect's name.
+  4. The total dialogue script MUST NOT exceed 8 replica lines in total (e.g. exactly 4 Agent turns and 4 Lead turns). Keep it extremely concise and focused, matching this strict 8-line limit.
   
   Client Profile:
   - Type: ${typeClient}
