@@ -489,7 +489,7 @@ const generateScript = async (req, res) => {
         .join('\n')
       : '';
 
-    const prompt = contexte ? `You are generating a structured sales call script based on the following Job/Mission details.
+    const prompt = contexte ? `You are generating a linear sales call script based on the following Job/Mission details.
  
 JOB DETAILS (PRIMARY FOUNDATION):
 - TITRE DU JOB : ${gig.title || ''}
@@ -501,7 +501,13 @@ ${contexte}
 
 ${normalizedChatHistory ? `Chat history:\n${normalizedChatHistory}` : ''}
 
-Return ONLY the generated content.` : `You are generating a structured sales call script based on the following Job/Mission details.
+Format the output strictly as a linear dialogue of alternating lines.
+Do NOT output JSON or any other formatting. Use exactly this format:
+Agent: <dialogue text>
+Lead: <dialogue text>
+Agent: <dialogue text>
+
+Return ONLY the generated dialogue script.` : `You are generating a linear sales call script based on the following Job/Mission details.
   
   JOB DETAILS (PRIMARY FOUNDATION):
   - TITRE DU JOB : ${gig.title || ''}
@@ -509,26 +515,17 @@ Return ONLY the generated content.` : `You are generating a structured sales cal
   - CATEGORIE/INDUSTRIE : ${gig.category || gig.industry || ''}
 
   CRITICAL REQUIREMENTS:
-  1. The script MUST include ALL of the following 8 phases in this EXACT order:
-     - Phase 1: "Context & Preparation"
-     - Phase 2: "SBAM & Opening"
-     - Phase 3: "Legal & Compliance" (Agent MUST state: "the call may be recorded for quality and training purposes")
-     - Phase 4: "Need Discovery"
-     - Phase 5: "Value Proposition"
-     - Phase 6: "Documents/Quote"
-     - Phase 7: "Objection Handling"
-     - Phase 8: "Confirmation & Closing"
+  1. The script MUST flow naturally and cover the following phases in a continuous linear dialogue:
+     - Opening & SBAM
+     - Legal & Compliance (Agent MUST state: "the call may be recorded for quality and training purposes")
+     - Need Discovery
+     - Value Proposition
+     - Document/Quote presentation
+     - Objection Handling
+     - Confirmation & Closing
   
-  2. Each phase MUST have at least one dialogue exchange.
-  3. DO NOT skip or combine any phases.
-  4. DO NOT add any additional phases.
-  5. DO NOT mention the phase name in the dialogue text.
-  
-  DIALOGUE STRUCTURE:
-  - Each step must be a JSON object with:
-    - phase: one of the 8 exact phase names listed above
-    - actor: either "agent" or "lead"
-    - replica: the dialogue text
+  2. The script must be a single linear conversation with exactly one response/replica for each agent and lead turn. No multiple branching options or alternatives.
+  3. Keep sentences short, natural, and highly suited for spoken conversation. Do not use placeholders like [Company] or [Name]. Use [Nom du prospect] for the prospect's name.
   
   Client Profile:
   - Type: ${typeClient}
@@ -536,15 +533,12 @@ Return ONLY the generated content.` : `You are generating a structured sales cal
   
   ${normalizedChatHistory ? `Chat history:\n${normalizedChatHistory}` : ''}
 
-  Return ONLY a JSON array of dialogue steps following this exact format:
-  [
-    {
-      "phase": "Context & Preparation",
-      "actor": "agent",
-      "replica": "..."
-    },
-    ...
-  ]`;
+  Format the output strictly as a linear dialogue of alternating lines. Use exactly this format:
+  Agent: Bonjour [Nom du prospect], ...
+  Lead: Bonjour, ...
+  Agent: ...
+  
+  Return ONLY the generated dialogue script. Do NOT wrap in JSON.`;
 
     // Génération directe sur base du gig uniquement (pas de KB/RAG).
     let scriptContent;
@@ -595,34 +589,9 @@ Return ONLY the generated content.` : `You are generating a structured sales cal
       }
     }
 
-    // Check if the response is JSON (for Cockpit or other structured formats)
-    const isJsonResponse = typeof scriptContent === 'string' &&
-      (scriptContent.trim().startsWith('{') || scriptContent.trim().startsWith('['));
-
-    if (isJsonResponse) {
-      console.log('📦 JSON response detected. Skipping dialogue post-processing.');
-      try {
-        const parsed = JSON.parse(scriptContent);
-        return res.status(200).json({
-          success: true,
-          data: {
-            script: scriptContent,
-            ...(Array.isArray(parsed) ? { scriptArray: parsed } : parsed), // Include parsed fields like 'stages' for cockpit
-            metadata: {
-              processedAt: new Date().toISOString(),
-              model: process.env.VERTEX_AI_MODEL,
-              format: 'json'
-            }
-          }
-        });
-      } catch (e) {
-        console.warn('Failed to parse JSON response, falling back to dialogue processing');
-      }
-    }
-
     // Nettoyer le contenu
     if (typeof scriptContent === 'string') {
-      scriptContent = scriptContent.replace(/^```(?:json)?\s*|\s*```$/g, '').trim();
+      scriptContent = scriptContent.replace(/^```(?:json|text|plaintext)?\s*|\s*```$/g, '').trim();
     }
 
     // Parse the script content line by line
@@ -632,10 +601,6 @@ Return ONLY the generated content.` : `You are generating a structured sales cal
       .filter(Boolean);
 
     const dialogueRows = rawLines.map((line) => {
-      // Extract phase if present [Phase Name]
-      const phaseMatch = line.match(/^\[([^\]]+)\]/);
-      const phase = phaseMatch ? phaseMatch[1] : '';
-
       const normalized = line.replace(/^\[[^\]]+\]\s*/, '').trim();
       const m = normalized.match(/^(Agent|Lead|Candidate|Client)\s*:\s*(.+)$/i);
       if (m) {
@@ -643,27 +608,23 @@ Return ONLY the generated content.` : `You are generating a structured sales cal
         return {
           role: actor === 'agent' ? 'agent' : 'lead',
           text: String(m[2] || '').trim(),
-          phase: phase
+          phase: 'Dialogue'
         };
       }
       return {
         role: 'agent',
         text: String(normalized || '').trim(),
-        phase: phase
+        phase: 'Dialogue'
       };
     }).filter((row) => row.text);
 
-    // User-instruction guardrail:
-    // ALWAYS enforce "Bonjour [Nom du prospect]" on the first agent line
+    // Apply "Bonjour [Nom du prospect]" guardrail on first agent line
     const firstAgentIdx = dialogueRows.findIndex((row) => row.role === 'agent');
     if (firstAgentIdx >= 0) {
       let firstText = String(dialogueRows[firstAgentIdx].text || '').trim();
-
-      // Remove any hallucinated names at the start
       firstText = firstText.replace(/^(Bonjour|Salut|Allô)\s+[^,!.?]+[,!.?]?/i, '$1').trim();
 
       if (!firstText.toLowerCase().startsWith('bonjour [nom du prospect]')) {
-        // Enforce the standard opening
         if (firstText.toLowerCase().startsWith('bonjour')) {
           dialogueRows[firstAgentIdx].text = `Bonjour [Nom du prospect], ${firstText.slice(7).replace(/^[\s,]+/, '')}`;
         } else {
@@ -671,319 +632,22 @@ Return ONLY the generated content.` : `You are generating a structured sales cal
         }
       }
     }
-    const leadGuidance = [];
-    for (let i = 0; i < dialogueRows.length; i += 1) {
-      const row = dialogueRows[i];
-      if (row.role !== 'lead') continue;
-      const suggestions = [];
-      for (let j = i + 1; j < dialogueRows.length; j += 1) {
-        const next = dialogueRows[j];
-        if (next.role === 'lead') break;
-        if (next.role === 'agent' && next.text) suggestions.push(next.text);
-        if (suggestions.length >= 3) break;
-      }
-      leadGuidance.push({
-        leadLine: row.text,
-        suggestedAgentReplies:
-          suggestions.length > 0
-            ? suggestions
-            : [
-              'Merci pour votre retour. Je vous explique rapidement les points cles du poste.',
-              'Tres bien, je vais vous poser 2 questions pour confirmer votre adequation.',
-            ],
-      });
-    }
 
-    // Build advanced branching turns:
-    // each agent line has 2-3 lead options, each option has the matching agent reply.
-    let branchingTurns = [];
-    try {
-      const branchingPrompt = `Convert this script into an interactive branching playbook.
-
-INPUT SCRIPT:
-${String(scriptContent || '')}
-
-Return STRICT JSON only in this exact shape:
-{
-  "turns": [
-    {
-      "agentLine": "Agent line",
-      "leadOptions": [
-        { "leadReply": "Possible lead reply 1", "agentReply": "Best agent reply to option 1" },
-        { "leadReply": "Possible lead reply 2", "agentReply": "Best agent reply to option 2" },
-        { "leadReply": "Possible lead reply 3", "agentReply": "Best agent reply to option 3" }
-      ]
-    }
-  ]
-}
-
-Rules:
-- ${isContinuation ? 'Exactly 3 new turns' : 'Exactly 10 turns'}
-- 2 to 3 leadOptions per turn
-- Professional recruitment context
-- No placeholders like [Company] or [Name]
-- Keep replies concise and realistic
-- Do NOT reuse the exact same agentReply for multiple leadOptions in the same turn.
-- Make each agentReply specifically adapt to its leadReply.
-- Output JSON only`;
-
-      const branchingResult = await vertexAIService.generativeModel.generateContent(branchingPrompt);
-      const branchingResponse = branchingResult.response;
-      let branchingText = '';
-      if (branchingResponse?.candidates?.[0]?.content?.parts?.[0]?.text) {
-        branchingText = String(branchingResponse.candidates[0].content.parts[0].text);
-      } else if (branchingResponse?.candidates?.[0]?.text) {
-        branchingText = String(branchingResponse.candidates[0].text);
-      } else if (typeof branchingResponse?.text === 'string') {
-        branchingText = String(branchingResponse.text);
-      }
-      branchingText = branchingText.replace(/^```(?:json)?\s*|\s*```$/g, '').trim();
-      const parsed = JSON.parse(branchingText);
-      const turns = Array.isArray(parsed?.turns) ? parsed.turns : [];
-      branchingTurns = turns
-        .map((t) => ({
-          agentLine: String(t?.agentLine || '').trim(),
-          leadOptions: Array.isArray(t?.leadOptions)
-            ? t.leadOptions
-              .map((o) => ({
-                leadReply: String(o?.leadReply || '').trim(),
-                agentReply: String(o?.agentReply || '').trim(),
-              }))
-              .filter((o) => o.leadReply && o.agentReply)
-              .slice(0, 3)
-            : [],
-        }))
-        .filter((t) => t.agentLine && t.leadOptions.length >= 1)
-        .slice(0, 10);
-    } catch (branchErr) {
-      console.log('Branching JSON generation failed, fallback heuristic used:', String(branchErr?.message || branchErr));
-    }
-
-    if (branchingTurns.length === 0) {
-      // Fallback heuristic from dialogue rows.
-      const fallbackTurns = [];
-      for (let i = 0; i < dialogueRows.length; i += 1) {
-        if (dialogueRows[i]?.role !== 'agent') continue;
-        const agentLine = String(dialogueRows[i]?.text || '').trim();
-        if (!agentLine) continue;
-        let leadReply = '';
-        let agentReply = '';
-        for (let j = i + 1; j < dialogueRows.length; j += 1) {
-          const row = dialogueRows[j];
-          if (!leadReply && row.role === 'lead') {
-            leadReply = String(row.text || '').trim();
-            continue;
-          }
-          if (leadReply && row.role === 'agent') {
-            agentReply = String(row.text || '').trim();
-            break;
-          }
-          if (leadReply && row.role === 'lead') break;
-        }
-        const defaultAgentReply =
-          agentReply || 'Merci pour votre retour. Je vous donne les informations essentielles en 30 secondes.';
-        const opts = [
-          {
-            leadReply: leadReply || 'Oui, je vous ecoute.',
-            agentReply: defaultAgentReply,
-          },
-          {
-            leadReply: 'C est interessant, pouvez-vous preciser le role ?',
-            agentReply:
-              'Bien sur. Le poste est centre sur les missions cles du gig, avec un cadre clair et une evolution possible.',
-          },
-          {
-            leadReply: 'Je ne suis pas disponible maintenant.',
-            agentReply: 'Je comprends. Quel serait le meilleur moment pour vous rappeler rapidement ?',
-          },
-        ];
-        fallbackTurns.push({
-          agentLine,
-          leadOptions: opts.slice(0, 3),
-        });
-        if (fallbackTurns.length >= 10) break;
-      }
-      branchingTurns = fallbackTurns;
-    }
-
-    // Guarantee at least 10 turns for agent messages.
-    const sanitizeOptionPair = (option, gigTitle) => {
-      const leadReply = String(option?.leadReply || '').trim();
-      const agentReply = String(option?.agentReply || '').trim();
-      if (!leadReply || !agentReply) return null;
-      return { leadReply, agentReply };
-    };
-    const defaultTurnOptions = (gigTitle) => ([
-      {
-        leadReply: 'Oui, je suis interesse. Quelle est la suite ?',
-        agentReply: `Parfait. Je vous presente la prochaine etape pour le poste ${String(gigTitle || '').trim() || 'vise'}.`,
-      },
-      {
-        leadReply: 'J ai besoin de plus de details avant de confirmer.',
-        agentReply: 'Bien sur. Je peux preciser les missions, le rythme et les attentes en moins d une minute.',
-      },
-    ]);
-    const ensureTwoOptions = (options, gigTitle) => {
-      const valid = (Array.isArray(options) ? options : [])
-        .map((opt) => sanitizeOptionPair(opt, gigTitle))
-        .filter(Boolean);
-      const merged = [...valid];
-      const defaults = defaultTurnOptions(gigTitle);
-      let defaultIndex = 0;
-      while (merged.length < 2 && defaultIndex < defaults.length) {
-        merged.push(defaults[defaultIndex]);
-        defaultIndex += 1;
-      }
-      return merged.slice(0, 3);
-    };
-    const extractAgentLinesFromDialogue = (rows) =>
-      (Array.isArray(rows) ? rows : [])
-        .filter((row) => String(row?.role || '').toLowerCase() === 'agent')
-        .map((row) => String(row?.text || '').trim())
-        .filter(Boolean);
-    const agentLinesPool = extractAgentLinesFromDialogue(dialogueRows);
-    const baseTurns = branchingTurns.map((turn) => ({
-      agentLine: String(turn?.agentLine || '').trim(),
-      leadOptions: ensureTwoOptions(turn?.leadOptions, gig?.title),
-    })).filter((turn) => turn.agentLine);
-    const seenAgentLines = new Set(baseTurns.map((turn) => turn.agentLine.toLowerCase()));
-    let poolIndex = 0;
-    while (baseTurns.length < 10) {
-      let candidateLine = '';
-      while (poolIndex < agentLinesPool.length && !candidateLine) {
-        const candidate = agentLinesPool[poolIndex];
-        poolIndex += 1;
-        if (candidate && !seenAgentLines.has(candidate.toLowerCase())) {
-          candidateLine = candidate;
-        }
-      }
-      if (!candidateLine) {
-        const turnNumber = baseTurns.length + 1;
-        candidateLine = `Je continue avec l etape ${turnNumber} pour valider l adequation et confirmer la suite du processus.`;
-      }
-      seenAgentLines.add(candidateLine.toLowerCase());
-      baseTurns.push({
-        agentLine: candidateLine,
-        leadOptions: defaultTurnOptions(gig?.title),
-      });
-    }
-    branchingTurns = baseTurns.slice(0, 10);
-
-    // De-duplicate repeated agent replies inside each turn so lead choices
-    // visibly produce different outcomes on the frontend.
-    const normalizeBranchText = (text) =>
-      String(text || '')
-        .toLowerCase()
-        .replace(/\s+/g, ' ')
-        .trim();
-
-    branchingTurns = branchingTurns.map((turn) => {
-      const opts = Array.isArray(turn?.leadOptions) ? turn.leadOptions : [];
-      if (opts.length <= 1) return turn;
-      const countByReply = {};
-      opts.forEach((opt) => {
-        const key = normalizeBranchText(opt?.agentReply);
-        if (!key) return;
-        countByReply[key] = (countByReply[key] || 0) + 1;
-      });
-      const nextOpts = opts.map((opt) => {
-        const reply = String(opt?.agentReply || '').trim();
-        const lead = String(opt?.leadReply || '').trim();
-        const key = normalizeBranchText(reply);
-        if (!key || (countByReply[key] || 0) <= 1) return opt;
-        const lowerLead = lead.toLowerCase();
-        let adapted = reply;
-        if (/\b(non|pas|occupe|indisponible)\b/.test(lowerLead)) {
-          adapted =
-            'Je comprends. Merci pour votre retour. Si votre situation change, je reste disponible pour reprendre la discussion.';
-        } else if (/\b(plus|preciser|details?|expliquer)\b/.test(lowerLead)) {
-          adapted = `Bien sur. Je peux vous donner plus de details sur le poste ${String(gig?.title || '').trim()}.`;
-        } else if (/\b(interesse|interessant|oui)\b/.test(lowerLead)) {
-          adapted = 'Excellent. Je vous propose de passer a l etape suivante et valider vos disponibilites.';
-        }
-        return {
-          ...opt,
-          agentReply: adapted,
-        };
-      });
-      return {
-        ...turn,
-        leadOptions: nextOpts,
-      };
-    });
-
-    // Build deterministic ids and explicit links between turns
-    // so frontend can follow scenario branches reliably.
-    const normalizeLine = (text) =>
-      String(text || '')
-        .toLowerCase()
-        .replace(/\s+/g, ' ')
-        .trim();
-    const byAgentLine = new Map();
-    branchingTurns.forEach((turn, idx) => {
-      const key = normalizeLine(turn?.agentLine);
-      if (key && !byAgentLine.has(key)) byAgentLine.set(key, idx);
-    });
-    const linkedTurns = branchingTurns.map((turn, idx) => {
-      const turnId = `turn_${idx + 1}`;
-      const options = Array.isArray(turn?.leadOptions) ? turn.leadOptions : [];
-      const linkedOptions = options.map((opt) => {
-        const nextIdx = byAgentLine.get(normalizeLine(opt?.agentReply));
-        return {
-          leadReply: String(opt?.leadReply || '').trim(),
-          agentReply: String(opt?.agentReply || '').trim(),
-          nextTurnId: typeof nextIdx === 'number' ? `turn_${nextIdx + 1}` : null,
-        };
-      });
-      return {
-        id: turnId,
-        agentLine: String(turn?.agentLine || '').trim(),
-        leadOptions: linkedOptions,
-      };
-    });
-    // Persist structured dialogue (no prefix in text).
-    let scriptArray = dialogueRows.map((row) => ({
+    const scriptArray = dialogueRows.map((row) => ({
       phase: 'Dialogue',
       actor: row.role === 'lead' ? 'lead' : 'agent',
       replica: String(row.text || '').trim(),
     })).filter((row) => row.replica);
 
-    if (scriptArray.length === 0) {
-      scriptArray = [
-        {
-          phase: 'Dialogue',
-          actor: 'agent',
-          replica: 'Script indisponible.'
-        }
-      ];
-    }
-
-    // Validate script structure
-    console.log('Validation de la structure du script...');
-    const phases = scriptArray.map(item => item.phase);
-    const uniquePhases = [...new Set(phases)];
-    console.log('Analyse des phases du script:');
-    console.log('------------------------------');
-    console.log(`Nombre total d'étapes: ${scriptArray.length}`);
-    console.log(`Phases uniques: ${uniquePhases.length}`);
-    console.log('Distribution des phases:');
-    phases.reduce((acc, phase) => {
-      acc[phase] = (acc[phase] || 0) + 1;
-      return acc;
-    }, {});
-
-    // Do NOT save here: persistence happens only on explicit validation action.
-    console.log('Aucune sauvegarde DB pendant generation (validation requise).');
-
-    // Prepare final response
+    // Prepare clean linear response
     const finalResponse = {
       success: true,
       data: {
-        script: dialogueRows.map((row) => row.text).join('\n'),
+        script: dialogueRows.map((row) => `${row.role === 'lead' ? 'Lead' : 'Agent'}: ${row.text}`).join('\n'),
         playbook: {
           dialogue: dialogueRows,
-          leadGuidance,
-          turns: linkedTurns,
+          leadGuidance: [],
+          turns: [],
         },
         metadata: {
           processedAt: new Date().toISOString(),
@@ -997,27 +661,16 @@ Rules:
           scriptId: null,
           analysisStats: {
             totalSteps: scriptArray.length,
-            uniquePhases: uniquePhases.length,
-            phasesDistribution: phases.reduce((acc, phase) => {
-              acc[phase] = (acc[phase] || 0) + 1;
-              return acc;
-            }, {}),
+            uniquePhases: 1,
+            phasesDistribution: { 'Dialogue': scriptArray.length },
             citationsUsed: 0
           }
         }
       }
     };
 
-    console.log('\n✅ GÉNÉRATION TERMINÉE\n');
-    console.log('Sources utilisées:');
-    if (response && response.candidates?.[0]?.citationMetadata?.citations) {
-      response.candidates[0].citationMetadata.citations.forEach(citation => {
-        console.log(`  - ${citation.title}`);
-      });
-    }
-    console.log('\n========================================\n');
-
-    logger.info('Script generation completed successfully');
+    console.log('\n✅ GÉNÉRATION TERMINÉE (LINEAR)\n');
+    logger.info('Linear script generation completed successfully');
     res.status(200).json(finalResponse);
   } catch (error) {
     console.log('\n❌ ERREUR LORS DE LA GÉNÉRATION:');
