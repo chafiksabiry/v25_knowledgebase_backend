@@ -37,9 +37,21 @@ const StageResponseSchema = new mongoose.Schema({
 const StageSchema = new mongoose.Schema({
   id: { type: String, required: true },
   label: { type: String, required: true },
-  agent: { type: String, required: true },
+  agent: { type: String }, // Made optional for backwards compatibility
   responses: [StageResponseSchema],
-  compliance: { type: String }
+  compliance: { type: String },
+
+  // Premium interactive cockpit fields
+  stepNumber: { type: Number },
+  type: { type: String },
+  typeLabel: { type: String },
+  introTitle: { type: String },
+  introReplica: { type: String },
+  reminders: [mongoose.Schema.Types.Mixed],
+  optionsTitle: { type: String },
+  options: [mongoose.Schema.Types.Mixed],
+  checklistTitle: { type: String },
+  checklist: [{ type: String }]
 }, { _id: false });
 
 const ScriptSchema = new mongoose.Schema({
