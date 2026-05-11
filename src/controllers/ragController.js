@@ -463,6 +463,22 @@ const generateScript = async (req, res) => {
       return res.status(400).json({ error: 'A gig selection is required to generate a script.' });
     }
 
+    // Clean up trainings titles to remove any "Module X" prefixes before passing to LLM
+    let cleanedTrainings = [];
+    if (Array.isArray(trainings)) {
+      cleanedTrainings = trainings.map(t => {
+        if (!t) return t;
+        const copy = { ...t };
+        if (typeof copy.title === 'string') {
+          copy.title = copy.title.replace(/^(module\s+\d+\s*[:\-]\s*)/i, '').trim();
+        }
+        if (typeof copy.name === 'string') {
+          copy.name = copy.name.replace(/^(module\s+\d+\s*[:\-]\s*)/i, '').trim();
+        }
+        return copy;
+      });
+    }
+
     // Initialize Vertex AI if needed
     if (!vertexAIService.vertexAI) {
       await vertexAIService.initialize();
@@ -497,7 +513,7 @@ SALES MISSION:
 - Category/Industry: ${gig.category || gig.industry || ''}
 
 RELATED TRAINING MODULES (Ensure that the script stages, speech lines, guidelines, recommendations, and checklists directly reflect, integrate, and reinforce the methodologies taught in these modules):
-${JSON.stringify(trainings || [])}
+${JSON.stringify(cleanedTrainings)}
 
 USER REFINEMENT/CONTEXT:
 ${contexte || 'Generate a standard interactive 8-stage sales script.'}
@@ -681,9 +697,36 @@ Return ONLY the generated dialogue script.` : `You are generating a linear sales
 
       if (Array.isArray(parsedStages) && parsedStages.length > 0) {
         console.log('\n✅ GÉNÉRATION INTERACTIVE REUSSIE\n');
+        
+        // Clean up stages text in backend too to guarantee no "Module X :" strings are saved
+        const cleanedStages = parsedStages.map(stage => {
+          if (!stage) return stage;
+          const s = { ...stage };
+          if (Array.isArray(s.reminders)) {
+            s.reminders = s.reminders.map(rem => {
+              if (rem && typeof rem.text === 'string') {
+                return {
+                  ...rem,
+                  text: rem.text.replace(/^(module\s+\d+\s*[:\-]\s*)/i, '').trim()
+                };
+              }
+              return rem;
+            });
+          }
+          if (Array.isArray(s.checklist)) {
+            s.checklist = s.checklist.map(item => {
+              if (typeof item === 'string') {
+                return item.replace(/^(module\s+\d+\s*[:\-]\s*)/i, '').trim();
+              }
+              return item;
+            });
+          }
+          return s;
+        });
+
         return res.status(200).json({
           success: true,
-          stages: parsedStages,
+          stages: cleanedStages,
           metadata: {
             processedAt: new Date().toISOString(),
             model: process.env.VERTEX_AI_MODEL || 'vertex-ai',
