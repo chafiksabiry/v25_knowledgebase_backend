@@ -457,13 +457,10 @@ const analyzeDocument = async (req, res) => {
  */
 const generateScript = async (req, res) => {
   try {
-    const { companyId, gig, typeClient, langueTon, contexte, currentScript, currentPlaybook, chatHistory } = req.body;
+    const { companyId, gig, typeClient, langueTon, contexte, currentScript, currentPlaybook, chatHistory, trainings, isInteractiveRequest } = req.body;
     // Validation checks
     if (!gig || !gig._id) {
       return res.status(400).json({ error: 'A gig selection is required to generate a script.' });
-    }
-    if (!typeClient || !langueTon) {
-      return res.status(400).json({ error: 'Type de client and langue/ton are required.' });
     }
 
     // Initialize Vertex AI if needed
@@ -489,7 +486,64 @@ const generateScript = async (req, res) => {
         .join('\n')
       : '';
 
-    const prompt = contexte ? `You are generating a linear sales call script based on the following Job/Mission details.
+    let prompt;
+    if (isInteractiveRequest) {
+      prompt = `You are a world-class conversational sales engineer. Your task is to generate a highly detailed, 8-stage interactive call script in JSON format.
+This script MUST be tailored to the following sales mission and its related training modules:
+
+SALES MISSION:
+- Title: ${gig.title || ''}
+- Description: ${gig.description || ''}
+- Category/Industry: ${gig.category || gig.industry || ''}
+
+RELATED TRAINING MODULES (Ensure that the script stages, speech lines, guidelines, recommendations, and checklists directly reflect, integrate, and reinforce the methodologies taught in these modules):
+${JSON.stringify(trainings || [])}
+
+USER REFINEMENT/CONTEXT:
+${contexte || 'Generate a standard interactive 8-stage sales script.'}
+
+SCHEMA SPECIFICATIONS:
+The output must be a single, raw, parseable JSON object with no markdown surrounding block fences.
+The JSON object must have a single key "stages" which is an array of exactly 8 objects.
+Each object represents a step in the sales call and must conform to this strict schema:
+{
+  "id": "step_1" to "step_8",
+  "stepNumber": 1 to 8,
+  "label": "Short, striking title of the stage in French (e.g., 'Ouverture & Identification', 'Découverte du besoin', 'Proposition de valeur', 'Traitement des objections', 'Clôture et validation')",
+  "type": "one of: 'regulatory', 'collection', 'discovery', 'presentation', 'objection', 'compliance', 'closing', 'followup'",
+  "typeLabel": "French label matching the type (e.g., 'Réglementaire', 'Collecte', 'Découverte', 'Argumentaire', 'Objections', 'Conformité', 'Clôture', 'Suivi')",
+  "introTitle": "Actionable micro-instruction in uppercase French (e.g., 'OUVERTURE LOI NAEGELEN + DDA', 'EXPLORATION DES BESOINS COMPLÉMENTAIRES')",
+  "introReplica": "The exact script/dialogue lines the Agent should speak. Keep it realistic, direct, and in natural spoken French. Never use raw placeholders like [Company] or [Your Name] - use realistic context-based details.",
+  "reminders": [
+    {
+      "type": "warning", "clock", or "info",
+      "text": "Short French compliance rule or best practice from the training modules (e.g., Bloctel fine risk 75000€, allowed telesales hours, RGPD consent)."
+    }
+  ],
+  "optionsTitle": "French header (e.g. 'GESTION DES OBJECTIONS' or 'RÉACTION DU CLIENT')",
+  "options": [
+    {
+      "id": "option_1",
+      "label": "Outcome/Choice title in French (e.g., '✓ Accord de principe', '↻ Objection sur le tarif')",
+      "subtext": "What the prospect says in French (e.g., 'Je trouve que l'abonnement mensuel est trop cher.')",
+      "recommendedResponse": "The exact spoken reply in natural French the Agent must use to handle this specific outcome/objection."
+    }
+  ],
+  "checklistTitle": "French header (e.g., 'DONNÉES À SAISIR DANS LE CRM')",
+  "checklist": [
+    "Specific data point to extract from the user tailored to this gig (e.g., 'Régime d'assurance', 'SIRET', 'Adresse e-mail de facturation')"
+  ]
+}
+
+CRITICAL RULES:
+1. Do not include any 'conditionalTabs' or horizontal segmented tabs. We do not want them.
+2. The JSON must be valid, strict, parseable, and contain exactly 8 stages.
+3. Keep spoken lines natural, friendly, highly professional.
+4. Integrate the training concepts dynamically in the reminders and recommendedResponses.
+
+Return ONLY the valid raw JSON matching the schema. No markdown wrapping.`;
+    } else {
+      prompt = contexte ? `You are generating a linear sales call script based on the following Job/Mission details.
  
 JOB DETAILS (PRIMARY FOUNDATION):
 - TITRE DU JOB : ${gig.title || ''}
@@ -546,6 +600,7 @@ Return ONLY the generated dialogue script.` : `You are generating a linear sales
   Agent: ...
   
   Return ONLY the generated dialogue script. Do NOT wrap in JSON.`;
+    }
 
     // Génération directe sur base du gig uniquement (pas de KB/RAG).
     let scriptContent;
@@ -601,6 +656,43 @@ Return ONLY the generated dialogue script.` : `You are generating a linear sales
       scriptContent = scriptContent.replace(/^```(?:json|text|plaintext)?\s*|\s*```$/g, '').trim();
     }
 
+    // Interactive structured response parsing
+    if (isInteractiveRequest) {
+      let parsedStages = null;
+      try {
+        const clean = String(scriptContent || '')
+          .replace(/^```(?:json)?\s*|\s*```$/gi, '')
+          .trim();
+        const parsed = JSON.parse(clean);
+        parsedStages = parsed.stages || parsed;
+      } catch (err) {
+        console.warn('[BACKEND PARSER] String looked like JSON but parsing failed, trying simple extraction.', err);
+        // Regexp JSON extraction fallback
+        const jsonMatch = String(scriptContent || '').match(/\{[\s\S]*\}/);
+        if (jsonMatch) {
+          try {
+            const parsed = JSON.parse(jsonMatch[0]);
+            parsedStages = parsed.stages || parsed;
+          } catch (e) {
+            console.error('[BACKEND PARSER] Regex JSON parse failed too.', e);
+          }
+        }
+      }
+
+      if (Array.isArray(parsedStages) && parsedStages.length > 0) {
+        console.log('\n✅ GÉNÉRATION INTERACTIVE REUSSIE\n');
+        return res.status(200).json({
+          success: true,
+          stages: parsedStages,
+          metadata: {
+            processedAt: new Date().toISOString(),
+            model: process.env.VERTEX_AI_MODEL || 'vertex-ai',
+            sourceMode: 'interactive_script_gpt'
+          }
+        });
+      }
+    }
+
     // Parse the script content - handle both structured JSON schemas and linear text
     let dialogueRows = [];
     let isStructuredJson = false;
@@ -626,12 +718,12 @@ Return ONLY the generated dialogue script.` : `You are generating a linear sales
     }
 
     if (isStructuredJson && parsedJson) {
-      const steps = parsedJson.steps || parsedJson.script || (Array.isArray(parsedJson) ? parsedJson : null);
+      const steps = parsedJson.stages || parsedJson.steps || parsedJson.script || (Array.isArray(parsedJson) ? parsedJson : null);
       if (Array.isArray(steps)) {
         dialogueRows = steps.map((step) => {
           const actor = String(step.actor || step.role || 'agent').toLowerCase();
-          const replica = String(step.replica || step.text || step.content || '');
-          const phase = String(step.phase || step.step_title || 'Dialogue');
+          const replica = String(step.replica || step.introReplica || step.text || step.content || '');
+          const phase = String(step.phase || step.label || step.step_title || 'Dialogue');
           return {
             role: actor === 'lead' ? 'lead' : 'agent',
             text: replica,
