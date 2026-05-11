@@ -601,29 +601,74 @@ Return ONLY the generated dialogue script.` : `You are generating a linear sales
       scriptContent = scriptContent.replace(/^```(?:json|text|plaintext)?\s*|\s*```$/g, '').trim();
     }
 
-    // Parse the script content line by line
-    const rawLines = String(scriptContent || '')
-      .split(/\r?\n/)
-      .map((l) => l.trim())
-      .filter(Boolean);
+    // Parse the script content - handle both structured JSON schemas and linear text
+    let dialogueRows = [];
+    let isStructuredJson = false;
+    let parsedJson = null;
 
-    const dialogueRows = rawLines.map((line) => {
-      const normalized = line.replace(/^\[[^\]]+\]\s*/, '').trim();
-      const m = normalized.match(/^(Agent|Lead|Candidate|Client)\s*:\s*(.+)$/i);
-      if (m) {
-        const actor = String(m[1] || '').toLowerCase();
+    if (typeof scriptContent === 'string') {
+      const trimmed = scriptContent.trim();
+      if (trimmed.startsWith('{') || trimmed.startsWith('[')) {
+        try {
+          parsedJson = JSON.parse(trimmed);
+          isStructuredJson = true;
+        } catch (e) {
+          // Attempt to extract from possible markdown codeblock wrapper
+          const clean = trimmed.replace(/^```(?:json)?\s*|\s*```$/gi, '').trim();
+          try {
+            parsedJson = JSON.parse(clean);
+            isStructuredJson = true;
+          } catch (err) {
+            console.warn('[BACKEND PARSER] String looked like JSON but parsing failed, falling back to line parsing.');
+          }
+        }
+      }
+    }
+
+    if (isStructuredJson && parsedJson) {
+      const steps = parsedJson.steps || parsedJson.script || (Array.isArray(parsedJson) ? parsedJson : null);
+      if (Array.isArray(steps)) {
+        dialogueRows = steps.map((step) => {
+          const actor = String(step.actor || step.role || 'agent').toLowerCase();
+          const replica = String(step.replica || step.text || step.content || '');
+          const phase = String(step.phase || step.step_title || 'Dialogue');
+          return {
+            role: actor === 'lead' ? 'lead' : 'agent',
+            text: replica,
+            phase: phase,
+            compliance_tags: step.compliance_tags || [],
+            ai_scoring_signals: step.ai_scoring_signals || null,
+            conditional_branches: step.conditional_branches || []
+          };
+        }).filter((row) => row.text);
+      }
+    }
+
+    // Fallback to line-by-line parsing if not JSON or if JSON has no steps
+    if (dialogueRows.length === 0) {
+      const rawLines = String(scriptContent || '')
+        .split(/\r?\n/)
+        .map((l) => l.trim())
+        .filter(Boolean);
+
+      dialogueRows = rawLines.map((line) => {
+        const normalized = line.replace(/^\[[^\]]+\]\s*/, '').trim();
+        const m = normalized.match(/^(Agent|Lead|Candidate|Client)\s*:\s*(.+)$/i);
+        if (m) {
+          const actor = String(m[1] || '').toLowerCase();
+          return {
+            role: actor === 'agent' ? 'agent' : 'lead',
+            text: String(m[2] || '').trim(),
+            phase: 'Dialogue'
+          };
+        }
         return {
-          role: actor === 'agent' ? 'agent' : 'lead',
-          text: String(m[2] || '').trim(),
+          role: 'agent',
+          text: String(normalized || '').trim(),
           phase: 'Dialogue'
         };
-      }
-      return {
-        role: 'agent',
-        text: String(normalized || '').trim(),
-        phase: 'Dialogue'
-      };
-    }).filter((row) => row.text);
+      }).filter((row) => row.text);
+    }
 
     // Apply "Bonjour [Nom du prospect]" guardrail on first agent line
     const firstAgentIdx = dialogueRows.findIndex((row) => row.role === 'agent');
