@@ -928,6 +928,34 @@ const createScript = async (req, res) => {
       return res.status(400).json({ error: 'script array must contain at least one dialogue line' });
     }
 
+    // Sanitize the playbook before persisting. Iframes are user-provided
+    // URLs so we enforce: HTTPS only, capped length, max 20 entries — and
+    // we drop any row missing a usable URL.
+    let safePlaybook = playbook && typeof playbook === 'object' ? { ...playbook } : undefined;
+    if (safePlaybook) {
+      const rawIframes = Array.isArray(safePlaybook.iframes) ? safePlaybook.iframes : [];
+      const sanitizedIframes = [];
+      for (const entry of rawIframes) {
+        if (sanitizedIframes.length >= 20) break;
+        if (!entry || typeof entry !== 'object') continue;
+        const rawUrl = String(entry.url || '').trim();
+        if (!rawUrl) continue;
+        let parsed;
+        try {
+          parsed = new URL(rawUrl);
+        } catch {
+          continue;
+        }
+        if (parsed.protocol !== 'https:') continue;
+        sanitizedIframes.push({
+          id: String(entry.id || `if-${Date.now()}-${sanitizedIframes.length}`).slice(0, 64),
+          label: String(entry.label || '').trim().slice(0, 120),
+          url: parsed.toString().slice(0, 2000)
+        });
+      }
+      safePlaybook.iframes = sanitizedIframes;
+    }
+
     // One script per gig: validate action updates existing or creates once.
     const created = await Script.findOneAndUpdate(
       { gigId },
@@ -937,7 +965,7 @@ const createScript = async (req, res) => {
         language,
         details: String(details || '').trim(),
         script: safeScript,
-        playbook: playbook && typeof playbook === 'object' ? playbook : undefined,
+        playbook: safePlaybook,
         isActive: typeof isActive === 'boolean' ? isActive : true,
       },
       {

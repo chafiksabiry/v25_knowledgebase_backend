@@ -54,6 +54,22 @@ const StageSchema = new mongoose.Schema({
   checklist: [{ type: String }]
 }, { _id: false });
 
+/**
+ * Iframe embedded alongside the script (CRM, calculator, payment form,
+ * knowledge base view, etc.). Reps see these inside the cockpit during
+ * the call so they can act on the prospect without leaving the script.
+ *
+ * - `id` lets the front re-render the same iframe on save/reload.
+ * - `label` is what reps see as the tab/title.
+ * - `url` MUST be HTTPS; non-HTTPS URLs are stripped by the controller
+ *   before save (mixed content is blocked by browsers anyway).
+ */
+const ScriptIframeSchema = new mongoose.Schema({
+  id: { type: String, required: true },
+  label: { type: String, default: '', maxlength: 120 },
+  url: { type: String, required: true, maxlength: 2000 }
+}, { _id: false });
+
 const ScriptSchema = new mongoose.Schema({
   gigId: { type: mongoose.Schema.Types.ObjectId, ref: 'Gig', required: true },
   targetClient: { type: String, required: true }, // Profile
@@ -66,7 +82,8 @@ const ScriptSchema = new mongoose.Schema({
     turns: [TurnSchema],
     title: { type: String },
     format: { type: String },
-    stages: [StageSchema]
+    stages: [StageSchema],
+    iframes: [ScriptIframeSchema]
   },
   isActive: { type: Boolean, default: true }, // New field for script activation status
   createdAt: { type: Date, default: Date.now }
