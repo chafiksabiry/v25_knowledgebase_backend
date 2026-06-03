@@ -106,6 +106,9 @@ const getCallRecordings = async (req, res) => {
     }
 
     const company = await Company.findOne({ userId });
+    if (!company) {
+      return res.status(404).json({ error: 'Company not found for this user' });
+    }
     const { gigId } = req.query;
     
     const query = { companyId: company._id };
@@ -122,12 +125,13 @@ const getCallRecordings = async (req, res) => {
       date: recording.date,
       duration: recording.duration,
       recordingUrl: recording.recordingUrl,
-      summary: recording.summary,
+      summary: recording.analysis?.summary || recording.summary || '',
       sentiment: recording.sentiment,
       tags: recording.tags,
       aiInsights: recording.aiInsights,
       repId: recording.repId,
       companyId: recording.companyId,
+      gigId: recording.gigId,
       fileType: recording.fileType
     }));
 
