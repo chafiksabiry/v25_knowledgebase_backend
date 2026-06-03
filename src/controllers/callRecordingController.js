@@ -24,8 +24,8 @@ const uploadCallRecording = async (req, res) => {
       return res.status(404).json({ error: 'Company not found' });
     }
 
-    // Upload to Cloudinary
-    const { url: recordingUrl, public_id: cloudinaryPublicId } = await uploadToCloudinary(filePath, 'call-recordings');
+    // Upload to Cloudinary ('video' resource_type supports audio streaming)
+    const { url: recordingUrl, public_id: cloudinaryPublicId } = await uploadToCloudinary(filePath, 'call-recordings', 'video');
 
     // Create call recording record
     const callRecording = new CallRecording({
@@ -125,7 +125,7 @@ const getCallRecordings = async (req, res) => {
       date: recording.date,
       duration: recording.duration,
       recordingUrl: recording.recordingUrl,
-      summary: recording.analysis?.summary || recording.summary || '',
+      summary: typeof recording.summary === 'string' ? recording.summary : '',
       sentiment: recording.sentiment,
       tags: recording.tags,
       aiInsights: recording.aiInsights,
