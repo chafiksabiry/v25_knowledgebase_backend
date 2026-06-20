@@ -28,7 +28,7 @@ app.use(cors({
   origin: [
     process.env.FRONTEND_URL,
     process.env.QIANKUN_FRONT_URL,
-    'https://harx25pageslinks.netlify.app', // Netlify orchestrator frontend
+    'https://harx.ai', // Netlify orchestrator frontend
     'http://localhost:5173',
     'http://localhost:5174'
   ],
