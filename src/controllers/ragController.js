@@ -6,6 +6,15 @@ const Script = require('../models/Script');
 const Company = require('../models/Company');
 const axios = require('axios');
 
+/** Only one script may be active per gig — deactivate siblings when activating one. */
+const deactivateOtherScriptsForGig = async (gigId, exceptScriptId) => {
+  if (!gigId) return;
+  await Script.updateMany(
+    { gigId, _id: { $ne: exceptScriptId } },
+    { $set: { isActive: false } }
+  );
+};
+
 /**
  * Helper function to call Anthropic Claude as a fallback
  * @param {string} prompt - The prompt to send to Claude
@@ -956,25 +965,21 @@ const createScript = async (req, res) => {
       safePlaybook.iframes = sanitizedIframes;
     }
 
-    // One script per gig: validate action updates existing or creates once.
-    const created = await Script.findOneAndUpdate(
-      { gigId },
-      {
-        gigId,
-        targetClient,
-        language,
-        details: String(details || '').trim(),
-        script: safeScript,
-        playbook: safePlaybook,
-        isActive: typeof isActive === 'boolean' ? isActive : true,
-      },
-      {
-        new: true,
-        upsert: true,
-        runValidators: true,
-        setDefaultsOnInsert: true,
-      }
-    );
+    // Multiple scripts per gig; only one may be active at a time.
+    const shouldBeActive = isActive === true;
+    if (shouldBeActive) {
+      await deactivateOtherScriptsForGig(gigId, null);
+    }
+
+    const created = await Script.create({
+      gigId,
+      targetClient,
+      language,
+      details: String(details || '').trim(),
+      script: safeScript,
+      playbook: safePlaybook,
+      isActive: shouldBeActive,
+    });
 
     return res.status(201).json({
       success: true,
@@ -1005,6 +1010,15 @@ const updateScriptStatus = async (req, res) => {
     }
     if (typeof isActive !== 'boolean') {
       return res.status(400).json({ error: 'isActive boolean is required' });
+    }
+
+    const script = await Script.findById(scriptId);
+    if (!script) {
+      return res.status(404).json({ error: 'Script not found' });
+    }
+
+    if (isActive) {
+      await deactivateOtherScriptsForGig(script.gigId, script._id);
     }
 
     const updated = await Script.findByIdAndUpdate(

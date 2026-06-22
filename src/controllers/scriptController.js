@@ -3,6 +3,15 @@ const { logger } = require('../utils/logger');
 const axios = require('axios');
 const { vertexAIService } = require('../config/vertexAIConfig');
 
+/** Only one script may be active per gig — deactivate siblings when activating one. */
+const deactivateOtherScriptsForGig = async (gigId, exceptScriptId) => {
+  if (!gigId) return;
+  await Script.updateMany(
+    { gigId, _id: { $ne: exceptScriptId } },
+    { $set: { isActive: false } }
+  );
+};
+
 /**
  * Get all scripts for a given gigId
  * @param {Object} req - Express request object with gigId in params
@@ -11,10 +20,19 @@ const { vertexAIService } = require('../config/vertexAIConfig');
 const getScriptsForGig = async (req, res) => {
   try {
     const { gigId } = req.params;
+    const { active, status } = req.query;
     if (!gigId) {
       return res.status(400).json({ error: 'gigId is required' });
     }
-    const scripts = await Script.find({ gigId }).sort({ createdAt: -1 });
+
+    const query = { gigId };
+    const wantsActiveOnly =
+      String(active).toLowerCase() === 'true' || status === 'active';
+    if (wantsActiveOnly) {
+      query.isActive = true;
+    }
+
+    const scripts = await Script.find(query).sort({ createdAt: -1 });
     res.status(200).json({ success: true, data: scripts });
   } catch (error) {
     logger.error('Error fetching scripts for gig:', error);
@@ -84,6 +102,10 @@ const updateScriptStatus = async (req, res) => {
     const script = await Script.findById(scriptId);
     if (!script) {
       return res.status(404).json({ error: 'Script not found' });
+    }
+
+    if (isActive) {
+      await deactivateOtherScriptsForGig(script.gigId, script._id);
     }
 
     script.isActive = isActive;
