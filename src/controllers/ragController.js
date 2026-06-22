@@ -15,6 +15,61 @@ const deactivateOtherScriptsForGig = async (gigId, exceptScriptId) => {
   );
 };
 
+/** Normalize and validate script body fields shared by create/update. */
+const sanitizeScriptBody = ({ targetClient, language, details, script, playbook }) => {
+  if (!targetClient || !language) {
+    return { error: 'targetClient and language are required' };
+  }
+
+  const scriptArray = Array.isArray(script) ? script : [];
+  const safeScript = scriptArray
+    .map((row) => ({
+      phase: String(row?.phase || 'Dialogue').trim() || 'Dialogue',
+      actor: String(row?.actor || 'agent').toLowerCase() === 'lead' ? 'lead' : 'agent',
+      replica: String(row?.replica || '').trim(),
+    }))
+    .filter((row) => row.replica);
+
+  if (safeScript.length === 0) {
+    return { error: 'script array must contain at least one dialogue line' };
+  }
+
+  let safePlaybook = playbook && typeof playbook === 'object' ? { ...playbook } : undefined;
+  if (safePlaybook) {
+    const rawIframes = Array.isArray(safePlaybook.iframes) ? safePlaybook.iframes : [];
+    const sanitizedIframes = [];
+    for (const entry of rawIframes) {
+      if (sanitizedIframes.length >= 20) break;
+      if (!entry || typeof entry !== 'object') continue;
+      const rawUrl = String(entry.url || '').trim();
+      if (!rawUrl) continue;
+      let parsed;
+      try {
+        parsed = new URL(rawUrl);
+      } catch {
+        continue;
+      }
+      if (parsed.protocol !== 'https:') continue;
+      sanitizedIframes.push({
+        id: String(entry.id || `if-${Date.now()}-${sanitizedIframes.length}`).slice(0, 64),
+        label: String(entry.label || '').trim().slice(0, 120),
+        url: parsed.toString().slice(0, 2000),
+      });
+    }
+    safePlaybook.iframes = sanitizedIframes;
+  }
+
+  return {
+    data: {
+      targetClient,
+      language,
+      details: String(details || '').trim(),
+      script: safeScript,
+      playbook: safePlaybook,
+    },
+  };
+};
+
 /**
  * Helper function to call Anthropic Claude as a fallback
  * @param {string} prompt - The prompt to send to Claude
@@ -920,52 +975,10 @@ const createScript = async (req, res) => {
   try {
     const { gigId, targetClient, language, details, script, playbook, isActive } = req.body || {};
     if (!gigId) return res.status(400).json({ error: 'gigId is required' });
-    if (!targetClient || !language) {
-      return res.status(400).json({ error: 'targetClient and language are required' });
-    }
 
-    const scriptArray = Array.isArray(script) ? script : [];
-    const safeScript = scriptArray
-      .map((row) => ({
-        phase: String(row?.phase || 'Dialogue').trim() || 'Dialogue',
-        actor: String(row?.actor || 'agent').toLowerCase() === 'lead' ? 'lead' : 'agent',
-        replica: String(row?.replica || '').trim(),
-      }))
-      .filter((row) => row.replica);
+    const sanitized = sanitizeScriptBody({ targetClient, language, details, script, playbook });
+    if (sanitized.error) return res.status(400).json({ error: sanitized.error });
 
-    if (safeScript.length === 0) {
-      return res.status(400).json({ error: 'script array must contain at least one dialogue line' });
-    }
-
-    // Sanitize the playbook before persisting. Iframes are user-provided
-    // URLs so we enforce: HTTPS only, capped length, max 20 entries — and
-    // we drop any row missing a usable URL.
-    let safePlaybook = playbook && typeof playbook === 'object' ? { ...playbook } : undefined;
-    if (safePlaybook) {
-      const rawIframes = Array.isArray(safePlaybook.iframes) ? safePlaybook.iframes : [];
-      const sanitizedIframes = [];
-      for (const entry of rawIframes) {
-        if (sanitizedIframes.length >= 20) break;
-        if (!entry || typeof entry !== 'object') continue;
-        const rawUrl = String(entry.url || '').trim();
-        if (!rawUrl) continue;
-        let parsed;
-        try {
-          parsed = new URL(rawUrl);
-        } catch {
-          continue;
-        }
-        if (parsed.protocol !== 'https:') continue;
-        sanitizedIframes.push({
-          id: String(entry.id || `if-${Date.now()}-${sanitizedIframes.length}`).slice(0, 64),
-          label: String(entry.label || '').trim().slice(0, 120),
-          url: parsed.toString().slice(0, 2000)
-        });
-      }
-      safePlaybook.iframes = sanitizedIframes;
-    }
-
-    // Multiple scripts per gig; only one may be active at a time.
     const shouldBeActive = isActive === true;
     if (shouldBeActive) {
       await deactivateOtherScriptsForGig(gigId, null);
@@ -973,11 +986,7 @@ const createScript = async (req, res) => {
 
     const created = await Script.create({
       gigId,
-      targetClient,
-      language,
-      details: String(details || '').trim(),
-      script: safeScript,
-      playbook: safePlaybook,
+      ...sanitized.data,
       isActive: shouldBeActive,
     });
 
@@ -993,6 +1002,63 @@ const createScript = async (req, res) => {
   } catch (error) {
     logger.error('Error creating script:', error);
     return res.status(500).json({ error: 'Failed to create script', details: error.message });
+  }
+};
+
+/**
+ * Update an existing script (same gig — no duplicate on re-save)
+ * @param {Object} req
+ * @param {Object} res
+ */
+const updateScript = async (req, res) => {
+  try {
+    const { scriptId } = req.params;
+    const { gigId, targetClient, language, details, script, playbook, isActive } = req.body || {};
+    if (!scriptId) return res.status(400).json({ error: 'scriptId is required' });
+
+    const existing = await Script.findById(scriptId);
+    if (!existing) return res.status(404).json({ error: 'Script not found' });
+
+    if (gigId && String(existing.gigId) !== String(gigId)) {
+      return res.status(400).json({ error: 'Script does not belong to this gig' });
+    }
+
+    const sanitized = sanitizeScriptBody({
+      targetClient: targetClient ?? existing.targetClient,
+      language: language ?? existing.language,
+      details: details ?? existing.details,
+      script: script ?? existing.script,
+      playbook: playbook ?? existing.playbook,
+    });
+    if (sanitized.error) return res.status(400).json({ error: sanitized.error });
+
+    const shouldBeActive = typeof isActive === 'boolean' ? isActive : existing.isActive;
+    if (shouldBeActive) {
+      await deactivateOtherScriptsForGig(existing.gigId, existing._id);
+    }
+
+    existing.targetClient = sanitized.data.targetClient;
+    existing.language = sanitized.data.language;
+    existing.details = sanitized.data.details;
+    existing.script = sanitized.data.script;
+    if (sanitized.data.playbook !== undefined) {
+      existing.playbook = sanitized.data.playbook;
+    }
+    existing.isActive = shouldBeActive;
+    await existing.save();
+
+    return res.status(200).json({
+      success: true,
+      data: {
+        _id: existing._id,
+        gigId: existing.gigId,
+        isActive: existing.isActive,
+        createdAt: existing.createdAt,
+      },
+    });
+  } catch (error) {
+    logger.error('Error updating script:', error);
+    return res.status(500).json({ error: 'Failed to update script', details: error.message });
   }
 };
 
@@ -1176,6 +1242,7 @@ module.exports = {
   analyzeDocument,
   generateScript,
   createScript,
+  updateScript,
   listScripts,
   updateScriptStatus,
   deleteScript,
