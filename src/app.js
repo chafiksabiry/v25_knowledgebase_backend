@@ -14,9 +14,33 @@ const callRecordingRoutes = require('./routes/callRecordingRoutes');
 const app = express();
 
 // Middleware
+const knowledgeAllowedOrigins = [
+  process.env.CORS_ORIGIN,
+  'http://localhost:5173',
+  'http://127.0.0.1:5173',
+  'http://localhost:5174',
+  'http://localhost:8100',
+  'http://localhost:3000',
+  'capacitor://localhost',
+  'ionic://localhost',
+  'https://harx.ai',
+].filter(Boolean);
+
 app.use(cors({
-  origin: process.env.CORS_ORIGIN,
-  credentials: true
+  origin(origin, callback) {
+    if (!origin) return callback(null, true);
+    if (
+      knowledgeAllowedOrigins.includes(origin) ||
+      /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin) ||
+      origin.endsWith('.netlify.app') ||
+      origin.endsWith('.harx.ai')
+    ) {
+      return callback(null, true);
+    }
+    console.log('CORS blocked origin:', origin);
+    return callback(new Error('Not allowed by CORS'));
+  },
+  credentials: true,
 }));
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
