@@ -521,7 +521,21 @@ const analyzeDocument = async (req, res) => {
  */
 const generateScript = async (req, res) => {
   try {
-    const { companyId, gig, typeClient, langueTon, contexte, currentScript, currentPlaybook, chatHistory, trainings, isInteractiveRequest } = req.body;
+    const {
+      companyId,
+      gig,
+      typeClient,
+      langueTon,
+      contexte,
+      currentScript,
+      currentPlaybook,
+      chatHistory,
+      trainings,
+      isInteractiveRequest,
+      editMode,
+      targetStageIndex,
+      currentStages,
+    } = req.body;
     // Validation checks
     if (!gig || !gig._id) {
       return res.status(400).json({ error: 'A gig selection is required to generate a script.' });
@@ -566,8 +580,66 @@ const generateScript = async (req, res) => {
         .join('\n')
       : '';
 
+    const hasCurrentStages = Array.isArray(currentStages) && currentStages.length > 0;
+    const safeTargetIdx = Number.isInteger(Number(targetStageIndex))
+      ? Math.min(Math.max(0, Number(targetStageIndex)), Math.max(0, (currentStages?.length || 1) - 1))
+      : 0;
+    const isTargetedInteractiveEdit =
+      !!isInteractiveRequest &&
+      (editMode === 'targeted' || editMode === 'refine') &&
+      hasCurrentStages;
+
     let prompt;
-    if (isInteractiveRequest) {
+    if (isTargetedInteractiveEdit) {
+      const targetStage = currentStages[safeTargetIdx] || {};
+      prompt = `You are a world-class conversational sales engineer editing an EXISTING interactive call script.
+
+CRITICAL MISSION — SURGICAL EDIT ONLY:
+- Apply the user request ONLY to stage index ${safeTargetIdx} (stepNumber ${targetStage.stepNumber || safeTargetIdx + 1}, id "${targetStage.id || `step_${safeTargetIdx + 1}`}").
+- Do NOT rewrite, rephrase, or regenerate any other stage.
+- Preserve all unrelated content of the target stage unless the user explicitly asks to change it.
+- Keep the same schema fields and French language.
+
+SALES MISSION:
+- Title: ${gig.title || ''}
+- Description: ${gig.description || ''}
+- Category/Industry: ${gig.category || gig.industry || ''}
+
+RELATED TRAINING MODULES:
+${JSON.stringify(cleanedTrainings)}
+
+USER EDIT REQUEST (apply only to the target stage):
+${contexte || 'Improve clarity of the current stage without changing intent.'}
+
+CURRENT TARGET STAGE (edit this object):
+${JSON.stringify(targetStage, null, 2)}
+
+FULL CURRENT SCRIPT (context only — other stages must stay identical):
+${JSON.stringify(currentStages)}
+
+OUTPUT FORMAT:
+Return ONLY a raw parseable JSON object with NO markdown fences, in ONE of these shapes:
+1) { "patchedStage": { ...single updated stage object... } }
+2) { "stages": [ ...exactly the same length as CURRENT SCRIPT, with ONLY index ${safeTargetIdx} changed... ] }
+
+STAGE OBJECT SCHEMA (same as existing):
+{
+  "id": "step_N",
+  "stepNumber": N,
+  "label": "...",
+  "type": "regulatory|collection|discovery|presentation|objection|compliance|closing|followup",
+  "typeLabel": "...",
+  "introTitle": "...",
+  "introReplica": "...",
+  "reminders": [{ "type": "warning|clock|info", "text": "..." }],
+  "optionsTitle": "...",
+  "options": [{ "id": "...", "label": "...", "subtext": "...", "recommendedResponse": "..." }],
+  "checklistTitle": "...",
+  "checklist": ["..."]
+}
+
+Return ONLY valid raw JSON.`;
+    } else if (isInteractiveRequest) {
       prompt = `You are a world-class conversational sales engineer. Your task is to generate a highly detailed, 8-stage interactive call script in JSON format.
 This script MUST be tailored to the following sales mission and its related training modules:
 
@@ -739,12 +811,14 @@ Return ONLY the generated dialogue script.` : `You are generating a linear sales
     // Interactive structured response parsing
     if (isInteractiveRequest) {
       let parsedStages = null;
+      let patchedStage = null;
       try {
         const clean = String(scriptContent || '')
           .replace(/^```(?:json)?\s*|\s*```$/gi, '')
           .trim();
         const parsed = JSON.parse(clean);
-        parsedStages = parsed.stages || parsed;
+        patchedStage = parsed.patchedStage || null;
+        parsedStages = parsed.stages || (Array.isArray(parsed) ? parsed : null);
       } catch (err) {
         console.warn('[BACKEND PARSER] String looked like JSON but parsing failed, trying simple extraction.', err);
         // Regexp JSON extraction fallback
@@ -752,10 +826,38 @@ Return ONLY the generated dialogue script.` : `You are generating a linear sales
         if (jsonMatch) {
           try {
             const parsed = JSON.parse(jsonMatch[0]);
-            parsedStages = parsed.stages || parsed;
+            patchedStage = parsed.patchedStage || null;
+            parsedStages = parsed.stages || (Array.isArray(parsed) ? parsed : null);
           } catch (e) {
             console.error('[BACKEND PARSER] Regex JSON parse failed too.', e);
           }
+        }
+      }
+
+      // Targeted refine: keep every stage identical except the requested one.
+      if (isTargetedInteractiveEdit && Array.isArray(currentStages) && currentStages.length > 0) {
+        const merged = currentStages.map((stage) => (stage ? { ...stage } : stage));
+        let nextStage = null;
+        if (patchedStage && typeof patchedStage === 'object') {
+          nextStage = patchedStage;
+        } else if (Array.isArray(parsedStages) && parsedStages[safeTargetIdx]) {
+          nextStage = parsedStages[safeTargetIdx];
+        }
+
+        if (nextStage && typeof nextStage === 'object') {
+          const base = currentStages[safeTargetIdx] || {};
+          merged[safeTargetIdx] = {
+            ...base,
+            ...nextStage,
+            id: base.id || nextStage.id,
+            stepNumber: base.stepNumber || nextStage.stepNumber || safeTargetIdx + 1,
+          };
+          parsedStages = merged;
+          console.log(`\n✅ TARGETED INTERACTIVE EDIT applied to stage index ${safeTargetIdx}\n`);
+        } else {
+          return res.status(502).json({
+            error: 'Targeted script edit failed: model did not return a valid patched stage.',
+          });
         }
       }
 
@@ -794,7 +896,10 @@ Return ONLY the generated dialogue script.` : `You are generating a linear sales
           metadata: {
             processedAt: new Date().toISOString(),
             model: process.env.VERTEX_AI_MODEL || 'vertex-ai',
-            sourceMode: 'interactive_script_gpt'
+            sourceMode: isTargetedInteractiveEdit
+              ? 'interactive_script_targeted_edit'
+              : 'interactive_script_gpt',
+            targetStageIndex: isTargetedInteractiveEdit ? safeTargetIdx : undefined,
           }
         });
       }
