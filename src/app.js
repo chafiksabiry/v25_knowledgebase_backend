@@ -16,6 +16,8 @@ const app = express();
 // Middleware
 const knowledgeAllowedOrigins = [
   process.env.CORS_ORIGIN,
+  process.env.FRONTEND_URL,
+  process.env.QIANKUN_FRONT_URL,
   'http://localhost:5173',
   'http://127.0.0.1:5173',
   'http://localhost:5174',
@@ -24,6 +26,8 @@ const knowledgeAllowedOrigins = [
   'capacitor://localhost',
   'ionic://localhost',
   'https://harx.ai',
+  'https://harx26harxconnection-dev.netlify.app',
+  'https://harx26harxconnection.netlify.app',
 ].filter(Boolean);
 
 app.use(cors({
