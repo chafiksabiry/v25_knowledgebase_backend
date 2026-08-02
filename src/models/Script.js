@@ -1,0 +1,92 @@
+const mongoose = require('mongoose');
+
+const ScriptPhaseSchema = new mongoose.Schema({
+  phase: { type: String, required: true },
+  actor: { type: String, required: true }, // 'agent' or 'lead'
+  replica: { type: String, required: true }
+}, { _id: false });
+
+const DialogueRowSchema = new mongoose.Schema({
+  role: { type: String, enum: ['agent', 'lead'], required: true },
+  text: { type: String, required: true }
+}, { _id: false });
+
+const LeadGuidanceSchema = new mongoose.Schema({
+  leadLine: { type: String, required: true },
+  suggestedAgentReplies: [{ type: String }]
+}, { _id: false });
+
+const TurnOptionSchema = new mongoose.Schema({
+  leadReply: { type: String, required: true },
+  agentReply: { type: String, required: true },
+  nextTurnId: { type: String, default: null }
+}, { _id: false });
+
+const TurnSchema = new mongoose.Schema({
+  id: { type: String, required: true },
+  agentLine: { type: String, required: true },
+  leadOptions: [TurnOptionSchema]
+}, { _id: false });
+
+// Support for Interactive Cockpit stages schema
+const StageResponseSchema = new mongoose.Schema({
+  text: { type: String, required: true },
+  nextStageId: { type: String, required: true }
+}, { _id: false });
+
+const StageSchema = new mongoose.Schema({
+  id: { type: String, required: true },
+  label: { type: String, required: true },
+  agent: { type: String }, // Made optional for backwards compatibility
+  responses: [StageResponseSchema],
+  compliance: { type: String },
+
+  // Premium interactive cockpit fields
+  stepNumber: { type: Number },
+  type: { type: String },
+  typeLabel: { type: String },
+  introTitle: { type: String },
+  introReplica: { type: String },
+  reminders: [mongoose.Schema.Types.Mixed],
+  optionsTitle: { type: String },
+  options: [mongoose.Schema.Types.Mixed],
+  checklistTitle: { type: String },
+  checklist: [{ type: String }]
+}, { _id: false });
+
+/**
+ * Iframe embedded alongside the script (CRM, calculator, payment form,
+ * knowledge base view, etc.). Reps see these inside the cockpit during
+ * the call so they can act on the prospect without leaving the script.
+ *
+ * - `id` lets the front re-render the same iframe on save/reload.
+ * - `label` is what reps see as the tab/title.
+ * - `url` MUST be HTTPS; non-HTTPS URLs are stripped by the controller
+ *   before save (mixed content is blocked by browsers anyway).
+ */
+const ScriptIframeSchema = new mongoose.Schema({
+  id: { type: String, required: true },
+  label: { type: String, default: '', maxlength: 120 },
+  url: { type: String, required: true, maxlength: 2000 }
+}, { _id: false });
+
+const ScriptSchema = new mongoose.Schema({
+  gigId: { type: mongoose.Schema.Types.ObjectId, ref: 'Gig', required: true },
+  targetClient: { type: String, required: true }, // Profile
+  language: { type: String, required: true },
+  details: { type: String }, // context
+  script: [ScriptPhaseSchema],
+  playbook: {
+    dialogue: [DialogueRowSchema],
+    leadGuidance: [LeadGuidanceSchema],
+    turns: [TurnSchema],
+    title: { type: String },
+    format: { type: String },
+    stages: [StageSchema],
+    iframes: [ScriptIframeSchema]
+  },
+  isActive: { type: Boolean, default: false },
+  createdAt: { type: Date, default: Date.now }
+});
+
+module.exports = mongoose.model('Script', ScriptSchema); 

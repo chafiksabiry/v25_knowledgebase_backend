@@ -18,6 +18,11 @@ const DocumentSchema = new Schema(
       ref: 'Company',
       required: true
     },
+    gigId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Gig',
+      required: false
+    },
     isProcessed: { type: Boolean, default: false },
     processingStatus: { 
       type: String, 
@@ -38,20 +43,15 @@ const DocumentSchema = new Schema(
       author: { type: String }
     },
     analysis: {
-      summary: { type: String },
-      keyTopics: [{ type: String }],
-      sentimentScore: { type: Number },
-      readabilityScore: { type: Number },
-      gaps: [{
-        description: { type: String, required: true },
-        severity: { 
-          type: String, 
-          enum: ['high', 'medium', 'low'],
-          required: true 
-        }
-      }],
-      recommendations: [{ type: String }],
-      lastAnalyzedAt: { type: Date }
+      summary: String,
+      domain: String,
+      theme: String,
+      mainPoints: [String],
+      technicalLevel: String,
+      targetAudience: String,
+      keyTerms: [String],
+      recommendations: [String],
+      analyzedAt: Date
     }
   },
   { timestamps: true }

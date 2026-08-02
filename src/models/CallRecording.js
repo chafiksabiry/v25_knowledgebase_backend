@@ -24,8 +24,72 @@ const callRecordingSchema = new mongoose.Schema({
   transcriptUrl: {
     type: String
   },
-  summary: {
+  fileType: {
     type: String
+  },
+
+  analysis: {
+    status: {
+      type: String,
+      enum: ['pending', 'processing', 'completed', 'failed'],
+      default: 'pending'
+    },
+    summary: {
+      type: Object,
+      default: {
+        keyIdeas: [],
+        lastUpdated: null
+      }
+    },
+    transcription: {
+      status: {
+        type: String,
+        enum: ['pending', 'processing', 'completed', 'failed'],
+        default: 'pending'
+      },
+      segments: [
+        {
+          start: { type: String, required: true }, // mm:ss.SSS
+          end: { type: String, required: true },   // mm:ss.SSS
+          speaker: { type: String },
+          text: { type: String, required: true }
+        }
+      ],
+      fullTranscript: { type: String, default: '' },
+      lastUpdated: { type: Date },
+      error: { type: String, default: null }
+    },
+    error: String,
+    scoring: {
+      status: {
+        type: String,
+        enum: ['pending', 'processing', 'completed', 'failed'],
+        default: 'pending'
+      },
+      result: {
+        type: new mongoose.Schema({
+          'Agent fluency': {
+            score: { type: Number },
+            feedback: { type: String }
+          },
+          'Sentiment analysis': {
+            score: { type: Number },
+            feedback: { type: String }
+          },
+          'Fraud detection': {
+            score: { type: Number },
+            feedback: { type: String }
+          },
+          'overall': {
+            score: { type: Number },
+            feedback: { type: String }
+          }
+        }, { _id: false }),
+        default: null
+      },
+      lastUpdated: { type: Date },
+      error: { type: String, default: null }
+    }
   },
   sentiment: {
     type: String,
@@ -46,6 +110,11 @@ const callRecordingSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Company',
     required: true
+  },
+  gigId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Gig',
+    required: false
   },
   processingOptions: {
     transcription: {

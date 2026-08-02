@@ -1,6 +1,116 @@
 const { vertexAIService } = require('../config/vertexAIConfig');
 const Document = require('../models/Document');
 const { logger } = require('../utils/logger');
+const { generateDocumentAnalysisPrompt } = require('../prompts/documentAnalysisPrompt');
+const Script = require('../models/Script');
+const Company = require('../models/Company');
+const axios = require('axios');
+
+/** Only one script may be active per gig — deactivate siblings when activating one. */
+const deactivateOtherScriptsForGig = async (gigId, exceptScriptId) => {
+  if (!gigId) return;
+  await Script.updateMany(
+    { gigId, _id: { $ne: exceptScriptId } },
+    { $set: { isActive: false } }
+  );
+};
+
+/** Normalize and validate script body fields shared by create/update. */
+const sanitizeScriptBody = ({ targetClient, language, details, script, playbook }) => {
+  if (!targetClient || !language) {
+    return { error: 'targetClient and language are required' };
+  }
+
+  const scriptArray = Array.isArray(script) ? script : [];
+  const safeScript = scriptArray
+    .map((row) => ({
+      phase: String(row?.phase || 'Dialogue').trim() || 'Dialogue',
+      actor: String(row?.actor || 'agent').toLowerCase() === 'lead' ? 'lead' : 'agent',
+      replica: String(row?.replica || '').trim(),
+    }))
+    .filter((row) => row.replica);
+
+  if (safeScript.length === 0) {
+    return { error: 'script array must contain at least one dialogue line' };
+  }
+
+  let safePlaybook = playbook && typeof playbook === 'object' ? { ...playbook } : undefined;
+  if (safePlaybook) {
+    const rawIframes = Array.isArray(safePlaybook.iframes) ? safePlaybook.iframes : [];
+    const sanitizedIframes = [];
+    for (const entry of rawIframes) {
+      if (sanitizedIframes.length >= 20) break;
+      if (!entry || typeof entry !== 'object') continue;
+      const rawUrl = String(entry.url || '').trim();
+      if (!rawUrl) continue;
+      let parsed;
+      try {
+        parsed = new URL(rawUrl);
+      } catch {
+        continue;
+      }
+      if (parsed.protocol !== 'https:') continue;
+      sanitizedIframes.push({
+        id: String(entry.id || `if-${Date.now()}-${sanitizedIframes.length}`).slice(0, 64),
+        label: String(entry.label || '').trim().slice(0, 120),
+        url: parsed.toString().slice(0, 2000),
+      });
+    }
+    safePlaybook.iframes = sanitizedIframes;
+  }
+
+  return {
+    data: {
+      targetClient,
+      language,
+      details: String(details || '').trim(),
+      script: safeScript,
+      playbook: safePlaybook,
+    },
+  };
+};
+
+/**
+ * Helper function to call Anthropic Claude as a fallback
+ * @param {string} prompt - The prompt to send to Claude
+ * @returns {Promise<string>} - The generated script content
+ */
+const callAnthropicFallback = async (prompt) => {
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+  if (!apiKey) {
+    logger.warn('ANTHROPIC_API_KEY not found in environment, fallback skipped.');
+    throw new Error('Vertex AI quota exhausted (429) and no Anthropic key available.');
+  }
+
+  logger.info('🔄 Attempting fallback generation with Claude...');
+  try {
+    const response = await axios.post(
+      'https://api.anthropic.com/v1/messages',
+      {
+        model: process.env.ANTHROPIC_MODEL || 'claude-3-5-sonnet-20241022',
+        max_tokens: 4096,
+        messages: [{ role: 'user', content: prompt }],
+      },
+      {
+        headers: {
+          'x-api-key': apiKey,
+          'anthropic-version': '2023-06-01',
+          'content-type': 'application/json',
+        },
+      }
+    );
+
+    if (response.data && response.data.content && response.data.content[0]) {
+      logger.info('✅ Generation successful with Claude fallback');
+      return response.data.content[0].text;
+    }
+    throw new Error('Unexpected response format from Anthropic');
+  } catch (error) {
+    const errorDetail = error.response?.data ? JSON.stringify(error.response.data) : error.message;
+    logger.error(`❌ Anthropic fallback failed: ${errorDetail}`);
+    throw new Error(`Anthropic fallback failed: ${error.message}`);
+  }
+};
 
 /**
  * Initialize a RAG corpus for a company
@@ -16,7 +126,7 @@ const initializeCompanyCorpus = async (req, res) => {
     }
 
     logger.info(`Initializing Vertex AI for company ${companyId}`);
-    
+
     // Initialize Vertex AI if not already initialized
     if (!vertexAIService.vertexAI) {
       await vertexAIService.initialize();
@@ -48,10 +158,10 @@ const initializeCompanyCorpus = async (req, res) => {
     logger.error('Error initializing RAG corpus:', {
       error: error.message,
       stack: error.stack,
-      details: error.response?.data || error
+      details: error.response?.data || error.message
     });
-    
-    res.status(500).json({ 
+
+    res.status(500).json({
       error: 'Failed to initialize RAG corpus',
       details: error.message,
       stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
@@ -109,28 +219,1137 @@ const queryKnowledgeBase = async (req, res) => {
 
     // Initialize Vertex AI if not already initialized
     if (!vertexAIService.vertexAI) {
-      vertexAIService.initialize();
+      await vertexAIService.initialize();
     }
+
+    // **NOUVEAU : Récupérer le statut du corpus**
+    const corpusStatus = await vertexAIService.checkCorpusStatus(companyId);
 
     // Query the knowledge base
     const response = await vertexAIService.queryKnowledgeBase(companyId, query);
 
+    // **MODIFIÉ : Inclure le statut détaillé du corpus dans les métadonnées**
     res.status(200).json({
-      response: response.candidates[0].content,
-      metadata: {
-        citations: response.candidates[0].citationMetadata,
-        safetyRatings: response.candidates[0].safetyRatings
+      success: true,
+      data: {
+        answer: response.candidates[0].content.parts[0].text,
+        metadata: {
+          corpusStatus: corpusStatus,
+          model: process.env.VERTEX_AI_MODEL,
+          processedAt: new Date().toISOString(),
+          citations: response.candidates[0].citationMetadata,
+          safetyRatings: response.candidates[0].safetyRatings
+        }
       }
     });
 
   } catch (error) {
     logger.error('Error querying knowledge base:', error);
-    res.status(500).json({ error: 'Failed to query knowledge base' });
+    res.status(500).json({
+      success: false,
+      error: 'Failed to query knowledge base',
+      details: error.message
+    });
+  }
+};
+
+/**
+ * **NOUVEAU : Obtenir le statut du corpus RAG**
+ * @param {Object} req - Express request object with companyId in params
+ * @param {Object} res - Express response object
+ */
+const getCorpusStatus = async (req, res) => {
+  try {
+    const { companyId } = req.params;
+
+    if (!companyId) {
+      return res.status(400).json({ error: 'Company ID is required' });
+    }
+
+    if (!vertexAIService.vertexAI) {
+      vertexAIService.initialize();
+    }
+
+    const status = await vertexAIService.checkCorpusStatus(companyId);
+
+    res.status(200).json({ companyId, status });
+
+  } catch (error) {
+    logger.error('Error getting corpus status:', error);
+    res.status(500).json({ error: 'Failed to get corpus status' });
+  }
+};
+
+/**
+ * **NOUVEAU : Obtenir la liste des documents du corpus**
+ * @param {Object} req - Express request object with companyId in params
+ * @param {Object} res - Express response object
+ */
+const getCorpusDocuments = async (req, res) => {
+  try {
+    const { companyId } = req.params;
+
+    if (!companyId) {
+      return res.status(400).json({ error: 'Company ID is required' });
+    }
+
+    if (!vertexAIService.vertexAI) {
+      vertexAIService.initialize();
+    }
+
+    const documents = await vertexAIService.getCorpusDocuments(companyId);
+
+    res.status(200).json({ companyId, documents, count: documents.length });
+
+  } catch (error) {
+    logger.error('Error getting corpus documents:', error);
+    res.status(500).json({ error: 'Failed to get corpus documents' });
+  }
+};
+
+/**
+ * **NOUVEAU : Obtenir le contenu d'un document spécifique**
+ * @param {Object} req - Express request object with companyId and documentId in params
+ * @param {Object} res - Express response object
+ */
+const getDocumentContent = async (req, res) => {
+  try {
+    const { companyId, documentId } = req.params;
+
+    if (!companyId || !documentId) {
+      return res.status(400).json({ error: 'Company ID and Document ID are required' });
+    }
+
+    if (!vertexAIService.vertexAI) {
+      vertexAIService.initialize();
+    }
+
+    const document = await vertexAIService.getDocumentContent(companyId, documentId);
+
+    res.status(200).json({ companyId, document });
+
+  } catch (error) {
+    logger.error('Error getting document content:', error);
+    res.status(500).json({ error: 'Failed to get document content' });
+  }
+};
+
+/**
+ * **NOUVEAU : Obtenir les statistiques du corpus**
+ * @param {Object} req - Express request object with companyId in params
+ * @param {Object} res - Express response object
+ */
+const getCorpusStats = async (req, res) => {
+  try {
+    const { companyId } = req.params;
+
+    if (!companyId) {
+      return res.status(400).json({ error: 'Company ID is required' });
+    }
+
+    if (!vertexAIService.vertexAI) {
+      vertexAIService.initialize();
+    }
+
+    const stats = await vertexAIService.getCorpusStats(companyId);
+
+    res.status(200).json({ companyId, stats });
+
+  } catch (error) {
+    logger.error('Error getting corpus stats:', error);
+    res.status(500).json({ error: 'Failed to get corpus stats' });
+  }
+};
+
+/**
+ * **NOUVEAU : Rechercher dans le corpus**
+ * @param {Object} req - Express request object with companyId in params and searchTerm in query
+ * @param {Object} res - Express response object
+ */
+const searchInCorpus = async (req, res) => {
+  try {
+    const { companyId } = req.params;
+    const { searchTerm } = req.query;
+
+    if (!companyId) {
+      return res.status(400).json({ error: 'Company ID is required' });
+    }
+
+    if (!searchTerm) {
+      return res.status(400).json({ error: 'Search term is required' });
+    }
+
+    if (!vertexAIService.vertexAI) {
+      vertexAIService.initialize();
+    }
+
+    const results = await vertexAIService.searchInCorpus(companyId, searchTerm);
+
+    res.status(200).json({ companyId, searchTerm, results, count: results.length });
+
+  } catch (error) {
+    logger.error('Error searching in corpus:', error);
+    res.status(500).json({ error: 'Failed to search in corpus' });
+  }
+};
+
+/**
+ * Analyze a document using RAG
+ * @param {Object} req - Express request object with documentId in params
+ * @param {Object} res - Express response object
+ */
+const analyzeDocument = async (req, res) => {
+  try {
+    const { id: documentId } = req.params;
+
+    if (!documentId) {
+      return res.status(400).json({ error: 'Document ID is required' });
+    }
+
+    // Get the document
+    const document = await Document.findById(documentId);
+    if (!document) {
+      return res.status(404).json({ error: 'Document not found' });
+    }
+
+    // Initialize Vertex AI if not already initialized
+    if (!vertexAIService.vertexAI) {
+      await vertexAIService.initialize();
+    }
+
+    // Generate analysis prompt
+    const isVideo = document.fileType && document.fileType.startsWith('video/');
+    const analysisPrompt = generateDocumentAnalysisPrompt(isVideo ? "This is a video file. Please analyze its context and provide a summary based on your knowledge if available, or a general assessment if it's new." : document.content);
+
+    // Perform analysis using RAG with a single call
+    // For videos, we might want to pass different parameters to vertexAIService later
+    const response = await vertexAIService.queryKnowledgeBase(
+      document.companyId,
+      analysisPrompt,
+      isVideo ? { fileUrl: document.fileUrl, fileType: document.fileType } : null
+    );
+
+    // Parse the response to get the analysis results
+    let analysisResults;
+    try {
+      logger.info('Raw response from Vertex AI:', JSON.stringify(response, null, 2));
+
+      // Vérifier la structure de la réponse
+      if (!response || !response.candidates || !response.candidates[0]) {
+        throw new Error('Invalid response structure from Vertex AI');
+      }
+
+      // Extraire le contenu de la réponse
+      let content;
+      if (response.candidates[0].content && response.candidates[0].content.parts) {
+        content = response.candidates[0].content.parts[0].text;
+      } else if (response.candidates[0].text) {
+        content = response.candidates[0].text;
+      } else if (typeof response.candidates[0] === 'string') {
+        content = response.candidates[0];
+      } else {
+        throw new Error('Unable to extract content from response');
+      }
+
+      // Essayer de parser le contenu comme JSON
+      try {
+        // D'abord, essayer de parser directement
+        analysisResults = JSON.parse(content);
+      } catch (jsonError) {
+        // Si ça échoue, essayer d'extraire le JSON avec une regex
+        const jsonMatch = content.match(/\{[\s\S]*\}/);
+        if (jsonMatch) {
+          analysisResults = JSON.parse(jsonMatch[0]);
+        } else {
+          throw new Error('No valid JSON found in response');
+        }
+      }
+
+      // Valider la structure des résultats
+      const requiredFields = ['summary', 'domain', 'theme', 'mainPoints', 'technicalLevel', 'targetAudience', 'keyTerms', 'recommendations'];
+      const missingFields = requiredFields.filter(field => !analysisResults[field]);
+
+      if (missingFields.length > 0) {
+        logger.warn('Missing fields in analysis results:', missingFields);
+        // Remplir les champs manquants avec des valeurs par défaut
+        missingFields.forEach(field => {
+          if (field === 'mainPoints' || field === 'keyTerms' || field === 'recommendations') {
+            analysisResults[field] = ['Not available'];
+          } else {
+            analysisResults[field] = 'Not available';
+          }
+        });
+      }
+
+    } catch (parseError) {
+      logger.error('Error parsing analysis results:', {
+        error: parseError.message,
+        response: response,
+        stack: parseError.stack
+      });
+      throw new Error('Failed to parse analysis results: ' + parseError.message);
+    }
+
+    // Update document with analysis results
+    document.analysis = {
+      ...analysisResults,
+      analyzedAt: new Date()
+    };
+    await document.save();
+
+    res.status(200).json(document.analysis);
+
+  } catch (error) {
+    logger.error('Error checking corpus status:', {
+      error: error.message,
+      stack: error.stack,
+      details: error.response?.data || error.message
+    });
+
+    res.status(500).json({
+      error: 'Failed to analyze document',
+      details: error.message,
+      stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+    });
+  }
+};
+
+/**
+ * Generate a call script using the company RAG corpus
+ * @param {Object} req - Express request object with companyId, gig, typeClient, language, details in body
+ * @param {Object} res - Express response object
+ */
+const generateScript = async (req, res) => {
+  try {
+    const {
+      companyId,
+      gig,
+      typeClient,
+      langueTon,
+      contexte,
+      currentScript,
+      currentPlaybook,
+      chatHistory,
+      trainings,
+      isInteractiveRequest,
+      editMode,
+      targetStageIndex,
+      currentStages,
+    } = req.body;
+    // Validation checks
+    if (!gig || !gig._id) {
+      return res.status(400).json({ error: 'A gig selection is required to generate a script.' });
+    }
+
+    // Clean up trainings titles to remove any "Module X" prefixes before passing to LLM
+    let cleanedTrainings = [];
+    if (Array.isArray(trainings)) {
+      cleanedTrainings = trainings.map(t => {
+        if (!t) return t;
+        const copy = { ...t };
+        if (typeof copy.title === 'string') {
+          copy.title = copy.title.replace(/^(module\s+\d+\s*[:\-]\s*)/i, '').trim();
+        }
+        if (typeof copy.name === 'string') {
+          copy.name = copy.name.replace(/^(module\s+\d+\s*[:\-]\s*)/i, '').trim();
+        }
+        return copy;
+      });
+    }
+
+    // Initialize Vertex AI if needed
+    if (!vertexAIService.vertexAI) {
+      await vertexAIService.initialize();
+      console.log('✅ Vertex AI initialisé\n');
+    }
+
+    console.log('Mode generation: GIG ONLY (sans consultation KB)');
+    console.log('\n========================================\n');
+
+    // Construire le prompt pour la génération
+    console.log('🔄 PRÉPARATION DU PROMPT...\n');
+
+    const normalizedChatHistory = Array.isArray(chatHistory)
+      ? chatHistory
+        .map((msg) => {
+          const role = String(msg?.role || '').toLowerCase() === 'assistant' ? 'assistant' : 'user';
+          const text = String(msg?.content || '').trim();
+          return text ? `${role.toUpperCase()}: ${text}` : '';
+        })
+        .filter(Boolean)
+        .join('\n')
+      : '';
+
+    const hasCurrentStages = Array.isArray(currentStages) && currentStages.length > 0;
+    const safeTargetIdx = Number.isInteger(Number(targetStageIndex))
+      ? Math.min(Math.max(0, Number(targetStageIndex)), Math.max(0, (currentStages?.length || 1) - 1))
+      : 0;
+    const isTargetedInteractiveEdit =
+      !!isInteractiveRequest &&
+      (editMode === 'targeted' || editMode === 'refine') &&
+      hasCurrentStages;
+
+    let prompt;
+    if (isTargetedInteractiveEdit) {
+      const targetStage = currentStages[safeTargetIdx] || {};
+      prompt = `You are a world-class conversational sales engineer editing an EXISTING interactive call script.
+
+CRITICAL MISSION — SURGICAL EDIT ONLY:
+- Apply the user request ONLY to stage index ${safeTargetIdx} (stepNumber ${targetStage.stepNumber || safeTargetIdx + 1}, id "${targetStage.id || `step_${safeTargetIdx + 1}`}").
+- Do NOT rewrite, rephrase, or regenerate any other stage.
+- Preserve all unrelated content of the target stage unless the user explicitly asks to change it.
+- Keep the same schema fields and French language.
+
+SALES MISSION:
+- Title: ${gig.title || ''}
+- Description: ${gig.description || ''}
+- Category/Industry: ${gig.category || gig.industry || ''}
+
+RELATED TRAINING MODULES:
+${JSON.stringify(cleanedTrainings)}
+
+USER EDIT REQUEST (apply only to the target stage):
+${contexte || 'Improve clarity of the current stage without changing intent.'}
+
+CURRENT TARGET STAGE (edit this object):
+${JSON.stringify(targetStage, null, 2)}
+
+FULL CURRENT SCRIPT (context only — other stages must stay identical):
+${JSON.stringify(currentStages)}
+
+OUTPUT FORMAT:
+Return ONLY a raw parseable JSON object with NO markdown fences, in ONE of these shapes:
+1) { "patchedStage": { ...single updated stage object... } }
+2) { "stages": [ ...exactly the same length as CURRENT SCRIPT, with ONLY index ${safeTargetIdx} changed... ] }
+
+STAGE OBJECT SCHEMA (same as existing):
+{
+  "id": "step_N",
+  "stepNumber": N,
+  "label": "...",
+  "type": "regulatory|collection|discovery|presentation|objection|compliance|closing|followup",
+  "typeLabel": "...",
+  "introTitle": "...",
+  "introReplica": "...",
+  "reminders": [{ "type": "warning|clock|info", "text": "..." }],
+  "optionsTitle": "...",
+  "options": [{ "id": "...", "label": "...", "subtext": "...", "recommendedResponse": "..." }],
+  "checklistTitle": "...",
+  "checklist": ["..."]
+}
+
+Return ONLY valid raw JSON.`;
+    } else if (isInteractiveRequest) {
+      prompt = `You are a world-class conversational sales engineer. Your task is to generate a highly detailed, 8-stage interactive call script in JSON format.
+This script MUST be tailored to the following sales mission and its related training modules:
+
+SALES MISSION:
+- Title: ${gig.title || ''}
+- Description: ${gig.description || ''}
+- Category/Industry: ${gig.category || gig.industry || ''}
+
+RELATED TRAINING MODULES (Ensure that the script stages, speech lines, guidelines, recommendations, and checklists directly reflect, integrate, and reinforce the methodologies taught in these modules):
+${JSON.stringify(cleanedTrainings)}
+
+USER REFINEMENT/CONTEXT:
+${contexte || 'Generate a standard interactive 8-stage sales script.'}
+
+SCHEMA SPECIFICATIONS:
+The output must be a single, raw, parseable JSON object with no markdown surrounding block fences.
+The JSON object must have a single key "stages" which is an array of exactly 8 objects.
+Each object represents a step in the sales call and must conform to this strict schema:
+{
+  "id": "step_1" to "step_8",
+  "stepNumber": 1 to 8,
+  "label": "Short, striking title of the stage in French (e.g., 'Ouverture & Identification', 'Découverte du besoin', 'Proposition de valeur', 'Traitement des objections', 'Clôture et validation')",
+  "type": "one of: 'regulatory', 'collection', 'discovery', 'presentation', 'objection', 'compliance', 'closing', 'followup'",
+  "typeLabel": "French label matching the type (e.g., 'Réglementaire', 'Collecte', 'Découverte', 'Argumentaire', 'Objections', 'Conformité', 'Clôture', 'Suivi')",
+  "introTitle": "Actionable micro-instruction in uppercase French (e.g., 'OUVERTURE LOI NAEGELEN + DDA', 'EXPLORATION DES BESOINS COMPLÉMENTAIRES')",
+  "introReplica": "The exact script/dialogue lines the Agent should speak. Keep it realistic, direct, and in natural spoken French. Never use raw placeholders like [Company] or [Your Name] - use realistic context-based details.",
+  "reminders": [
+    {
+      "type": "warning", "clock", or "info",
+      "text": "Short French compliance rule or best practice from the training modules (e.g., Bloctel fine risk 75000€, allowed telesales hours, RGPD consent)."
+    }
+  ],
+  "optionsTitle": "French header (e.g. 'GESTION DES OBJECTIONS' or 'RÉACTION DU CLIENT')",
+  "options": [
+    {
+      "id": "option_1",
+      "label": "Outcome/Choice title in French (e.g., '✓ Accord de principe', '↻ Objection sur le tarif')",
+      "subtext": "What the prospect says in French (e.g., 'Je trouve que l'abonnement mensuel est trop cher.')",
+      "recommendedResponse": "The exact spoken reply in natural French the Agent must use to handle this specific outcome/objection."
+    }
+  ],
+  "checklistTitle": "French header (e.g., 'DONNÉES À SAISIR DANS LE CRM')",
+  "checklist": [
+    "Specific data point to extract from the user tailored to this gig (e.g., 'Régime d'assurance', 'SIRET', 'Adresse e-mail de facturation')"
+  ]
+}
+
+CRITICAL RULES:
+1. Do not include any 'conditionalTabs' or horizontal segmented tabs. We do not want them.
+2. The JSON must be valid, strict, parseable, and contain exactly 8 stages.
+3. Keep spoken lines natural, friendly, highly professional.
+4. Integrate the training concepts dynamically in the reminders and recommendedResponses.
+
+Return ONLY the valid raw JSON matching the schema. No markdown wrapping.`;
+    } else {
+      prompt = contexte ? `You are generating a linear sales call script based on the following Job/Mission details.
+ 
+JOB DETAILS (PRIMARY FOUNDATION):
+- TITRE DU JOB : ${gig.title || ''}
+- DESCRIPTION : ${gig.description || ''}
+- CATEGORIE/INDUSTRIE : ${gig.category || gig.industry || ''}
+
+Instructions:
+${contexte}
+
+CRITICAL REQUIREMENTS:
+- The total dialogue script MUST NOT exceed 8 replica lines in total (e.g. exactly 4 Agent turns and 4 Lead turns). Keep it extremely concise and focused, matching this strict 8-line limit.
+- Each speaker turn (Agent and Lead) MUST consist of exactly two lines (sentences) of dialogue.
+- REGLEMENTATION ET COMPLIANCE : The Agent MUST explicitly state in their opening/compliance turn that "cet appel est susceptible d'être enregistré à des fins de formation ou de contrôle de qualité" (the call may be recorded for quality and training purposes) and ensure full compliance with French telesales regulations and RGPD/GDPR guidelines.
+
+${normalizedChatHistory ? `Chat history:\n${normalizedChatHistory}` : ''}
+
+Format the output strictly as a linear dialogue of alternating lines.
+Do NOT output JSON or any other formatting. Use exactly this format:
+Agent: <dialogue text>
+Lead: <dialogue text>
+Agent: <dialogue text>
+
+Return ONLY the generated dialogue script.` : `You are generating a linear sales call script based on the following Job/Mission details.
+  
+  JOB DETAILS (PRIMARY FOUNDATION):
+  - TITRE DU JOB : ${gig.title || ''}
+  - DESCRIPTION : ${gig.description || ''}
+  - CATEGORIE/INDUSTRIE : ${gig.category || gig.industry || ''}
+
+  CRITICAL REQUIREMENTS:
+  1. The script MUST flow naturally and cover the following phases in a continuous linear dialogue:
+     - Opening & SBAM
+     - Legal, Compliance & Réglementation (Agent MUST explicitly state: "cet appel est susceptible d'être enregistré à des fins de formation ou de contrôle de qualité", in strict compliance with French RGPD regulations and telesales guidelines. The script should mention or adhere to French commercial laws / Bloctel rights).
+     - Need Discovery
+     - Value Proposition
+     - Document/Quote presentation
+     - Objection Handling
+     - Confirmation & Closing
+  
+  2. The script must be a single linear conversation with exactly one response/replica for each agent and lead turn. No multiple branching options or alternatives.
+  3. Keep sentences short, natural, and highly suited for spoken conversation. Do not use placeholders like [Company] or [Name]. Use [Nom du prospect] for the prospect's name.
+  4. The total dialogue script MUST NOT exceed 8 replica lines in total (e.g. exactly 4 Agent turns and 4 Lead turns). Keep it extremely concise and focused, matching this strict 8-line limit.
+  5. Each speaker turn (Agent and Lead) MUST consist of exactly two dialogue lines/sentences. Keep each speech block short, composed of exactly 2 lines.
+  
+  Client Profile:
+  - Type: ${typeClient}
+  - Language/Tone: ${langueTon}
+  
+  ${normalizedChatHistory ? `Chat history:\n${normalizedChatHistory}` : ''}
+
+  Format the output strictly as a linear dialogue of alternating lines. Use exactly this format:
+  Agent: Bonjour [Nom du prospect], ...
+  Lead: Bonjour, ...
+  Agent: ...
+  
+  Return ONLY the generated dialogue script. Do NOT wrap in JSON.`;
+    }
+
+    // Génération directe sur base du gig uniquement (pas de KB/RAG).
+    let scriptContent;
+    let response;
+    try {
+      const result = await vertexAIService.generativeModel.generateContent(prompt);
+      response = result.response;
+
+      // Log response metadata
+      console.log('📄 MÉTADONNÉES DE LA RÉPONSE DE Vertex AI:');
+      console.log('----------------------------------------');
+      console.log(`Candidats présents: ${!!response.candidates ? 'Oui' : 'Non'}`);
+      console.log(`Nombre de candidats: ${response.candidates?.length || 0}`);
+      console.log();
+
+      // Extraire la réponse générée
+      if (response.candidates && response.candidates[0]) {
+        if (response.candidates[0].content && response.candidates[0].content.parts) {
+          scriptContent = response.candidates[0].content.parts[0].text;
+        } else if (response.candidates[0].text) {
+          scriptContent = response.candidates[0].text;
+        } else {
+          scriptContent = response.candidates[0];
+        }
+      } else if (response.text) {
+        scriptContent = response.text;
+      } else if (typeof response === 'string') {
+        scriptContent = response;
+      } else {
+        throw new Error('Unexpected response structure from Vertex AI');
+      }
+    } catch (error) {
+      const errorMsg = error.message || 'Unknown Vertex AI Error';
+      const isQuotaError = errorMsg.includes('429') ||
+        errorMsg.includes('404') ||
+        errorMsg.toLowerCase().includes('quota') ||
+        errorMsg.toLowerCase().includes('not found') ||
+        errorMsg.toLowerCase().includes('overloaded') ||
+        error.status === 429 ||
+        error.status === 404;
+
+      if (isQuotaError) {
+        logger.warn(`⚠️ Vertex AI error (${errorMsg}). Triggering Claude fallback...`);
+        scriptContent = await callAnthropicFallback(prompt);
+      } else {
+        logger.error(`❌ Error during script generation (Vertex AI): ${errorMsg}`);
+        throw error;
+      }
+    }
+
+    // Nettoyer le contenu
+    if (typeof scriptContent === 'string') {
+      scriptContent = scriptContent.replace(/^```(?:json|text|plaintext)?\s*|\s*```$/g, '').trim();
+    }
+
+    // Interactive structured response parsing
+    if (isInteractiveRequest) {
+      let parsedStages = null;
+      let patchedStage = null;
+      try {
+        const clean = String(scriptContent || '')
+          .replace(/^```(?:json)?\s*|\s*```$/gi, '')
+          .trim();
+        const parsed = JSON.parse(clean);
+        patchedStage = parsed.patchedStage || null;
+        parsedStages = parsed.stages || (Array.isArray(parsed) ? parsed : null);
+      } catch (err) {
+        console.warn('[BACKEND PARSER] String looked like JSON but parsing failed, trying simple extraction.', err);
+        // Regexp JSON extraction fallback
+        const jsonMatch = String(scriptContent || '').match(/\{[\s\S]*\}/);
+        if (jsonMatch) {
+          try {
+            const parsed = JSON.parse(jsonMatch[0]);
+            patchedStage = parsed.patchedStage || null;
+            parsedStages = parsed.stages || (Array.isArray(parsed) ? parsed : null);
+          } catch (e) {
+            console.error('[BACKEND PARSER] Regex JSON parse failed too.', e);
+          }
+        }
+      }
+
+      // Targeted refine: keep every stage identical except the requested one.
+      if (isTargetedInteractiveEdit && Array.isArray(currentStages) && currentStages.length > 0) {
+        const merged = currentStages.map((stage) => (stage ? { ...stage } : stage));
+        let nextStage = null;
+        if (patchedStage && typeof patchedStage === 'object') {
+          nextStage = patchedStage;
+        } else if (Array.isArray(parsedStages) && parsedStages[safeTargetIdx]) {
+          nextStage = parsedStages[safeTargetIdx];
+        }
+
+        if (nextStage && typeof nextStage === 'object') {
+          const base = currentStages[safeTargetIdx] || {};
+          merged[safeTargetIdx] = {
+            ...base,
+            ...nextStage,
+            id: base.id || nextStage.id,
+            stepNumber: base.stepNumber || nextStage.stepNumber || safeTargetIdx + 1,
+          };
+          parsedStages = merged;
+          console.log(`\n✅ TARGETED INTERACTIVE EDIT applied to stage index ${safeTargetIdx}\n`);
+        } else {
+          return res.status(502).json({
+            error: 'Targeted script edit failed: model did not return a valid patched stage.',
+          });
+        }
+      }
+
+      if (Array.isArray(parsedStages) && parsedStages.length > 0) {
+        console.log('\n✅ GÉNÉRATION INTERACTIVE REUSSIE\n');
+        
+        // Clean up stages text in backend too to guarantee no "Module X :" strings are saved
+        const cleanedStages = parsedStages.map(stage => {
+          if (!stage) return stage;
+          const s = { ...stage };
+          if (Array.isArray(s.reminders)) {
+            s.reminders = s.reminders.map(rem => {
+              if (rem && typeof rem.text === 'string') {
+                return {
+                  ...rem,
+                  text: rem.text.replace(/^(module\s+\d+\s*[:\-]\s*)/i, '').trim()
+                };
+              }
+              return rem;
+            });
+          }
+          if (Array.isArray(s.checklist)) {
+            s.checklist = s.checklist.map(item => {
+              if (typeof item === 'string') {
+                return item.replace(/^(module\s+\d+\s*[:\-]\s*)/i, '').trim();
+              }
+              return item;
+            });
+          }
+          return s;
+        });
+
+        return res.status(200).json({
+          success: true,
+          stages: cleanedStages,
+          metadata: {
+            processedAt: new Date().toISOString(),
+            model: process.env.VERTEX_AI_MODEL || 'vertex-ai',
+            sourceMode: isTargetedInteractiveEdit
+              ? 'interactive_script_targeted_edit'
+              : 'interactive_script_gpt',
+            targetStageIndex: isTargetedInteractiveEdit ? safeTargetIdx : undefined,
+          }
+        });
+      }
+    }
+
+    // Parse the script content - handle both structured JSON schemas and linear text
+    let dialogueRows = [];
+    let isStructuredJson = false;
+    let parsedJson = null;
+
+    if (typeof scriptContent === 'string') {
+      const trimmed = scriptContent.trim();
+      if (trimmed.startsWith('{') || trimmed.startsWith('[')) {
+        try {
+          parsedJson = JSON.parse(trimmed);
+          isStructuredJson = true;
+        } catch (e) {
+          // Attempt to extract from possible markdown codeblock wrapper
+          const clean = trimmed.replace(/^```(?:json)?\s*|\s*```$/gi, '').trim();
+          try {
+            parsedJson = JSON.parse(clean);
+            isStructuredJson = true;
+          } catch (err) {
+            console.warn('[BACKEND PARSER] String looked like JSON but parsing failed, falling back to line parsing.');
+          }
+        }
+      }
+    }
+
+    if (isStructuredJson && parsedJson) {
+      const steps = parsedJson.stages || parsedJson.steps || parsedJson.script || (Array.isArray(parsedJson) ? parsedJson : null);
+      if (Array.isArray(steps)) {
+        dialogueRows = steps.map((step) => {
+          const actor = String(step.actor || step.role || 'agent').toLowerCase();
+          const replica = String(step.replica || step.introReplica || step.text || step.content || '');
+          const phase = String(step.phase || step.label || step.step_title || 'Dialogue');
+          return {
+            role: actor === 'lead' ? 'lead' : 'agent',
+            text: replica,
+            phase: phase,
+            compliance_tags: step.compliance_tags || [],
+            ai_scoring_signals: step.ai_scoring_signals || null,
+            conditional_branches: step.conditional_branches || []
+          };
+        }).filter((row) => row.text);
+      }
+    }
+
+    // Fallback to line-by-line parsing if not JSON or if JSON has no steps
+    if (dialogueRows.length === 0) {
+      const rawLines = String(scriptContent || '')
+        .split(/\r?\n/)
+        .map((l) => l.trim())
+        .filter(Boolean);
+
+      dialogueRows = rawLines.map((line) => {
+        const normalized = line.replace(/^\[[^\]]+\]\s*/, '').trim();
+        const m = normalized.match(/^(Agent|Lead|Candidate|Client)\s*:\s*(.+)$/i);
+        if (m) {
+          const actor = String(m[1] || '').toLowerCase();
+          return {
+            role: actor === 'agent' ? 'agent' : 'lead',
+            text: String(m[2] || '').trim(),
+            phase: 'Dialogue'
+          };
+        }
+        return {
+          role: 'agent',
+          text: String(normalized || '').trim(),
+          phase: 'Dialogue'
+        };
+      }).filter((row) => row.text);
+    }
+
+    // Apply "Bonjour [Nom du prospect]" guardrail on first agent line
+    const firstAgentIdx = dialogueRows.findIndex((row) => row.role === 'agent');
+    if (firstAgentIdx >= 0) {
+      let firstText = String(dialogueRows[firstAgentIdx].text || '').trim();
+      firstText = firstText.replace(/^(Bonjour|Salut|Allô)\s+[^,!.?]+[,!.?]?/i, '$1').trim();
+
+      if (!firstText.toLowerCase().startsWith('bonjour [nom du prospect]')) {
+        if (firstText.toLowerCase().startsWith('bonjour')) {
+          dialogueRows[firstAgentIdx].text = `Bonjour [Nom du prospect], ${firstText.slice(7).replace(/^[\s,]+/, '')}`;
+        } else {
+          dialogueRows[firstAgentIdx].text = `Bonjour [Nom du prospect], ${firstText}`;
+        }
+      }
+    }
+
+    const scriptArray = dialogueRows.map((row) => ({
+      phase: 'Dialogue',
+      actor: row.role === 'lead' ? 'lead' : 'agent',
+      replica: String(row.text || '').trim(),
+    })).filter((row) => row.replica);
+
+    // Prepare clean linear response
+    const finalResponse = {
+      success: true,
+      data: {
+        script: dialogueRows.map((row) => `${row.role === 'lead' ? 'Lead' : 'Agent'}: ${row.text}`).join('\n'),
+        playbook: {
+          dialogue: dialogueRows,
+          leadGuidance: [],
+          turns: [],
+        },
+        metadata: {
+          processedAt: new Date().toISOString(),
+          model: process.env.VERTEX_AI_MODEL,
+          sourceMode: 'gig_only',
+          gigInfo: {
+            gigId: gig._id,
+            gigTitle: gig.title,
+            gigCategory: gig.category
+          },
+          scriptId: null,
+          analysisStats: {
+            totalSteps: scriptArray.length,
+            uniquePhases: 1,
+            phasesDistribution: { 'Dialogue': scriptArray.length },
+            citationsUsed: 0
+          }
+        }
+      }
+    };
+
+    console.log('\n✅ GÉNÉRATION TERMINÉE (LINEAR)\n');
+    logger.info('Linear script generation completed successfully');
+    res.status(200).json(finalResponse);
+  } catch (error) {
+    console.log('\n❌ ERREUR LORS DE LA GÉNÉRATION:');
+    console.log('-----------------------------');
+    console.log(error.message);
+    console.log('\n========================================\n');
+
+    logger.error('Error generating script:', { message: error.message, stack: error.stack });
+    res.status(500).json({ error: 'Failed to generate script', details: error.message });
+  }
+};
+
+/**
+ * List scripts filtered by gig
+ * @param {Object} req
+ * @param {Object} res
+ */
+const listScripts = async (req, res) => {
+  try {
+    const { gigId, isActive } = req.query;
+    if (!gigId) {
+      return res.status(400).json({ error: 'gigId query param is required' });
+    }
+
+    const filter = { gigId };
+    if (typeof isActive !== 'undefined') {
+      filter.isActive = String(isActive).toLowerCase() === 'true';
+    }
+
+    const scripts = await Script.find(filter)
+      .sort({ createdAt: -1 })
+      .select('_id gigId targetClient language details script playbook isActive createdAt')
+      .lean();
+
+    return res.status(200).json({
+      success: true,
+      data: scripts,
+    });
+  } catch (error) {
+    logger.error('Error listing scripts:', { message: error.message, stack: error.stack });
+    return res.status(500).json({ error: 'Failed to list scripts', details: error.message });
+  }
+};
+
+/**
+ * Create script in database (called on explicit validate action)
+ * @param {Object} req
+ * @param {Object} res
+ */
+const createScript = async (req, res) => {
+  try {
+    const { gigId, targetClient, language, details, script, playbook, isActive } = req.body || {};
+    if (!gigId) return res.status(400).json({ error: 'gigId is required' });
+
+    const sanitized = sanitizeScriptBody({ targetClient, language, details, script, playbook });
+    if (sanitized.error) return res.status(400).json({ error: sanitized.error });
+
+    const shouldBeActive = isActive === true;
+    if (shouldBeActive) {
+      await deactivateOtherScriptsForGig(gigId, null);
+    }
+
+    const created = await Script.create({
+      gigId,
+      ...sanitized.data,
+      isActive: shouldBeActive,
+    });
+
+    return res.status(201).json({
+      success: true,
+      data: {
+        _id: created._id,
+        gigId: created.gigId,
+        isActive: created.isActive,
+        createdAt: created.createdAt,
+      },
+    });
+  } catch (error) {
+    logger.error('Error creating script:', error);
+    return res.status(500).json({ error: 'Failed to create script', details: error.message });
+  }
+};
+
+/**
+ * Update an existing script (same gig — no duplicate on re-save)
+ * @param {Object} req
+ * @param {Object} res
+ */
+const updateScript = async (req, res) => {
+  try {
+    const { scriptId } = req.params;
+    const { gigId, targetClient, language, details, script, playbook, isActive } = req.body || {};
+    if (!scriptId) return res.status(400).json({ error: 'scriptId is required' });
+
+    const existing = await Script.findById(scriptId);
+    if (!existing) return res.status(404).json({ error: 'Script not found' });
+
+    if (gigId && String(existing.gigId) !== String(gigId)) {
+      return res.status(400).json({ error: 'Script does not belong to this gig' });
+    }
+
+    const sanitized = sanitizeScriptBody({
+      targetClient: targetClient ?? existing.targetClient,
+      language: language ?? existing.language,
+      details: details ?? existing.details,
+      script: script ?? existing.script,
+      playbook: playbook ?? existing.playbook,
+    });
+    if (sanitized.error) return res.status(400).json({ error: sanitized.error });
+
+    const shouldBeActive = typeof isActive === 'boolean' ? isActive : existing.isActive;
+    if (shouldBeActive) {
+      await deactivateOtherScriptsForGig(existing.gigId, existing._id);
+    }
+
+    existing.targetClient = sanitized.data.targetClient;
+    existing.language = sanitized.data.language;
+    existing.details = sanitized.data.details;
+    existing.script = sanitized.data.script;
+    if (sanitized.data.playbook !== undefined) {
+      existing.playbook = sanitized.data.playbook;
+    }
+    existing.isActive = shouldBeActive;
+    await existing.save();
+
+    return res.status(200).json({
+      success: true,
+      data: {
+        _id: existing._id,
+        gigId: existing.gigId,
+        isActive: existing.isActive,
+        createdAt: existing.createdAt,
+      },
+    });
+  } catch (error) {
+    logger.error('Error updating script:', error);
+    return res.status(500).json({ error: 'Failed to update script', details: error.message });
+  }
+};
+
+/**
+ * Update script status (activate/deactivate)
+ * @param {Object} req
+ * @param {Object} res
+ */
+const updateScriptStatus = async (req, res) => {
+  try {
+    const { scriptId } = req.params;
+    const { isActive } = req.body || {};
+    if (!scriptId) {
+      return res.status(400).json({ error: 'scriptId is required' });
+    }
+    if (typeof isActive !== 'boolean') {
+      return res.status(400).json({ error: 'isActive boolean is required' });
+    }
+
+    const script = await Script.findById(scriptId);
+    if (!script) {
+      return res.status(404).json({ error: 'Script not found' });
+    }
+
+    if (isActive) {
+      await deactivateOtherScriptsForGig(script.gigId, script._id);
+    }
+
+    const updated = await Script.findByIdAndUpdate(
+      scriptId,
+      { isActive },
+      { new: true, runValidators: true }
+    )
+      .select('_id gigId isActive createdAt')
+      .lean();
+
+    if (!updated) {
+      return res.status(404).json({ error: 'Script not found' });
+    }
+
+    return res.status(200).json({
+      success: true,
+      data: updated,
+    });
+  } catch (error) {
+    logger.error('Error updating script status:', error);
+    return res.status(500).json({ error: 'Failed to update script status', details: error.message });
+  }
+};
+
+/**
+ * Delete script by id
+ * @param {Object} req
+ * @param {Object} res
+ */
+const deleteScript = async (req, res) => {
+  try {
+    const { scriptId } = req.params;
+    if (!scriptId) {
+      return res.status(400).json({ error: 'scriptId is required' });
+    }
+
+    const deleted = await Script.findByIdAndDelete(scriptId).lean();
+    if (!deleted) {
+      return res.status(404).json({ error: 'Script not found' });
+    }
+
+    return res.status(200).json({
+      success: true,
+      data: {
+        _id: deleted._id,
+      },
+    });
+  } catch (error) {
+    logger.error('Error deleting script:', error);
+    return res.status(500).json({ error: 'Failed to delete script', details: error.message });
+  }
+};
+
+/**
+ * Translate document analysis to English
+ * @param {Object} req - Express request object with analysis and targetLanguage in body
+ * @param {Object} res - Express response object
+ */
+const translateAnalysis = async (req, res) => {
+  try {
+    const { analysis, targetLanguage } = req.body;
+
+    if (!analysis || !targetLanguage) {
+      return res.status(400).json({ error: 'Analysis object and target language are required' });
+    }
+
+    logger.info('Translating document analysis to:', targetLanguage);
+
+    // Initialize Vertex AI if not already initialized
+    if (!vertexAIService.vertexAI) {
+      await vertexAIService.initialize();
+    }
+
+    // Create translation prompt
+    const translationPrompt = `You are a professional translator. Translate the following document analysis to ${targetLanguage} while maintaining the exact same JSON structure and format.
+
+IMPORTANT: 
+- Keep the exact same JSON structure
+- Translate all text content to ${targetLanguage}
+- Maintain the same level of detail and professionalism
+- Ensure technical terms are appropriately translated
+- Keep the same array lengths for mainPoints, keyTerms, and recommendations
+
+Original analysis to translate:
+${JSON.stringify(analysis, null, 2)}
+
+Return only the translated JSON object with the same structure:`;
+
+    // Generate translation using the initialized generative model
+    const result = await vertexAIService.generativeModel.generateContent(translationPrompt);
+    const response = result.response;
+
+    logger.info('Raw translation response:', JSON.stringify(response, null, 2));
+
+    // Extract content using the same pattern as document analysis
+    let content;
+    if (!response || !response.candidates || !response.candidates[0]) {
+      throw new Error('Invalid response structure from Vertex AI');
+    }
+
+    if (response.candidates[0].content && response.candidates[0].content.parts) {
+      content = response.candidates[0].content.parts[0].text;
+    } else if (response.candidates[0].text) {
+      content = response.candidates[0].text;
+    } else if (typeof response.candidates[0] === 'string') {
+      content = response.candidates[0];
+    } else {
+      throw new Error('Unable to extract content from response');
+    }
+
+    logger.info('Extracted content:', content);
+
+    // Parse the JSON response
+    let translatedAnalysis;
+    try {
+      // First, try to parse directly
+      translatedAnalysis = JSON.parse(content);
+    } catch (jsonError) {
+      // If that fails, try to extract JSON with regex
+      const jsonMatch = content.match(/\{[\s\S]*\}/);
+      if (jsonMatch) {
+        translatedAnalysis = JSON.parse(jsonMatch[0]);
+      } else {
+        throw new Error('No valid JSON found in response');
+      }
+    }
+
+    logger.info('Successfully translated analysis');
+
+    res.status(200).json({
+      success: true,
+      translatedAnalysis,
+      originalLanguage: 'auto-detected',
+      targetLanguage
+    });
+
+  } catch (error) {
+    logger.error('Error translating analysis:', error);
+    res.status(500).json({
+      error: 'Failed to translate analysis',
+      details: error.message
+    });
   }
 };
 
 module.exports = {
   initializeCompanyCorpus,
   syncDocumentsToCorpus,
-  queryKnowledgeBase
+  queryKnowledgeBase,
+  getCorpusStatus,
+  getCorpusDocuments,
+  getDocumentContent,
+  getCorpusStats,
+  searchInCorpus,
+  analyzeDocument,
+  generateScript,
+  createScript,
+  updateScript,
+  listScripts,
+  updateScriptStatus,
+  deleteScript,
+  translateAnalysis
 }; 
