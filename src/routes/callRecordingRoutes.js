@@ -3,7 +3,14 @@ const router = express.Router();
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
-const { uploadCallRecording, getCallRecordings, deleteCallRecording } = require('../controllers/callRecordingController');
+const { 
+    uploadCallRecording, 
+    getCallRecordings, 
+    deleteCallRecording,
+    getAudioSummary,
+    getAudioTranscription,
+    getCallScoring
+} = require('../controllers/callRecordingController');
 
 // Configure multer for file uploads
 const storage = multer.diskStorage({
@@ -29,18 +36,18 @@ const upload = multer({
 
 // Retrieve call recordings for a given company
 router.get('/', async (req, res) => {
-  const { companyId } = req.query;
-  if (!companyId) {
-    return res.status(400).json({ error: 'Company ID is required' });
+  const { userId } = req.query;
+  if (!userId) {
+    return res.status(400).json({ error: 'User ID is required' });
   }
   await getCallRecordings(req, res);
 });
 
 // Upload a new call recording
 router.post('/upload', upload.single('file'), async (req, res, next) => {
-  const { companyId } = req.body;
-  if (!companyId) {
-    return res.status(400).json({ error: 'Company ID is required' });
+  const { userId } = req.body;
+  if (!userId) {
+    return res.status(400).json({ error: 'User ID is required' });
   }
   await uploadCallRecording(req, res, next);
 });
@@ -52,6 +59,33 @@ router.delete('/:id', async (req, res) => {
     return res.status(400).json({ error: 'Call Recording ID is required' });
   }
   await deleteCallRecording(req, res);
+});
+
+// Generate summary for a call recording
+router.post('/:recordingId/analyze/summary', async (req, res) => {
+  const { recordingId } = req.params;
+  if (!recordingId) {
+    return res.status(400).json({ error: 'Call Recording ID is required' });
+  }
+  await getAudioSummary(req, res);
+});
+
+// Generate transcription for a call recording
+router.post('/:recordingId/analyze/transcription', async (req, res) => {
+  const { recordingId } = req.params;
+  if (!recordingId) {
+    return res.status(400).json({ error: 'Call Recording ID is required' });
+  }
+  await getAudioTranscription(req, res);
+});
+
+// Generate scoring for a call recording
+router.post('/:recordingId/analyze/scoring', async (req, res) => {
+  const { recordingId } = req.params;
+  if (!recordingId) {
+    return res.status(400).json({ error: 'Call Recording ID is required' });
+  }
+  await getCallScoring(req, res);
 });
 
 module.exports = router; 

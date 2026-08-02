@@ -14,11 +14,11 @@ cloudinary.config({
  * @param {string} folder - Folder in Cloudinary to store the file
  * @returns {Promise<{url: string, public_id: string}>}
  */
-const uploadToCloudinary = async (filePath, folder) => {
+const uploadToCloudinary = async (filePath, folder, resourceType = 'auto') => {
   try {
     const result = await cloudinary.uploader.upload(filePath, {
       folder,
-      resource_type: 'auto' // Automatically detect file type
+      resource_type: resourceType
     });
     
     return {

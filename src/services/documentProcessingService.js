@@ -30,6 +30,13 @@ async function extractTextFromFile(filePath, fileType) {
       case 'text/html':
         return extractTextFromTxt(filePath); // Simple text extraction for markdown and HTML
         
+      case 'video/mp4':
+      case 'video/mpeg':
+      case 'video/quicktime':
+      case 'video/x-msvideo':
+      case 'video/webm':
+        return ''; // Video doesn't have text to extract directly
+        
       default:
         throw new Error(`Unsupported file type: ${fileType}`);
     }
