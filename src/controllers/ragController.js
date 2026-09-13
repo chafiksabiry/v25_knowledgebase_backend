@@ -5,6 +5,14 @@ const { generateDocumentAnalysisPrompt } = require('../prompts/documentAnalysisP
 const Script = require('../models/Script');
 const Company = require('../models/Company');
 const axios = require('axios');
+const {
+  assertCompanyHasAiTokens,
+  chargeCompanyAiTokens,
+  fallbackEstimatedUsage,
+  resolveUsageOrEstimate,
+  usageFromAnthropic,
+  usageFromGemini,
+} = require('../utils/aiTokenBilling');
 
 /** Only one script may be active per gig — deactivate siblings when activating one. */
 const deactivateOtherScriptsForGig = async (gigId, exceptScriptId) => {
@@ -73,7 +81,7 @@ const sanitizeScriptBody = ({ targetClient, language, details, script, playbook 
 /**
  * Helper function to call Anthropic Claude as a fallback
  * @param {string} prompt - The prompt to send to Claude
- * @returns {Promise<string>} - The generated script content
+ * @returns {Promise<{ text: string, usage: object }>}
  */
 const callAnthropicFallback = async (prompt) => {
   const apiKey = process.env.ANTHROPIC_API_KEY;
@@ -82,12 +90,13 @@ const callAnthropicFallback = async (prompt) => {
     throw new Error('Vertex AI quota exhausted (429) and no Anthropic key available.');
   }
 
+  const model = process.env.ANTHROPIC_MODEL || 'claude-3-5-sonnet-20241022';
   logger.info('🔄 Attempting fallback generation with Claude...');
   try {
     const response = await axios.post(
       'https://api.anthropic.com/v1/messages',
       {
-        model: process.env.ANTHROPIC_MODEL || 'claude-3-5-sonnet-20241022',
+        model,
         max_tokens: 4096,
         messages: [{ role: 'user', content: prompt }],
       },
@@ -102,7 +111,11 @@ const callAnthropicFallback = async (prompt) => {
 
     if (response.data && response.data.content && response.data.content[0]) {
       logger.info('✅ Generation successful with Claude fallback');
-      return response.data.content[0].text;
+      const text = response.data.content[0].text;
+      const usage =
+        usageFromAnthropic(response.data, model) ||
+        fallbackEstimatedUsage(prompt, text);
+      return { text, usage };
     }
     throw new Error('Unexpected response format from Anthropic');
   } catch (error) {
@@ -541,6 +554,17 @@ const generateScript = async (req, res) => {
       return res.status(400).json({ error: 'A gig selection is required to generate a script.' });
     }
 
+    const billingCompanyId = String(companyId || '').trim() || undefined;
+    const tokenGate = await assertCompanyHasAiTokens(billingCompanyId, 1);
+    if (!tokenGate.ok) {
+      return res.status(402).json({
+        success: false,
+        error: 'insufficient_tokens',
+        message: tokenGate.message,
+        data: { tokens: tokenGate.tokens },
+      });
+    }
+
     // Clean up trainings titles to remove any "Module X" prefixes before passing to LLM
     let cleanedTrainings = [];
     if (Array.isArray(trainings)) {
@@ -757,6 +781,7 @@ Return ONLY the generated dialogue script.` : `You are generating a linear sales
     // Génération directe sur base du gig uniquement (pas de KB/RAG).
     let scriptContent;
     let response;
+    let providerUsage = null;
     try {
       const result = await vertexAIService.generativeModel.generateContent(prompt);
       response = result.response;
@@ -767,6 +792,10 @@ Return ONLY the generated dialogue script.` : `You are generating a linear sales
       console.log(`Candidats présents: ${!!response.candidates ? 'Oui' : 'Non'}`);
       console.log(`Nombre de candidats: ${response.candidates?.length || 0}`);
       console.log();
+
+      providerUsage =
+        usageFromGemini(response, process.env.VERTEX_AI_MODEL || 'vertex-ai') ||
+        usageFromGemini(result, process.env.VERTEX_AI_MODEL || 'vertex-ai');
 
       // Extraire la réponse générée
       if (response.candidates && response.candidates[0]) {
@@ -796,7 +825,9 @@ Return ONLY the generated dialogue script.` : `You are generating a linear sales
 
       if (isQuotaError) {
         logger.warn(`⚠️ Vertex AI error (${errorMsg}). Triggering Claude fallback...`);
-        scriptContent = await callAnthropicFallback(prompt);
+        const fallback = await callAnthropicFallback(prompt);
+        scriptContent = fallback.text;
+        providerUsage = fallback.usage;
       } else {
         logger.error(`❌ Error during script generation (Vertex AI): ${errorMsg}`);
         throw error;
@@ -890,6 +921,20 @@ Return ONLY the generated dialogue script.` : `You are generating a linear sales
           return s;
         });
 
+        const usage = resolveUsageOrEstimate(
+          providerUsage,
+          prompt,
+          JSON.stringify(cleanedStages)
+        );
+        const charge = await chargeCompanyAiTokens({
+          companyId: billingCompanyId,
+          usageId: `script-generate-${gig._id}-${Date.now()}`,
+          usage,
+          tool: isTargetedInteractiveEdit
+            ? 'script.refine_stage'
+            : 'script.generate_interactive',
+        });
+
         return res.status(200).json({
           success: true,
           stages: cleanedStages,
@@ -900,7 +945,12 @@ Return ONLY the generated dialogue script.` : `You are generating a linear sales
               ? 'interactive_script_targeted_edit'
               : 'interactive_script_gpt',
             targetStageIndex: isTargetedInteractiveEdit ? safeTargetIdx : undefined,
-          }
+          },
+          usage: {
+            ...usage,
+            billed: charge.billed,
+            balance: charge.tokens,
+          },
         });
       }
     }
@@ -1027,6 +1077,22 @@ Return ONLY the generated dialogue script.` : `You are generating a linear sales
 
     console.log('\n✅ GÉNÉRATION TERMINÉE (LINEAR)\n');
     logger.info('Linear script generation completed successfully');
+    const usage = resolveUsageOrEstimate(
+      providerUsage,
+      prompt,
+      finalResponse.data.script
+    );
+    const charge = await chargeCompanyAiTokens({
+      companyId: billingCompanyId,
+      usageId: `script-generate-linear-${gig._id}-${Date.now()}`,
+      usage,
+      tool: 'script.generate_chat',
+    });
+    finalResponse.usage = {
+      ...usage,
+      billed: charge.billed,
+      balance: charge.tokens,
+    };
     res.status(200).json(finalResponse);
   } catch (error) {
     console.log('\n❌ ERREUR LORS DE LA GÉNÉRATION:');
