@@ -933,6 +933,7 @@ Return ONLY the generated dialogue script.` : `You are generating a linear sales
           tool: isTargetedInteractiveEdit
             ? 'script.refine_stage'
             : 'script.generate_interactive',
+          gigId: String(gig._id),
         });
 
         return res.status(200).json({
@@ -1087,6 +1088,7 @@ Return ONLY the generated dialogue script.` : `You are generating a linear sales
       usageId: `script-generate-linear-${gig._id}-${Date.now()}`,
       usage,
       tool: 'script.generate_chat',
+      gigId: String(gig._id),
     });
     finalResponse.usage = {
       ...usage,
