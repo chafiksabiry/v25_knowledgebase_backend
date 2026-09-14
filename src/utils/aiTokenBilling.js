@@ -96,7 +96,7 @@ async function assertCompanyHasAiTokens(companyId, minRequired = 1) {
   }
 }
 
-async function chargeCompanyAiTokens({ companyId, usageId, usage, tool, meta }) {
+async function chargeCompanyAiTokens({ companyId, usageId, usage, tool, gigId, meta }) {
   const id = String(companyId || '').trim();
   if (!id) return { billed: false };
   const tokensUsed = Math.max(0, Math.round(usage?.totalTokens || 0));
@@ -104,6 +104,7 @@ async function chargeCompanyAiTokens({ companyId, usageId, usage, tool, meta }) 
 
   try {
     const base = getOrchestratorApiBase();
+    const resolvedGigId = String(gigId || meta?.gigId || '').trim() || undefined;
     const res = await fetch(`${base}/tokens-company/charge-usage`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -112,6 +113,7 @@ async function chargeCompanyAiTokens({ companyId, usageId, usage, tool, meta }) 
         usageId,
         tokensUsed,
         tool,
+        gigId: resolvedGigId || undefined,
         meta: {
           ...(meta || {}),
           provider: usage.provider,
@@ -119,6 +121,7 @@ async function chargeCompanyAiTokens({ companyId, usageId, usage, tool, meta }) 
           inputTokens: usage.inputTokens,
           outputTokens: usage.outputTokens,
           estimated: usage.estimated,
+          ...(resolvedGigId ? { gigId: resolvedGigId } : {}),
         },
       }),
     });
