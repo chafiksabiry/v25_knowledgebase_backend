@@ -6,6 +6,7 @@ const fs = require('fs');
 const {
   uploadDocument,
   getAllDocuments,
+  getDocumentsByGig,
   getDocumentById,
   deleteDocument,
   updateDocument,
@@ -62,6 +63,9 @@ router.post('/upload', upload.single('file'), uploadDocument);
 
 // Get all documents
 router.get('/', getAllDocuments);
+
+// Get documents by gig (must be before /:id)
+router.get('/gig/:gigId', getDocumentsByGig);
 
 // Get a single document by ID
 router.get('/:id', getDocumentById);

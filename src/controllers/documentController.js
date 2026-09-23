@@ -140,6 +140,18 @@ const getAllDocuments = async (req, res) => {
   }
 };
 
+const getDocumentsByGig = async (req, res) => {
+  try {
+    const gigId = String(req.params.gigId || '').trim();
+    if (!gigId) return res.status(400).json({ error: 'gigId is required' });
+    const documents = await Document.find({ gigId }).select('-content -chunks').sort({ uploadedAt: -1, createdAt: -1 });
+    res.status(200).json({ documents });
+  } catch (error) {
+    logger.error('Error fetching documents by gig:', error);
+    res.status(500).json({ error: 'Failed to fetch documents' });
+  }
+};
+
 // Get document by ID
 const getDocumentById = async (req, res) => {
   try {
@@ -221,6 +233,7 @@ const analyzeDocument = async (req, res) => {
 module.exports = {
   uploadDocument,
   getAllDocuments,
+  getDocumentsByGig,
   getDocumentById,
   deleteDocument,
   updateDocument,
