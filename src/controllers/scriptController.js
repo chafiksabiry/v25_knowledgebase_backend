@@ -112,6 +112,18 @@ const updateScriptStatus = async (req, res) => {
     await script.save();
     
     logger.info(`Script status updated successfully: ${scriptId} - isActive: ${isActive}`);
+
+    if (isActive === false) {
+      try {
+        const { notifyScriptDeactivated } = require('../services/repNotificationClient');
+        void notifyScriptDeactivated({
+          gigId: script.gigId,
+          scriptId: script._id,
+        }).catch((err) => logger.error('Script deactivated notification failed:', err));
+      } catch (err) {
+        logger.error('Script deactivated notification import failed:', err);
+      }
+    }
     
     res.status(200).json({ 
       success: true, 
