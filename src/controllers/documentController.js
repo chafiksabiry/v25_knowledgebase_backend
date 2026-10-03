@@ -80,6 +80,19 @@ const uploadDocument = async (req, res) => {
     // Delete local file after upload
     await fs.unlink(filePath);
 
+    if (document.gigId) {
+      try {
+        const { notifyKbDocumentAdded } = require('../services/repNotificationClient');
+        void notifyKbDocumentAdded({
+          gigId: document.gigId,
+          documentId: document._id,
+          documentName: document.name,
+        }).catch((err) => logger.error('KB document notification failed:', err));
+      } catch (err) {
+        logger.error('KB document notification import failed:', err);
+      }
+    }
+
     res.status(201).json({
       message: 'Document uploaded successfully',
       document: {

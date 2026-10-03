@@ -1163,6 +1163,15 @@ const createScript = async (req, res) => {
       isActive: shouldBeActive,
     });
 
+    try {
+      const { notifyScriptAdded } = require('../services/repNotificationClient');
+      void notifyScriptAdded({ gigId: created.gigId, scriptId: created._id }).catch((err) =>
+        logger.error('Script added notification failed:', err)
+      );
+    } catch (err) {
+      logger.error('Script added notification import failed:', err);
+    }
+
     return res.status(201).json({
       success: true,
       data: {
@@ -1270,6 +1279,18 @@ const updateScriptStatus = async (req, res) => {
 
     if (!updated) {
       return res.status(404).json({ error: 'Script not found' });
+    }
+
+    if (isActive === false) {
+      try {
+        const { notifyScriptDeactivated } = require('../services/repNotificationClient');
+        void notifyScriptDeactivated({
+          gigId: updated.gigId,
+          scriptId: updated._id,
+        }).catch((err) => logger.error('Script deactivated notification failed:', err));
+      } catch (err) {
+        logger.error('Script deactivated notification import failed:', err);
+      }
     }
 
     return res.status(200).json({
