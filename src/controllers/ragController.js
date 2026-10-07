@@ -23,6 +23,119 @@ const deactivateOtherScriptsForGig = async (gigId, exceptScriptId) => {
   );
 };
 
+/** Default friendly contact tokens when the company front did not send a catalog. */
+const DEFAULT_CONTACT_VARIABLE_LABELS = [
+  'Nom du prospect',
+  'Prénom',
+  'Nom',
+  'Email',
+  'Téléphone',
+  'Votre nom (REP)',
+  "Nom de l'entreprise (vendeur)",
+];
+
+/** Map common legacy bracket aliases → friendly {{label}}. */
+const LEGACY_BRACKET_TO_FRIENDLY = [
+  { pattern: /\[\s*Nom du (?:client\/)?prospect\s*\]/gi, label: 'Nom du prospect' },
+  { pattern: /\[\s*Nom(?:\s+du)?\s+prospect\s*\]/gi, label: 'Nom du prospect' },
+  { pattern: /\[\s*Nom du client\s*\]/gi, label: 'Nom du prospect' },
+  { pattern: /\[\s*Votre\s*Nom\s*\]/gi, label: 'Votre nom (REP)' },
+  { pattern: /\[\s*Prénom(?:\s+de\s+l['’]?agent)?\s*\]/gi, label: 'Votre nom (REP)' },
+  { pattern: /\[\s*Nom de (?:l['’])?entreprise(?:\s+prospect)?\s*\]/gi, label: "Nom de l'entreprise (vendeur)" },
+  { pattern: /\[\s*Nom de la (?:société|societe|company|compagnie)\s*\]/gi, label: "Nom de l'entreprise (vendeur)" },
+  { pattern: /\[\s*Société\s*\]/gi, label: "Nom de l'entreprise (vendeur)" },
+  { pattern: /\[\s*Entreprise\s*\]/gi, label: "Nom de l'entreprise (vendeur)" },
+];
+
+const formatContactVariablesBlock = (contactVariables) => {
+  const list = Array.isArray(contactVariables) ? contactVariables : [];
+  const lines = list
+    .map((v) => {
+      const label = String(v?.label || v?.key || '').trim();
+      if (!label) return '';
+      const example = v?.example ? ` (ex: ${String(v.example).trim()})` : '';
+      return `- {{${label}}}${example}`;
+    })
+    .filter(Boolean);
+
+  const effectiveLines =
+    lines.length > 0
+      ? lines
+      : DEFAULT_CONTACT_VARIABLE_LABELS.map((label) => `- {{${label}}}`);
+
+  return [
+    'CONTACT VARIABLES (MANDATORY IN SPOKEN LINES):',
+    'Use EXACTLY these tokens with double curly braces — never invent other placeholder syntax.',
+    'Do NOT replace tokens with concrete names; keep {{Label}} so the runtime can merge lead data.',
+    'FORBIDDEN: [Nom du prospect], [Votre Nom], [Company], raw DB keys (Deal_Name, Email_1), or hard-coded fake names.',
+    'REQUIRED examples in opening: greet with {{Nom du prospect}} and introduce with {{Votre nom (REP)}} / {{Nom de l\'entreprise (vendeur)}} when relevant.',
+    ...effectiveLines,
+  ].join('\n');
+};
+
+const normalizeScriptPlaceholders = (text, contactVariables) => {
+  if (typeof text !== 'string' || !text) return text;
+  let out = text;
+
+  for (const { pattern, label } of LEGACY_BRACKET_TO_FRIENDLY) {
+    out = out.replace(pattern, `{{${label}}}`);
+  }
+
+  const labels = new Set(
+    (Array.isArray(contactVariables) ? contactVariables : [])
+      .map((v) => String(v?.label || '').trim())
+      .filter(Boolean)
+  );
+  for (const label of DEFAULT_CONTACT_VARIABLE_LABELS) labels.add(label);
+
+  // Convert remaining [Label] → {{Label}} when Label matches a known friendly label (case-insensitive).
+  out = out.replace(/\[([^\]]{1,80})\]/g, (full, inner) => {
+    const trimmed = String(inner || '').trim();
+    if (!trimmed || trimmed.includes('{')) return full;
+    const match = [...labels].find((l) => l.toLowerCase() === trimmed.toLowerCase());
+    return match ? `{{${match}}}` : full;
+  });
+
+  return out;
+};
+
+const normalizeStagePlaceholders = (stage, contactVariables) => {
+  if (!stage || typeof stage !== 'object') return stage;
+  const s = { ...stage };
+  if (typeof s.introReplica === 'string') {
+    s.introReplica = normalizeScriptPlaceholders(s.introReplica, contactVariables);
+  }
+  if (Array.isArray(s.reminders)) {
+    s.reminders = s.reminders.map((rem) =>
+      rem && typeof rem.text === 'string'
+        ? { ...rem, text: normalizeScriptPlaceholders(rem.text, contactVariables) }
+        : rem
+    );
+  }
+  if (Array.isArray(s.options)) {
+    s.options = s.options.map((opt) => {
+      if (!opt || typeof opt !== 'object') return opt;
+      const next = { ...opt };
+      if (typeof next.subtext === 'string') {
+        next.subtext = normalizeScriptPlaceholders(next.subtext, contactVariables);
+      }
+      if (typeof next.recommendedResponse === 'string') {
+        next.recommendedResponse = normalizeScriptPlaceholders(
+          next.recommendedResponse,
+          contactVariables
+        );
+      }
+      return next;
+    });
+  }
+  if (Array.isArray(s.checklist)) {
+    s.checklist = s.checklist.map((item) =>
+      typeof item === 'string' ? normalizeScriptPlaceholders(item, contactVariables) : item
+    );
+  }
+  return s;
+};
+
 /** Normalize and validate script body fields shared by create/update. */
 const sanitizeScriptBody = ({ targetClient, language, details, script, playbook }) => {
   if (!targetClient || !language) {
@@ -548,7 +661,9 @@ const generateScript = async (req, res) => {
       editMode,
       targetStageIndex,
       currentStages,
+      contactVariables,
     } = req.body;
+    const contactVariablesBlock = formatContactVariablesBlock(contactVariables);
     // Validation checks
     if (!gig || !gig._id) {
       return res.status(400).json({ error: 'A gig selection is required to generate a script.' });
@@ -641,6 +756,10 @@ ${JSON.stringify(targetStage, null, 2)}
 FULL CURRENT SCRIPT (context only — other stages must stay identical):
 ${JSON.stringify(currentStages)}
 
+${contactVariablesBlock}
+
+When editing spoken lines (introReplica, recommendedResponse), keep or insert contact variables as {{Label}} from the list above. Never convert them to [brackets] or concrete fake names.
+
 OUTPUT FORMAT:
 Return ONLY a raw parseable JSON object with NO markdown fences, in ONE of these shapes:
 1) { "patchedStage": { ...single updated stage object... } }
@@ -678,6 +797,8 @@ ${JSON.stringify(cleanedTrainings)}
 USER REFINEMENT/CONTEXT:
 ${contexte || 'Generate a standard interactive 8-stage sales script.'}
 
+${contactVariablesBlock}
+
 SCHEMA SPECIFICATIONS:
 The output must be a single, raw, parseable JSON object with no markdown surrounding block fences.
 The JSON object must have a single key "stages" which is an array of exactly 8 objects.
@@ -689,7 +810,7 @@ Each object represents a step in the sales call and must conform to this strict 
   "type": "one of: 'regulatory', 'collection', 'discovery', 'presentation', 'objection', 'compliance', 'closing', 'followup'",
   "typeLabel": "French label matching the type (e.g., 'Réglementaire', 'Collecte', 'Découverte', 'Argumentaire', 'Objections', 'Conformité', 'Clôture', 'Suivi')",
   "introTitle": "Actionable micro-instruction in uppercase French (e.g., 'OUVERTURE LOI NAEGELEN + DDA', 'EXPLORATION DES BESOINS COMPLÉMENTAIRES')",
-  "introReplica": "The exact script/dialogue lines the Agent should speak. Keep it realistic, direct, and in natural spoken French. Never use raw placeholders like [Company] or [Your Name] - use realistic context-based details.",
+  "introReplica": "Exact Agent dialogue in natural spoken French. MUST embed contact merge tokens like {{Nom du prospect}}, {{Votre nom (REP)}}, {{Nom de l'entreprise (vendeur)}} (and other catalog labels) — never [brackets], never hard-coded fake names.",
   "reminders": [
     {
       "type": "warning", "clock", or "info",
@@ -702,7 +823,7 @@ Each object represents a step in the sales call and must conform to this strict 
       "id": "option_1",
       "label": "Outcome/Choice title in French (e.g., '✓ Accord de principe', '↻ Objection sur le tarif')",
       "subtext": "What the prospect says in French (e.g., 'Je trouve que l'abonnement mensuel est trop cher.')",
-      "recommendedResponse": "The exact spoken reply in natural French the Agent must use to handle this specific outcome/objection."
+      "recommendedResponse": "Exact spoken Agent reply in French; use {{Label}} contact tokens wherever a personalizable field appears."
     }
   ],
   "checklistTitle": "French header (e.g., 'DONNÉES À SAISIR DANS LE CRM')",
@@ -716,6 +837,8 @@ CRITICAL RULES:
 2. The JSON must be valid, strict, parseable, and contain exactly 8 stages.
 3. Keep spoken lines natural, friendly, highly professional.
 4. Integrate the training concepts dynamically in the reminders and recommendedResponses.
+5. Stage 1 introReplica MUST open with a greeting that includes {{Nom du prospect}} and introduce the agent with {{Votre nom (REP)}} calling on behalf of {{Nom de l'entreprise (vendeur)}}.
+6. Everywhere a prospect name, agent name, or seller company would be spoken, use the {{Label}} tokens from CONTACT VARIABLES — never invent [Nom du prospect] / [Votre Nom].
 
 Return ONLY the valid raw JSON matching the schema. No markdown wrapping.`;
     } else {
@@ -729,10 +852,13 @@ JOB DETAILS (PRIMARY FOUNDATION):
 Instructions:
 ${contexte}
 
+${contactVariablesBlock}
+
 CRITICAL REQUIREMENTS:
 - The total dialogue script MUST NOT exceed 8 replica lines in total (e.g. exactly 4 Agent turns and 4 Lead turns). Keep it extremely concise and focused, matching this strict 8-line limit.
 - Each speaker turn (Agent and Lead) MUST consist of exactly two lines (sentences) of dialogue.
 - REGLEMENTATION ET COMPLIANCE : The Agent MUST explicitly state in their opening/compliance turn that "cet appel est susceptible d'être enregistré à des fins de formation ou de contrôle de qualité" (the call may be recorded for quality and training purposes) and ensure full compliance with French telesales regulations and RGPD/GDPR guidelines.
+- Use {{Nom du prospect}}, {{Votre nom (REP)}}, {{Nom de l'entreprise (vendeur)}} (and other catalog labels) in Agent lines. Never use [bracket] placeholders.
 
 ${normalizedChatHistory ? `Chat history:\n${normalizedChatHistory}` : ''}
 
@@ -749,6 +875,8 @@ Return ONLY the generated dialogue script.` : `You are generating a linear sales
   - DESCRIPTION : ${gig.description || ''}
   - CATEGORIE/INDUSTRIE : ${gig.category || gig.industry || ''}
 
+  ${contactVariablesBlock}
+
   CRITICAL REQUIREMENTS:
   1. The script MUST flow naturally and cover the following phases in a continuous linear dialogue:
      - Opening & SBAM
@@ -760,7 +888,7 @@ Return ONLY the generated dialogue script.` : `You are generating a linear sales
      - Confirmation & Closing
   
   2. The script must be a single linear conversation with exactly one response/replica for each agent and lead turn. No multiple branching options or alternatives.
-  3. Keep sentences short, natural, and highly suited for spoken conversation. Do not use placeholders like [Company] or [Name]. Use [Nom du prospect] for the prospect's name.
+  3. Keep sentences short, natural, and highly suited for spoken conversation. Use {{Nom du prospect}} for the prospect name, {{Votre nom (REP)}} for the agent name, and {{Nom de l'entreprise (vendeur)}} for the seller company. Never use [bracket] placeholders.
   4. The total dialogue script MUST NOT exceed 8 replica lines in total (e.g. exactly 4 Agent turns and 4 Lead turns). Keep it extremely concise and focused, matching this strict 8-line limit.
   5. Each speaker turn (Agent and Lead) MUST consist of exactly two dialogue lines/sentences. Keep each speech block short, composed of exactly 2 lines.
   
@@ -771,7 +899,7 @@ Return ONLY the generated dialogue script.` : `You are generating a linear sales
   ${normalizedChatHistory ? `Chat history:\n${normalizedChatHistory}` : ''}
 
   Format the output strictly as a linear dialogue of alternating lines. Use exactly this format:
-  Agent: Bonjour [Nom du prospect], ...
+  Agent: Bonjour {{Nom du prospect}}, je m'appelle {{Votre nom (REP)}} et j'appelle de la part de {{Nom de l'entreprise (vendeur)}}...
   Lead: Bonjour, ...
   Agent: ...
   
@@ -896,9 +1024,10 @@ Return ONLY the generated dialogue script.` : `You are generating a linear sales
         console.log('\n✅ GÉNÉRATION INTERACTIVE REUSSIE\n');
         
         // Clean up stages text in backend too to guarantee no "Module X :" strings are saved
+        // and normalize legacy [brackets] into {{friendly labels}} for contact merge.
         const cleanedStages = parsedStages.map(stage => {
           if (!stage) return stage;
-          const s = { ...stage };
+          let s = { ...stage };
           if (Array.isArray(s.reminders)) {
             s.reminders = s.reminders.map(rem => {
               if (rem && typeof rem.text === 'string') {
@@ -918,6 +1047,7 @@ Return ONLY the generated dialogue script.` : `You are generating a linear sales
               return item;
             });
           }
+          s = normalizeStagePlaceholders(s, contactVariables);
           return s;
         });
 
@@ -1025,17 +1155,25 @@ Return ONLY the generated dialogue script.` : `You are generating a linear sales
       }).filter((row) => row.text);
     }
 
-    // Apply "Bonjour [Nom du prospect]" guardrail on first agent line
+    // Normalize placeholders then enforce "Bonjour {{Nom du prospect}}" on first agent line
+    dialogueRows = dialogueRows.map((row) => ({
+      ...row,
+      text: normalizeScriptPlaceholders(String(row.text || ''), contactVariables),
+    }));
+
     const firstAgentIdx = dialogueRows.findIndex((row) => row.role === 'agent');
     if (firstAgentIdx >= 0) {
       let firstText = String(dialogueRows[firstAgentIdx].text || '').trim();
-      firstText = firstText.replace(/^(Bonjour|Salut|Allô)\s+[^,!.?]+[,!.?]?/i, '$1').trim();
-
-      if (!firstText.toLowerCase().startsWith('bonjour [nom du prospect]')) {
+      const hasProspectToken = /\{\{\s*Nom du prospect\s*\}\}/i.test(firstText);
+      if (!hasProspectToken) {
+        // Drop a hard-coded greeting name before injecting the merge token.
+        firstText = firstText
+          .replace(/^(Bonjour|Salut|Allô)\s+(?!\{\{)[^,!.?]+[,!.?]?\s*/i, '$1 ')
+          .trim();
         if (firstText.toLowerCase().startsWith('bonjour')) {
-          dialogueRows[firstAgentIdx].text = `Bonjour [Nom du prospect], ${firstText.slice(7).replace(/^[\s,]+/, '')}`;
+          dialogueRows[firstAgentIdx].text = `Bonjour {{Nom du prospect}}, ${firstText.slice(7).replace(/^[\s,]+/, '')}`;
         } else {
-          dialogueRows[firstAgentIdx].text = `Bonjour [Nom du prospect], ${firstText}`;
+          dialogueRows[firstAgentIdx].text = `Bonjour {{Nom du prospect}}, ${firstText}`;
         }
       }
     }
