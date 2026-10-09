@@ -645,6 +645,107 @@ const analyzeDocument = async (req, res) => {
  * @param {Object} req - Express request object with companyId, gig, typeClient, language, details in body
  * @param {Object} res - Express response object
  */
+function stageLooksValid(stage) {
+  return !!(stage && typeof stage === 'object' && (stage.introReplica || stage.label || stage.id));
+}
+
+function applyIncomingStage(base, incoming, index) {
+  return {
+    ...(base || {}),
+    ...incoming,
+    id: (base && base.id) || incoming.id || `step_${index + 1}`,
+    stepNumber: (base && base.stepNumber) || incoming.stepNumber || index + 1,
+  };
+}
+
+/**
+ * Keep stages up to lockedIndex as given. Later stages may be replaced when the
+ * model returns a full script. Stages before the lock are never rewritten.
+ */
+function mergeScriptContinuity(currentStages, parsedStages, patchedStage, lockedIndex, lockEditedStage) {
+  const merged = currentStages.map((stage) => (stage ? { ...stage } : stage));
+  const applyAt = (index, incoming) => {
+    if (!stageLooksValid(incoming)) return false;
+    merged[index] = applyIncomingStage(currentStages[index], incoming, index);
+    return true;
+  };
+
+  let targetApplied = lockEditedStage;
+  if (!lockEditedStage) {
+    if (stageLooksValid(patchedStage)) targetApplied = applyAt(lockedIndex, patchedStage);
+    else if (Array.isArray(parsedStages)) targetApplied = applyAt(lockedIndex, parsedStages[lockedIndex]);
+  }
+
+  if (Array.isArray(parsedStages)) {
+    for (let i = lockedIndex + 1; i < currentStages.length; i += 1) {
+      applyAt(i, parsedStages[i]);
+    }
+  }
+  return { merged, targetApplied };
+}
+
+async function generateModelText(prompt) {
+  try {
+    const result = await vertexAIService.generativeModel.generateContent(prompt);
+    const response = result.response;
+    const providerUsage =
+      usageFromGemini(response, process.env.VERTEX_AI_MODEL || 'vertex-ai') ||
+      usageFromGemini(result, process.env.VERTEX_AI_MODEL || 'vertex-ai');
+    let text = '';
+    if (response?.candidates?.[0]?.content?.parts) {
+      text = response.candidates[0].content.parts[0].text;
+    } else if (response?.candidates?.[0]?.text) {
+      text = response.candidates[0].text;
+    } else if (response?.text) {
+      text = response.text;
+    } else if (typeof response === 'string') {
+      text = response;
+    } else {
+      throw new Error('Unexpected response structure from Vertex AI');
+    }
+    return {
+      text: String(text || '').replace(/^```(?:json|text|plaintext)?\s*|\s*```$/g, '').trim(),
+      usage: providerUsage,
+    };
+  } catch (error) {
+    const errorMsg = error.message || 'Unknown Vertex AI Error';
+    const isQuotaError = errorMsg.includes('429') ||
+      errorMsg.includes('404') ||
+      errorMsg.toLowerCase().includes('quota') ||
+      errorMsg.toLowerCase().includes('not found') ||
+      errorMsg.toLowerCase().includes('overloaded') ||
+      error.status === 429 ||
+      error.status === 404;
+    if (!isQuotaError) throw error;
+    logger.warn(`⚠️ Vertex AI error (${errorMsg}). Triggering Claude fallback...`);
+    return callAnthropicFallback(prompt);
+  }
+}
+
+function parseInteractiveModelJson(scriptContent) {
+  const raw = String(scriptContent || '').replace(/^```(?:json)?\s*|\s*```$/gi, '').trim();
+  const tryParse = (value) => {
+    const parsed = JSON.parse(value);
+    const patchedStage = parsed?.patchedStage || parsed?.stage || null;
+    let parsedStages = parsed?.stages || (Array.isArray(parsed) ? parsed : null);
+    if (!parsedStages && stageLooksValid(parsed) && !patchedStage) {
+      return { patchedStage: parsed, parsedStages: null };
+    }
+    return { patchedStage, parsedStages };
+  };
+  try {
+    return tryParse(raw);
+  } catch (err) {
+    const jsonMatch = raw.match(/\{[\s\S]*\}/);
+    if (!jsonMatch) return { patchedStage: null, parsedStages: null };
+    try {
+      return tryParse(jsonMatch[0]);
+    } catch (inner) {
+      return { patchedStage: null, parsedStages: null };
+    }
+  }
+}
+
 const generateScript = async (req, res) => {
   try {
     const {
@@ -723,20 +824,43 @@ const generateScript = async (req, res) => {
     const safeTargetIdx = Number.isInteger(Number(targetStageIndex))
       ? Math.min(Math.max(0, Number(targetStageIndex)), Math.max(0, (currentStages?.length || 1) - 1))
       : 0;
+    const isRealignEdit = editMode === 'realign';
     const isTargetedInteractiveEdit =
       !!isInteractiveRequest &&
-      (editMode === 'targeted' || editMode === 'refine') &&
+      (editMode === 'targeted' || editMode === 'refine' || isRealignEdit) &&
       hasCurrentStages;
 
     let prompt;
     if (isTargetedInteractiveEdit) {
       const targetStage = currentStages[safeTargetIdx] || {};
-      prompt = `You are a world-class conversational sales engineer editing an EXISTING interactive call script.
+      const continuityRules = `CONTINUITY (required):
+- A later stage may mention an objection, price, offer, feature, competitor, or promise ONLY if that subject was already opened in an earlier stage or in the mission description.
+- If a later stage objects to a price/tariff/fee/subscription that no earlier stage discusses, rewrite that objection so it matches what was actually said. Do not keep "objection sur le tarif" when price was never introduced.
+- If a later stage is already consistent, copy it unchanged. Do not paraphrase for style.
+- Never rewrite stages before index ${safeTargetIdx}.
+- Return the FULL script as { "stages": [ ...exactly ${currentStages.length} stages in order... ] }.`;
+      prompt = isRealignEdit
+        ? `You are a world-class conversational sales engineer. The user already edited stage index ${safeTargetIdx} (stepNumber ${targetStage.stepNumber || safeTargetIdx + 1}). Keep stages 0 through ${safeTargetIdx} EXACTLY as written in CURRENT SCRIPT. Do not paraphrase them.
 
-CRITICAL MISSION — SURGICAL EDIT ONLY:
-- Apply the user request ONLY to stage index ${safeTargetIdx} (stepNumber ${targetStage.stepNumber || safeTargetIdx + 1}, id "${targetStage.id || `step_${safeTargetIdx + 1}`}").
-- Do NOT rewrite, rephrase, or regenerate any other stage.
-- Preserve all unrelated content of the target stage unless the user explicitly asks to change it.
+${continuityRules}
+
+SALES MISSION:
+- Title: ${gig.title || ''}
+- Description: ${gig.description || ''}
+- Category/Industry: ${gig.category || gig.industry || ''}
+
+CURRENT SCRIPT (source of truth, including the user's edit):
+${JSON.stringify(currentStages)}
+
+${contactVariablesBlock}
+
+When you rewrite a later spoken line, keep {{Label}} contact tokens. Each rewritten stage must keep id, stepNumber, label, type, introTitle, introReplica, reminders, options and checklist. Return ONLY raw JSON.`
+        : `You are a world-class conversational sales engineer editing an EXISTING interactive call script.
+
+MISSION:
+- Apply the user request to stage index ${safeTargetIdx} (stepNumber ${targetStage.stepNumber || safeTargetIdx + 1}, id "${targetStage.id || `step_${safeTargetIdx + 1}`}").
+- Then reread every LATER stage and rewrite it only when the edit makes it inconsistent.
+${continuityRules}
 - Keep the same schema fields and French language.
 
 SALES MISSION:
@@ -753,7 +877,7 @@ ${contexte || 'Improve clarity of the current stage without changing intent.'}
 CURRENT TARGET STAGE (edit this object):
 ${JSON.stringify(targetStage, null, 2)}
 
-FULL CURRENT SCRIPT (context only — other stages must stay identical):
+FULL CURRENT SCRIPT:
 ${JSON.stringify(currentStages)}
 
 ${contactVariablesBlock}
@@ -761,9 +885,8 @@ ${contactVariablesBlock}
 When editing spoken lines (introReplica, recommendedResponse), keep or insert contact variables as {{Label}} from the list above. Never convert them to [brackets] or concrete fake names.
 
 OUTPUT FORMAT:
-Return ONLY a raw parseable JSON object with NO markdown fences, in ONE of these shapes:
-1) { "patchedStage": { ...single updated stage object... } }
-2) { "stages": [ ...exactly the same length as CURRENT SCRIPT, with ONLY index ${safeTargetIdx} changed... ] }
+Return ONLY a raw parseable JSON object with NO markdown fences:
+{ "stages": [ ...exactly ${currentStages.length} stages. Index ${safeTargetIdx} is the edited stage. Later indexes are unchanged when still coherent, rewritten when they contradict the stages before them... ] }
 
 STAGE OBJECT SCHEMA (same as existing):
 {
@@ -839,6 +962,7 @@ CRITICAL RULES:
 4. Integrate the training concepts dynamically in the reminders and recommendedResponses.
 5. Stage 1 introReplica MUST open with a greeting that includes {{Nom du prospect}} and introduce the agent with {{Votre nom (REP)}} calling on behalf of {{Nom de l'entreprise (vendeur)}}.
 6. Everywhere a prospect name, agent name, or seller company would be spoken, use the {{Label}} tokens from CONTACT VARIABLES — never invent [Nom du prospect] / [Votre Nom].
+7. Continuity: a later stage may object to, argue, or collect a subject only if an earlier stage or the mission description already introduced it. Do not add an objection about price, tariff, fees, or subscription unless that subject was stated earlier or in the mission.
 
 Return ONLY the valid raw JSON matching the schema. No markdown wrapping.`;
     } else {
@@ -969,55 +1093,53 @@ Return ONLY the generated dialogue script.` : `You are generating a linear sales
 
     // Interactive structured response parsing
     if (isInteractiveRequest) {
-      let parsedStages = null;
-      let patchedStage = null;
-      try {
-        const clean = String(scriptContent || '')
-          .replace(/^```(?:json)?\s*|\s*```$/gi, '')
-          .trim();
-        const parsed = JSON.parse(clean);
-        patchedStage = parsed.patchedStage || null;
-        parsedStages = parsed.stages || (Array.isArray(parsed) ? parsed : null);
-      } catch (err) {
-        console.warn('[BACKEND PARSER] String looked like JSON but parsing failed, trying simple extraction.', err);
-        // Regexp JSON extraction fallback
-        const jsonMatch = String(scriptContent || '').match(/\{[\s\S]*\}/);
-        if (jsonMatch) {
+      let { parsedStages, patchedStage } = parseInteractiveModelJson(scriptContent);
+
+      // Edit one stage, then let later stages follow when the change makes them inconsistent.
+      if (isTargetedInteractiveEdit && Array.isArray(currentStages) && currentStages.length > 0) {
+        let { merged, targetApplied } = mergeScriptContinuity(
+          currentStages,
+          parsedStages,
+          patchedStage,
+          safeTargetIdx,
+          isRealignEdit
+        );
+        const laterMissing = safeTargetIdx < currentStages.length - 1 &&
+          (!Array.isArray(parsedStages) || parsedStages.length <= safeTargetIdx + 1);
+        if (targetApplied && laterMissing) {
+          const followPrompt = `The script below already contains the edited stage at index ${safeTargetIdx}. Keep stages 0 through ${safeTargetIdx} EXACTLY as written. Rewrite only later stages that mention a subject (price, tariff, offer, objection, feature) which the earlier stages never introduced. Copy a later stage unchanged when it still fits. Return ONLY { "stages": [ ...${currentStages.length} stages... ] }.\n\n${JSON.stringify(merged)}`;
           try {
-            const parsed = JSON.parse(jsonMatch[0]);
-            patchedStage = parsed.patchedStage || null;
-            parsedStages = parsed.stages || (Array.isArray(parsed) ? parsed : null);
-          } catch (e) {
-            console.error('[BACKEND PARSER] Regex JSON parse failed too.', e);
+            const follow = await generateModelText(followPrompt);
+            const followed = parseInteractiveModelJson(follow.text);
+            if (follow.usage && providerUsage) {
+              providerUsage = {
+                ...providerUsage,
+                inputTokens: (providerUsage.inputTokens || 0) + (follow.usage.inputTokens || 0),
+                outputTokens: (providerUsage.outputTokens || 0) + (follow.usage.outputTokens || 0),
+                totalTokens: (providerUsage.totalTokens || 0) + (follow.usage.totalTokens || 0),
+              };
+            } else if (follow.usage) {
+              providerUsage = follow.usage;
+            }
+            const second = mergeScriptContinuity(
+              merged,
+              followed.parsedStages,
+              null,
+              safeTargetIdx,
+              true
+            );
+            merged = second.merged;
+          } catch (followError) {
+            logger.warn(`Script continuity follow-up skipped: ${followError.message}`);
           }
         }
-      }
-
-      // Targeted refine: keep every stage identical except the requested one.
-      if (isTargetedInteractiveEdit && Array.isArray(currentStages) && currentStages.length > 0) {
-        const merged = currentStages.map((stage) => (stage ? { ...stage } : stage));
-        let nextStage = null;
-        if (patchedStage && typeof patchedStage === 'object') {
-          nextStage = patchedStage;
-        } else if (Array.isArray(parsedStages) && parsedStages[safeTargetIdx]) {
-          nextStage = parsedStages[safeTargetIdx];
-        }
-
-        if (nextStage && typeof nextStage === 'object') {
-          const base = currentStages[safeTargetIdx] || {};
-          merged[safeTargetIdx] = {
-            ...base,
-            ...nextStage,
-            id: base.id || nextStage.id,
-            stepNumber: base.stepNumber || nextStage.stepNumber || safeTargetIdx + 1,
-          };
-          parsedStages = merged;
-          console.log(`\n✅ TARGETED INTERACTIVE EDIT applied to stage index ${safeTargetIdx}\n`);
-        } else {
+        if (!targetApplied) {
           return res.status(502).json({
             error: 'Targeted script edit failed: model did not return a valid patched stage.',
           });
         }
+        parsedStages = merged;
+        console.log(`\n✅ TARGETED INTERACTIVE EDIT applied to stage index ${safeTargetIdx}\n`);
       }
 
       if (Array.isArray(parsedStages) && parsedStages.length > 0) {
