@@ -839,6 +839,82 @@ function parseInteractiveModelJson(scriptContent) {
   return { patchedStage: null, parsedStages: null };
 }
 
+function normalizeUiLang(value) {
+  const raw = String(value || '').toLowerCase();
+  if (raw.startsWith('en')) return 'en';
+  if (raw.startsWith('fr')) return 'fr';
+  return null;
+}
+
+function addProviderUsage(base, extra) {
+  if (!extra) return base || null;
+  if (!base) return extra;
+  return {
+    ...base,
+    inputTokens: (base.inputTokens || 0) + (extra.inputTokens || 0),
+    outputTokens: (base.outputTokens || 0) + (extra.outputTokens || 0),
+    totalTokens: (base.totalTokens || 0) + (extra.totalTokens || 0),
+  };
+}
+
+function cleanInteractiveStages(stages, contactVariables) {
+  return stages.map((stage) => {
+    if (!stage) return stage;
+    let s = { ...stage };
+    if (Array.isArray(s.reminders)) {
+      s.reminders = s.reminders.map((rem) => {
+        if (rem && typeof rem.text === 'string') {
+          return {
+            ...rem,
+            text: rem.text.replace(/^(module\s+\d+\s*[:\-]\s*)/i, '').trim(),
+          };
+        }
+        return rem;
+      });
+    }
+    if (Array.isArray(s.checklist)) {
+      s.checklist = s.checklist.map((item) => {
+        if (typeof item === 'string') {
+          return item.replace(/^(module\s+\d+\s*[:\-]\s*)/i, '').trim();
+        }
+        return item;
+      });
+    }
+    return normalizeStagePlaceholders(s, contactVariables);
+  });
+}
+
+function alignTranslatedStages(source, translated) {
+  return source.map((stage, index) => {
+    const next = translated[index] && typeof translated[index] === 'object' ? translated[index] : {};
+    return {
+      ...next,
+      id: stage?.id || next.id,
+      stepNumber: stage?.stepNumber || next.stepNumber,
+      type: stage?.type || next.type,
+    };
+  });
+}
+
+async function translateInteractiveStages(stages, targetLang) {
+  const langName = targetLang === 'fr' ? 'French' : 'English';
+  const prompt = `Translate this interactive call script into ${langName}.
+Return ONLY one JSON object {"stages":[...]} with exactly ${stages.length} stages in the same order.
+Keep id, stepNumber, and type unchanged.
+Translate every human-readable string: label, typeLabel, introTitle, introReplica, reminders[].text, optionsTitle, options[].label, options[].subtext, options[].recommendedResponse, checklistTitle, and checklist items.
+Copy every {{...}} token exactly. Do not translate the text inside {{ }}.
+No markdown and no commentary.
+
+${JSON.stringify({ stages })}`;
+  const result = await generateModelText(prompt, { json: true });
+  const parsed = parseInteractiveModelJson(result.text);
+  const next = parsed.parsedStages;
+  if (!Array.isArray(next) || next.length !== stages.length) {
+    throw new Error(`translated stage count ${Array.isArray(next) ? next.length : 0}`);
+  }
+  return { stages: alignTranslatedStages(stages, next), usage: result.usage };
+}
+
 const generateScript = async (req, res) => {
   try {
     const {
@@ -856,6 +932,7 @@ const generateScript = async (req, res) => {
       targetStageIndex,
       currentStages,
       contactVariables,
+      outputLanguage,
     } = req.body;
     const contactVariablesBlock = formatContactVariablesBlock(contactVariables);
     // Validation checks
@@ -954,7 +1031,7 @@ MISSION:
 - Apply the user request to stage index ${safeTargetIdx} (stepNumber ${targetStage.stepNumber || safeTargetIdx + 1}, id "${targetStage.id || `step_${safeTargetIdx + 1}`}").
 - Then reread every LATER stage and rewrite it only when the edit makes it inconsistent.
 ${continuityRules}
-- Keep the same schema fields and French language.
+- Keep the same schema fields and the same language as CURRENT SCRIPT.
 
 SALES MISSION:
 - Title: ${gig.title || ''}
@@ -1279,36 +1356,24 @@ Return ONLY the generated dialogue script.` : `You are generating a linear sales
         
         // Clean up stages text in backend too to guarantee no "Module X :" strings are saved
         // and normalize legacy [brackets] into {{friendly labels}} for contact merge.
-        const cleanedStages = parsedStages.map(stage => {
-          if (!stage) return stage;
-          let s = { ...stage };
-          if (Array.isArray(s.reminders)) {
-            s.reminders = s.reminders.map(rem => {
-              if (rem && typeof rem.text === 'string') {
-                return {
-                  ...rem,
-                  text: rem.text.replace(/^(module\s+\d+\s*[:\-]\s*)/i, '').trim()
-                };
-              }
-              return rem;
-            });
-          }
-          if (Array.isArray(s.checklist)) {
-            s.checklist = s.checklist.map(item => {
-              if (typeof item === 'string') {
-                return item.replace(/^(module\s+\d+\s*[:\-]\s*)/i, '').trim();
-              }
-              return item;
-            });
-          }
-          s = normalizeStagePlaceholders(s, contactVariables);
-          return s;
-        });
+        const cleanedStages = cleanInteractiveStages(parsedStages, contactVariables);
+        const sourceLang = isTargetedInteractiveEdit
+          ? (normalizeUiLang(outputLanguage) || 'fr')
+          : 'fr';
+        const otherLang = sourceLang === 'en' ? 'fr' : 'en';
+        const stagesByLanguage = { [sourceLang]: cleanedStages };
+        try {
+          const translated = await translateInteractiveStages(cleanedStages, otherLang);
+          stagesByLanguage[otherLang] = cleanInteractiveStages(translated.stages, contactVariables);
+          providerUsage = addProviderUsage(providerUsage, translated.usage);
+        } catch (translationError) {
+          logger.warn(`Interactive script ${otherLang} translation failed: ${translationError.message}`);
+        }
 
         const usage = resolveUsageOrEstimate(
           providerUsage,
           prompt,
-          JSON.stringify(cleanedStages)
+          JSON.stringify(stagesByLanguage)
         );
         const charge = await chargeCompanyAiTokens({
           companyId: billingCompanyId,
@@ -1323,6 +1388,7 @@ Return ONLY the generated dialogue script.` : `You are generating a linear sales
         return res.status(200).json({
           success: true,
           stages: cleanedStages,
+          stagesByLanguage,
           metadata: {
             processedAt: new Date().toISOString(),
             model: process.env.VERTEX_AI_MODEL || 'vertex-ai',
