@@ -6,10 +6,27 @@ const { vertexAIService } = require('../config/vertexAIConfig');
 /** Only one script may be active per gig — deactivate siblings when activating one. */
 const deactivateOtherScriptsForGig = async (gigId, exceptScriptId) => {
   if (!gigId) return;
+  const siblings = await Script.find(
+    { gigId, _id: { $ne: exceptScriptId }, isActive: true },
+    { _id: 1 }
+  ).lean();
+  if (siblings.length === 0) return;
+
   await Script.updateMany(
     { gigId, _id: { $ne: exceptScriptId } },
     { $set: { isActive: false } }
   );
+
+  try {
+    const { notifyScriptDeactivated } = require('../services/repNotificationClient');
+    await Promise.allSettled(
+      siblings.map((s) =>
+        notifyScriptDeactivated({ gigId, scriptId: s._id })
+      )
+    );
+  } catch (err) {
+    logger.error('Script auto-deactivation notification failed:', err);
+  }
 };
 
 /**
