@@ -558,7 +558,7 @@ const analyzeDocument = async (req, res) => {
     // Parse the response to get the analysis results
     let analysisResults;
     try {
-      logger.info('Raw response from Vertex AI:', JSON.stringify(response, null, 2));
+      logger.info(`Raw response from Vertex AI (chars=${JSON.stringify(response || '').length})`);
 
       // Vérifier la structure de la réponse
       if (!response || !response.candidates || !response.candidates[0]) {
@@ -684,9 +684,28 @@ function mergeScriptContinuity(currentStages, parsedStages, patchedStage, locked
   return { merged, targetApplied };
 }
 
-async function generateModelText(prompt) {
+function isVertexConfigError(error) {
+  const msg = String(error?.message || '');
+  return /responseMimeType|response_mime_type|INVALID_ARGUMENT|invalid argument|Unknown name/i.test(msg);
+}
+
+function interactiveGenerationRequest(prompt, { json = false } = {}) {
+  return {
+    contents: [{ role: 'user', parts: [{ text: prompt }] }],
+    generationConfig: {
+      temperature: 0.3,
+      maxOutputTokens: 16384,
+      ...(json ? { responseMimeType: 'application/json' } : {}),
+    },
+  };
+}
+
+async function generateModelText(prompt, options = {}) {
+  const request = (options.json || options.maxTokens)
+    ? interactiveGenerationRequest(prompt, { json: !!options.json })
+    : prompt;
   try {
-    const result = await vertexAIService.generativeModel.generateContent(prompt);
+    const result = await vertexAIService.generativeModel.generateContent(request);
     const response = result.response;
     const providerUsage =
       usageFromGemini(response, process.env.VERTEX_AI_MODEL || 'vertex-ai') ||
@@ -716,34 +735,108 @@ async function generateModelText(prompt) {
       errorMsg.toLowerCase().includes('overloaded') ||
       error.status === 429 ||
       error.status === 404;
+    if (options.json && isVertexConfigError(error)) {
+      return generateModelText(prompt, { maxTokens: true });
+    }
     if (!isQuotaError) throw error;
     logger.warn(`⚠️ Vertex AI error (${errorMsg}). Triggering Claude fallback...`);
     return callAnthropicFallback(prompt);
   }
 }
 
+function closeTruncatedJson(input) {
+  const stack = [];
+  let inString = false;
+  let escape = false;
+  let out = '';
+  for (let i = 0; i < input.length; i += 1) {
+    const c = input[i];
+    if (inString) {
+      if (escape) {
+        escape = false;
+        out += c;
+        continue;
+      }
+      if (c === '\\') {
+        escape = true;
+        out += c;
+        continue;
+      }
+      if (c === '"') {
+        inString = false;
+        out += c;
+        continue;
+      }
+      if (c === '\n' || c === '\r') {
+        out += ' ';
+        continue;
+      }
+      out += c;
+      continue;
+    }
+    if (c === '"') {
+      inString = true;
+      out += c;
+      continue;
+    }
+    if (c === '{' || c === '[') stack.push(c);
+    else if ((c === '}' || c === ']') && stack.length) stack.pop();
+    out += c;
+  }
+  if (inString) out += '"';
+  out = out.replace(/,\s*$/, '');
+  while (stack.length) {
+    const open = stack.pop();
+    out += open === '{' ? '}' : ']';
+  }
+  return out.replace(/,\s*([}\]])/g, '$1');
+}
+
 function parseInteractiveModelJson(scriptContent) {
-  const raw = String(scriptContent || '').replace(/^```(?:json)?\s*|\s*```$/gi, '').trim();
+  const stripped = String(scriptContent || '')
+    .replace(/^\uFEFF/, '')
+    .replace(/```(?:json|text|plaintext)?/gi, '')
+    .trim();
   const tryParse = (value) => {
     const parsed = JSON.parse(value);
     const patchedStage = parsed?.patchedStage || parsed?.stage || null;
-    let parsedStages = parsed?.stages || (Array.isArray(parsed) ? parsed : null);
+    const scriptLooksLikeStages = Array.isArray(parsed?.script)
+      && parsed.script.some((item) => item && (item.introReplica || item.label || item.id));
+    let parsedStages = parsed?.stages
+      || parsed?.data?.stages
+      || (scriptLooksLikeStages ? parsed.script : null)
+      || (Array.isArray(parsed) ? parsed : null);
     if (!parsedStages && stageLooksValid(parsed) && !patchedStage) {
       return { patchedStage: parsed, parsedStages: null };
     }
     return { patchedStage, parsedStages };
   };
-  try {
-    return tryParse(raw);
-  } catch (err) {
-    const jsonMatch = raw.match(/\{[\s\S]*\}/);
-    if (!jsonMatch) return { patchedStage: null, parsedStages: null };
+  const payloads = [];
+  const push = (value) => {
+    const text = String(value || '').trim();
+    if (text && !payloads.includes(text)) payloads.push(text);
+  };
+  push(stripped);
+  const objectMatch = stripped.match(/\{[\s\S]*\}/);
+  if (objectMatch) push(objectMatch[0].replace(/,\s*([}\]])/g, '$1'));
+  const arrayMatch = stripped.match(/\[[\s\S]*\]/);
+  if (arrayMatch) push(arrayMatch[0].replace(/,\s*([}\]])/g, '$1'));
+  const starts = [stripped.indexOf('{'), stripped.indexOf('[')].filter((index) => index >= 0);
+  if (starts.length) {
+    const sliced = stripped.slice(Math.min(...starts));
+    push(sliced.replace(/,\s*([}\]])/g, '$1'));
+    push(closeTruncatedJson(sliced));
+  }
+  for (const payload of payloads) {
     try {
-      return tryParse(jsonMatch[0]);
-    } catch (inner) {
-      return { patchedStage: null, parsedStages: null };
+      const result = tryParse(payload);
+      const hasStages = Array.isArray(result.parsedStages) && result.parsedStages.length > 0;
+      if (hasStages || stageLooksValid(result.patchedStage)) return result;
+    } catch (_) {
+      // Try the next repaired candidate.
     }
   }
+  return { patchedStage: null, parsedStages: null };
 }
 
 const generateScript = async (req, res) => {
@@ -1035,7 +1128,18 @@ Return ONLY the generated dialogue script.` : `You are generating a linear sales
     let response;
     let providerUsage = null;
     try {
-      const result = await vertexAIService.generativeModel.generateContent(prompt);
+      let result;
+      try {
+        result = await vertexAIService.generativeModel.generateContent(
+          isInteractiveRequest ? interactiveGenerationRequest(prompt, { json: true }) : prompt
+        );
+      } catch (configError) {
+        if (!isInteractiveRequest || !isVertexConfigError(configError)) throw configError;
+        logger.warn(`JSON response mode unavailable (${configError.message}). Retrying with a larger text budget.`);
+        result = await vertexAIService.generativeModel.generateContent(
+          interactiveGenerationRequest(prompt)
+        );
+      }
       response = result.response;
 
       // Log response metadata
@@ -1094,6 +1198,34 @@ Return ONLY the generated dialogue script.` : `You are generating a linear sales
     // Interactive structured response parsing
     if (isInteractiveRequest) {
       let { parsedStages, patchedStage } = parseInteractiveModelJson(scriptContent);
+      const stagesMissing = !Array.isArray(parsedStages) || parsedStages.length === 0;
+      if (stagesMissing && !stageLooksValid(patchedStage)) {
+        logger.warn(
+          `Interactive script JSON unreadable (chars=${String(scriptContent || '').length}, finish=${response?.candidates?.[0]?.finishReason || 'n/a'}). Retrying.`
+        );
+        try {
+          const retry = await generateModelText(
+            `${prompt}\n\nThe previous answer was not valid JSON. Return ONLY one compact JSON object {"stages":[...exactly 8 stages...]}. No markdown and no commentary.`,
+            { json: true }
+          );
+          scriptContent = retry.text;
+          const again = parseInteractiveModelJson(scriptContent);
+          parsedStages = again.parsedStages;
+          patchedStage = again.patchedStage;
+          if (retry.usage) {
+            providerUsage = providerUsage
+              ? {
+                  ...providerUsage,
+                  inputTokens: (providerUsage.inputTokens || 0) + (retry.usage.inputTokens || 0),
+                  outputTokens: (providerUsage.outputTokens || 0) + (retry.usage.outputTokens || 0),
+                  totalTokens: (providerUsage.totalTokens || 0) + (retry.usage.totalTokens || 0),
+                }
+              : retry.usage;
+          }
+        } catch (retryError) {
+          logger.warn(`Interactive script JSON retry failed: ${retryError.message}`);
+        }
+      }
 
       // Edit one stage, then let later stages follow when the change makes them inconsistent.
       if (isTargetedInteractiveEdit && Array.isArray(currentStages) && currentStages.length > 0) {
@@ -1109,7 +1241,7 @@ Return ONLY the generated dialogue script.` : `You are generating a linear sales
         if (targetApplied && laterMissing) {
           const followPrompt = `The script below already contains the edited stage at index ${safeTargetIdx}. Keep stages 0 through ${safeTargetIdx} EXACTLY as written. Rewrite only later stages that mention a subject (price, tariff, offer, objection, feature) which the earlier stages never introduced. Copy a later stage unchanged when it still fits. Return ONLY { "stages": [ ...${currentStages.length} stages... ] }.\n\n${JSON.stringify(merged)}`;
           try {
-            const follow = await generateModelText(followPrompt);
+            const follow = await generateModelText(followPrompt, { json: true });
             const followed = parseInteractiveModelJson(follow.text);
             if (follow.usage && providerUsage) {
               providerUsage = {
@@ -1206,6 +1338,11 @@ Return ONLY the generated dialogue script.` : `You are generating a linear sales
           },
         });
       }
+
+      logger.warn('Interactive script generation produced no stages.');
+      return res.status(502).json({
+        error: 'Format de script généré incompatible. Veuillez réessayer.',
+      });
     }
 
     // Parse the script content - handle both structured JSON schemas and linear text
@@ -1605,7 +1742,7 @@ const translateAnalysis = async (req, res) => {
       return res.status(400).json({ error: 'Analysis object and target language are required' });
     }
 
-    logger.info('Translating document analysis to:', targetLanguage);
+    logger.info(`Translating document analysis to: ${targetLanguage}`);
 
     // Initialize Vertex AI if not already initialized
     if (!vertexAIService.vertexAI) {
@@ -1631,7 +1768,7 @@ Return only the translated JSON object with the same structure:`;
     const result = await vertexAIService.generativeModel.generateContent(translationPrompt);
     const response = result.response;
 
-    logger.info('Raw translation response:', JSON.stringify(response, null, 2));
+    logger.info(`Raw translation response (chars=${JSON.stringify(response || '').length})`);
 
     // Extract content using the same pattern as document analysis
     let content;
