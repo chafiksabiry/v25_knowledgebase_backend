@@ -1201,6 +1201,10 @@ Return ONLY the generated dialogue script.` : `You are generating a linear sales
     }
 
     // Génération directe sur base du gig uniquement (pas de KB/RAG).
+    const scriptLang = normalizeUiLang(outputLanguage) || 'fr';
+    const scriptLangName = scriptLang === 'fr' ? 'French' : 'English';
+    prompt = `LANGUAGE: Write every human-readable string in ${scriptLangName} only. One language. Do not translate and do not add a second copy. Schema examples may be French; they show the shape, not the language to write.\n\n${prompt}`;
+
     let scriptContent;
     let response;
     let providerUsage = null;
@@ -1357,18 +1361,8 @@ Return ONLY the generated dialogue script.` : `You are generating a linear sales
         // Clean up stages text in backend too to guarantee no "Module X :" strings are saved
         // and normalize legacy [brackets] into {{friendly labels}} for contact merge.
         const cleanedStages = cleanInteractiveStages(parsedStages, contactVariables);
-        const sourceLang = isTargetedInteractiveEdit
-          ? (normalizeUiLang(outputLanguage) || 'fr')
-          : 'fr';
-        const otherLang = sourceLang === 'en' ? 'fr' : 'en';
-        const stagesByLanguage = { [sourceLang]: cleanedStages };
-        try {
-          const translated = await translateInteractiveStages(cleanedStages, otherLang);
-          stagesByLanguage[otherLang] = cleanInteractiveStages(translated.stages, contactVariables);
-          providerUsage = addProviderUsage(providerUsage, translated.usage);
-        } catch (translationError) {
-          logger.warn(`Interactive script ${otherLang} translation failed: ${translationError.message}`);
-        }
+        const scriptLang = normalizeUiLang(outputLanguage) || 'fr';
+        const stagesByLanguage = { [scriptLang]: cleanedStages };
 
         const usage = resolveUsageOrEstimate(
           providerUsage,
