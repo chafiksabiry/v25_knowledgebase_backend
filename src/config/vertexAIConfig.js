@@ -144,13 +144,19 @@ class VertexAIService {
   /**
    * **AMÉLIORÉ : Helper pour récupérer tout le contenu textuel d'une entreprise**
    * @param {string} companyId - L'ID de l'entreprise
+   * @param {string} [gigId] - Si fourni, restreint le corpus aux documents/appels de ce gig ;
+   *   si le gig n'a aucun contenu propre, retombe sur le corpus entreprise complet.
    * @returns {Array} - Un tableau de documents et transcriptions
    */
-  async _getCorpusContent(companyId) {
+  async _getCorpusContent(companyId, gigId = null) {
     try {
-      // Récupérer les documents
-      const documents = await Document.find({ companyId });
-      logger.info(`Found ${documents.length} documents for company ${companyId}`);
+      // Récupérer les documents (scope gig d'abord, repli entreprise si vide)
+      let documents = gigId ? await Document.find({ companyId, gigId }) : [];
+      let scopedToGig = Boolean(gigId) && documents.length > 0;
+      if (!scopedToGig) {
+        documents = await Document.find({ companyId });
+      }
+      logger.info(`Found ${documents.length} documents for company ${companyId}${scopedToGig ? ` (scoped to gig ${gigId})` : ''}`);
 
       const documentContents = documents.map(doc => ({
         id: doc._id.toString(),
@@ -161,8 +167,12 @@ class VertexAIService {
       }));
 
       // **CORRIGÉ : Récupérer TOUS les enregistrements d'appels (pas seulement ceux avec transcription)**
-      const allCallRecordings = await CallRecording.find({ companyId });
-      logger.info(`Found ${allCallRecordings.length} total call recordings for company ${companyId}`);
+      let allCallRecordings = gigId ? await CallRecording.find({ companyId, gigId }) : [];
+      const callsScopedToGig = Boolean(gigId) && allCallRecordings.length > 0;
+      if (!callsScopedToGig) {
+        allCallRecordings = await CallRecording.find({ companyId });
+      }
+      logger.info(`Found ${allCallRecordings.length} total call recordings for company ${companyId}${callsScopedToGig ? ` (scoped to gig ${gigId})` : ''}`);
 
       const callContents = allCallRecordings.map(call => {
         // Utiliser la transcription si disponible, sinon créer un contenu descriptif
@@ -196,14 +206,14 @@ class VertexAIService {
     }
   }
 
-  async queryKnowledgeBase(companyId, query, fileInfo = null) {
+  async queryKnowledgeBase(companyId, query, fileInfo = null, gigId = null) {
     try {
       if (!this.vertexAI) {
         throw new Error('Vertex AI not initialized');
       }
 
       // **MODIFIÉ : Récupère le contenu directement depuis la base de données**
-      const corpus = await this._getCorpusContent(companyId);
+      const corpus = await this._getCorpusContent(companyId, gigId);
 
       logger.info(`Querying knowledge base for company ${companyId}:`, { query, hasFileInfo: !!fileInfo });
 
