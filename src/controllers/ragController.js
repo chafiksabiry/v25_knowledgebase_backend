@@ -337,7 +337,7 @@ const syncDocumentsToCorpus = async (req, res) => {
  */
 const queryKnowledgeBase = async (req, res) => {
   try {
-    const { companyId, query } = req.body;
+    const { companyId, query, gigId } = req.body;
 
     if (!companyId || !query) {
       return res.status(400).json({ error: 'Company ID and query are required' });
@@ -351,8 +351,8 @@ const queryKnowledgeBase = async (req, res) => {
     // **NOUVEAU : Récupérer le statut du corpus**
     const corpusStatus = await vertexAIService.checkCorpusStatus(companyId);
 
-    // Query the knowledge base
-    const response = await vertexAIService.queryKnowledgeBase(companyId, query);
+    // Query the knowledge base (scoped to the gig when one is provided)
+    const response = await vertexAIService.queryKnowledgeBase(companyId, query, null, gigId || null);
 
     // **MODIFIÉ : Inclure le statut détaillé du corpus dans les métadonnées**
     res.status(200).json({
@@ -803,7 +803,25 @@ const generateScript = async (req, res) => {
       console.log('✅ Vertex AI initialisé\n');
     }
 
-    console.log('Mode generation: GIG ONLY (sans consultation KB)');
+    // ENT-14: ground the script in the company's real knowledge-base
+    // documents (offers, pricing, etc.) instead of generating purely from
+    // the gig title/description. Fails open (no KB block) on any error or
+    // an empty corpus, so script generation is never blocked by this.
+    let knowledgeBaseContext = '';
+    try {
+      const corpusStatus = await vertexAIService.checkCorpusStatus(billingCompanyId);
+      if (corpusStatus?.exists) {
+        const kbQuery = `Quelles offres, tarifs, arguments de vente et informations utiles sont documentés pour ce job : "${gig.title || ''}" — ${gig.description || ''}`;
+        const kbResponse = await vertexAIService.queryKnowledgeBase(billingCompanyId, kbQuery);
+        const kbAnswer = kbResponse?.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (kbAnswer && kbAnswer.trim()) {
+          knowledgeBaseContext = `\n\nKNOWLEDGE BASE CONTEXT (real documents from this company's knowledge base):\n${kbAnswer.trim()}\n\nUse ONLY the offers, prices and facts above when they are relevant — never invent an offer, price or fact that is not grounded in this context or in the job details below.\n`;
+        }
+      }
+      console.log(knowledgeBaseContext ? 'Mode generation: GIG + KB (RAG)' : 'Mode generation: GIG ONLY (no KB documents found)');
+    } catch (kbErr) {
+      console.warn('⚠️ KB grounding skipped (generation continues without it):', kbErr.message);
+    }
     console.log('\n========================================\n');
 
     // Construire le prompt pour la génération
@@ -972,7 +990,7 @@ JOB DETAILS (PRIMARY FOUNDATION):
 - TITRE DU JOB : ${gig.title || ''}
 - DESCRIPTION : ${gig.description || ''}
 - CATEGORIE/INDUSTRIE : ${gig.category || gig.industry || ''}
-
+${knowledgeBaseContext}
 Instructions:
 ${contexte}
 
@@ -998,7 +1016,7 @@ Return ONLY the generated dialogue script.` : `You are generating a linear sales
   - TITRE DU JOB : ${gig.title || ''}
   - DESCRIPTION : ${gig.description || ''}
   - CATEGORIE/INDUSTRIE : ${gig.category || gig.industry || ''}
-
+  ${knowledgeBaseContext}
   ${contactVariablesBlock}
 
   CRITICAL REQUIREMENTS:
