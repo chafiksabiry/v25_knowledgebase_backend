@@ -337,7 +337,7 @@ const syncDocumentsToCorpus = async (req, res) => {
  */
 const queryKnowledgeBase = async (req, res) => {
   try {
-    const { companyId, query } = req.body;
+    const { companyId, query, gigId } = req.body;
 
     if (!companyId || !query) {
       return res.status(400).json({ error: 'Company ID and query are required' });
@@ -351,8 +351,8 @@ const queryKnowledgeBase = async (req, res) => {
     // **NOUVEAU : Récupérer le statut du corpus**
     const corpusStatus = await vertexAIService.checkCorpusStatus(companyId);
 
-    // Query the knowledge base
-    const response = await vertexAIService.queryKnowledgeBase(companyId, query);
+    // Query the knowledge base (scoped to the gig when one is provided)
+    const response = await vertexAIService.queryKnowledgeBase(companyId, query, null, gigId || null);
 
     // **MODIFIÉ : Inclure le statut détaillé du corpus dans les métadonnées**
     res.status(200).json({
