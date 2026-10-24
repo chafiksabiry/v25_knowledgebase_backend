@@ -74,9 +74,9 @@ function keywordScore(query, text) {
  * @returns {Promise<Array<{documentId:string, title:string, index:number, content:string, score:number}>>}
  */
 async function retrieveChunks({ companyId, gigId = null, query, topK = DEFAULT_TOP_K }) {
-  let docs = gigId ? await Document.find({ companyId, gigId }).select('name chunks.content chunks.index +chunks.embedding embeddingModel') : [];
+  let docs = gigId ? await Document.find({ companyId, gigId }).select('name chunks embeddingModel') : [];
   if (docs.length === 0) {
-    docs = await Document.find({ companyId }).select('name chunks.content chunks.index +chunks.embedding embeddingModel');
+    docs = await Document.find({ companyId }).select('name chunks embeddingModel');
   }
 
   const queryVectors = {};

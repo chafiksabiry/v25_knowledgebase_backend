@@ -151,10 +151,10 @@ class VertexAIService {
   async _getCorpusContent(companyId, gigId = null) {
     try {
       // Récupérer les documents (scope gig d'abord, repli entreprise si vide)
-      let documents = gigId ? await Document.find({ companyId, gigId }) : [];
+      let documents = gigId ? await Document.find({ companyId, gigId }).select('-chunks') : [];
       let scopedToGig = Boolean(gigId) && documents.length > 0;
       if (!scopedToGig) {
-        documents = await Document.find({ companyId });
+        documents = await Document.find({ companyId }).select('-chunks');
       }
       logger.info(`Found ${documents.length} documents for company ${companyId}${scopedToGig ? ` (scoped to gig ${gigId})` : ''}`);
 
