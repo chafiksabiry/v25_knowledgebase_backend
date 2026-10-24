@@ -1637,7 +1637,10 @@ const getKnowledgeReadiness = async (req, res) => {
     }
 
     const match = { companyId: company._id };
-    if (gigId && gigId !== 'all') match.gigId = new mongoose.Types.ObjectId(String(gigId));
+    if (gigId && gigId !== 'all') {
+      // The gig's own documents plus the company-wide ones (no gig attached).
+      match.$or = [{ gigId: new mongoose.Types.ObjectId(String(gigId)) }, { gigId: null }];
+    }
 
     const rows = await Document.aggregate([
       { $match: match },
