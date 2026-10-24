@@ -34,8 +34,10 @@ const DocumentSchema = new Schema(
     chunks: [{
       content: { type: String, required: true },
       index: { type: Number, required: true },
-      // Search vector (semantic retrieval); never sent to clients, see retrievalService
-      embedding: { type: [Number], select: false, default: undefined }
+      // Search vector (semantic retrieval). Not `select: false`: that adds a `chunks.embedding` exclusion which
+      // collides with the `-chunks` projection of the list queries (Mongo "Path collision"). It is stripped from
+      // JSON output instead (see the toJSON transform below).
+      embedding: { type: [Number], default: undefined }
     }],
     embeddingModel: { type: String, default: null },
     embeddedAt: { type: Date, default: null },
@@ -66,7 +68,15 @@ const DocumentSchema = new Schema(
       analyzedAt: Date
     }
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+    toJSON: {
+      transform: (_doc, ret) => {
+        if (Array.isArray(ret.chunks)) ret.chunks.forEach((chunk) => delete chunk.embedding);
+        return ret;
+      }
+    }
+  }
 );
 
 // Create and export the Document model
