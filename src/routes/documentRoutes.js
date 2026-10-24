@@ -4,6 +4,7 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const {
+  createSectorKnowledge,
   uploadDocument,
   getAllDocuments,
   getDocumentsByGig,
@@ -63,6 +64,9 @@ const upload = multer({
 
 // Upload a new document
 router.post('/upload', upload.single('file'), uploadDocument);
+
+// AI-generated knowledge base of one sector case, attached to one gig
+router.post('/sector-knowledge', createSectorKnowledge);
 
 // Get all documents
 router.get('/', getAllDocuments);
