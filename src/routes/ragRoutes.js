@@ -10,7 +10,8 @@ const {
   getDocumentContent,
   getCorpusStats,
   searchInCorpus,
-  translateAnalysis
+  translateAnalysis,
+  getKnowledgeReadiness
 } = require('../controllers/ragController');
 
 // Initialize RAG corpus for a company
@@ -21,6 +22,9 @@ router.post('/corpus/sync', syncDocumentsToCorpus);
 
 // Query the knowledge base
 router.post('/query', queryKnowledgeBase);
+
+// Readiness of the knowledge base (documents usable by the REPS, analyses)
+router.get('/readiness', getKnowledgeReadiness);
 
 // Analyze a document
 router.post('/analyze/:id', analyzeDocument);
