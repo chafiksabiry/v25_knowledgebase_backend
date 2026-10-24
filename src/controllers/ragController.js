@@ -365,6 +365,7 @@ const queryKnowledgeBase = async (req, res) => {
           corpusStatus: corpusStatus,
           model: process.env.VERTEX_AI_MODEL,
           processedAt: new Date().toISOString(),
+          retrieval: response.retrieval || null,
           citations: response.candidates[0].citationMetadata,
           safetyRatings: response.candidates[0].safetyRatings
         }
@@ -1650,6 +1651,9 @@ const getKnowledgeReadiness = async (req, res) => {
           contentLength: { $strLenCP: { $ifNull: ['$content', ''] } },
           wordCount: '$metadata.wordCount',
           chunkCount: { $size: { $ifNull: ['$chunks', []] } },
+          embeddingModel: 1,
+          embeddedAt: 1,
+          extraction: 1,
         },
       },
       { $sort: { uploadedAt: -1 } },
@@ -1665,6 +1669,9 @@ const getKnowledgeReadiness = async (req, res) => {
         gigId: d.gigId ? String(d.gigId) : null,
         words: d.wordCount || 0,
         chunks: d.chunkCount,
+        indexed: Boolean(d.embeddedAt),
+        ocr: Boolean(d.extraction && d.extraction.ocr),
+        tables: (d.extraction && d.extraction.tables) || 0,
         ready: hasText,
         reason: hasText ? null : 'no_text',
         analyzed,
@@ -1683,6 +1690,7 @@ const getKnowledgeReadiness = async (req, res) => {
           ready,
           notReady: documents.length - ready,
           analyzed: documents.filter((d) => d.analyzed).length,
+          indexed: documents.filter((d) => d.indexed).length,
           totalWords: documents.reduce((n, d) => n + d.words, 0),
         },
         documents,
@@ -1694,7 +1702,31 @@ const getKnowledgeReadiness = async (req, res) => {
   }
 };
 
+/** (Re)builds the search index of the company's documents; existing documents get their embeddings here. */
+const reindexKnowledgeBase = async (req, res) => {
+  try {
+    const { userId, force } = req.body || {};
+    if (!userId) return res.status(400).json({ error: 'User ID is required' });
+    const company = await Company.findOne({ userId });
+    if (!company) return res.status(404).json({ error: 'No company found for this user' });
+    const { reindexCompany } = require('../services/retrievalService');
+    const results = await reindexCompany(company._id, { force: Boolean(force) });
+    res.status(200).json({
+      success: true,
+      data: {
+        documents: results.length,
+        embedded: results.filter((r) => r.embedded).length,
+        failed: results.filter((r) => !r.embedded).map((r) => ({ id: r.id, name: r.name, error: r.error })),
+      },
+    });
+  } catch (error) {
+    logger.error('Error reindexing knowledge base:', error);
+    res.status(500).json({ error: 'Failed to reindex knowledge base', details: error.message });
+  }
+};
+
 module.exports = {
+  reindexKnowledgeBase,
   initializeCompanyCorpus,
   syncDocumentsToCorpus,
   queryKnowledgeBase,

@@ -25,6 +25,7 @@ router.post('/query', queryKnowledgeBase);
 
 // Readiness of the knowledge base (documents usable by the REPS, analyses)
 router.get('/readiness', getKnowledgeReadiness);
+router.post('/reindex', require('../controllers/ragController').reindexKnowledgeBase);
 
 // Analyze a document
 router.post('/analyze/:id', analyzeDocument);
