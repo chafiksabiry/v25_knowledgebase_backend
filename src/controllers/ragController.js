@@ -1,4 +1,6 @@
 const { vertexAIService } = require('../config/vertexAIConfig');
+const { runDocumentAnalysis, MIN_USABLE_CHARS } = require('../services/documentAnalysisService');
+const mongoose = require('mongoose');
 const Document = require('../models/Document');
 const { logger } = require('../utils/logger');
 const { generateDocumentAnalysisPrompt } = require('../prompts/documentAnalysisPrompt');
@@ -538,92 +540,8 @@ const analyzeDocument = async (req, res) => {
       return res.status(404).json({ error: 'Document not found' });
     }
 
-    // Initialize Vertex AI if not already initialized
-    if (!vertexAIService.vertexAI) {
-      await vertexAIService.initialize();
-    }
-
-    // Generate analysis prompt
-    const isVideo = document.fileType && document.fileType.startsWith('video/');
-    const analysisPrompt = generateDocumentAnalysisPrompt(isVideo ? "This is a video file. Please analyze its context and provide a summary based on your knowledge if available, or a general assessment if it's new." : document.content);
-
-    // Perform analysis using RAG with a single call
-    // For videos, we might want to pass different parameters to vertexAIService later
-    const response = await vertexAIService.queryKnowledgeBase(
-      document.companyId,
-      analysisPrompt,
-      isVideo ? { fileUrl: document.fileUrl, fileType: document.fileType } : null
-    );
-
-    // Parse the response to get the analysis results
-    let analysisResults;
-    try {
-      logger.info('Raw response from Vertex AI:', JSON.stringify(response, null, 2));
-
-      // Vérifier la structure de la réponse
-      if (!response || !response.candidates || !response.candidates[0]) {
-        throw new Error('Invalid response structure from Vertex AI');
-      }
-
-      // Extraire le contenu de la réponse
-      let content;
-      if (response.candidates[0].content && response.candidates[0].content.parts) {
-        content = response.candidates[0].content.parts[0].text;
-      } else if (response.candidates[0].text) {
-        content = response.candidates[0].text;
-      } else if (typeof response.candidates[0] === 'string') {
-        content = response.candidates[0];
-      } else {
-        throw new Error('Unable to extract content from response');
-      }
-
-      // Essayer de parser le contenu comme JSON
-      try {
-        // D'abord, essayer de parser directement
-        analysisResults = JSON.parse(content);
-      } catch (jsonError) {
-        // Si ça échoue, essayer d'extraire le JSON avec une regex
-        const jsonMatch = content.match(/\{[\s\S]*\}/);
-        if (jsonMatch) {
-          analysisResults = JSON.parse(jsonMatch[0]);
-        } else {
-          throw new Error('No valid JSON found in response');
-        }
-      }
-
-      // Valider la structure des résultats
-      const requiredFields = ['summary', 'domain', 'theme', 'mainPoints', 'technicalLevel', 'targetAudience', 'keyTerms', 'recommendations'];
-      const missingFields = requiredFields.filter(field => !analysisResults[field]);
-
-      if (missingFields.length > 0) {
-        logger.warn('Missing fields in analysis results:', missingFields);
-        // Remplir les champs manquants avec des valeurs par défaut
-        missingFields.forEach(field => {
-          if (field === 'mainPoints' || field === 'keyTerms' || field === 'recommendations') {
-            analysisResults[field] = ['Not available'];
-          } else {
-            analysisResults[field] = 'Not available';
-          }
-        });
-      }
-
-    } catch (parseError) {
-      logger.error('Error parsing analysis results:', {
-        error: parseError.message,
-        response: response,
-        stack: parseError.stack
-      });
-      throw new Error('Failed to parse analysis results: ' + parseError.message);
-    }
-
-    // Update document with analysis results
-    document.analysis = {
-      ...analysisResults,
-      analyzedAt: new Date()
-    };
-    await document.save();
-
-    res.status(200).json(document.analysis);
+    const analysis = await runDocumentAnalysis(document);
+    res.status(200).json(analysis);
 
   } catch (error) {
     logger.error('Error checking corpus status:', {
@@ -1702,6 +1620,80 @@ Return only the translated JSON object with the same structure:`;
   }
 };
 
+/**
+ * Knowledge-base readiness for the onboarding step: for each document, is its text usable by the
+ * REPS (extracted, chunked) and has it been analysed ? Content is never sent to the client.
+ */
+const getKnowledgeReadiness = async (req, res) => {
+  try {
+    const { userId, gigId } = req.query;
+    if (!userId) {
+      return res.status(400).json({ error: 'User ID is required' });
+    }
+    const company = await Company.findOne({ userId });
+    if (!company) {
+      return res.status(404).json({ error: 'No company found for this user' });
+    }
+
+    const match = { companyId: company._id };
+    if (gigId && gigId !== 'all') match.gigId = new mongoose.Types.ObjectId(String(gigId));
+
+    const rows = await Document.aggregate([
+      { $match: match },
+      {
+        $project: {
+          name: 1,
+          fileType: 1,
+          gigId: 1,
+          uploadedAt: 1,
+          analysis: 1,
+          contentLength: { $strLenCP: { $ifNull: ['$content', ''] } },
+          wordCount: '$metadata.wordCount',
+          chunkCount: { $size: { $ifNull: ['$chunks', []] } },
+        },
+      },
+      { $sort: { uploadedAt: -1 } },
+    ]);
+
+    const documents = rows.map((d) => {
+      const hasText = d.contentLength >= MIN_USABLE_CHARS;
+      const analyzed = Boolean(d.analysis && d.analysis.summary);
+      return {
+        id: String(d._id),
+        name: d.name,
+        fileType: d.fileType,
+        gigId: d.gigId ? String(d.gigId) : null,
+        words: d.wordCount || 0,
+        chunks: d.chunkCount,
+        ready: hasText,
+        reason: hasText ? null : 'no_text',
+        analyzed,
+        summary: analyzed ? String(d.analysis.summary).slice(0, 280) : null,
+        analyzedAt: analyzed ? d.analysis.analyzedAt || null : null,
+      };
+    });
+
+    const ready = documents.filter((d) => d.ready).length;
+    res.status(200).json({
+      success: true,
+      data: {
+        companyId: String(company._id),
+        summary: {
+          documents: documents.length,
+          ready,
+          notReady: documents.length - ready,
+          analyzed: documents.filter((d) => d.analyzed).length,
+          totalWords: documents.reduce((n, d) => n + d.words, 0),
+        },
+        documents,
+      },
+    });
+  } catch (error) {
+    logger.error('Error computing knowledge readiness:', error);
+    res.status(500).json({ error: 'Failed to compute knowledge readiness' });
+  }
+};
+
 module.exports = {
   initializeCompanyCorpus,
   syncDocumentsToCorpus,
@@ -1712,6 +1704,7 @@ module.exports = {
   getCorpusStats,
   searchInCorpus,
   analyzeDocument,
+  getKnowledgeReadiness,
   generateScript,
   createScript,
   updateScript,

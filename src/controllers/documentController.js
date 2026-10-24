@@ -8,6 +8,7 @@ const Company = require('../models/Company');
 const { uploadToCloudinary, deleteFromCloudinary } = require('../services/cloudinaryService');
 const documentService = require('../services/documentService');
 const { vertexAIService } = require('../config/vertexAIConfig');
+const { runDocumentAnalysis, MIN_USABLE_CHARS } = require('../services/documentAnalysisService');
 
 // Upload a new document
 const uploadDocument = async (req, res) => {
@@ -52,6 +53,8 @@ const uploadDocument = async (req, res) => {
       paragraphCount: 0
     };
 
+    const hasUsableText = extractedText.trim().length >= MIN_USABLE_CHARS;
+
     // Create document record
     const document = new Document({
       name: name || req.file.originalname,
@@ -64,6 +67,10 @@ const uploadDocument = async (req, res) => {
       uploadedBy,
       companyId,
       gigId: gigId || null,
+      // The "RAG" reads the extracted text: a document without usable text feeds nothing.
+      isProcessed: hasUsableText,
+      processingStatus: hasUsableText ? 'completed' : 'failed',
+      processingError: hasUsableText ? null : 'no_text',
       chunks: chunks.map((chunk, index) => ({
         content: chunk,
         index
@@ -79,6 +86,15 @@ const uploadDocument = async (req, res) => {
 
     // Delete local file after upload
     await fs.unlink(filePath);
+
+    // Analyse in the background so the summary is ready when the user opens the document.
+    if (hasUsableText) {
+      setImmediate(() => {
+        runDocumentAnalysis(document).catch((err) =>
+          logger.error(`Background analysis failed for document ${document._id}:`, err.message)
+        );
+      });
+    }
 
     if (document.gigId) {
       try {
@@ -104,6 +120,8 @@ const uploadDocument = async (req, res) => {
         tags: document.tags,
         uploadedAt: document.uploadedAt,
         isProcessed: document.isProcessed,
+        processingStatus: document.processingStatus,
+        processingError: document.processingError,
         metadata: document.metadata
       }
     });

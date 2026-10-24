@@ -29,6 +29,7 @@ const DocumentSchema = new Schema(
       enum: ['pending', 'processing', 'completed', 'failed'],
       default: 'pending'
     },
+    processingError: { type: String, default: null },
     chunks: [{
       content: { type: String, required: true },
       index: { type: Number, required: true }
