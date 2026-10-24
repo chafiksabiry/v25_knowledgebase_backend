@@ -8,8 +8,80 @@ const Company = require('../models/Company');
 const { uploadToCloudinary, deleteFromCloudinary } = require('../services/cloudinaryService');
 const documentService = require('../services/documentService');
 const { vertexAIService } = require('../config/vertexAIConfig');
+const { generateSectorKnowledge, writeTempMarkdown } = require('../services/sectorKnowledgeService');
 const { indexDocument } = require('../services/retrievalService');
 const { runDocumentAnalysis, MIN_USABLE_CHARS } = require('../services/documentAnalysisService');
+
+// Create, with the AI, the knowledge base of one sector case (auto insurance, health insurance...) for ONE gig.
+// Scoped to the gig so that no other gig is fed with sector content that does not concern it.
+const createSectorKnowledge = async (req, res) => {
+  try {
+    const { userId, gigId, sectorId, sectorName, outline, language, country, gigTitle, gigDescription, force } = req.body || {};
+    if (!userId || !gigId || !sectorId || !sectorName) {
+      return res.status(400).json({ error: 'userId, gigId, sectorId and sectorName are required' });
+    }
+    const company = await Company.findOne({ userId });
+    if (!company) return res.status(404).json({ error: 'Company not found' });
+
+    const tag = `sector:${sectorId}`;
+    const existing = await Document.findOne({ companyId: company._id, gigId, tags: tag });
+    if (existing && !force) {
+      return res.status(200).json({ created: false, alreadyExists: true, document: { id: existing._id, name: existing.name } });
+    }
+
+    const content = await generateSectorKnowledge({ sectorName, outline, gigTitle, gigDescription, country, language });
+    const filePath = await writeTempMarkdown(`kb-${sectorId}`, content);
+    let uploaded;
+    try {
+      uploaded = await uploadToCloudinary(filePath, 'documents', 'raw');
+    } finally {
+      await fs.unlink(filePath).catch(() => undefined);
+    }
+
+    if (existing) {
+      await deleteFromCloudinary(existing.cloudinaryPublicId).catch(() => undefined);
+      await Document.deleteOne({ _id: existing._id });
+    }
+
+    const metrics = calculateDocumentMetrics(content);
+    const document = new Document({
+      name: `${sectorName} — base de connaissances (IA)`,
+      description: 'Généré par IA à partir du catalogue sectoriel. À valider avant usage.',
+      fileUrl: uploaded.url,
+      cloudinaryPublicId: uploaded.public_id,
+      fileType: 'text/markdown',
+      content,
+      tags: [tag, 'ai-generated'],
+      uploadedBy: 'ai',
+      companyId: company._id,
+      gigId,
+      isProcessed: true,
+      processingStatus: 'completed',
+      extraction: { method: 'ai-generated', ocr: false, tables: 0 },
+      chunks: chunkDocument(content).map((chunk, index) => ({ content: chunk, index })),
+      metadata: { ...metrics, createdAt: new Date(), modifiedAt: new Date() },
+    });
+    await document.save();
+
+    setImmediate(async () => {
+      try {
+        await indexDocument(document);
+      } catch (err) {
+        logger.error(`Background indexing failed for sector document ${document._id}:`, err.message);
+      }
+      try {
+        await runDocumentAnalysis(document);
+      } catch (err) {
+        logger.error(`Background analysis failed for sector document ${document._id}:`, err.message);
+      }
+    });
+
+    res.status(201).json({ created: true, document: { id: document._id, name: document.name, gigId: document.gigId, tags: document.tags } });
+  } catch (error) {
+    logger.error('Error creating sector knowledge base:', error);
+    res.status(500).json({ error: 'Failed to create sector knowledge base', details: error.message });
+  }
+};
 
 // Upload a new document
 const uploadDocument = async (req, res) => {
@@ -274,6 +346,7 @@ const analyzeDocument = async (req, res) => {
 };
 
 module.exports = {
+  createSectorKnowledge,
   uploadDocument,
   getAllDocuments,
   getDocumentsByGig,
