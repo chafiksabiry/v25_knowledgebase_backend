@@ -244,7 +244,8 @@ const getAllDocuments = async (req, res) => {
 
     const query = { companyId };
     if (gigId && gigId !== 'all') {
-      query.gigId = gigId;
+      // The gig's own documents plus the company-wide ones (uploaded without a gig, e.g. during onboarding).
+      query.$or = [{ gigId }, { gigId: null }];
     }
 
     const documents = await Document.find(query).select('-content -chunks');
