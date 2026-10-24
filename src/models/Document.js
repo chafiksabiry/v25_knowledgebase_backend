@@ -9,7 +9,8 @@ const DocumentSchema = new Schema(
     fileUrl: { type: String, required: true },
     cloudinaryPublicId: { type: String, required: true },
     fileType: { type: String, required: true },
-    content: { type: String, required: true },
+    // Empty when nothing could be extracted (scan without OCR, video): the document is then flagged no_text
+    content: { type: String, default: '' },
     tags: [{ type: String }],
     uploadedAt: { type: Date, default: Date.now },
     uploadedBy: { type: String, required: true },
@@ -32,8 +33,18 @@ const DocumentSchema = new Schema(
     processingError: { type: String, default: null },
     chunks: [{
       content: { type: String, required: true },
-      index: { type: Number, required: true }
+      index: { type: Number, required: true },
+      // Search vector (semantic retrieval); never sent to clients, see retrievalService
+      embedding: { type: [Number], select: false, default: undefined }
     }],
+    embeddingModel: { type: String, default: null },
+    embeddedAt: { type: Date, default: null },
+    // How the text was obtained: text-layer | ocr | docx-structured | raw-text | text | none
+    extraction: {
+      method: { type: String, default: null },
+      ocr: { type: Boolean, default: false },
+      tables: { type: Number, default: 0 }
+    },
     metadata: {
       wordCount: { type: Number },
       characterCount: { type: Number },

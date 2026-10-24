@@ -2,12 +2,13 @@ const fs = require('fs').promises;
 const path = require('path');
 const Document = require('../models/Document');
 const { logger } = require('../utils/logger');
-const { extractTextFromFile, calculateDocumentMetrics } = require('../services/documentProcessingService');
+const { extractTextFromFileDetailed, calculateDocumentMetrics } = require('../services/documentProcessingService');
 const { chunkDocument } = require('../utils/textProcessing');
 const Company = require('../models/Company');
 const { uploadToCloudinary, deleteFromCloudinary } = require('../services/cloudinaryService');
 const documentService = require('../services/documentService');
 const { vertexAIService } = require('../config/vertexAIConfig');
+const { indexDocument } = require('../services/retrievalService');
 const { runDocumentAnalysis, MIN_USABLE_CHARS } = require('../services/documentAnalysisService');
 
 // Upload a new document
@@ -40,7 +41,8 @@ const uploadDocument = async (req, res) => {
 
     // Extract text from the file
     const fileType = req.file.mimetype;
-    const extractedText = await extractTextFromFile(filePath, fileType) || '';
+    const extraction = await extractTextFromFileDetailed(filePath, fileType);
+    const extractedText = extraction.text || '';
 
     // Chunk the document (only if we have text)
     const chunks = extractedText ? chunkDocument(extractedText) : [];
@@ -71,6 +73,7 @@ const uploadDocument = async (req, res) => {
       isProcessed: hasUsableText,
       processingStatus: hasUsableText ? 'completed' : 'failed',
       processingError: hasUsableText ? null : 'no_text',
+      extraction: { method: extraction.method, ocr: extraction.ocr, tables: extraction.tables },
       chunks: chunks.map((chunk, index) => ({
         content: chunk,
         index
@@ -89,10 +92,19 @@ const uploadDocument = async (req, res) => {
 
     // Analyse in the background so the summary is ready when the user opens the document.
     if (hasUsableText) {
-      setImmediate(() => {
-        runDocumentAnalysis(document).catch((err) =>
-          logger.error(`Background analysis failed for document ${document._id}:`, err.message)
-        );
+      // Semantic index (embeddings) so the reps' assistant can retrieve the right passage, then the
+      // analysis. Sequential: both save the same document.
+      setImmediate(async () => {
+        try {
+          await indexDocument(document);
+        } catch (err) {
+          logger.error(`Background indexing failed for document ${document._id}:`, err.message);
+        }
+        try {
+          await runDocumentAnalysis(document);
+        } catch (err) {
+          logger.error(`Background analysis failed for document ${document._id}:`, err.message);
+        }
       });
     }
 

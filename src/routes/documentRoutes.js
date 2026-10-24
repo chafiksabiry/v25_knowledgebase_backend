@@ -36,6 +36,9 @@ const fileFilter = (req, file, cb) => {
     'text/plain',
     'text/markdown',
     'text/html',
+    'image/png',
+    'image/jpeg',
+    'image/webp',
     'video/mp4',
     'video/mpeg',
     'video/quicktime',
@@ -46,7 +49,7 @@ const fileFilter = (req, file, cb) => {
   if (allowedTypes.includes(file.mimetype)) {
     cb(null, true);
   } else {
-    cb(new Error('Invalid file type. Only PDF, Word, TXT, MD, HTML and Video files are allowed.'));
+    cb(new Error('Invalid file type. Only PDF, Word, TXT, MD, HTML, image (PNG, JPEG, WebP) and Video files are allowed.'));
   }
 };
 
