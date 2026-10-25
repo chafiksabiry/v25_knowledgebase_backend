@@ -74,7 +74,8 @@ function keywordScore(query, text) {
  * @returns {Promise<Array<{documentId:string, title:string, index:number, content:string, score:number}>>}
  */
 async function retrieveChunks({ companyId, gigId = null, query, topK = DEFAULT_TOP_K }) {
-  let docs = gigId ? await Document.find({ companyId, gigId }).select('name chunks embeddingModel') : [];
+  // The gig's own documents plus the company-wide ones (no gig attached), like the document lists.
+  let docs = gigId ? await Document.find({ companyId, $or: [{ gigId }, { gigId: null }] }).select('name chunks embeddingModel') : [];
   if (docs.length === 0) {
     docs = await Document.find({ companyId }).select('name chunks embeddingModel');
   }

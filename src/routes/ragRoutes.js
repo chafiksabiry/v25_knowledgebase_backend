@@ -25,6 +25,9 @@ router.post('/query', queryKnowledgeBase);
 
 // Readiness of the knowledge base (documents usable by the REPS, analyses)
 router.get('/readiness', getKnowledgeReadiness);
+// Relevance / maturity score of the knowledge base (per gig) and passage search for AI agents
+router.post('/score', require('../controllers/knowledgeInsightsController').getKnowledgeScore);
+router.post('/agent-search', require('../controllers/knowledgeInsightsController').agentSearch);
 router.post('/reindex', require('../controllers/ragController').reindexKnowledgeBase);
 
 // Analyze a document
