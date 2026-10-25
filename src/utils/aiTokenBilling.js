@@ -3,6 +3,18 @@
  * Providers: Anthropic (Claude), OpenAI, Gemini/Vertex. Fallback: ~4 chars ≈ 1 token.
  */
 
+const crypto = require('crypto');
+
+const b64url = (v) => Buffer.from(v).toString('base64').replace(/=+$/, '').replace(/\+/g, '-').replace(/\//g, '_');
+
+/** JWT HS256 de service à service, valable une minute (même format que ceux vérifiés par l'orchestrateur). */
+function signServiceToken(secret, payload, ttlSeconds = 60) {
+  const now = Math.floor(Date.now() / 1000);
+  const body = `${b64url(JSON.stringify({ alg: 'HS256', typ: 'JWT' }))}.${b64url(JSON.stringify({ ...payload, iat: now, exp: now + ttlSeconds }))}`;
+  const sig = crypto.createHmac('sha256', secret).update(body).digest('base64').replace(/=+$/, '').replace(/\+/g, '-').replace(/\//g, '_');
+  return `${body}.${sig}`;
+}
+
 function estimateTokensFromText(...parts) {
   const chars = parts.reduce((sum, p) => sum + String(p || '').length, 0);
   return Math.max(1, Math.ceil(chars / 4));
@@ -122,17 +134,29 @@ async function assertCompanyHasAiTokens(companyId, minRequired = 1, options = {}
 
   try {
     const base = getOrchestratorApiBase();
+    // L'orchestrateur exige un JWT sur /check (PAY-12) : appel de service à service, jeton signé avec le secret commun.
+    const headers = {};
+    if (process.env.JWT_SECRET) {
+      headers.Authorization = `Bearer ${signServiceToken(process.env.JWT_SECRET, { service: 'knowledgebase', companyId: id })}`;
+    }
     const res = await fetch(
-      `${base}/tokens-company/${encodeURIComponent(id)}/check?min=${Math.max(1, minRequired)}`
+      `${base}/tokens-company/${encodeURIComponent(id)}/check?min=${Math.max(1, minRequired)}`,
+      { headers }
     );
     const json = await res.json().catch(() => ({}));
     const tokens = typeof json?.data?.tokens === 'number' ? json.data.tokens : 0;
-    if (!res.ok || json?.success === false) {
+    // Solde insuffisant = 402 (ou success:false). Tout autre refus (401, 5xx…) n'est pas un solde insuffisant :
+    // on ne peut pas vérifier, la requête passe et le débit (charge-usage) fera foi, comme en cas d'erreur réseau.
+    if (res.status === 402 || json?.success === false) {
       return {
         ok: false,
         tokens,
         message: json?.message || 'Solde de tokens AI insuffisant. Rechargez pour continuer.',
       };
+    }
+    if (!res.ok) {
+      console.warn('[aiTokenBilling] balance check unavailable (allowing request):', res.status);
+      return { ok: true, tokens: 0 };
     }
     return { ok: true, tokens };
   } catch (err) {
@@ -203,6 +227,7 @@ async function chargeCompanyAiTokens({ companyId, usageId, usage, tool, gigId, m
 }
 
 module.exports = {
+  signServiceToken,
   estimateTokensFromText,
   usageFromAnthropic,
   usageFromGemini,
