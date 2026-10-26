@@ -11,21 +11,29 @@ jest.mock('../models/Company', () => ({ findOne: jest.fn(async ({ userId }) => (
 jest.mock('../services/retrievalService', () => ({ retrieveChunks: jest.fn() }));
 jest.mock('../utils/logger', () => ({ logger: { error: jest.fn(), warn: jest.fn(), info: jest.fn() } }));
 
+process.env.JWT_SECRET = 'test-secret';
+process.env.REGISTRATION_BACKEND_URL = 'https://registration.test';
+const jwt = require('jsonwebtoken');
 const { retrieveChunks } = require('../services/retrievalService');
+const { authenticate, clearCompanyCache } = require('../middleware/companyScope');
 const { getKnowledgeScore, agentSearch } = require('../controllers/knowledgeInsightsController');
 
 const GIG_A = '64b0000000000000000000a1';
 const GIG_B = '64b0000000000000000000b2';
-const run = async (handler, body) => {
+const run = async (handler, body, auth = { service: 'kb-agent-search' }) => {
   const res = { statusCode: 200, status(c) { this.statusCode = c; return this; }, json(p) { this.body = p; return this; } };
-  await handler({ body }, res);
+  await handler({ body, auth }, res);
   return res;
+};
+const callerCompany = (companyId) => {
+  global.fetch = jest.fn(async () => ({ ok: true, json: async () => ({ success: true, data: { companyId } }) }));
 };
 const text = (s) => `${s} `.repeat(60);
 
 beforeEach(() => {
   mockDocs.length = 0;
   retrieveChunks.mockReset();
+  clearCompanyCache();
 });
 
 describe('knowledge score endpoint', () => {
@@ -82,5 +90,45 @@ describe('agent search endpoint', () => {
     retrieveChunks.mockResolvedValue([]);
     const res = await run(agentSearch, { companyId: COMPANY, query: 'question sans réponse' });
     expect(res.body.data).toEqual({ found: false, passages: [] });
+  });
+});
+
+describe('agent search access control', () => {
+  const COMPANY = '64b000000000000000000001';
+  const respond = () => ({ statusCode: 200, status(c) { this.statusCode = c; return this; }, json(p) { this.body = p; return this; } });
+  const guard = authenticate({ serviceScopes: ['kb-agent-search'] });
+  const withToken = (payload, secret = 'test-secret') => ({ headers: { authorization: `Bearer ${jwt.sign(payload, secret)}` } });
+
+  test('anonymous callers, forged tokens and other service scopes are refused', () => {
+    const next = jest.fn();
+    for (const req of [{ headers: {} }, withToken({ scope: 'kb-agent-search' }, 'other'), withToken({ scope: 'company-notify' }), withToken({ email: 'x' })]) {
+      const res = respond();
+      guard(req, res, next);
+      expect(res.statusCode).toBe(401);
+    }
+    expect(next).not.toHaveBeenCalled();
+  });
+
+  test('the voice service token and a signed-in user are accepted', () => {
+    const next = jest.fn();
+    const svc = withToken({ scope: 'kb-agent-search' });
+    guard(svc, respond(), next);
+    expect(svc.auth).toEqual({ service: 'kb-agent-search' });
+    const usr = withToken({ userId: 'u1' });
+    guard(usr, respond(), next);
+    expect(usr.auth.userId).toBe('u1');
+    expect(next).toHaveBeenCalledTimes(2);
+  });
+
+  test('a user can only search the knowledge base of their own company', async () => {
+    retrieveChunks.mockResolvedValue([]);
+    callerCompany(COMPANY);
+    const own = await run(agentSearch, { companyId: COMPANY, query: 'x' }, { userId: 'u1', token: 't' });
+    expect(own.statusCode).toBe(200);
+    clearCompanyCache();
+    callerCompany('64b0000000000000000000d9');
+    const other = await run(agentSearch, { companyId: COMPANY, query: 'x' }, { userId: 'u1', token: 't' });
+    expect(other.statusCode).toBe(403);
+    expect(retrieveChunks).toHaveBeenCalledTimes(1);
   });
 });

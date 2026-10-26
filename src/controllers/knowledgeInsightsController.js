@@ -4,6 +4,7 @@ const Company = require('../models/Company');
 const { logger } = require('../utils/logger');
 const { scoreKnowledgeBase } = require('../services/knowledgeScoring');
 const { retrieveChunks } = require('../services/retrievalService');
+const { assertCompanyAccess } = require('../middleware/companyScope');
 
 const MAX_DOCUMENTS = 300;
 const MAX_GIGS = 50;
@@ -69,6 +70,7 @@ const getKnowledgeScore = async (req, res) => {
 /**
  * Passages of the knowledge base that answer a question, for an AI agent working a gig (live call, chat...).
  * POST /api/rag/agent-search  { companyId, gigId, query, topK? }
+ * Authenticated: a user of that company, or a HARX service token with scope "kb-agent-search".
  * Short passages only: the agent has a few seconds to answer, and nothing is invented here.
  */
 const agentSearch = async (req, res) => {
@@ -82,6 +84,7 @@ const agentSearch = async (req, res) => {
     if (gigId && !mongoose.Types.ObjectId.isValid(String(gigId))) {
       return res.status(400).json({ error: 'gigId is not valid' });
     }
+    await assertCompanyAccess(req, companyId);
 
     const chunks = await retrieveChunks({
       companyId: new mongoose.Types.ObjectId(String(companyId)),
@@ -102,6 +105,7 @@ const agentSearch = async (req, res) => {
       },
     });
   } catch (error) {
+    if (error.status) return res.status(error.status).json({ error: error.message });
     logger.error('Error in agent knowledge search:', error);
     res.status(500).json({ error: 'Failed to search the knowledge base' });
   }
