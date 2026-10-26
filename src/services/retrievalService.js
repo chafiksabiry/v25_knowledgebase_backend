@@ -9,6 +9,8 @@ const CHUNK_SIZE = 1200;
 const CHUNK_OVERLAP = 200;
 const DEFAULT_TOP_K = 8;
 const MIN_SCORE = 0.2;
+/** A document with at least this much text is usable (same threshold as the readiness report). */
+const MIN_USABLE_CHARS = 40;
 
 /** Text embedded for a chunk: the document name gives the chunk its context. */
 function chunkEmbeddingText(docName, content) {
@@ -35,6 +37,7 @@ async function indexDocument(documentOrId) {
     doc.chunks = pieces.map((content, index) => ({ content, index, embedding: vectors[index] }));
     doc.embeddingModel = model;
     doc.embeddedAt = new Date();
+    if (doc.processingStatus === 'pending') doc.processingStatus = 'completed';
     await doc.save();
     return { embedded: true, chunks: pieces.length, model };
   } catch (error) {
@@ -49,7 +52,12 @@ async function indexDocument(documentOrId) {
 
 /** (Re)indexes every document of a company that has no up-to-date embeddings. */
 async function reindexCompany(companyId, { force = false } = {}) {
-  const filter = { companyId, processingStatus: 'completed' };
+  // Documents are selected on having text, not on processingStatus: uploads from before the status was
+  // maintained stayed 'pending' forever and were silently skipped (the button answered "ok" having done nothing).
+  const filter = {
+    companyId,
+    $expr: { $gte: [{ $strLenCP: { $ifNull: ['$content', ''] } }, MIN_USABLE_CHARS] },
+  };
   if (!force) filter.embeddedAt = null;
   const docs = await Document.find(filter);
   const results = [];
@@ -78,6 +86,20 @@ async function retrieveChunks({ companyId, gigId = null, query, topK = DEFAULT_T
   let docs = gigId ? await Document.find({ companyId, $or: [{ gigId }, { gigId: null }] }).select('name chunks embeddingModel') : [];
   if (docs.length === 0) {
     docs = await Document.find({ companyId }).select('name chunks embeddingModel');
+  }
+
+  // A document without chunks (not indexed yet) must not be invisible to the REPS / AI agents: it is split on the
+  // fly and scored on keywords only until its index exists.
+  const unindexed = docs.filter((d) => !(d.chunks && d.chunks.length));
+  if (unindexed.length) {
+    const withText = await Document.find({ _id: { $in: unindexed.map((d) => d._id) } }).select('content');
+    const textById = new Map(withText.map((d) => [String(d._id), String(d.content || '')]));
+    for (const doc of unindexed) {
+      const text = textById.get(String(doc._id)) || '';
+      if (text.trim().length >= MIN_USABLE_CHARS) {
+        doc.chunks = chunkDocument(text, CHUNK_SIZE, CHUNK_OVERLAP).map((content, index) => ({ content, index }));
+      }
+    }
   }
 
   const queryVectors = {};
