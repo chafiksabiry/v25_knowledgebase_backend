@@ -124,14 +124,16 @@ const calculateTopicRelevance = (doc, topic) => {
   return Math.min(relevance / 10, 1); // Normalize to 0-1
 };
 
+const ANALYSIS_MAX_OUTPUT_TOKENS = 16384;
+
 // Helper function to analyze documents using RAG
 async function analyzeDocumentsWithRAG(companyId, documents) {
   try {
-    // Initialize RAG corpus for the company
-    await vertexAIService.createRagCorpus(companyId);
-
-    // Import documents to the corpus
-    await vertexAIService.importDocumentsToCorpus(companyId, documents);
+    // No Vertex RAG corpus to create or fill: queryKnowledgeBase reads the company's documents
+    // straight from MongoDB. It only needs the Vertex AI client to be ready.
+    if (!vertexAIService.vertexAI) {
+      await vertexAIService.initialize();
+    }
 
     // Single comprehensive query with all three aspects
     const query = `Analyze the provided documents comprehensively to identify topics, knowledge gaps, and recommendations. 
@@ -195,7 +197,10 @@ Ensure your response contains only valid JSON - no introductory or explanatory t
 
     // Execute the single unified query
     logger.info(`Running comprehensive analysis query for company ${companyId}...`);
-    const response = await vertexAIService.queryKnowledgeBase(companyId, query);
+    // The requested JSON (3 sections) is far larger than the 2048-token default: a cut-off answer is unusable.
+    const response = await vertexAIService.queryKnowledgeBase(companyId, query, null, null, {
+      maxOutputTokens: ANALYSIS_MAX_OUTPUT_TOKENS
+    });
 
     // Handle different response structures and parse JSON
     let resultText;
@@ -219,27 +224,22 @@ Ensure your response contains only valid JSON - no introductory or explanatory t
       resultText = 'Unable to extract analysis result';
     }
 
-    // Parse the JSON response
-    try {
-      let parsedResult;
-      if (typeof resultText === 'string') {
-        // Extract JSON from the text if it's embedded (looking for { } pattern)
-        const jsonMatch = resultText.match(/\{[\s\S]*\}/);
-        const jsonString = jsonMatch ? jsonMatch[0] : resultText;
-        parsedResult = JSON.parse(jsonString);
-      } else {
-        parsedResult = resultText;
-      }
+    // An answer cut off by the token limit cannot be valid JSON: say so instead of a parse error.
+    if (response.candidates && response.candidates[0] && response.candidates[0].finishReason === 'MAX_TOKENS') {
+      throw new Error('The analysis was truncated because the response was too long. Please retry.');
+    }
 
-      return parsedResult;
+    // Parse the JSON response. Anything unusable fails the analysis (never 'completed' with raw text).
+    let parsedResult;
+    try {
+      // Extract JSON from the text if it's embedded (looking for { } pattern)
+      const jsonMatch = String(resultText).match(/\{[\s\S]*\}/);
+      parsedResult = JSON.parse(jsonMatch ? jsonMatch[0] : resultText);
     } catch (e) {
       logger.error('Failed to parse analysis results as JSON:', e);
-      // Return a simplified structure with the error message
-      return {
-        error: "Failed to parse analysis results as JSON",
-        rawText: resultText
-      };
+      throw new Error('The analysis result was not valid JSON. Please retry.');
     }
+    return parsedResult;
   } catch (error) {
     logger.error('Error in RAG analysis:', error);
     throw error;
