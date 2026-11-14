@@ -253,33 +253,14 @@ const initializeCompanyCorpus = async (req, res) => {
       return res.status(400).json({ error: 'Company ID is required' });
     }
 
-    logger.info(`Initializing Vertex AI for company ${companyId}`);
-
-    // Initialize Vertex AI if not already initialized
-    if (!vertexAIService.vertexAI) {
-      await vertexAIService.initialize();
-    }
-
-    logger.info('Creating RAG corpus...');
-    // Create RAG corpus for the company
-    const corpus = await vertexAIService.createRagCorpus(companyId);
-    logger.info('RAG corpus created:', corpus);
-
-    // Get all documents for the company
-    const documents = await Document.find({ companyId });
-    logger.info(`Found ${documents.length} documents for company ${companyId}`);
-
-    // Import documents to the corpus if any exist
-    if (documents.length > 0) {
-      logger.info('Importing documents to corpus...');
-      await vertexAIService.importDocumentsToCorpus(companyId, documents);
-      logger.info('Documents imported successfully');
-    }
+    // No Vertex RAG corpus exists any more: queries read the documents from MongoDB.
+    // Kept for API compatibility; it only reports how many documents are available.
+    const documentCount = await Document.countDocuments({ companyId });
+    logger.info(`Corpus initialize for company ${companyId}: ${documentCount} documents (no Vertex corpus)`);
 
     res.status(200).json({
       message: 'RAG corpus initialized successfully',
-      corpus,
-      documentsImported: documents.length
+      documentsImported: documentCount
     });
 
   } catch (error) {
@@ -310,20 +291,12 @@ const syncDocumentsToCorpus = async (req, res) => {
       return res.status(400).json({ error: 'Company ID is required' });
     }
 
-    // Initialize Vertex AI if not already initialized
-    if (!vertexAIService.vertexAI) {
-      vertexAIService.initialize();
-    }
-
-    // Get all documents for the company
-    const documents = await Document.find({ companyId });
-
-    // Import documents to the corpus
-    const result = await vertexAIService.importDocumentsToCorpus(companyId, documents);
+    // Nothing to sync: documents are read from MongoDB at query time (no Vertex RAG corpus).
+    const documentCount = await Document.countDocuments({ companyId });
 
     res.status(200).json({
       message: 'Documents synced to RAG corpus successfully',
-      documentsImported: result.imported_rag_files_count
+      documentsImported: documentCount
     });
 
   } catch (error) {

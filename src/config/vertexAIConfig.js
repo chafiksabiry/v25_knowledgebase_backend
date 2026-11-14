@@ -206,7 +206,7 @@ class VertexAIService {
     }
   }
 
-  async queryKnowledgeBase(companyId, query, fileInfo = null, gigId = null) {
+  async queryKnowledgeBase(companyId, query, fileInfo = null, gigId = null, options = {}) {
     try {
       if (!this.vertexAI) {
         throw new Error('Vertex AI not initialized');
@@ -276,7 +276,7 @@ Rules: answer precisely from the extracts, quote figures, conditions and table v
           temperature: 0.7,
           topK: 40,
           topP: 0.95,
-          maxOutputTokens: 2048,
+          maxOutputTokens: options.maxOutputTokens || 2048,
         }
       });
 
