@@ -10,6 +10,7 @@ const axios = require('axios');
 const {
   assertCompanyHasAiTokens,
   chargeCompanyAiTokens,
+  tokenGateErrorResponse,
   fallbackEstimatedUsage,
   resolveUsageOrEstimate,
   usageFromAnthropic,
@@ -665,12 +666,8 @@ const generateScript = async (req, res) => {
     const billingCompanyId = String(companyId || '').trim() || undefined;
     const tokenGate = await assertCompanyHasAiTokens(billingCompanyId, 1);
     if (!tokenGate.ok) {
-      return res.status(402).json({
-        success: false,
-        error: 'insufficient_tokens',
-        message: tokenGate.message,
-        data: { tokens: tokenGate.tokens },
-      });
+      const refusal = tokenGateErrorResponse(tokenGate);
+      return res.status(refusal.status).json(refusal.body);
     }
 
     // Clean up trainings titles to remove any "Module X" prefixes before passing to LLM
@@ -1112,6 +1109,7 @@ Return ONLY the generated dialogue script.` : `You are generating a linear sales
           usage: {
             ...usage,
             billed: charge.billed,
+            charged: charge.charged,
             balance: charge.tokens,
           },
         });
@@ -1263,6 +1261,7 @@ Return ONLY the generated dialogue script.` : `You are generating a linear sales
     finalResponse.usage = {
       ...usage,
       billed: charge.billed,
+      charged: charge.charged,
       balance: charge.tokens,
     };
     res.status(200).json(finalResponse);
