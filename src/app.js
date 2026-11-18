@@ -6,7 +6,7 @@ const fs = require('fs');
 const { logger } = require('./utils/logger');
 const loggerMiddleware = require('./middleware/loggerMiddleware');
 const documentRoutes = require('./routes/documentRoutes');
-const fineTuningRoutes = require('./routes/fineTuningRoutes');
+const { fineTuningGone, blockTrainingFiles, purgeTrainingFiles } = require('./routes/fineTuningDisabled');
 const analysisRoutes = require('./routes/analysisRoutes');
 const callRecordingRoutes = require('./routes/callRecordingRoutes');
 
@@ -56,12 +56,13 @@ if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir, { recursive: true });
 }
 
-// Serve static files from uploads directory
-app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+// Serve static files from uploads directory (old fine-tuning training files are deleted and never served)
+purgeTrainingFiles(uploadsDir, logger);
+app.use('/uploads', blockTrainingFiles, express.static(path.join(__dirname, '../uploads')));
 
 // Routes
 app.use('/api/documents', documentRoutes);
-app.use('/api/fine-tuning', fineTuningRoutes);
+app.use('/api/fine-tuning', fineTuningGone); // feature retired, see routes/fineTuningDisabled.js
 app.use('/api/analysis', analysisRoutes);
 app.use('/api/call-recordings', callRecordingRoutes);
 
