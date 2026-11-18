@@ -57,7 +57,7 @@ function authenticate(options = {}) {
       }
       const userId = decoded.userId || decoded.id;
       if (!userId) throw new Error('no user in token');
-      req.auth = { userId: String(userId), token };
+      req.auth = { userId: String(userId), token, typeUser: decoded.typeUser ? String(decoded.typeUser) : null };
       return next();
     } catch (error) {
       return res.status(401).json({ error: 'Authentication failed' });
