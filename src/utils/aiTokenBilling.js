@@ -3,6 +3,18 @@
  * Providers: Anthropic (Claude), OpenAI, Gemini/Vertex. Fallback: ~4 chars ≈ 1 token.
  */
 
+const crypto = require('crypto');
+
+const b64url = (v) => Buffer.from(v).toString('base64').replace(/=+$/, '').replace(/\+/g, '-').replace(/\//g, '_');
+
+/** JWT HS256 de service à service, valable une minute (même format que ceux vérifiés par l'orchestrateur). */
+function signServiceToken(secret, payload, ttlSeconds = 60) {
+  const now = Math.floor(Date.now() / 1000);
+  const body = `${b64url(JSON.stringify({ alg: 'HS256', typ: 'JWT' }))}.${b64url(JSON.stringify({ ...payload, iat: now, exp: now + ttlSeconds }))}`;
+  const sig = crypto.createHmac('sha256', secret).update(body).digest('base64').replace(/=+$/, '').replace(/\+/g, '-').replace(/\//g, '_');
+  return `${body}.${sig}`;
+}
+
 function estimateTokensFromText(...parts) {
   const chars = parts.reduce((sum, p) => sum + String(p || '').length, 0);
   return Math.max(1, Math.ceil(chars / 4));
@@ -72,93 +84,100 @@ function getOrchestratorApiBase() {
   return String(raw).replace(/\/$/, '');
 }
 
-function getGigsApiBase() {
-  const raw =
-    process.env.GIGS_API_URL ||
-    process.env.GIGS_API ||
-    process.env.API_URL_GIGS ||
-    'https://v25gigsmanualcreationbackend-production.up.railway.app/api';
-  return String(raw).replace(/\/$/, '');
+/**
+ * Règle produit : les jetons IA sont TOUJOURS prépayés et débités (aucun premier gig gratuit).
+ * Sans companyId la requête est refusée ; si le solde est illisible la requête échoue proprement
+ * (jamais de génération gratuite silencieuse).
+ */
+
+/** Réponse HTTP uniforme d'un refus de garde (400 sans entreprise, 402 solde insuffisant, 503 solde illisible). */
+function tokenGateErrorResponse(gate) {
+  const status = gate.code === 'company_required' ? 400 : gate.code === 'balance_unavailable' ? 503 : 402;
+  return {
+    status,
+    body: {
+      success: false,
+      error: gate.code || 'insufficient_tokens',
+      message: gate.message,
+      data: { tokens: gate.tokens },
+    },
+  };
 }
 
-/** First-gig package (0 or 1 gig): AI included in subscription. */
-async function isFirstGigForCompany(companyId) {
+/**
+ * Vérifie le solde prépayé auprès de l'orchestrateur.
+ * - sans companyId : refus (400 company_required) ;
+ * - solde < minRequired : refus (402 insufficient_tokens) avec le vrai solde ;
+ * - solde illisible (réseau, 401, 5xx, réponse invalide) : refus propre (503 balance_unavailable).
+ * Le solde renvoyé est le solde réel (undefined si inconnu, jamais 0 comme marqueur).
+ */
+async function assertCompanyHasAiTokens(companyId, minRequired = 1) {
   const id = String(companyId || '').trim();
-  if (!id) return true;
-  try {
-    const base = getGigsApiBase();
-    const res = await fetch(`${base}/gigs/company/${encodeURIComponent(id)}/has-gigs`);
-    if (res.ok) {
-      const json = await res.json().catch(() => ({}));
-      const countRaw = json?.data?.count ?? json?.count;
-      if (typeof countRaw === 'number' && Number.isFinite(countRaw)) {
-        return countRaw <= 1;
-      }
-      const hasGigs = Boolean(json?.data?.hasGigs ?? json?.hasGigs);
-      if (!hasGigs) return true;
-    }
-    const listRes = await fetch(`${base}/gigs/company/${encodeURIComponent(id)}`);
-    if (!listRes.ok) return true;
-    const listJson = await listRes.json().catch(() => ({}));
-    const rows = listJson?.data ?? listJson;
-    if (!Array.isArray(rows)) return true;
-    return rows.length <= 1;
-  } catch (err) {
-    console.warn('[aiTokenBilling] first-gig check failed (treating as first):', err);
-    return true;
+  if (!id) {
+    return {
+      ok: false,
+      code: 'company_required',
+      message: "Identifiant d'entreprise requis pour utiliser les jetons IA.",
+    };
   }
-}
 
-async function assertCompanyHasAiTokens(companyId, minRequired = 1, options = {}) {
-  const id = String(companyId || '').trim();
-  if (!id) return { ok: true, tokens: 0 };
-
-  if (options?.skipIfFirstGig !== false) {
-    const firstGig = await isFirstGigForCompany(id);
-    if (firstGig) {
-      return { ok: true, tokens: 0, firstGigFree: true };
-    }
-  }
+  const min = Math.max(1, Math.ceil(Number(minRequired) || 1));
+  const unavailable = (detail) => {
+    console.warn('[aiTokenBilling] balance check unavailable:', detail);
+    return {
+      ok: false,
+      code: 'balance_unavailable',
+      message: 'Impossible de vérifier votre solde de jetons IA pour le moment. Réessayez dans quelques instants.',
+    };
+  };
 
   try {
     const base = getOrchestratorApiBase();
-    const res = await fetch(
-      `${base}/tokens-company/${encodeURIComponent(id)}/check?min=${Math.max(1, minRequired)}`
-    );
+    // L'orchestrateur exige un JWT sur /check (PAY-12) : appel de service à service, jeton signé avec le secret commun.
+    const headers = {};
+    if (process.env.JWT_SECRET) {
+      headers.Authorization = `Bearer ${signServiceToken(process.env.JWT_SECRET, { service: 'knowledgebase', companyId: id })}`;
+    }
+    const res = await fetch(`${base}/tokens-company/${encodeURIComponent(id)}/check?min=${min}`, { headers });
     const json = await res.json().catch(() => ({}));
-    const tokens = typeof json?.data?.tokens === 'number' ? json.data.tokens : 0;
-    if (!res.ok || json?.success === false) {
+    const balance = json?.data?.tokens;
+    const hasBalance = typeof balance === 'number' && Number.isFinite(balance);
+
+    if (res.status === 402 || json?.success === false) {
       return {
         ok: false,
-        tokens,
+        code: 'insufficient_tokens',
+        tokens: hasBalance ? balance : undefined,
         message: json?.message || 'Solde de tokens AI insuffisant. Rechargez pour continuer.',
       };
     }
-    return { ok: true, tokens };
+    if (!res.ok) return unavailable(`HTTP ${res.status}`);
+    if (!hasBalance) return unavailable('balance missing in orchestrator response');
+    return { ok: true, tokens: balance };
   } catch (err) {
-    console.warn('[aiTokenBilling] assert check failed (allowing request):', err);
-    return { ok: true, tokens: 0 };
+    return unavailable(String(err?.message || err));
   }
 }
 
-async function chargeCompanyAiTokens({ companyId, usageId, usage, tool, gigId, meta, skipCharge }) {
+/** Débite le coût réel après génération (toujours, aucun gig gratuit) ; le résultat est journalisé et renvoyé. */
+async function chargeCompanyAiTokens({ companyId, usageId, usage, tool, gigId, meta }) {
   const id = String(companyId || '').trim();
-  if (!id) return { billed: false };
-
-  let skip = Boolean(skipCharge);
-  if (skipCharge === undefined) {
-    try {
-      skip = await isFirstGigForCompany(id);
-    } catch {
-      skip = false;
-    }
-  }
-  if (skip) {
-    return { billed: false, firstGigFree: true };
-  }
-
   const tokensUsed = Math.max(0, Math.round(usage?.totalTokens || 0));
-  if (tokensUsed <= 0) return { billed: false };
+  const log = (r) => {
+    console.info('[aiTokenBilling] charge', {
+      tool,
+      usageId,
+      companyId: id || null,
+      tokensUsed,
+      billed: r.billed,
+      charged: r.charged,
+      balance: r.tokens,
+      reason: r.reason,
+    });
+    return r;
+  };
+  if (!id) return log({ billed: false, charged: 0, reason: 'company_required' });
+  if (tokensUsed <= 0) return log({ billed: false, charged: 0, reason: 'no_usage' });
 
   try {
     const base = getOrchestratorApiBase();
@@ -184,31 +203,30 @@ async function chargeCompanyAiTokens({ companyId, usageId, usage, tool, gigId, m
       }),
     });
     const json = await res.json().catch(() => ({}));
+    const balance = typeof json?.data?.tokens === 'number' ? json.data.tokens : undefined;
     if (res.status === 402) {
-      console.warn('[aiTokenBilling] charge 402 insufficient_tokens', id, tokensUsed);
-      return { billed: false, tokens: json?.data?.tokens };
+      return log({ billed: false, tokens: balance, charged: 0, reason: 'insufficient_tokens' });
     }
     if (!res.ok) {
       console.warn('[aiTokenBilling] charge failed', res.status, json);
-      return { billed: false };
+      return log({ billed: false, charged: 0, reason: 'charge_failed' });
     }
-    return {
-      billed: Boolean(json?.charged),
-      tokens: typeof json?.data?.tokens === 'number' ? json.data.tokens : undefined,
-    };
+    const billed = Boolean(json?.charged);
+    return log({ billed, tokens: balance, charged: billed ? tokensUsed : 0, ...(billed ? {} : { reason: 'charge_failed' }) });
   } catch (err) {
     console.warn('[aiTokenBilling] charge error:', err);
-    return { billed: false };
+    return log({ billed: false, charged: 0, reason: 'charge_failed' });
   }
 }
 
 module.exports = {
+  signServiceToken,
   estimateTokensFromText,
   usageFromAnthropic,
   usageFromGemini,
   fallbackEstimatedUsage,
   resolveUsageOrEstimate,
-  isFirstGigForCompany,
+  tokenGateErrorResponse,
   assertCompanyHasAiTokens,
   chargeCompanyAiTokens,
 };

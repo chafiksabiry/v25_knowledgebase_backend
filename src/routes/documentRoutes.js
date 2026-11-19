@@ -4,6 +4,7 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const {
+  createSectorKnowledge,
   uploadDocument,
   getAllDocuments,
   getDocumentsByGig,
@@ -12,6 +13,9 @@ const {
   updateDocument,
   analyzeDocument
 } = require('../controllers/documentController');
+const { companyGuard, userGuard, from } = require('../middleware/routeGuards');
+
+const gigParam = from.gig((req) => req.params.gigId);
 
 // Configure multer for file uploads
 const storage = multer.diskStorage({
@@ -36,6 +40,9 @@ const fileFilter = (req, file, cb) => {
     'text/plain',
     'text/markdown',
     'text/html',
+    'image/png',
+    'image/jpeg',
+    'image/webp',
     'video/mp4',
     'video/mpeg',
     'video/quicktime',
@@ -46,7 +53,7 @@ const fileFilter = (req, file, cb) => {
   if (allowedTypes.includes(file.mimetype)) {
     cb(null, true);
   } else {
-    cb(new Error('Invalid file type. Only PDF, Word, TXT, MD, HTML and Video files are allowed.'));
+    cb(new Error('Invalid file type. Only PDF, Word, TXT, MD, HTML, image (PNG, JPEG, WebP) and Video files are allowed.'));
   }
 };
 
@@ -59,24 +66,27 @@ const upload = multer({
 });
 
 // Upload a new document
-router.post('/upload', upload.single('file'), uploadDocument);
+router.post('/upload', upload.single('file'), companyGuard(from.userId('body')), uploadDocument);
+
+// AI-generated knowledge base of one sector case, attached to one gig
+router.post('/sector-knowledge', companyGuard([from.userId('body'), from.gig((req) => req.body && req.body.gigId)]), createSectorKnowledge);
 
 // Get all documents
-router.get('/', getAllDocuments);
+router.get('/', companyGuard(from.userId('query'), { services: ['kb-read'] }), getAllDocuments);
 
 // Get documents by gig (must be before /:id)
-router.get('/gig/:gigId', getDocumentsByGig);
+router.get('/gig/:gigId', companyGuard(gigParam, { reps: true, services: ['kb-read'] }), getDocumentsByGig);
 
 // Get a single document by ID
-router.get('/:id', getDocumentById);
+router.get('/:id', companyGuard(from.document()), getDocumentById);
 
 // Analyze a document
-router.get('/:id/analysis', analyzeDocument);
+router.get('/:id/analysis', companyGuard(from.document()), analyzeDocument);
 
 // Delete a document
-router.delete('/:id', deleteDocument);
+router.delete('/:id', companyGuard(from.document()), deleteDocument);
 
 // Update document metadata
-router.put('/:id', updateDocument);
+router.put('/:id', companyGuard(from.document()), updateDocument);
 
 module.exports = router; 

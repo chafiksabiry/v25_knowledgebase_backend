@@ -1,4 +1,6 @@
 const { vertexAIService } = require('../config/vertexAIConfig');
+const { runDocumentAnalysis, MIN_USABLE_CHARS } = require('../services/documentAnalysisService');
+const mongoose = require('mongoose');
 const Document = require('../models/Document');
 const { logger } = require('../utils/logger');
 const { generateDocumentAnalysisPrompt } = require('../prompts/documentAnalysisPrompt');
@@ -8,6 +10,7 @@ const axios = require('axios');
 const {
   assertCompanyHasAiTokens,
   chargeCompanyAiTokens,
+  tokenGateErrorResponse,
   fallbackEstimatedUsage,
   resolveUsageOrEstimate,
   usageFromAnthropic,
@@ -251,33 +254,14 @@ const initializeCompanyCorpus = async (req, res) => {
       return res.status(400).json({ error: 'Company ID is required' });
     }
 
-    logger.info(`Initializing Vertex AI for company ${companyId}`);
-
-    // Initialize Vertex AI if not already initialized
-    if (!vertexAIService.vertexAI) {
-      await vertexAIService.initialize();
-    }
-
-    logger.info('Creating RAG corpus...');
-    // Create RAG corpus for the company
-    const corpus = await vertexAIService.createRagCorpus(companyId);
-    logger.info('RAG corpus created:', corpus);
-
-    // Get all documents for the company
-    const documents = await Document.find({ companyId });
-    logger.info(`Found ${documents.length} documents for company ${companyId}`);
-
-    // Import documents to the corpus if any exist
-    if (documents.length > 0) {
-      logger.info('Importing documents to corpus...');
-      await vertexAIService.importDocumentsToCorpus(companyId, documents);
-      logger.info('Documents imported successfully');
-    }
+    // No Vertex RAG corpus exists any more: queries read the documents from MongoDB.
+    // Kept for API compatibility; it only reports how many documents are available.
+    const documentCount = await Document.countDocuments({ companyId });
+    logger.info(`Corpus initialize for company ${companyId}: ${documentCount} documents (no Vertex corpus)`);
 
     res.status(200).json({
       message: 'RAG corpus initialized successfully',
-      corpus,
-      documentsImported: documents.length
+      documentsImported: documentCount
     });
 
   } catch (error) {
@@ -308,20 +292,12 @@ const syncDocumentsToCorpus = async (req, res) => {
       return res.status(400).json({ error: 'Company ID is required' });
     }
 
-    // Initialize Vertex AI if not already initialized
-    if (!vertexAIService.vertexAI) {
-      vertexAIService.initialize();
-    }
-
-    // Get all documents for the company
-    const documents = await Document.find({ companyId });
-
-    // Import documents to the corpus
-    const result = await vertexAIService.importDocumentsToCorpus(companyId, documents);
+    // Nothing to sync: documents are read from MongoDB at query time (no Vertex RAG corpus).
+    const documentCount = await Document.countDocuments({ companyId });
 
     res.status(200).json({
       message: 'Documents synced to RAG corpus successfully',
-      documentsImported: result.imported_rag_files_count
+      documentsImported: documentCount
     });
 
   } catch (error) {
@@ -363,6 +339,7 @@ const queryKnowledgeBase = async (req, res) => {
           corpusStatus: corpusStatus,
           model: process.env.VERTEX_AI_MODEL,
           processedAt: new Date().toISOString(),
+          retrieval: response.retrieval || null,
           citations: response.candidates[0].citationMetadata,
           safetyRatings: response.candidates[0].safetyRatings
         }
@@ -538,92 +515,8 @@ const analyzeDocument = async (req, res) => {
       return res.status(404).json({ error: 'Document not found' });
     }
 
-    // Initialize Vertex AI if not already initialized
-    if (!vertexAIService.vertexAI) {
-      await vertexAIService.initialize();
-    }
-
-    // Generate analysis prompt
-    const isVideo = document.fileType && document.fileType.startsWith('video/');
-    const analysisPrompt = generateDocumentAnalysisPrompt(isVideo ? "This is a video file. Please analyze its context and provide a summary based on your knowledge if available, or a general assessment if it's new." : document.content);
-
-    // Perform analysis using RAG with a single call
-    // For videos, we might want to pass different parameters to vertexAIService later
-    const response = await vertexAIService.queryKnowledgeBase(
-      document.companyId,
-      analysisPrompt,
-      isVideo ? { fileUrl: document.fileUrl, fileType: document.fileType } : null
-    );
-
-    // Parse the response to get the analysis results
-    let analysisResults;
-    try {
-      logger.info(`Raw response from Vertex AI (chars=${JSON.stringify(response || '').length})`);
-
-      // Vérifier la structure de la réponse
-      if (!response || !response.candidates || !response.candidates[0]) {
-        throw new Error('Invalid response structure from Vertex AI');
-      }
-
-      // Extraire le contenu de la réponse
-      let content;
-      if (response.candidates[0].content && response.candidates[0].content.parts) {
-        content = response.candidates[0].content.parts[0].text;
-      } else if (response.candidates[0].text) {
-        content = response.candidates[0].text;
-      } else if (typeof response.candidates[0] === 'string') {
-        content = response.candidates[0];
-      } else {
-        throw new Error('Unable to extract content from response');
-      }
-
-      // Essayer de parser le contenu comme JSON
-      try {
-        // D'abord, essayer de parser directement
-        analysisResults = JSON.parse(content);
-      } catch (jsonError) {
-        // Si ça échoue, essayer d'extraire le JSON avec une regex
-        const jsonMatch = content.match(/\{[\s\S]*\}/);
-        if (jsonMatch) {
-          analysisResults = JSON.parse(jsonMatch[0]);
-        } else {
-          throw new Error('No valid JSON found in response');
-        }
-      }
-
-      // Valider la structure des résultats
-      const requiredFields = ['summary', 'domain', 'theme', 'mainPoints', 'technicalLevel', 'targetAudience', 'keyTerms', 'recommendations'];
-      const missingFields = requiredFields.filter(field => !analysisResults[field]);
-
-      if (missingFields.length > 0) {
-        logger.warn('Missing fields in analysis results:', missingFields);
-        // Remplir les champs manquants avec des valeurs par défaut
-        missingFields.forEach(field => {
-          if (field === 'mainPoints' || field === 'keyTerms' || field === 'recommendations') {
-            analysisResults[field] = ['Not available'];
-          } else {
-            analysisResults[field] = 'Not available';
-          }
-        });
-      }
-
-    } catch (parseError) {
-      logger.error('Error parsing analysis results:', {
-        error: parseError.message,
-        response: response,
-        stack: parseError.stack
-      });
-      throw new Error('Failed to parse analysis results: ' + parseError.message);
-    }
-
-    // Update document with analysis results
-    document.analysis = {
-      ...analysisResults,
-      analyzedAt: new Date()
-    };
-    await document.save();
-
-    res.status(200).json(document.analysis);
+    const analysis = await runDocumentAnalysis(document);
+    res.status(200).json(analysis);
 
   } catch (error) {
     logger.error('Error checking corpus status:', {
@@ -943,12 +836,8 @@ const generateScript = async (req, res) => {
     const billingCompanyId = String(companyId || '').trim() || undefined;
     const tokenGate = await assertCompanyHasAiTokens(billingCompanyId, 1);
     if (!tokenGate.ok) {
-      return res.status(402).json({
-        success: false,
-        error: 'insufficient_tokens',
-        message: tokenGate.message,
-        data: { tokens: tokenGate.tokens },
-      });
+      const refusal = tokenGateErrorResponse(tokenGate);
+      return res.status(refusal.status).json(refusal.body);
     }
 
     // Clean up trainings titles to remove any "Module X" prefixes before passing to LLM
@@ -1412,6 +1301,7 @@ Return ONLY the generated dialogue script.` : `You are generating a linear sales
           usage: {
             ...usage,
             billed: charge.billed,
+            charged: charge.charged,
             balance: charge.tokens,
           },
         });
@@ -1568,6 +1458,7 @@ Return ONLY the generated dialogue script.` : `You are generating a linear sales
     finalResponse.usage = {
       ...usage,
       billed: charge.billed,
+      charged: charge.charged,
       balance: charge.tokens,
     };
     res.status(200).json(finalResponse);
@@ -1899,7 +1790,115 @@ Return only the translated JSON object with the same structure:`;
   }
 };
 
+/**
+ * Knowledge-base readiness for the onboarding step: for each document, is its text usable by the
+ * REPS (extracted, chunked) and has it been analysed ? Content is never sent to the client.
+ */
+const getKnowledgeReadiness = async (req, res) => {
+  try {
+    const { userId, gigId } = req.query;
+    if (!userId) {
+      return res.status(400).json({ error: 'User ID is required' });
+    }
+    const company = await Company.findOne({ userId });
+    if (!company) {
+      return res.status(404).json({ error: 'No company found for this user' });
+    }
+
+    const match = { companyId: company._id };
+    if (gigId && gigId !== 'all') {
+      // The gig's own documents plus the company-wide ones (no gig attached).
+      match.$or = [{ gigId: new mongoose.Types.ObjectId(String(gigId)) }, { gigId: null }];
+    }
+
+    const rows = await Document.aggregate([
+      { $match: match },
+      {
+        $project: {
+          name: 1,
+          fileType: 1,
+          gigId: 1,
+          uploadedAt: 1,
+          analysis: 1,
+          contentLength: { $strLenCP: { $ifNull: ['$content', ''] } },
+          wordCount: '$metadata.wordCount',
+          chunkCount: { $size: { $ifNull: ['$chunks', []] } },
+          embeddingModel: 1,
+          embeddedAt: 1,
+          extraction: 1,
+        },
+      },
+      { $sort: { uploadedAt: -1 } },
+    ]);
+
+    const documents = rows.map((d) => {
+      const hasText = d.contentLength >= MIN_USABLE_CHARS;
+      const analyzed = Boolean(d.analysis && d.analysis.summary);
+      return {
+        id: String(d._id),
+        name: d.name,
+        fileType: d.fileType,
+        gigId: d.gigId ? String(d.gigId) : null,
+        words: d.wordCount || 0,
+        chunks: d.chunkCount,
+        indexed: Boolean(d.embeddedAt),
+        ocr: Boolean(d.extraction && d.extraction.ocr),
+        tables: (d.extraction && d.extraction.tables) || 0,
+        ready: hasText,
+        reason: hasText ? null : 'no_text',
+        analyzed,
+        summary: analyzed ? String(d.analysis.summary).slice(0, 280) : null,
+        analyzedAt: analyzed ? d.analysis.analyzedAt || null : null,
+      };
+    });
+
+    const ready = documents.filter((d) => d.ready).length;
+    res.status(200).json({
+      success: true,
+      data: {
+        companyId: String(company._id),
+        summary: {
+          documents: documents.length,
+          ready,
+          notReady: documents.length - ready,
+          analyzed: documents.filter((d) => d.analyzed).length,
+          indexed: documents.filter((d) => d.indexed).length,
+          totalWords: documents.reduce((n, d) => n + d.words, 0),
+        },
+        documents,
+      },
+    });
+  } catch (error) {
+    logger.error('Error computing knowledge readiness:', error);
+    res.status(500).json({ error: 'Failed to compute knowledge readiness' });
+  }
+};
+
+/** (Re)builds the search index of the company's documents; existing documents get their embeddings here. */
+const reindexKnowledgeBase = async (req, res) => {
+  try {
+    const { userId, force } = req.body || {};
+    if (!userId) return res.status(400).json({ error: 'User ID is required' });
+    const company = await Company.findOne({ userId });
+    if (!company) return res.status(404).json({ error: 'No company found for this user' });
+    const { reindexCompany } = require('../services/retrievalService');
+    const results = await reindexCompany(company._id, { force: Boolean(force) });
+    res.status(200).json({
+      success: true,
+      data: {
+        documents: results.length,
+        embedded: results.filter((r) => r.embedded).length,
+        failed: results.filter((r) => !r.embedded).map((r) => ({ id: r.id, name: r.name, error: r.error })),
+      },
+    });
+  } catch (error) {
+    logger.error('Error reindexing knowledge base:', error);
+    res.status(500).json({ error: 'Failed to reindex knowledge base', details: error.message });
+  }
+};
+
 module.exports = {
+  reindexKnowledgeBase,
   initializeCompanyCorpus,
   syncDocumentsToCorpus,
   queryKnowledgeBase,
@@ -1909,6 +1908,7 @@ module.exports = {
   getCorpusStats,
   searchInCorpus,
   analyzeDocument,
+  getKnowledgeReadiness,
   generateScript,
   createScript,
   updateScript,

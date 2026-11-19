@@ -6,16 +6,16 @@ const path = require('path');
 const http = require('http');
 const { logger } = require('./utils/logger');
 const { vertexAIService } = require('./config/vertexAIConfig');
-const documentRoutes = require('./routes/documentRoutes');
-const fineTuningRoutes = require('./routes/fineTuningRoutes');
-const analysisRoutes = require('./routes/analysisRoutes');
-const companyRoutes = require('./routes/companyRoutes');
-const callRecordingRoutes = require('./routes/callRecordingRoutes');
-const ragRoutes = require('./routes/ragRoutes');
-const scriptRoutes = require('./routes/scriptRoutes');
+const { mountApi } = require('./routes/mountApi');
 
 // Load environment variables
 dotenv.config();
+
+// Every /api route checks a JWT signed with JWT_SECRET. There is no fallback secret: without it, nothing can run.
+if (!process.env.JWT_SECRET) {
+  logger.error('JWT_SECRET is not set: the knowledge base refuses to start (every /api route needs it to check tokens).');
+  process.exit(1);
+}
 
 // Create Express app and HTTP server
 const app = express();
@@ -63,14 +63,8 @@ app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 // Static files for document uploads
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
-// Routes
-app.use('/api/documents', documentRoutes);
-app.use('/api/fine-tuning', fineTuningRoutes);
-app.use('/api/analysis', analysisRoutes);
-app.use('/api/companies', companyRoutes);
-app.use('/api/call-recordings', callRecordingRoutes);
-app.use('/api/rag', ragRoutes);
-app.use('/api/scripts', scriptRoutes);
+// Routes: JWT required on every /api route, company checked per route (routes/mountApi.js). /health stays public.
+mountApi(app);
 
 // Health check endpoint
 app.get('/health', (req, res) => {

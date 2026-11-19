@@ -151,10 +151,10 @@ class VertexAIService {
   async _getCorpusContent(companyId, gigId = null) {
     try {
       // Récupérer les documents (scope gig d'abord, repli entreprise si vide)
-      let documents = gigId ? await Document.find({ companyId, gigId }) : [];
+      let documents = gigId ? await Document.find({ companyId, gigId }).select('-chunks') : [];
       let scopedToGig = Boolean(gigId) && documents.length > 0;
       if (!scopedToGig) {
-        documents = await Document.find({ companyId });
+        documents = await Document.find({ companyId }).select('-chunks');
       }
       logger.info(`Found ${documents.length} documents for company ${companyId}${scopedToGig ? ` (scoped to gig ${gigId})` : ''}`);
 
@@ -206,7 +206,7 @@ class VertexAIService {
     }
   }
 
-  async queryKnowledgeBase(companyId, query, fileInfo = null, gigId = null) {
+  async queryKnowledgeBase(companyId, query, fileInfo = null, gigId = null, options = {}) {
     try {
       if (!this.vertexAI) {
         throw new Error('Vertex AI not initialized');
@@ -217,18 +217,38 @@ class VertexAIService {
 
       logger.info(`Querying knowledge base for company ${companyId}:`, { query, hasFileInfo: !!fileInfo });
 
-      // Create a context from the stored documents or an empty string if none
-      const context = corpus.length > 0
-        ? corpus.map(doc => `Document: ${doc.title}\nContent: ${doc.content}\n---\n`).join('\n')
-        : "No specific documents found in knowledge base.";
+      // Small corpora are sent whole (the model sees every document in full). Larger ones go through
+      // semantic retrieval: only the passages closest to the question are sent, with their source.
+      const { retrieveChunks, FULL_CONTEXT_MAX_CHARS } = require('../services/retrievalService');
+      const totalChars = corpus.reduce((n, doc) => n + String(doc.content || '').length, 0);
+      let context = '';
+      let sources = [];
+      let mode = 'none';
+      if (corpus.length > 0 && totalChars <= FULL_CONTEXT_MAX_CHARS) {
+        mode = 'full';
+        context = corpus.map(doc => `Document: ${doc.title}\nContent: ${doc.content}\n---\n`).join('\n');
+        sources = corpus.map(doc => ({ documentId: doc.id, title: doc.title }));
+      } else if (corpus.length > 0) {
+        mode = 'retrieval';
+        const chunks = await retrieveChunks({ companyId, gigId, query });
+        if (chunks.length > 0) {
+          context = chunks
+            .map(c => `Document: ${c.title} (passage ${c.index + 1})\nContent: ${c.content}\n---\n`)
+            .join('\n');
+          sources = [...new Map(chunks.map(c => [c.documentId, { documentId: c.documentId, title: c.title }])).values()];
+        } else {
+          mode = 'none';
+        }
+      }
+      logger.info(`Knowledge base query mode=${mode} totalChars=${totalChars} sources=${sources.length}`);
 
-      const promptText = corpus.length > 0
-        ? `Using the following documents as context, please answer this question: "${query}"
+      const promptText = context
+        ? `Using ONLY the following extracts from the company's documents, answer this question: "${query}"
 
 Context:
 ${context}
 
-Please provide a comprehensive answer based on the information in these documents.`
+Rules: answer precisely from the extracts, quote figures, conditions and table values exactly, and name the document(s) you rely on. If the extracts do not contain the answer, say so clearly instead of guessing.`
         : `Please answer this question based on your general knowledge: "${query}"
 
 (Note: No specific documents were found in the company knowledge base to provide additional context.)`;
@@ -256,11 +276,13 @@ Please provide a comprehensive answer based on the information in these document
           temperature: 0.7,
           topK: 40,
           topP: 0.95,
-          maxOutputTokens: 2048,
+          maxOutputTokens: options.maxOutputTokens || 2048,
         }
       });
 
-      return result.response;
+      const response = result.response;
+      response.retrieval = { mode, sources };
+      return response;
     } catch (error) {
       logger.error(`Failed to query knowledge base for company ${companyId}:`, {
         error: error.message,
