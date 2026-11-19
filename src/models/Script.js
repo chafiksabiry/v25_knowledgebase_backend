@@ -83,6 +83,10 @@ const ScriptSchema = new mongoose.Schema({
     title: { type: String },
     format: { type: String },
     stages: [StageSchema],
+    stagesByLanguage: {
+      fr: [StageSchema],
+      en: [StageSchema],
+    },
     iframes: [ScriptIframeSchema]
   },
   isActive: { type: Boolean, default: false },
