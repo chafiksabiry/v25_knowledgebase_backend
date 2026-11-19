@@ -5,10 +5,7 @@ const path = require('path');
 const fs = require('fs');
 const { logger } = require('./utils/logger');
 const loggerMiddleware = require('./middleware/loggerMiddleware');
-const documentRoutes = require('./routes/documentRoutes');
-const fineTuningRoutes = require('./routes/fineTuningRoutes');
-const analysisRoutes = require('./routes/analysisRoutes');
-const callRecordingRoutes = require('./routes/callRecordingRoutes');
+const { mountApi } = require('./routes/mountApi');
 
 // Initialize express app
 const app = express();
@@ -59,11 +56,8 @@ if (!fs.existsSync(uploadsDir)) {
 // Serve static files from uploads directory
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
-// Routes
-app.use('/api/documents', documentRoutes);
-app.use('/api/fine-tuning', fineTuningRoutes);
-app.use('/api/analysis', analysisRoutes);
-app.use('/api/call-recordings', callRecordingRoutes);
+// Routes: same mounting as src/index.js (the real entry point): JWT required on every /api route.
+mountApi(app);
 
 // Health check endpoint
 app.get('/health', (req, res) => {
